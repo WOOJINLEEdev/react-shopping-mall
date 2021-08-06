@@ -1,0 +1,30 @@
+@keyframes loading {
+  0% {
+    transform: translateX(0);
+  }
+  50%,
+  100% {
+    transform: translateX(1024px);
+  }
+}
+
+.skeleton_item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 350px;
+  height: 500px;
+  background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
+  animation: loading 2s infinite linear;
+}
+
+.skeleton_item {
+  overflow: hidden;
+  position: relative;
+  width: 1024px;
+  height: 500px;
+  margin-bottom: 20px;
+  background: #f2f2f2;
+  border-radius: 5px;
+}
