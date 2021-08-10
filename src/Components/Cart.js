@@ -235,9 +235,6 @@ const Cart = () => {
                       />
                     </Link>
                     <div className="info_box">
-                      <div className="brand_box">
-                        <p className="brand_name"></p>
-                      </div>
                       <div className="info_text">
                         <p className="goods itemName">{item.product_name}</p>
                       </div>
@@ -264,6 +261,7 @@ const Cart = () => {
 
                       <div className="info_text priceAndQuantity">
                         <QuantityCounter
+                          flexEnd={false}
                           quantity={item.quantity}
                           onIncrement={() => handleQuantityIncrement(idx)}
                           onDecrement={() => handleQuantityDecrement(idx)}

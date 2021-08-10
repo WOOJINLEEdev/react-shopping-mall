@@ -37,7 +37,7 @@ const LogoutModal = ({ isOpen, onRequestClose }) => {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       style={customModalStyle}
-      shouldCloseOnOverlayClick={false}
+      shouldCloseOnOverlayClick={true}
     >
       <h2
         style={{

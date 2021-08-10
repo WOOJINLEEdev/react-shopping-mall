@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
 import BoardTable from "./BoardTable";
 import BoardTableRow from "./BoardTableRow";
 import BoardTableColumn from "./BoardTableColumn";
@@ -25,6 +26,23 @@ const BoardFirst = (props) => {
   const [searchClassName, setSearchClassName] = useState("search_wrap");
   const [selectedOption, setSelectedOption] = useState("");
 
+  const headersName = [
+    "번호",
+    "구분",
+    "제목",
+    "작성자",
+    "등록일",
+    "조회수",
+    "미리보기",
+  ];
+  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(min-width: 320px) and (max-width:767px)",
+  });
+
   const notice = postList.filter((data) => data.type === "공지사항");
   let searchInput = "";
 
@@ -46,6 +64,11 @@ const BoardFirst = (props) => {
     height: 100%;
     margin: 0 auto;
     padding: 20px;
+
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+      width: calc(100% - 40px);
+      height: 100%;
+    }
   `;
 
   const token = localStorage.getItem("token");
@@ -114,9 +137,7 @@ const BoardFirst = (props) => {
 
   return (
     <BoardWrap>
-      <h2 style={{ fontSize: "30px", textAlign: "center", fontWeight: "bold" }}>
-        커뮤니티 (Board First)
-      </h2>
+      <h2 className="board_first_head">커뮤니티 (Board First)</h2>
       <div className="board_write_wrap">
         <BoardFilter
           handleSelectOption={handleSelectOption}
@@ -144,22 +165,23 @@ const BoardFirst = (props) => {
       />
 
       <BoardTable
-        headersName={[
-          "번호",
-          "구분",
-          "제목",
-          "작성자",
-          "등록일",
-          "조회수",
-          "미리보기",
-        ]}
+        headersName={
+          isMobile ? ["구분", "제목", "작성자", "등록일"] : headersName
+        }
         boardLocal="first"
       >
         {notice.map((item, i) => (
           <BoardTableRow key={i} background>
-            <BoardTableColumn>
-              <GiSpeaker />
-            </BoardTableColumn>
+            {isTablet && (
+              <BoardTableColumn>
+                <GiSpeaker />
+              </BoardTableColumn>
+            )}
+            {isPc && (
+              <BoardTableColumn>
+                <GiSpeaker />
+              </BoardTableColumn>
+            )}
             <BoardTableColumn>
               <span style={{ color: "blue", fontWeight: "bold" }}>
                 {item.type}
@@ -171,22 +193,32 @@ const BoardFirst = (props) => {
               </Link>
             </BoardTableColumn>
             <BoardTableColumn>{item.user}</BoardTableColumn>
-            <BoardTableColumn>{item.createDate}</BoardTableColumn>
-            <BoardTableColumn>{item.readCount}</BoardTableColumn>
-            <BoardTableColumn>
-              <button
-                type="button"
-                className="board_preview_btn"
-                onClick={() => handlePreviewBtn(item.no)}
-              >
-                <span className="visually_hidden">미리보기</span>
-              </button>
-            </BoardTableColumn>
+            {isMobile && (
+              <BoardTableColumn>
+                {item.createDate.substring(5)}
+              </BoardTableColumn>
+            )}
+            {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+            {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
+            {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
+            {isPc && (
+              <BoardTableColumn>
+                <button
+                  type="button"
+                  className="board_preview_btn"
+                  onClick={() => handlePreviewBtn(item.no)}
+                >
+                  <span className="visually_hidden">미리보기</span>
+                </button>
+              </BoardTableColumn>
+            )}
           </BoardTableRow>
         ))}
         {currentPosts(dataList).map((item, i) => (
           <BoardTableRow key={i}>
-            <BoardTableColumn>{item.no}</BoardTableColumn>
+            {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
+            {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}
             <BoardTableColumn>{item.type}</BoardTableColumn>
             <BoardTableColumn>
               <Link to={`/post/${item.no}`} className="board_link">
@@ -194,17 +226,26 @@ const BoardFirst = (props) => {
               </Link>
             </BoardTableColumn>
             <BoardTableColumn>{item.user}</BoardTableColumn>
-            <BoardTableColumn>{item.createDate}</BoardTableColumn>
-            <BoardTableColumn>{item.readCount}</BoardTableColumn>
-            <BoardTableColumn>
-              <button
-                type="button"
-                className="board_preview_btn"
-                onClick={() => handlePreviewBtn(item.no)}
-              >
-                <span className="visually_hidden">미리보기</span>
-              </button>
-            </BoardTableColumn>
+            {isMobile && (
+              <BoardTableColumn>
+                {item.createDate.substring(5)}
+              </BoardTableColumn>
+            )}
+            {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+            {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
+            {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
+            {isPc && (
+              <BoardTableColumn>
+                <button
+                  type="button"
+                  className="board_preview_btn"
+                  onClick={() => handlePreviewBtn(item.no)}
+                >
+                  <span className="visually_hidden">미리보기</span>
+                </button>
+              </BoardTableColumn>
+            )}
           </BoardTableRow>
         ))}
       </BoardTable>

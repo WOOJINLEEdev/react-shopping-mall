@@ -165,7 +165,6 @@ const OrderDelivery = ({ onChange, delivery }) => {
           onSubmit={onSubmit}
         >
           <Form>
-            {/* <form method="POST"> */}
             <div className="delivery_box">
               <div className="label_box">
                 <label>배송지명</label>
@@ -333,7 +332,6 @@ const OrderDelivery = ({ onChange, delivery }) => {
                 placeholder="배송시 요청사항을 작성해 주세요."
               />
             </div>
-            {/* </form> */}
           </Form>
         </Formik>
       </div>

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import QuantityCounter from "./QuantityCounter";
 import Loading from "./Loading";
 import PopupModal from "./PopupModal";
+import styled from "styled-components";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
@@ -135,6 +136,7 @@ const ItemDetail = ({ match }) => {
               <td className="tbody_td_qty">
                 <QuantityCounter
                   margin
+                  flexEnd={false}
                   quantity={quantity}
                   onIncrement={() => setQuantity((qty) => qty + 1)}
                   onDecrement={() => setQuantity((qty) => qty - 1)}

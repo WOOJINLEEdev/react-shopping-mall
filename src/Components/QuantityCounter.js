@@ -1,10 +1,22 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const QuantityCounter = ({ quantity, onIncrement, onDecrement, margin }) => {
+const QuantityCounter = ({
+  quantity,
+  onIncrement,
+  onDecrement,
+  margin,
+  flexEnd,
+}) => {
   const QuantityArea = styled.div`
     display: flex;
     margin: ${(props) => (props.margin ? "0 70px" : "0")};
+
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+      justify-content: ${(props) =>
+        props.flexEnd ? "flex-end" : "flex-start"};
+      margin: 0;
+    }
   `;
 
   return (

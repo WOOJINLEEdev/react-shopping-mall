@@ -7,6 +7,16 @@ const Container = styled.div`
   line-height: 30px;
   margin: 0 auto;
   text-align: center;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+    margin: 0;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 const CurGroup = styled.div`
@@ -15,6 +25,10 @@ const CurGroup = styled.div`
   width: 300px;
   line-height: 30px;
   margin: 0 auto;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    margin: 0 auto;
+  }
 `;
 
 const CurDate = styled.div`
@@ -61,7 +75,7 @@ class Clock extends Component {
 
     return (
       <Container className="main_clock">
-        <CurGroup>
+        <CurGroup className="clock_group">
           <CurDate>
             {date.getFullYear()}&nbsp;/&nbsp;
             {date.getMonth() < 9

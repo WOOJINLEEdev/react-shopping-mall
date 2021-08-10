@@ -179,11 +179,9 @@ table {
 html,
 body {
   font-family: "Spoqa Han Sans 400", "Spoqa Han Sans Bold", sans-serif;
-  /* font-weight: 600; */
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  /* text-align: center; */
 }
 
 .header_link {
@@ -192,8 +190,6 @@ body {
   line-height: 80px;
   text-align: center;
   text-decoration: none;
-  position: absolute;
-  top: 0;
   background-color: rgb(97, 95, 95);
   color: rgb(97, 95, 95);
   opacity: 0.2;
@@ -203,22 +199,6 @@ body {
   background: linear-gradient(to bottom, #efefef, rgb(105, 105, 105));
   color: #333;
 }
-
-/* .header_link {
-  position: absolute;
-  width: 200px;
-  height: 80px;
-  font-family: NIXGONFONTS;
-  font-size: 20px;
-  top: 0;
-  background: linear-gradient(to left top, #efefef, #333);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  text-decoration: none;
-  text-align: center;
-  line-height: 80px;
-} */
 
 .header {
   display: flex;
@@ -230,13 +210,7 @@ body {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* .header_title {
-  font-family: NIXGONFONTS;
-  font-size: 20px;
-} */
-
 .header_search {
-  /* position: absolute; */
   display: inline-block;
   width: 90px;
   height: 80px;
@@ -245,9 +219,12 @@ body {
   text-align: center;
 }
 
+.header_cart {
+  height: 80px;
+}
+
 .signin {
   display: inline-block;
-  /* background-color: rgba(0, 0, 0, 0.1); */
   width: 90px;
   height: 80px;
   line-height: 80px;
@@ -256,8 +233,6 @@ body {
 }
 
 .search_img {
-  /* width: 32px;
-  height: 32px; */
   margin: 24px 29px;
 }
 
@@ -273,19 +248,15 @@ body {
   display: flex;
   justify-content: flex-end;
   width: 270px;
-  /* width: 180px; */
   height: 80px;
-  /* background-color: #333; */
 }
 
 .signin_link {
-  /* position: absolute; */
   width: 90px;
   height: 80px;
 }
 
 .cart {
-  /* background-color: rgba(0, 0, 0, 0.1); */
   display: inline-block;
   width: 90px;
   height: 80px;
@@ -353,7 +324,6 @@ body {
   height: 100%;
   flex-wrap: wrap;
   justify-content: flex-start;
-  /* padding: 20px 0; */
 }
 
 .item_price {
@@ -405,15 +375,13 @@ body {
 
 .img_name {
   font-size: 18px;
-  /* height: 20px; */
   line-height: 30px;
   color: #333;
 }
 
 .img_price {
   font-size: 16px;
-  /* height: 20px; */
-  /* line-height: 20px; */
+
   color: #333;
 }
 
@@ -425,12 +393,12 @@ main {
   position: relative;
   width: 1024px;
   margin: 0 auto;
-  /* padding: 20px 0; */
 }
 
 .more_btn {
   width: 100%;
   height: 50px;
+  color: #757575;
   background-color: #efefef;
   border: 1px solid #d4d4d4;
   border-radius: 5px;
@@ -448,21 +416,6 @@ main {
   padding-top: 20px;
   padding-bottom: 500px;
 }
-
-/* .list_element:hover {
-  border: 1px solid #efefef;
-  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-  transition: all 0.25s;
-  transform: translateY(-4px);
-} */
-
-/* .list {
-  font-size: 14px;
-  color: #333;
-  text-align: center;
-  margin-bottom: 10px;
-  max-width: 300px;
-} */
 
 .image_wrapper {
   display: flex;
@@ -547,14 +500,12 @@ main {
 
 .td_quantity {
   width: calc(90% - 8px);
-  /* width: 90%; */
   text-align: center;
 }
 
 .list_btn_table {
   width: 100%;
   height: 80px;
-  /* margin: 0 auto; */
 }
 
 .btn_td {
@@ -670,7 +621,7 @@ main {
 
 .order_info {
   width: calc(100% - 110px);
-  border: 5px solid #333;
+  border: 5px solid #797979;
   border-radius: 5px;
   padding: 30px 50px;
 }
@@ -691,15 +642,11 @@ main {
   height: 50px;
   line-height: 50px;
   text-align: left;
-  /* border-top: 5px solid #333; */
-  /* border-bottom: 1px solid #333; */
 }
 
 .info_allCheck {
   display: flex;
   height: 40px;
-  /* height: 100px; */
-  /* border-bottom: 3px solid #333; */
 }
 
 .check_all {
@@ -714,13 +661,6 @@ main {
   margin-left: 5px;
 }
 
-/* .my_info_wrap {
-  display: flex;
-  height: 100%;
-  justify-content: space-between;
-  padding-bottom: 20px;
-} */
-
 .item_select {
   display: flex;
   justify-content: space-between;
@@ -732,7 +672,6 @@ main {
   width: 20px;
   height: 30px;
   margin: auto 0;
-  /* color: #d4d4d4; */
 }
 
 .item_remove {
@@ -744,11 +683,9 @@ main {
 }
 
 .item_img {
-  /* width: 80%; */
   width: 70%;
   max-width: 350px;
   max-height: 200px;
-  /* width: 40%; */
 }
 
 .info_box {
@@ -759,10 +696,8 @@ main {
 }
 
 .brand_box {
-  /* display: flex; */
   justify-content: space-between;
   font-weight: bold;
-  /* display: inline-block; */
 }
 
 .brand_label,
@@ -771,7 +706,6 @@ main {
 }
 
 .itemName {
-  /* width: 70%; */
   font-size: 18px;
   font-weight: bold;
   text-align: left;
@@ -803,7 +737,6 @@ main {
 
 .price_unit {
   line-height: 44px;
-  /* display: inline-block; */
 }
 
 .final_price,
@@ -898,7 +831,6 @@ main {
 
 .quantity_area {
   display: flex;
-  /* margin: 0 70px; */
 }
 
 .cart_quantity_area {
@@ -923,27 +855,22 @@ main {
   color: #d4d4d4;
   font-size: 30px;
   text-align: center;
-  /* line-height: 41px; */
 }
 
 .minus {
-  /* font-size: 40px; */
   border-right: none;
-  /* height: 41px; */
 }
 
 .plus {
   border-left: none;
-  /* height: 41px; */
 }
 
 .price_area {
   font-size: 18px;
-  /* line-height: 30px; */
   padding: 5px 0;
 }
 
----------------- // 회원가입
+/* ---------회원가입-----------*/
 
 .form {
   width: 100%;
@@ -974,13 +901,11 @@ main {
   background-color: #fbfbfb;
   font-size: 12px;
   color: #000;
-  /* margin-bottom: 20px; */
   padding: 10px;
 }
 
 .birth {
   display: flex;
-  /* margin-bottom: 0; */
   font-size: 0;
   margin-top: 20px;
 }
@@ -1017,7 +942,6 @@ main {
 }
 
 .mail {
-  /* width: calc(50% - 22px); */
   height: 14px;
 }
 
@@ -1048,8 +972,6 @@ main {
 }
 
 .tel {
-  /* width: 100%; */
-  /* margin-right: 12px; */
   margin-bottom: 6px;
 }
 
@@ -1068,11 +990,6 @@ main {
   outline: none;
   margin-top: 20px;
 }
-
-/* .birth {
-  margin-bottom: 20px;
-  font-size: 0;
-} */
 
 .birth_select {
   width: 30%;
@@ -1208,7 +1125,6 @@ main {
 }
 
 .delivery_box {
-  /* height: 52px; */
   margin-top: 10px;
 }
 
@@ -1252,7 +1168,6 @@ main {
 
 .tel {
   width: 20%;
-  /* margin-right: 0; */
 }
 
 .tel_dash {
@@ -1267,7 +1182,6 @@ main {
 
 .notice {
   font-size: 12px;
-  /* width: 50%; */
 }
 
 .coupon_mileage_wrap {
@@ -1389,7 +1303,6 @@ main {
   display: flex;
   justify-content: space-between;
   padding: 20px 0;
-  /* border-top: 3px solid #333; */
 }
 
 .cart_item_img {
@@ -1421,7 +1334,6 @@ main {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-  /* display: inline-block; */
 }
 
 .brand_label,
@@ -1454,7 +1366,6 @@ main {
 
 .price_unit {
   line-height: 44px;
-  /* display: inline-block; */
 }
 
 .final_price,
@@ -1586,13 +1497,6 @@ main {
 }
 
 /* -------------------마이페이지 */
-.main_wrap {
-  width: 824px;
-  height: 100%;
-  margin: 0 auto;
-  padding: 50px 100px;
-  background-color: #f1f1f1;
-}
 
 .main_title {
   font-size: 25px;
@@ -1720,13 +1624,6 @@ main {
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 }
 
-/* .info_li:hover {
-  border: 1px solid #efefef;
-  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-  transition: all 0.25s;
-  transform: translateY(-2px);
-} */
-
 .info_coupon_in {
   display: block;
   line-height: 20px;
@@ -1746,12 +1643,6 @@ main {
   font-style: italic;
   font-weight: normal;
 }
-
-/* .mileage_in {
-  
-  font-size: 14px;
-  font-weight: normal;
-} */
 
 .item_price_qty {
   font-weight: bold;
@@ -1788,15 +1679,7 @@ main {
   border-bottom: 3px solid #333;
 }
 
-/* .list_info_box {
-  width: 50%;
-  color: #333;
-  font-size: 13px;
-  text-decoration: none;
-} */
-
 .list_info {
-  /* display: flex; */
   width: 60%;
 }
 
@@ -1810,7 +1693,6 @@ main {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
-  /* display: inline-block; */
 }
 
 .list_brand_label,
@@ -1844,7 +1726,6 @@ main {
 
 .price_unit {
   line-height: 44px;
-  /* display: inline-block; */
 }
 
 .final_price,
@@ -1891,10 +1772,6 @@ main {
   padding: 10px 0;
 }
 
-/* .price {
-  padding: 0;
-} */
-
 .price_quantity {
   padding-left: 5px;
 }
@@ -1927,93 +1804,6 @@ main {
   pointer-events: none;
   opacity: 0.6;
 }
-
-/* .banner_wrapper {
-  overflow: hidden;
-  position: relative;
-  width: 1024px;
-  height: 420px;
-  margin: 0 auto;
-}
-
-.banner {
-  display: flex;
-  width: calc(100% * 3);
-  height: 350px;
-  margin: 0 auto;
-  animation: slide 20s infinite;
-}
-
-.btn_group {
-  height: 50px;
-  padding: 10px 0;
-  text-align: center;
-}
-
-.btn_slide_group {
-  height: 50px;
-}
-
-.btn_prev,
-.btn_next,
-.btn_slide_group {
-  display: inline-block;
-  line-height: 50px;
-}
-
-.btn_prev,
-.btn_next {
-  vertical-align: middle;
-  border: none;
-  cursor: pointer;
-}
-
-.btn_slide {
-  width: 16px;
-  height: 16px;
-  background-color: gray;
-  border: 1px solid gray;
-  border-radius: 50%;
-  margin: 0 10px;
-  vertical-align: middle;
-  cursor: pointer;
-}
-
-.btn_slide:hover {
-  transition: all 0.5s ease-in-out;
-  background-color: #333;
-  color: #fff;
-}
-
-.btn_prev {
-  width: 16px;
-  height: 16px;
-  background: url(./images/arrow_left.png) no-repeat;
-  -webkit-filter: opacity(0.3) drop-shadow(0 0 0 #356cb1);
-  filter: opacity(0.3) drop-shadow(0 0 0 #356cb1);
-}
-
-.btn_next {
-  width: 16px;
-  height: 16px;
-  background: url(./images/arrow_right.png) no-repeat;
-  -webkit-filter: opacity(0.3) drop-shadow(0 0 0 #356cb1);
-  filter: opacity(0.3) drop-shadow(0 0 0 #356cb1);
-}
-
-.banner_slide {
-  width: calc(100% / 3);
-  height: 350px;
-  background: linear-gradient(to right, #efefef, #333);
-}
-
-.banner_slide:nth-child(2) {
-  background: linear-gradient(to top, #efefef, rgb(185, 189, 190));
-}
-
-.banner_slide:last-child {
-  background-color: rgb(240, 158, 158);
-} */
 
 .slick-next {
   background: url("./images/arrow_right.png") center center no-repeat !important;
@@ -2092,18 +1882,9 @@ main {
   line-height: 13px;
 }
 
-/* .board_table_row:hover {
-  background-color: #acacac;
-  cursor: pointer;
-} */
-
 .board_col {
   width: 10%;
 }
-
-/* .th_type {
-  width: 10%;
-} */
 
 .th_date {
   width: 12%;
@@ -2140,7 +1921,6 @@ main {
   vertical-align: middle;
   width: 16px;
   height: 16px;
-  /* outline: none; */
   border: none;
   cursor: pointer;
 }
@@ -2314,12 +2094,17 @@ main {
   outline: none;
 }
 
+.board_first_head {
+  font-size: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
 /* ---------------------------------
 
 /* component */
 
 .star-rating {
-  /* border: solid 1px #ccc; */
   display: flex;
   flex-direction: row-reverse;
   font-size: 1.5em;
@@ -2358,4 +2143,262 @@ article {
   margin: 4em;
   max-width: 30em;
   padding: 2em;
+}
+
+/* --------------------------------------------- */
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .header {
+    width: 100%;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  .list_group {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .list {
+    min-width: 49%;
+    max-width: 300px;
+    width: 49%;
+    align-items: center;
+  }
+
+  .list_element {
+    display: inline-block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0;
+  }
+
+  .list + .list {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .image_wrap {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .test_img {
+    width: 100%;
+    min-width: 100%;
+    max-width: 300px;
+    height: 100%;
+    min-height: 200px;
+    max-height: 300px;
+  }
+
+  .greet {
+    padding: 0;
+  }
+
+  .info_coupon_in {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .login_wrap {
+    width: calc(100% - 40px);
+    padding: 50px 20px;
+  }
+
+  .login_fieldset {
+    width: 70%;
+    padding: 30px;
+  }
+
+  .list_element_detail {
+    display: block;
+    height: 600px;
+    padding-top: 20px;
+    padding-bottom: 100px;
+  }
+
+  .image_wrapper {
+    display: block;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .image_text_wrap {
+    width: 100%;
+    max-height: 220px;
+    padding: 0;
+  }
+
+  .list_table {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    font-size: 20px;
+    margin: 0 auto;
+  }
+
+  .tbody_td {
+    padding: 10px;
+    text-align: right;
+  }
+
+  .tbody_td_qty {
+    padding: 10px;
+  }
+
+  .list_btn_table {
+    width: 100%;
+    max-width: 500px;
+    margin: 10px auto;
+  }
+
+  .list_btn {
+    width: 90%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    margin: 0 auto;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    color: #efefef;
+    background-color: rgb(139, 138, 138);
+  }
+
+  .order_info {
+    width: calc(100% - 70px);
+    padding: 30px;
+  }
+
+  .info_img_box {
+    width: 45%;
+  }
+
+  .cart_item_img {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  .info_box {
+    width: 50%;
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .price_area {
+    font-size: 14px;
+  }
+
+  .info_text {
+    flex-direction: column;
+  }
+
+  .item_price_qty {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 41px;
+  }
+
+  .list_buy_btn {
+    width: 100%;
+    font-size: 13px;
+  }
+
+  .board_list {
+    width: 100%;
+    margin: 0;
+  }
+
+  .board_write_wrap {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .search_wrap {
+    width: 40%;
+    align-items: middle;
+  }
+
+  .board_write_btn {
+    width: 25%;
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .board_table_column {
+    padding: 20px 10px;
+    font-size: 15px;
+    line-height: 15px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .header {
+    width: 100%;
+  }
+
+  main {
+    width: 100%;
+  }
+
+  .list_group {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .list {
+    min-width: 30%;
+    max-width: 300px;
+    width: 30%;
+    align-items: center;
+  }
+
+  .list_element {
+    display: inline-block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0;
+  }
+
+  .list + .list {
+    margin-left: 5%;
+    margin-bottom: 20px;
+  }
+
+  .list:nth-child(3n + 1) {
+    margin-left: 0;
+  }
+
+  .image_wrap {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .test_img {
+    width: 100%;
+    min-width: 100%;
+    max-width: 300px;
+    height: 100%;
+    min-height: 250px;
+    max-height: 300px;
+  }
 }

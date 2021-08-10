@@ -10,6 +10,16 @@ const Container = styled.div`
   width: 1024px;
   height: 500px;
   margin-bottom: 20px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+    height: 400px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    height: 450px;
+  }
 `;
 
 const StyledSlider = styled(Slider)`
@@ -20,6 +30,14 @@ const StyledSlider = styled(Slider)`
 
 const SlideItem = styled.div`
   height: 500px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    height: 400px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    height: 450px;
+  }
 `;
 
 const Image = styled.img`
@@ -28,6 +46,14 @@ const Image = styled.img`
   max-height: 100%;
   margin: 0;
   border-radius: 5px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    min-height: 400px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    min-height: 450px;
+  }
 `;
 
 function NextArrow(props) {
