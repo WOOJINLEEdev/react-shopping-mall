@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import Modal from "react-modal";
+import { useMediaQuery } from "react-responsive";
 import BoardTable from "./BoardTable";
 import BoardTableRow from "./BoardTableRow";
 import BoardTableColumn from "./BoardTableColumn";
@@ -23,6 +24,22 @@ const BoardSecond = (props) => {
   const [searchClassName, setSearchClassName] = useState("search_wrap");
   const token = localStorage.getItem("token");
   const date = new Date();
+
+  const headersName = [
+    "번호",
+    "제목",
+    "작성자",
+    "등록일",
+    "조회수",
+    "미리보기",
+  ];
+  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(min-width: 320px) and (max-width:767px)",
+  });
 
   useEffect(() => {
     localStorage.setItem("board", "second");
@@ -59,6 +76,16 @@ const BoardSecond = (props) => {
     height: 100%;
     margin: 0 auto;
     padding: 20px;
+
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+      width: calc(100% - 40px);
+      height: 100%;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      width: calc(100% - 40px);
+      height: 100%;
+    }
   `;
 
   const handleWriteBtn = () => {
@@ -79,11 +106,20 @@ const BoardSecond = (props) => {
     setIsOpen(false);
   };
 
+  const getHeadersName = () => {
+    if (isTablet) {
+      return ["번호", "제목", "작성자", "등록일", "조회수"];
+    }
+    if (isMobile) {
+      return ["번호", "제목", "작성자", "등록일"];
+    }
+
+    return headersName;
+  };
+
   return (
     <BoardWrap>
-      <h2 style={{ fontSize: "30px", textAlign: "center", fontWeight: "bold" }}>
-        커뮤니티 (Board Second)
-      </h2>
+      <h2 className="board_second_head">커뮤니티 (Board Second)</h2>
       <div className="board_write_wrap">
         <SearchInputBtn searchClassName={searchClassName} />
         <button
@@ -100,17 +136,7 @@ const BoardSecond = (props) => {
         onRequestClose={onRequestClose}
       />
 
-      <BoardTable
-        headersName={[
-          "번호",
-          // "분류",
-          "제목",
-          "작성자",
-          "등록일",
-          "조회수",
-          "미리보기",
-        ]}
-      >
+      <BoardTable headersName={getHeadersName()} boardLocal="second">
         {currentPosts(board).map((item, i) => (
           <BoardTableRow key={i}>
             <BoardTableColumn>{item.id}</BoardTableColumn>
@@ -127,16 +153,19 @@ const BoardSecond = (props) => {
                 : date.getMonth() + 1}
               -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
             </BoardTableColumn>
-            <BoardTableColumn>{item.id}</BoardTableColumn>
-            <BoardTableColumn>
-              <button
-                type="button"
-                className="board_preview_btn"
-                onClick={() => handlePreviewBtn(item.id)}
-              >
-                <span className="visually_hidden">미리보기</span>
-              </button>
-            </BoardTableColumn>
+            {isTablet && <BoardTableColumn>{item.id}</BoardTableColumn>}
+            {isPc && <BoardTableColumn>{item.id}</BoardTableColumn>}
+            {isPc && (
+              <BoardTableColumn>
+                <button
+                  type="button"
+                  className="board_preview_btn"
+                  onClick={() => handlePreviewBtn(item.id)}
+                >
+                  <span className="visually_hidden">미리보기</span>
+                </button>
+              </BoardTableColumn>
+            )}
           </BoardTableRow>
         ))}
       </BoardTable>

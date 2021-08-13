@@ -53,17 +53,17 @@ const OrderPayments = () => {
               data-pay={i}
               value={i}
             >
-              {payment}
+              <span className="payment_name">{payment}</span>
             </li>
           ))}
         </ol>
-        <div className="pay_info">
+        {/* <div className="pay_info">
           <h3 className="pay_info_head">신용/체크카드</h3>
           <p className="pay_info_text">
             국내 모든 카드 사용이 가능하며 해외에서 발행된 카드는 이용하실 수
             없습니다. (해외배송은 불가능합니다.)
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

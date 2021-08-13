@@ -1,5 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
+import styled from "styled-components";
 
 const BoardTable = ({ headersName, children, loading, boardLocal }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -15,11 +16,14 @@ const BoardTable = ({ headersName, children, loading, boardLocal }) => {
       {loading && <div> loading... </div>}
       <table className="board_list">
         <colgroup>
-          {isPc ? <col className="board_col th_num" /> : null}
+          {boardLocal === "second"
+            ? isMobile && <col className="board_col th_num" />
+            : null}
+          {isTablet && <col className="board_col th_num" />}
+          {isPc && <col className="board_col th_num" />}
           {boardLocal === "first" ? (
             <col className="board_col th_type" />
           ) : null}
-          {/* <col className="board_col th_type" /> */}
           <col className="board_col th_title" />
           <col className="board_col th_user" />
           <col className="board_col th_date" />

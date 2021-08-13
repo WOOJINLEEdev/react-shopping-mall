@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
+import { useMediaQuery } from "react-responsive";
 import OrderDelivery from "./OrderDelivery";
 import OrderCoupon from "./OrderCoupon";
 import OrderPayments from "./OrderPayments";
@@ -9,6 +10,8 @@ import {
   deliveryName,
   phoneNumber,
 } from "./DeliveryValidation";
+import OrderTotalDetail from "./OrderTotalDetail";
+import useMyCart from "../Hooks/useMyCart";
 
 const Order = () => {
   const token = localStorage.getItem("token");
@@ -19,6 +22,33 @@ const Order = () => {
   const [selectOption, setSelectOption] = useState(0);
   const [checkout, setCheckout] = useState({});
   const [validated, setValidated] = useState({});
+
+  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(min-width: 320px) and (max-width:767px)",
+  });
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+
+  if (cartError) return <div>failed to load</div>;
+  if (loadingCart) return <div>loading...</div>;
+
+  const items = cart.items;
+  const totalPrice = items
+    .map((item) => item.variant_price * item.quantity)
+    .reduce((sum, itemPrice) => sum + itemPrice, 0);
+
+  const deliveryCharge = localStorage.getItem("delivery");
+
+  const handleOrderSubmit = () => {
+    console.log("오더버튼 클릭");
+  };
 
   const handleMileage = (e) => {
     if (e.target.value > availableMileage) {
@@ -69,22 +99,77 @@ const Order = () => {
 
   return (
     <div className="order_wrapper">
-      <div className="delivery_coupon_pay_wrap">
-        <OrderDelivery onChange={handleChangeDelivery} />
-        <OrderCoupon
-          mileage={mileage}
-          onChangeMileageInput={handleMileage}
-          handleSelectOption={handleSelect}
-          allMileage={allMileage}
-          value={usedMileage}
+      {isPc && (
+        <div className="delivery_coupon_pay_wrap">
+          <OrderDelivery onChange={handleChangeDelivery} />
+          <OrderCoupon
+            mileage={mileage}
+            onChangeMileageInput={handleMileage}
+            handleSelectOption={handleSelect}
+            allMileage={allMileage}
+            value={usedMileage}
+          />
+          <OrderPayments />
+        </div>
+      )}
+      {isPc && (
+        <OrderTotal
+          usedMileage={usedMileage}
+          selectOption={selectOption}
+          handleChangeDelivery={handleChangeDelivery}
         />
-        <OrderPayments />
-      </div>
-      <OrderTotal
-        usedMileage={usedMileage}
-        selectOption={selectOption}
-        handleChangeDelivery={handleChangeDelivery}
-      />
+      )}
+
+      {isTablet && (
+        <div>
+          <OrderDelivery onChange={handleChangeDelivery} />
+          <OrderTotal
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            handleChangeDelivery={handleChangeDelivery}
+          />
+          <OrderCoupon
+            mileage={mileage}
+            onChangeMileageInput={handleMileage}
+            handleSelectOption={handleSelect}
+            allMileage={allMileage}
+            value={usedMileage}
+          />
+          <OrderPayments />
+          <OrderTotalDetail
+            totalPrice={totalPrice}
+            deliveryCharge={deliveryCharge}
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            handleOrderSubmit={handleOrderSubmit}
+          />
+        </div>
+      )}
+      {isMobile && (
+        <div>
+          <OrderDelivery onChange={handleChangeDelivery} />
+          <OrderTotal
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            handleChangeDelivery={handleChangeDelivery}
+          />
+          <OrderCoupon
+            mileage={mileage}
+            onChangeMileageInput={handleMileage}
+            handleSelectOption={handleSelect}
+            allMileage={allMileage}
+            value={usedMileage}
+          />
+          <OrderPayments />
+          <OrderTotalDetail
+            totalPrice={totalPrice}
+            deliveryCharge={deliveryCharge}
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            handleOrderSubmit={handleOrderSubmit}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -66,12 +66,14 @@ const SelectBoardPage = () => {
     <SelectWrapper>
       <SelectBoardFirst>
         <Link to="/selectBoard1" className="select_board_link">
-          <p>데이터를 작성하여 만든 게시판</p>
+          <p className="select_board_text">데이터를 작성하여 만든 게시판</p>
         </Link>
       </SelectBoardFirst>
       <SelectBoardSecond>
         <Link to="/selectBoard2" className="select_board_link">
-          <p>JSONPlaceholder의 API를 이용하여 만든 게시판</p>
+          <p className="select_board_text">
+            JSONPlaceholder의 API를 이용하여 만든 게시판
+          </p>
         </Link>
       </SelectBoardSecond>
     </SelectWrapper>

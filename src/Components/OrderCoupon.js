@@ -33,30 +33,34 @@ const OrderCoupon = ({
           <div className="label_box">
             <label>마일리지</label>
           </div>
-          <input
-            type="text"
-            className="mileage_input"
-            onChange={onChangeMileageInput}
-            placeholder="0"
-            value={value}
-          />
-          <button
-            type="button"
-            className="all_mileage"
-            name="allMileage"
-            onClick={allMileage}
-          >
-            모두 사용
-          </button>
-          <span className="mileage_own">
-            보유 마일리지
-            <span className="mileage_unit">
-              <span className="mileage_in">
-                {mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          <div className="mileage_wrap">
+            <div className="mileage_input_btn">
+              <input
+                type="text"
+                className="mileage_input"
+                onChange={onChangeMileageInput}
+                placeholder="0"
+                value={value}
+              />
+              <button
+                type="button"
+                className="all_mileage"
+                name="allMileage"
+                onClick={allMileage}
+              >
+                모두 사용
+              </button>
+            </div>
+            <span className="mileage_own">
+              보유 마일리지
+              <span className="mileage_unit">
+                <span className="mileage_in">
+                  {mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </span>
+                p
               </span>
-              p
             </span>
-          </span>
+          </div>
         </div>
       </div>
     </section>

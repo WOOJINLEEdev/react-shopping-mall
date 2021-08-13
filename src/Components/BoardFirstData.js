@@ -75,7 +75,7 @@ export const postList = [
     no: 9,
     type: "일반",
     title: "아홉 번째 게시글입니다.",
-    content: " 나를 키우는 말 -이해인(1945-)",
+    content: "아홉 번째 게시글입니다.",
     user: "김철수",
     createDate: "2021-09-26",
     readCount: 25,

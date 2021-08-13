@@ -69,6 +69,11 @@ const BoardFirst = (props) => {
       width: calc(100% - 40px);
       height: 100%;
     }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      width: calc(100% - 40px);
+      height: 100%;
+    }
   `;
 
   const token = localStorage.getItem("token");
@@ -135,6 +140,17 @@ const BoardFirst = (props) => {
     searchInput = targetValue;
   };
 
+  const getHeadersName = () => {
+    if (isTablet) {
+      return ["번호", "구분", "제목", "작성자", "등록일"];
+    }
+    if (isMobile) {
+      return ["구분", "제목", "작성자", "등록일"];
+    }
+
+    return headersName;
+  };
+
   return (
     <BoardWrap>
       <h2 className="board_first_head">커뮤니티 (Board First)</h2>
@@ -164,12 +180,7 @@ const BoardFirst = (props) => {
         ModalClose={ModalClose}
       />
 
-      <BoardTable
-        headersName={
-          isMobile ? ["구분", "제목", "작성자", "등록일"] : headersName
-        }
-        boardLocal="first"
-      >
+      <BoardTable headersName={getHeadersName()} boardLocal="first">
         {notice.map((item, i) => (
           <BoardTableRow key={i} background>
             {isTablet && (
@@ -200,7 +211,6 @@ const BoardFirst = (props) => {
             )}
             {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
-            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && (
               <BoardTableColumn>
@@ -233,7 +243,6 @@ const BoardFirst = (props) => {
             )}
             {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
-            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && (
               <BoardTableColumn>

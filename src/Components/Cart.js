@@ -266,6 +266,7 @@ const Cart = () => {
                           onIncrement={() => handleQuantityIncrement(idx)}
                           onDecrement={() => handleQuantityDecrement(idx)}
                         />
+
                         <div>
                           <span className="item_price_qty">
                             {(item.variant_price * item.quantity)

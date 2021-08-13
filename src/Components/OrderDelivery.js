@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, ErrorMessage, Field, useFormikContext } from "formik";
 import * as Yup from "yup";
 import DaumPostcode from "react-daum-postcode";
+import { useMediaQuery } from "react-responsive";
 import {
   deliveryName,
   deliveryAddress,
@@ -23,6 +24,14 @@ const OrderDelivery = ({ onChange, delivery }) => {
   const [deliveryForm1, setDeliveryForm1] = useState(
     "delivery_box_wrap_second hide"
   );
+
+  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(min-width: 320px) and (max-width:767px)",
+  });
 
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
@@ -79,11 +88,77 @@ const OrderDelivery = ({ onChange, delivery }) => {
     borderRadius: "5px",
   };
 
+  const tabletPostCodeStyle = {
+    display: "block",
+    position: "absolute",
+    top: "25%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: "101",
+    width: "80%",
+    height: "500px",
+    border: "3px solid rgba(0, 0, 0, 0.1)",
+    borderRadius: "5px",
+  };
+
+  const mobilePostCodeStyle = {
+    display: "block",
+    position: "absolute",
+    top: "20%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: "101",
+    width: "80%",
+    height: "500px",
+    border: "3px solid rgba(0, 0, 0, 0.1)",
+    borderRadius: "5px",
+  };
+
   const postModalEscBtn = {
     display: "block",
     position: "absolute",
-    top: "5%",
-    left: "46%",
+    top: "3%",
+    left: "47%",
+    padding: ".5em 1em",
+    margin: ".4em .15em",
+    border: "3px solid rgba(0, 0, 0, 0.1)",
+    borderColor: "#dbdbdb #d2d2d2 #b2b2b2 #d2d2d3",
+    cursor: "pointer",
+    color: "#464646",
+    borderRadius: ".2em",
+    verticalAlign: "middle",
+    fontSize: "1em",
+    lineHeight: "1.25em",
+  };
+
+  const tabletPostModalEscBtn = {
+    display: "block",
+    position: "absolute",
+    top: "13%",
+    left: "45%",
+    padding: ".5em 1em",
+    margin: ".4em .15em",
+    border: "3px solid rgba(0, 0, 0, 0.1)",
+    borderColor: "#dbdbdb #d2d2d2 #b2b2b2 #d2d2d3",
+    cursor: "pointer",
+    color: "#464646",
+    borderRadius: ".2em",
+    verticalAlign: "middle",
+    fontSize: "1em",
+    lineHeight: "1.25em",
+  };
+
+  const mobilePostModalEscBtn = {
+    display: "block",
+    position: "absolute",
+    top: "7%",
+    left: "42%",
     padding: ".5em 1em",
     margin: ".4em .15em",
     border: "3px solid rgba(0, 0, 0, 0.1)",
@@ -149,12 +224,36 @@ const OrderDelivery = ({ onChange, delivery }) => {
         </li>
       </ul>
 
-      {showDaumPostModal ? (
+      {isPc && showDaumPostModal ? (
         <>
           <button style={postModalEscBtn} onClick={postModalEsc}>
             창닫기
           </button>
           <DaumPostcode onComplete={handleComplete} style={postCodeStyle} />
+        </>
+      ) : null}
+
+      {isTablet && showDaumPostModal ? (
+        <>
+          <button style={tabletPostModalEscBtn} onClick={postModalEsc}>
+            창닫기
+          </button>
+          <DaumPostcode
+            onComplete={handleComplete}
+            style={tabletPostCodeStyle}
+          />
+        </>
+      ) : null}
+
+      {isMobile && showDaumPostModal ? (
+        <>
+          <button style={mobilePostModalEscBtn} onClick={postModalEsc}>
+            창닫기
+          </button>
+          <DaumPostcode
+            onComplete={handleComplete}
+            style={mobilePostCodeStyle}
+          />
         </>
       ) : null}
 
@@ -224,7 +323,7 @@ const OrderDelivery = ({ onChange, delivery }) => {
                   value={addressDetail}
                   disabled
                 />
-                <br />
+                {/* <br /> */}
                 <input
                   type="text"
                   id="sample6_detailAddress"
@@ -391,7 +490,7 @@ const OrderDelivery = ({ onChange, delivery }) => {
                   value={addressDetail1}
                   disabled
                 />
-                <br />
+                {/* <br /> */}
                 <input
                   type="text"
                   id="sample5_detailAddress"

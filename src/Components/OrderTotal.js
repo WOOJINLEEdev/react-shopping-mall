@@ -1,8 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import useMyCart from "../Hooks/useMyCart";
+import OrderTotalDetail from "./OrderTotalDetail";
 
 const OrderTotal = ({ usedMileage, selectOption, handleChangeDelivery }) => {
+  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+  const isTablet = useMediaQuery({
+    query: "(min-width:768px) and (max-width:1023px)",
+  });
+  const isMobile = useMediaQuery({
+    query: "(min-width: 320px) and (max-width:767px)",
+  });
+
   const token = localStorage.getItem("token");
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -82,7 +92,16 @@ const OrderTotal = ({ usedMileage, selectOption, handleChangeDelivery }) => {
           ))}
         </ul>
       </div>
-
+      {isPc && (
+        <OrderTotalDetail
+          totalPrice={totalPrice}
+          deliveryCharge={deliveryCharge}
+          usedMileage={usedMileage}
+          selectOption={selectOption}
+          handleOrderSubmit={handleOrderSubmit}
+        />
+      )}
+      {/* 
       <div className="detail_wrap">
         <div className="detail_box">
           <div className="label_box">
@@ -173,7 +192,7 @@ const OrderTotal = ({ usedMileage, selectOption, handleChangeDelivery }) => {
         onClick={handleOrderSubmit}
       >
         CHECK OUT
-      </button>
+      </button> */}
     </section>
   );
 };

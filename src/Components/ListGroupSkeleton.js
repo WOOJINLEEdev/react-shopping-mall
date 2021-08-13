@@ -8,33 +8,9 @@ const ListGroupSkeleton = () => {
       <ul className="skeleton_listgroup">
         {arr.map((item, i) => (
           <li key={i} className="skeleton_list">
-            <div
-              className="skeleton_list_img"
-              style={{
-                width: "300px",
-                height: "300px",
-                background: "#f2f2f2",
-                borderRadius: "5px",
-              }}
-            ></div>
-            <p
-              className="skeleton_list_text"
-              style={{
-                margin: "5px 0",
-                height: "26.8px",
-                background: "#f2f2f2",
-                borderRadius: "5px",
-              }}
-            ></p>
-            <p
-              className="skeleton_list_text"
-              style={{
-                margin: "5px 0",
-                height: "26.8px",
-                background: "#f2f2f2",
-                borderRadius: "5px",
-              }}
-            ></p>
+            <div className="skeleton_list_img"></div>
+            <p className="skeleton_list_text"></p>
+            <p className="skeleton_list_text"></p>
           </li>
         ))}
       </ul>

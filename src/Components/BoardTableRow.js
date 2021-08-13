@@ -7,6 +7,11 @@ const TableRow = styled.tr`
       props.background ? "rgb(255, 239, 148)" : "#acacac"};
     cursor: pointer;
   }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    border-bottom: 2px solid #fff;
+    background-color: rgb(245, 245, 245);
+  }
 `;
 
 const BoardTableRow = ({ children, background }) => {

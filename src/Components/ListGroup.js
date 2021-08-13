@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSWRInfinite } from "swr";
 import ListItem from "./ListItem";
 import ListGroupSkeleton from "./ListGroupSkeleton";
-import { useMediaQuery } from "react-responsive";
 
 const PAGE_LIMIT = 8;
 let firstLoaded = false;
@@ -18,14 +17,6 @@ const getKey = (pageIndex, previousPageData) => {
 };
 
 function ListGroup() {
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
-
   const pageLimit = 8;
 
   const [test, setTest] = useState("loading");

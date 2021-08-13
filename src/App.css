@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -472,7 +474,6 @@ main {
 .tbody_td_qty {
   vertical-align: middle;
   text-align: center;
-  position: ;
 }
 
 .img_name {
@@ -729,6 +730,10 @@ main {
   border-top: 1px solid #d4d4d4;
 }
 
+.detail_box_wrap {
+  padding-bottom: 20px;
+}
+
 .detail_box {
   display: flex;
   justify-content: space-between;
@@ -743,6 +748,14 @@ main {
 .final {
   font-size: 20px;
   font-weight: bold;
+}
+
+.final {
+  color: #ff4800;
+}
+
+.final_price_zone {
+  font-size: 24px;
 }
 
 .order_check {
@@ -807,6 +820,7 @@ main {
   padding-left: 10px;
   line-height: 20px;
   min-height: 40px;
+  font-weight: bold;
 }
 
 .buy_btn {
@@ -1125,6 +1139,7 @@ main {
 }
 
 .delivery_box {
+  width: 100%;
   margin-top: 10px;
 }
 
@@ -1132,6 +1147,7 @@ main {
   height: 40px;
   padding: 0 14px;
   border: 1px solid #d4d4d4;
+  border-radius: 5px;
 }
 
 .first,
@@ -1141,6 +1157,7 @@ main {
 
 .delivery_box {
   display: flex;
+  width: 100%;
 }
 
 .postalCode_wrap {
@@ -1151,6 +1168,7 @@ main {
 .postalCode_search {
   background-color: #f4f4f4;
   border: 1px solid #f4f4f4;
+  border-radius: 5px;
   color: #333;
   margin-left: 10px;
   font-size: 13px;
@@ -1200,19 +1218,34 @@ main {
   height: 40px;
   padding: 0 14px;
   border: 1px solid #d4d4d4;
+  border-radius: 5px;
+}
+
+.mileage_wrap {
+  width: 100%;
+  display: flex;
+}
+
+.mileage_input_btn {
+  display: flex;
+  width: 100%;
+  height: 100%;
 }
 
 .mileage_input {
-  width: 30%;
-  height: 40px;
+  width: 70%;
+  height: 42px;
   padding: 0 14px;
   border: 1px solid #d4d4d4;
+  border-radius: 5px;
   color: #757575;
 }
 
 .all_mileage {
+  min-width: 100px;
   background-color: #f4f4f4;
   border: 1px solid #f4f4f4;
+  border-radius: 5px;
   color: #333;
   margin-left: 10px;
   font-size: 13px;
@@ -1243,7 +1276,7 @@ main {
 .payment_method {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
 .payment {
@@ -1252,6 +1285,7 @@ main {
   line-height: 50px;
   text-align: center;
   border: 1px solid #e4e4e4;
+  border-radius: 3px;
   margin-top: 10px;
   margin-right: 24px;
   font-size: 11px;
@@ -1687,6 +1721,7 @@ main {
   max-width: 120px;
   min-height: 140px;
   max-height: 150px;
+  border-radius: 5px;
 }
 
 .list_brand_box {
@@ -1908,13 +1943,13 @@ main {
   color: #333;
 }
 
-.board_item_title {
+/* .board_item_title {
   display: inline-block;
   width: 400px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */
 
 .board_preview_btn {
   background: url("./images/preview.png") no-repeat;
@@ -2094,10 +2129,12 @@ main {
   outline: none;
 }
 
-.board_first_head {
+.board_first_head,
+.board_second_head {
   font-size: 30px;
   text-align: center;
   font-weight: bold;
+  text-shadow: 2px 2px 2px gray;
 }
 
 /* ---------------------------------
@@ -2221,9 +2258,8 @@ article {
 
   .list_element_detail {
     display: block;
-    height: 600px;
-    padding-top: 20px;
-    padding-bottom: 100px;
+    height: 700px;
+    padding: 20px 20px 100px;
   }
 
   .image_wrapper {
@@ -2258,6 +2294,8 @@ article {
   }
 
   .tbody_td_qty {
+    display: flex;
+    justify-content: flex-end;
     padding: 10px;
   }
 
@@ -2327,7 +2365,7 @@ article {
 
   .board_write_wrap {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 20px;
   }
 
@@ -2338,6 +2376,7 @@ article {
 
   .board_write_btn {
     width: 25%;
+    max-width: 100px;
     margin: 0;
     font-size: 13px;
   }
@@ -2346,6 +2385,231 @@ article {
     padding: 20px 10px;
     font-size: 15px;
     line-height: 15px;
+  }
+
+  .item_table_th {
+    width: 45%;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-bottom: 5px solid #fff;
+    border-radius: 5px;
+  }
+
+  .board_col {
+    width: 20%;
+  }
+
+  .th_title {
+    width: 40%;
+  }
+
+  .select_board_text {
+    font-size: 13px;
+  }
+
+  .board_first_head {
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .board_second_head {
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .board_table_head {
+    font-size: 13px;
+  }
+
+  .order_wrapper {
+    flex-direction: column;
+  }
+
+  .delivery_coupon_pay_wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .delivery_info {
+    width: 100%;
+  }
+
+  .order_total_info {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .delivery_coupon_pay_wrap {
+    width: 100%;
+  }
+
+  .delivery_write {
+    width: 50%;
+  }
+
+  .delivery_input {
+    width: 100%;
+  }
+
+  .delivery_address {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .postalCode_wrap {
+    display: flex;
+    width: 100%;
+  }
+
+  .postalCode {
+    min-width: calc(30% - 30px);
+    max-width: 50%;
+  }
+
+  .postalCode_search {
+    min-width: 100px;
+    max-width: 200px;
+    font-size: 12px;
+  }
+
+  .delivery_address {
+    width: calc(100% - 90px);
+  }
+
+  .address {
+    margin-top: 10px;
+    width: calc(100% - 30px);
+  }
+
+  .tel_wrap {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  .tel {
+    width: calc(30% - 30px);
+  }
+
+  .tel_dash {
+    width: calc(5% - 10px);
+    color: #d4d4d4;
+    text-align: center;
+  }
+
+  .payment_method {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .payment {
+    width: calc(30% - 22px);
+    margin: 0 0 15px;
+    min-width: 62px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+
+  .payment + .payment {
+    margin-left: 5%;
+  }
+
+  .payment:nth-child(3n + 1) {
+    margin-left: 0;
+  }
+
+  .payment:first-child {
+    width: calc(30% - 2px);
+    min-width: 82px;
+    font-size: 12px;
+    padding: 0;
+  }
+
+  .payment:last-child {
+    width: calc(30% - 2px);
+    min-width: 82px;
+    font-size: 12px;
+    padding: 0;
+  }
+
+  .mileage_wrap {
+    flex-direction: column;
+  }
+
+  .mileage_input {
+    width: 55%;
+    max-width: 100%;
+  }
+
+  .all_mileage {
+    min-width: 40%;
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .mileage_own {
+    min-width: 40%;
+    padding: 0;
+  }
+
+  .mileage_unit {
+    padding-left: 10px;
+  }
+
+  .list_price_text {
+    font-size: 13px;
+  }
+
+  .list_info {
+    width: 60%;
+    max-width: 250px;
+  }
+
+  .info_list_box {
+    width: 30%;
+    margin-right: 10%;
+  }
+
+  .info_list_img {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .info_list_wrap {
+    justify-content: center;
+  }
+
+  .order_agree {
+    width: 15px;
+    height: 15px;
+  }
+
+  .agree_label {
+    font-size: 15px;
+  }
+
+  .checkout_btn {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 76px;
+    line-height: 76px;
+    font-size: 20px;
+    font-weight: bold;
   }
 }
 
@@ -2400,5 +2664,235 @@ article {
     height: 100%;
     min-height: 250px;
     max-height: 300px;
+  }
+
+  .board_list {
+    width: 100%;
+    margin: 0;
+  }
+
+  .board_write_wrap {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .search_wrap {
+    width: 40%;
+    align-items: middle;
+  }
+
+  .board_write_btn {
+    width: 100px;
+    margin: 0;
+    font-size: 13px;
+  }
+
+  .board_table_column {
+    padding: 20px 10px;
+    font-size: 15px;
+    line-height: 15px;
+  }
+
+  .item_table_th {
+    width: 45%;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.08);
+    border-bottom: 5px solid #fff;
+    border-radius: 5px;
+  }
+
+  .board_col {
+    width: 15%;
+  }
+
+  .th_title {
+    width: 40%;
+  }
+
+  .select_board_text {
+    font-size: 15px;
+  }
+
+  .order_wrapper {
+    padding: 50px;
+    flex-direction: column;
+  }
+
+  .delivery_coupon_pay_wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .delivery_info {
+    width: 100%;
+  }
+
+  .order_total_info {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+  }
+
+  .delivery_coupon_pay_wrap {
+    width: 100%;
+  }
+
+  .delivery_write {
+    width: 50%;
+  }
+
+  .old {
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .new {
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .delivery_box {
+    margin-top: 20px;
+  }
+
+  .delivery_input {
+    width: 100%;
+  }
+
+  .delivery_address {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .postalCode_wrap {
+    display: flex;
+    width: 100%;
+  }
+
+  .postalCode {
+    min-width: calc(30% - 30px);
+    max-width: 50%;
+  }
+
+  .postalCode_search {
+    min-width: 100px;
+    max-width: 200px;
+    font-size: 12px;
+  }
+
+  .delivery_address {
+    width: calc(100% - 90px);
+  }
+
+  .address {
+    margin-top: 10px;
+    width: calc(100% - 30px);
+  }
+
+  .tel_wrap {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  .tel {
+    width: calc(30% - 30px);
+  }
+
+  .tel_dash {
+    width: calc(5% - 10px);
+    color: #d4d4d4;
+    text-align: center;
+  }
+
+  .payment_method {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .payment {
+    width: calc(30% - 24px);
+    margin: 0 0 15px;
+    min-width: 62px;
+    border: 2px solid #e4e4e4;
+    font-size: 13px;
+  }
+
+  .payment_name {
+    font-size: 13px;
+  }
+
+  .payment + .payment {
+    margin-left: 5%;
+  }
+
+  .payment:nth-child(3n + 1) {
+    margin-left: 0;
+  }
+
+  /* .payment_name {
+    min-width: 62px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } */
+
+  .mileage_wrap {
+    flex-direction: column;
+  }
+
+  .mileage_input {
+    width: 55%;
+    max-width: 100%;
+  }
+
+  .all_mileage {
+    min-width: 40%;
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .mileage_own {
+    min-width: 40%;
+    padding: 0;
+  }
+
+  .mileage_unit {
+    padding-left: 10px;
+  }
+
+  .list_price_text {
+    font-size: 13px;
+  }
+
+  .list_info {
+    width: 60%;
+    max-width: 250px;
+  }
+
+  .info_list_box {
+    width: 30%;
+    margin-right: 10%;
+  }
+
+  .info_list_img {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .info_list_wrap {
+    justify-content: center;
+  }
+
+  .order_agree {
+    width: 16px;
+    height: 16px;
   }
 }
