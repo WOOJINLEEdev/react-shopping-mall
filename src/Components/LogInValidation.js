@@ -18,12 +18,34 @@ export function userPassword() {
     .required("비밀번호를 입력해주세요.");
 }
 
+export function userPassword2() {
+  return Yup.string()
+    .oneOf([Yup.ref("password1"), null], "비밀번호가 일치하지 않습니다.")
+    .required("비밀번호를 입력해주세요.");
+}
+
 export function userName() {
   return Yup.string("").required("이름을 입력해주세요.");
 }
 
 export function userBirthDay(dateType) {
-  return Yup.string("").max(2).required(`${dateType}을 입력해주세요.`);
+  return Yup.number()
+    .max(31, "31까지만 써라")
+    .required(`${dateType}을 입력해주세요.`);
+}
+
+export function userMonth() {
+  return Yup.number()
+    .moreThan(0, "최소 1 이상 입력해주세요.")
+    .lessThan(13, "월은 최대 12까지만 입력할 수 있습니다.")
+    .required("월을 입력해주세요.");
+}
+
+export function userDate() {
+  return Yup.number()
+    .moreThan(0, "최소 1 이상 입력해주세요.")
+    .lessThan(32, "일은 최대 31까지만 입력할 수 있습니다.")
+    .required("일을 입력해주세요.");
 }
 
 export function userEmail() {
