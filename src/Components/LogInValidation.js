@@ -28,12 +28,6 @@ export function userName() {
   return Yup.string("").required("이름을 입력해주세요.");
 }
 
-export function userBirthDay(dateType) {
-  return Yup.number()
-    .max(31, "31까지만 써라")
-    .required(`${dateType}을 입력해주세요.`);
-}
-
 export function userMonth() {
   return Yup.number()
     .moreThan(0, "최소 1 이상 입력해주세요.")
