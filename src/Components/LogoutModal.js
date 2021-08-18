@@ -1,13 +1,28 @@
 import React from "react";
 import Modal from "react-modal";
+import { useHistory } from "react-router-dom";
+import useMyCart from "../Hooks/useMyCart";
 
 Modal.setAppElement("#root");
 const LogoutModal = ({ isOpen, onRequestClose }) => {
+  const history = useHistory();
+  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+
+  if (cartError) return <div>에러 발생...</div>;
+  if (loadingCart) return <div>로딩 중...</div>;
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("delivery");
     localStorage.removeItem("board");
-    window.location.replace("/");
+
+    mutateCart(
+      {
+        items: [],
+      },
+      false
+    );
+    history.push("/");
   };
 
   const customModalStyle = {

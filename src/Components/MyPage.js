@@ -34,11 +34,10 @@ const MyPage = () => {
     height: 100%;
     margin: 0 auto;
     padding: 50px 100px;
-    background-color: #f1f1f1;
 
     @media only screen and (min-width: 320px) and (max-width: 767px) {
       width: calc(100% - 40px);
-      padding: 20px;
+      padding: 30px 20px 60px;
     }
 
     @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -57,6 +56,7 @@ const MyPage = () => {
     background-color: #fff;
     color: #686464;
     border-radius: 5px;
+    border: 2px solid #d4d4d4;
     box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 
     @media only screen and (min-width: 320px) and (max-width: 767px) {
@@ -88,6 +88,7 @@ const MyPage = () => {
     border-radius: 5px;
     font-size: 18px;
     font-weight: bold;
+    border: 2px solid #d4d4d4;
     box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
     margin: 0;
 
@@ -112,6 +113,7 @@ const MyPage = () => {
     border-radius: 5px;
     font-size: 18px;
     font-weight: bold;
+    border: 2px solid #d4d4d4;
     box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 
     :hover {

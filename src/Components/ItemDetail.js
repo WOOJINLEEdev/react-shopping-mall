@@ -18,7 +18,7 @@ const ItemDetail = ({ match }) => {
   const { data, error } = useSWR(url, fetcher);
 
   if (error) return "에러 발생";
-  if (!data) return <Loading>"로딩중..."</Loading>;
+  if (!data) return <Loading />;
 
   const selectOptions = data.variants;
 
@@ -42,6 +42,11 @@ const ItemDetail = ({ match }) => {
 
   function putItem() {
     console.log("장바구니 버튼 클릭");
+
+    if (!token) {
+      return alert("로그인 후 이용해주세요!");
+    }
+
     axios
       .put(
         "http://localhost:8282/v1/me/cart",
@@ -160,8 +165,7 @@ const ItemDetail = ({ match }) => {
               <td className="btn_td">
                 <input
                   type="button"
-                  id="buyBtn"
-                  className="list_btn"
+                  className="list_btn buy"
                   value="구매하기"
                 />
               </td>

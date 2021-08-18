@@ -7,6 +7,7 @@ import styled from "styled-components";
 import shoppingCartImg from "../images/shopping-cart.png";
 import signInImg from "../images/user.png";
 import searchImg from "../images/search2.png";
+import useMyCart from "../Hooks/useMyCart";
 
 const SignCartWrap = styled.div`
   display: flex;
@@ -29,15 +30,19 @@ const Header = () => {
   });
 
   const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
+  // const config = {
+  //   headers: { Authorization: `Bearer ${token}` },
+  // };
 
-  const cartUrl = "http://localhost:8282/v1/me/cart";
-  const fetcher = (url) => axios.get(url, config).then((res) => res.data);
-  const { data, error } = useSWR(cartUrl, fetcher);
+  // const cartUrl = "http://localhost:8282/v1/me/cart";
+  // const fetcher = (url) => {
+  //   axios.get(url, config).then((res) => res.data);
+  // };
+  // const { data, error } = useSWR(cartUrl, fetcher);
 
-  if (error)
+  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+
+  if (cartError)
     return (
       <header className="header">
         <Link to="/" className="header_link">
@@ -68,9 +73,9 @@ const Header = () => {
         </SignCartWrap>
       </header>
     );
-  if (!data) return "로딩중...";
+  if (loadingCart) return "로딩중...";
 
-  const cartAmount = data.items.length;
+  const cartAmount = cart.items.length;
   const cartAmountStyle = {
     position: "absolute",
     top: "15px",
@@ -89,6 +94,8 @@ const Header = () => {
   const handleSearchClick = () => {
     console.log("검색클릭");
   };
+
+  console.log("header render!!");
 
   return (
     <header className="header">

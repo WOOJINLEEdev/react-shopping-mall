@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import QuantityCounter from "./QuantityCounter";
 import Loading from "./Loading";
 import useMyCart from "../Hooks/useMyCart";
+import styled from "styled-components";
 
 const Cart = () => {
   const history = useHistory();
@@ -20,23 +21,31 @@ const Cart = () => {
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   console.log("swr cart:", cart);
 
-  const errorMsgStyle = {
-    display: "flex",
-    flexDirection: "column",
-    background: "linear-gradient(to right top, #861657, #ffa69e)",
-    color: "transparent",
-    WebkitBackgroundClip: "text",
-    backgroundClip: "text",
-    width: "100%",
-    height: "500px",
-    alignItems: "center",
-    textAlign: "center",
-    lineHeight: "300px",
-    fontSize: "40px",
-    fontWeight: "bold",
-    margin: "0 auto",
-    textDecoration: "none",
-  };
+  const CartErrorMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right bottom, #efefef, #333);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    width: 100%;
+    height: 500px;
+    align-items: center;
+    text-align: center;
+    line-height: 300px;
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0 auto;
+    text-decoration: none;
+
+    @media only screen and (min-width: 320px) and (max-width: 767px) {
+      font-size: 25px;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1023px) {
+      font-size: 30px;
+    }
+  `;
 
   const linkStyle = {
     background: "linear-gradient(to left bottom, #efefef, #333)",
@@ -52,12 +61,12 @@ const Cart = () => {
 
   if (cartError)
     return (
-      <div style={errorMsgStyle}>
-        <p style={{ display: "inline-block" }}>로그인 후 이용해주세요.</p>
+      <CartErrorMessage>
+        로그인 후 이용해주세요!
         <Link to="/login" style={linkStyle}>
           로그인
         </Link>
-      </div>
+      </CartErrorMessage>
     );
   if (loadingCart) return <Loading />;
 

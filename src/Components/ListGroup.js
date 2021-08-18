@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSWRInfinite } from "swr";
 import ListItem from "./ListItem";
 import ListGroupSkeleton from "./ListGroupSkeleton";
+import downArrow from "../images/down-arrow.png";
 
 const PAGE_LIMIT = 8;
 let firstLoaded = false;
@@ -49,12 +50,10 @@ function ListGroup() {
       {data.map((products) => {
         return products.map((product) => <ListItem item={product} />);
       })}
-      <input
-        type="button"
-        className="more_btn"
-        value="더보기"
-        onClick={handleClick}
-      />
+      <button type="button" className="more_btn" onClick={handleClick}>
+        더보기
+        <img src={downArrow} className="more_btn_arrow" />
+      </button>
     </ul>
   );
 }

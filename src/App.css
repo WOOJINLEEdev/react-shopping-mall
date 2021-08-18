@@ -195,6 +195,7 @@ body {
   background-color: rgb(97, 95, 95);
   color: rgb(97, 95, 95);
   opacity: 0.2;
+  border-radius: 3px;
 }
 
 .header_link:hover {
@@ -209,7 +210,8 @@ body {
   width: 1024px;
   height: 80px;
   margin: 0 auto;
-  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
+  /* background-color: rgba(0, 0, 0, 0.1); */
 }
 
 .header_search {
@@ -265,11 +267,12 @@ body {
 }
 
 .footer {
-  width: 100%;
+  width: 1024px;
   margin: 0 auto;
   font-size: 12px;
   color: #333;
   background-color: #fff;
+  box-shadow: 1px -3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .footer_menu {
@@ -400,16 +403,25 @@ main {
 .more_btn {
   width: 100%;
   height: 50px;
-  color: #757575;
-  background-color: #efefef;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
+  color: #333;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 3px;
   outline: none;
+  box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
 }
 
 .more_btn:hover {
-  background-color: #fff;
-  border: 1px solid #757575;
+  border: 1px solid #d4d4d4;
+}
+
+.more_btn_arrow {
+  width: 12px;
+  height: 12px;
+  margin-left: 5px;
 }
 
 .list_element_detail {
@@ -520,18 +532,22 @@ main {
   text-align: center;
   vertical-align: middle;
   margin: 0 auto;
-  border: none;
+  border: 3px solid #d4d4d4;
   border-radius: 5px;
   font-size: 20px;
-  color: #efefef;
-  background-color: rgb(139, 138, 138);
+  color: #333;
+  background-color: #fff;
 }
 
 .list_btn:hover {
-  background-color: #efefef;
-  border: lpx solid #333;
+  border: 3px solid #333;
   color: #333;
   font-weight: bold;
+}
+
+.buy:hover {
+  background-color: #333;
+  color: #fff;
 }
 
 .list_image {
@@ -606,12 +622,13 @@ main {
 
 .login_input:focus {
   outline-color: rgb(167, 167, 167);
+  box-shadow: 0 3px 13px 3px rgba(0, 0, 0, 0.1);
+  /* background: linear-gradient(to right top, #861657, #ffa69e); */
 }
 
 .login_wrap {
   padding: 100px 0;
   height: 600px;
-  background-color: #efefee;
 }
 
 /* --------------- // 카트 */
@@ -621,10 +638,9 @@ main {
 }
 
 .order_info {
-  width: calc(100% - 110px);
-  border: 5px solid #797979;
-  border-radius: 5px;
-  padding: 30px 50px;
+  width: calc(100% - 100px);
+  padding: 50px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .orderInfo {
@@ -912,6 +928,7 @@ main {
 .form_input {
   width: calc(100% - 22px);
   border: 1px solid #e4e4e4;
+  border-radius: 5px;
   background-color: #fbfbfb;
   font-size: 12px;
   color: #000;
@@ -999,6 +1016,7 @@ main {
   cursor: pointer;
   border: 1px solid rgb(146, 146, 146);
   background-color: rgb(146, 146, 146);
+  border-radius: 5px;
   color: #fff;
   height: 35px;
   outline: none;
@@ -1173,6 +1191,7 @@ main {
   margin-left: 10px;
   font-size: 13px;
   padding: 5px 10px;
+  cursor: pointer;
 }
 
 .address {
@@ -1610,44 +1629,6 @@ main {
   font-weight: bold;
 }
 
-.info_li_coupon {
-  display: inline-block;
-  width: 40%;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-  margin: 0;
-}
-
-.info_li_coupon:hover {
-  border: 1px solid #efefef;
-  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-  transition: all 0.25s;
-  transform: translateY(-2px);
-  color: green;
-}
-
-.info_li_mileage {
-  width: 40%;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-}
-
-.info_li_mileage:hover {
-  border: 1px solid #efefef;
-  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-  transition: all 0.25s;
-  transform: translateY(-2px);
-  color: green;
-}
-
 .info_li {
   padding: 30px;
   background-color: #fff;
@@ -1655,6 +1636,7 @@ main {
   font-size: 18px;
   font-weight: bold;
   margin-top: 30px;
+  border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 }
 
@@ -1991,6 +1973,11 @@ main {
   border: 2px solid #ebedf2;
 }
 
+.editor_user {
+  line-height: 40px;
+  color: #757575;
+}
+
 .board_editor_top {
   display: flex;
   flex-direction: column;
@@ -2235,6 +2222,7 @@ article {
   }
 
   .greet {
+    font-size: 16px;
     padding: 0;
   }
 
@@ -2305,22 +2293,14 @@ article {
     margin: 10px auto;
   }
 
-  .list_btn {
-    width: 90%;
-    height: 100%;
-    text-align: center;
-    vertical-align: middle;
-    margin: 0 auto;
-    border: none;
-    border-radius: 5px;
-    font-size: 20px;
-    color: #efefef;
-    background-color: rgb(139, 138, 138);
+  .td_select {
+    width: 100%;
   }
 
   .order_info {
-    width: calc(100% - 70px);
+    width: calc(100% - 60px);
     padding: 30px;
+    border: none;
   }
 
   .info_img_box {
@@ -2358,6 +2338,11 @@ article {
     font-size: 13px;
   }
 
+  .buy:focus {
+    background-color: #333;
+    color: #fff;
+  }
+
   .board_list {
     width: 100%;
     margin: 0;
@@ -2388,7 +2373,7 @@ article {
   }
 
   .item_table_th {
-    width: 45%;
+    width: 35%;
     padding: 15px;
     background-color: rgba(0, 0, 0, 0.08);
     border-bottom: 5px solid #fff;
@@ -2501,7 +2486,8 @@ article {
   }
 
   .tel_dash {
-    width: calc(5% - 10px);
+    width: 5%;
+    margin: 0;
     color: #d4d4d4;
     text-align: center;
   }
@@ -2610,6 +2596,20 @@ article {
     line-height: 76px;
     font-size: 20px;
     font-weight: bold;
+  }
+
+  .editor_user_btn_wrapper {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
+
+  .editor_user {
+    margin-top: 10px;
+  }
+
+  .footer {
+    width: 100%;
+    box-shadow: 1px -3px 5px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -2837,13 +2837,6 @@ article {
     margin-left: 0;
   }
 
-  /* .payment_name {
-    min-width: 62px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  } */
-
   .mileage_wrap {
     flex-direction: column;
   }
@@ -2894,5 +2887,10 @@ article {
   .order_agree {
     width: 16px;
     height: 16px;
+  }
+
+  .footer {
+    width: 100%;
+    box-shadow: 1px -3px 5px rgba(0, 0, 0, 0.1);
   }
 }

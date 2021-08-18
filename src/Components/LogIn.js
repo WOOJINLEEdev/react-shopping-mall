@@ -39,6 +39,7 @@ const LogIn = () => {
       })
       .catch(function (error) {
         console.log(error);
+        alert("일치하는 회원이 없습니다.");
       });
   };
 
