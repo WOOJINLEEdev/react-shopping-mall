@@ -8,17 +8,8 @@ import shoppingCartImg from "../images/shopping-cart.png";
 import signInImg from "../images/user.png";
 import searchImg from "../images/search2.png";
 import useMyCart from "../Hooks/useMyCart";
-
-const SignCartWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 270px;
-  height: 80px;
-
-  @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 90px;
-  }
-`;
+import useMenuCollapsed from "../Hooks/useMenuCollapsed";
+import { ReactComponent as MenuImg } from "../images/menu.svg";
 
 const Header = () => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -30,17 +21,9 @@ const Header = () => {
   });
 
   const token = localStorage.getItem("token");
-  // const config = {
-  //   headers: { Authorization: `Bearer ${token}` },
-  // };
-
-  // const cartUrl = "http://localhost:8282/v1/me/cart";
-  // const fetcher = (url) => {
-  //   axios.get(url, config).then((res) => res.data);
-  // };
-  // const { data, error } = useSWR(cartUrl, fetcher);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { data, mutate } = useMenuCollapsed();
 
   if (cartError)
     return (
@@ -76,32 +59,23 @@ const Header = () => {
   if (loadingCart) return "로딩중...";
 
   const cartAmount = cart.items.length;
-  const cartAmountStyle = {
-    position: "absolute",
-    top: "15px",
-    right: "18px",
-    width: "22px",
-    height: "22px",
-    borderRadius: "50%",
-    color: "#fff",
-    backgroundColor: "rgb(255, 0, 0, 0.7)",
-    fontWeight: "bold",
-    fontSize: "15px",
-    textAlign: "center",
-    lineHeight: "22px",
-  };
 
-  const handleSearchClick = () => {
-    console.log("검색클릭");
+  const handleMenuClick = () => {
+    console.log("메뉴 클릭");
+    mutate(!data);
   };
-
-  console.log("header render!!");
 
   return (
     <header className="header">
-      <Link to="/" className="header_link">
-        <h1 className="header_title">WOOJINLEE</h1>
-      </Link>
+      <MenuHomeWrap>
+        <MenuWrap onClick={handleMenuClick}>
+          <MenuImg fill="#333" width="20" height="20" margin="20px" />
+        </MenuWrap>
+
+        <Link to="/" className="header_link">
+          <h1 className="header_title">WOOJINLEE</h1>
+        </Link>
+      </MenuHomeWrap>
 
       <SignCartWrap>
         {isPc && (
@@ -121,7 +95,7 @@ const Header = () => {
             <img src={shoppingCartImg} className="cart_img" alt="cart"></img>
             <span className="visually_hidden">장바구니</span>
             {token && cartAmount > 0 ? (
-              <div style={cartAmountStyle}>{cartAmount}</div>
+              <CartAmount>{cartAmount}</CartAmount>
             ) : null}
           </div>
         </Link>
@@ -131,3 +105,84 @@ const Header = () => {
 };
 
 export default Header;
+
+const MenuHomeWrap = styled.div`
+  display: flex;
+  width: 210px;
+  height: 80px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    display: flex;
+    width: 180px;
+    margin: 0;
+  }
+`;
+
+const MenuWrap = styled.div`
+  display: none;
+  width: 90px;
+  height: 80px;
+  text-align: center;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin: 0;
+    text-align: center;
+
+    svg {
+      margin: 20px;
+    }
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    display: inline-block;
+
+    svg {
+      width: 30px;
+      height: 30px;
+
+      margin: 25px 30px;
+    }
+  }
+`;
+
+const SignCartWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 270px;
+  height: 80px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 120px;
+    height: 60px;
+  }
+`;
+
+const CartAmount = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: #fff;
+  background-color: rgb(255, 0, 0, 0.7);
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+  line-height: 22px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    line-height: 18px;
+    top: 10px;
+    right: 10px;
+  }
+
+  @media only screen and (min-width: 768) and (max-width: 1023px) {
+  }
+`;
