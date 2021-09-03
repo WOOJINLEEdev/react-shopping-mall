@@ -145,42 +145,71 @@ table {
 @font-face {
   font-family: "Spoqa Han Sans 100";
   font-weight: "100";
-  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Thin.ttf");
+  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Thin.ttf")
+    format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans 200";
   font-weight: "200";
-  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Light.ttf");
+  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Light.ttf")
+    format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans 300";
   font-weight: "300";
-  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Regular.ttf");
+  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Regular.ttf")
+    format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans 400";
   font-weight: "400";
-  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Medium.ttf");
+  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Medium.ttf")
+    format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans Bold";
   font-weight: "900";
-  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Bold.ttf");
+  src: url("./fonts/SpoqaHanSansNeo_TTF_original/SpoqaHanSansNeo-Bold.ttf")
+    format("truetype");
 }
 
 @font-face {
   font-family: "NIXGONFONTS";
   font-weight: "900";
-  src: url("./fonts/NIXGONFONTS\ B\ 2.0.ttf");
+  src: url("./fonts/NIXGONFONTS\ B\ 2.0.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "RobotoCondensed Light";
+  font-weight: "300";
+  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Light.ttf")
+    format("truetype");
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+  font-family: "RobotoCondensed Regular";
+  font-weight: "400";
+  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf")
+    format("truetype");
+  unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+  font-family: "RobotoCondensed Bold";
+  font-weight: "700";
+  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf")
+    format("truetype");
+  unicode-range: U+0041-005A, U+0061-007A;
 }
 
 html,
 body {
-  font-family: "Spoqa Han Sans 400", "Spoqa Han Sans Bold", sans-serif;
+  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
   width: 100%;
   height: 100%;
   margin: 0 auto;
@@ -211,7 +240,23 @@ body {
   height: 80px;
   margin: 0 auto;
   box-shadow: 0 1px 6px 0 rgb(32 33 36 / 28%);
+
   /* box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1); */
+}
+
+.header_about {
+  display: flex;
+  width: 90px;
+  height: 80px;
+  flex-direction: column;
+  text-align: center;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.about_link {
+  text-decoration: none;
+  color: #333;
 }
 
 .header_search {
@@ -221,6 +266,41 @@ body {
   line-height: 80px;
   font-size: 16px;
   text-align: center;
+  cursor: pointer;
+}
+
+.header_search_style {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+  z-index: -1;
+}
+
+.header_search_input {
+  width: 90%;
+  border: none;
+  border-bottom: 3px solid #333;
+  font-size: 30px;
+  outline: none;
+  background: rgba(0, 0, 0, 0);
+}
+
+.header_search_input::placeholder {
+  font-family: RobotoCondensed Regular;
+  font-weight: bold;
+}
+
+.header_search_btn {
+  /* overflow: hidden;
+  position: relative; */
+  background: url("./images/search.png") no-repeat center;
+  background-size: 30px 30px;
+  border: none;
+  padding: 0;
+  width: 10%;
+  height: 100%;
+  border-bottom: 3px solid #333;
 }
 
 .header_cart {
@@ -368,6 +448,10 @@ body {
   border-radius: 5px;
 }
 
+.test_img:hover {
+  box-shadow: 0 1px 15px 5px rgba(0, 0, 0, 0.2);
+}
+
 .image_wrap {
   display: inline-block;
   margin: 0;
@@ -412,6 +496,7 @@ main {
   outline: none;
   box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
 .more_btn:hover,
@@ -850,16 +935,19 @@ main {
   color: #fff;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .list_buy_btn {
   width: 30%;
   height: 41px;
+  line-height: 41px;
   font-size: 18px;
   background: #333;
   color: #fff;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .quantity_area {
@@ -1313,6 +1401,7 @@ main {
   font-size: 11px;
   padding: 0 10px;
   color: rgb(119, 119, 119);
+  cursor: pointer;
 }
 
 .payment:nth-child(4n) {
@@ -1545,6 +1634,7 @@ main {
 }
 
 .input_check {
+  display: block;
   padding: 2px;
   margin-bottom: 10px;
   color: red;
@@ -1566,7 +1656,8 @@ main {
   line-height: 80px;
   text-align: center;
   margin: 10px;
-  background-color: rgb(207, 207, 207);
+  color: #fff;
+  background-color: #333;
   border-radius: 5px;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 }
@@ -1593,11 +1684,12 @@ main {
 .myInfo_modify {
   display: inline-block;
   width: 150px;
-  height: 80px;
-  line-height: 80px;
+  height: 74px;
+  line-height: 74px;
   text-align: center;
   margin: 10px;
-  background-color: rgb(236, 236, 236);
+  background-color: #fff;
+  border: 3px solid #aaa;
   border-radius: 5px;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 }
@@ -1658,8 +1750,7 @@ main {
 .info_mileage_in {
   display: block;
   padding-top: 15px;
-  font-size: 14px;
-  font-style: italic;
+  font-size: 25px;
   font-weight: normal;
 }
 
@@ -1667,18 +1758,6 @@ main {
   font-weight: bold;
   font-size: 18px;
   line-height: 41px;
-}
-
-.modal_btn {
-  width: 50%;
-  height: 60px;
-  font-size: 15px;
-  font-weight: bold;
-  color: rgb(126, 126, 126);
-  border: 1px solid #dadada;
-  background-color: rgb(236, 236, 236);
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 }
 
 /* ----------- 오더토탈 부분 css */
@@ -1949,6 +2028,13 @@ main {
   display: none !important;
 }
 
+.search_hidden {
+  display: none;
+  /* transform: translateY(-165px); */
+  /* transition: transform 0.2s ease; */
+  /* z-index: -1; */
+}
+
 .menu_hidden {
   transform: translateX(-100%);
   transition: transform 0.5s ease;
@@ -2089,10 +2175,30 @@ main {
 
 .menu_search {
   display: flex;
-  margin-right: 20px;
-  border-bottom: 3px solid #d4d4d4;
   width: 100%;
+  margin-right: 20px;
   align-items: middle;
+}
+
+.menu_search_input {
+  width: 80%;
+  outline: none;
+  border: none;
+  border-bottom: 3px solid #d4d4d4;
+  font-size: 16px;
+}
+
+.menu_search_input::placeholder {
+  font-family: RobotoCondensed Regular;
+}
+
+.menu_search_btn {
+  background: url("./images/search.png") no-repeat center;
+  background-size: 20px 20px;
+  width: 20%;
+  padding: 0;
+  border: none;
+  border-bottom: 3px solid #d4d4d4;
 }
 
 .focusOn {
@@ -2664,7 +2770,7 @@ article {
   }
 
   .menu_search {
-    width: 80%;
+    width: 90%;
     height: 100%;
   }
 }

@@ -1,28 +1,52 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import useMyCart from "../Hooks/useMyCart";
 import OrderTotalDetail from "./OrderTotalDetail";
+import useCheckout from "../Hooks/useCheckout";
 
-const OrderTotal = ({ usedMileage, selectOption, handleChangeDelivery }) => {
+const OrderTotal = ({
+  usedMileage,
+  selectOption,
+  handleChangeDelivery,
+  itemCheckOut,
+  checkoutNumber,
+}) => {
+  const [checkoutNum, setCheckoutNum] = useState(checkoutNumber);
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  // const isTablet = useMediaQuery({
+  //   query: "(min-width:768px) and (max-width:1023px)",
+  // });
+  // const isMobile = useMediaQuery({
+  //   query: "(min-width: 320px) and (max-width:767px)",
+  // });
 
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
+  // const token = localStorage.getItem("token");
+  // const config = {
+  //   headers: { Authorization: `Bearer ${token}` },
+  // };
+
+  // const checkoutNumber = Number(match.params.checkoutId);
+
+  // useEffect(() => {
+  //   console.log("오더 오더 오더");
+  // }, []);
+
+  console.log(checkoutNum);
+
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
+    useCheckout(checkoutNumber);
 
-  if (cartError) return <div>failed to load</div>;
-  if (loadingCart) return <div>loading...</div>;
+  // if (cartError && (!itemCheckOut || !itemCheckOut.line_items))
+  //   return <div>failed to load</div>;
+  // if (loadingCart) return <div>loading...</div>;
 
-  const items = cart.items;
+  if (checkoutError) return <div>failed to load</div>;
+  if (loadingCheckout) return <div>loading...</div>;
+
+  // const items = cart.items;
+  const items = checkoutData.line_items;
   const totalPrice = items
     .map((item) => item.variant_price * item.quantity)
     .reduce((sum, itemPrice) => sum + itemPrice, 0);
@@ -33,10 +57,8 @@ const OrderTotal = ({ usedMileage, selectOption, handleChangeDelivery }) => {
     console.log("오더버튼 클릭");
   };
 
-  const timer = new Date();
-
-  console.log(timer);
-
+  console.log("아이템 이미지 src", items);
+  console.log("cart 아이템 src", cart);
   return (
     <section className="order_total_info">
       <div className="order_item_info">
@@ -50,11 +72,7 @@ const OrderTotal = ({ usedMileage, selectOption, handleChangeDelivery }) => {
                 to={`/products/${item.product_id}`}
                 className="info_list_box"
               >
-                <img
-                  className="info_list_img"
-                  alt=""
-                  src={item.product_image_src}
-                />
+                <img className="info_list_img" alt="" src={item.image_src} />
               </Link>
 
               <div className="list_info">

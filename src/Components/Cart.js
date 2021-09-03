@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -6,6 +6,7 @@ import QuantityCounter from "./QuantityCounter";
 import Loading from "./Loading";
 import useMyCart from "../Hooks/useMyCart";
 import styled from "styled-components";
+import useCheckout from "../Hooks/useCheckout";
 
 const Cart = () => {
   const history = useHistory();
@@ -14,9 +15,17 @@ const Cart = () => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
+  const [chkId, setChkId] = useState("");
   const [allChecked, setAllChecked] = useState(true);
   // const [checkList, setCheckList] = useState(false);
   // const [listId, setListId] = useState([]);
+
+  const checkoutNumber = chkId;
+  const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
+    useCheckout(checkoutNumber);
+
+  // if (checkoutError) return <div>failed to load...</div>;
+  // if (loadingCheckout) return <div>loading...</div>;
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   console.log("swr cart:", cart);
@@ -29,7 +38,7 @@ const Cart = () => {
     -webkit-background-clip: text;
     background-clip: text;
     width: 100%;
-    height: 500px;
+    height: 600px;
     align-items: center;
     text-align: center;
     line-height: 300px;
@@ -93,36 +102,62 @@ const Cart = () => {
     color: "rgb(97, 95, 95)",
   };
 
-  // const requestUpdateQuantity = (quantity) => {
-  //   return quantity + 1;
-  // };
-
-  const handleQuantityIncrement = async (cartItemIndex) => {
-    mutateCart(
-      {
-        ...cart,
-        items: items.map((cartItem, index) => ({
-          ...cartItem,
-          quantity:
-            cartItemIndex === index ? cartItem.quantity + 1 : cartItem.quantity,
-        })),
-      },
-      false
-    );
+  const handleQuantityIncrement = (itemId, quantity) => {
+    axios
+      .patch(
+        `http://localhost:8282/v1/me/cart/items/${itemId}/quantity`,
+        {
+          quantity: quantity + 1,
+        },
+        config
+      )
+      .then(function (response) {
+        console.log(response);
+        console.log("수량 증가");
+        mutateCart(
+          {
+            ...cart,
+            items: items.map((cartItem, index) => ({
+              ...cartItem,
+              quantity:
+                cartItem.id === itemId ? quantity + 1 : cartItem.quantity,
+            })),
+          },
+          false
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
-  const handleQuantityDecrement = async (cartItemIndex) => {
-    mutateCart(
-      {
-        ...cart,
-        items: items.map((cartItem, index) => ({
-          ...cartItem,
-          quantity:
-            cartItemIndex === index ? cartItem.quantity - 1 : cartItem.quantity,
-        })),
-      },
-      false
-    );
+  const handleQuantityDecrement = (itemId, quantity) => {
+    axios
+      .patch(
+        `http://localhost:8282/v1/me/cart/items/${itemId}/quantity`,
+        {
+          quantity: quantity - 1,
+        },
+        config
+      )
+      .then(function (response) {
+        console.log(response);
+        console.log("수량 감소");
+        mutateCart(
+          {
+            ...cart,
+            items: items.map((cartItem, index) => ({
+              ...cartItem,
+              quantity:
+                cartItem.id === itemId ? quantity - 1 : cartItem.quantity,
+            })),
+          },
+          false
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const checkedItems = cart.items.filter((item) => item.checked);
@@ -186,6 +221,67 @@ const Cart = () => {
     if (isAllChecked) {
       setAllChecked(true);
     }
+  };
+
+  const handleBuyBtnClick = (item, quantity) => {
+    const checkedLineItems = cart.items
+      .filter((item) => item.checked)
+      .map((item) => ({
+        variant_id: item.variant_id,
+        quantity: item.quantity,
+      }));
+    console.log("큰 구매버튼 클릭 ", checkedLineItems);
+
+    axios
+      .post(
+        "http://localhost:8282/v1/checkouts",
+        {
+          line_items: checkedLineItems,
+        },
+        config
+      )
+      .then(function (response) {
+        console.log(response);
+        console.log(response.data.checkout_id);
+        setChkId(response.data.checkout_id);
+        // history.push("/order");
+        history.push(`/checkout/${response.data.checkout_id}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const handleListBuyBtnClick = (item, quantity) => {
+    console.log("작은 구매버튼 클릭");
+
+    axios
+      .post(
+        "http://localhost:8282/v1/checkouts",
+        {
+          line_items: [
+            {
+              variant_id: item.variant_id,
+              quantity: quantity,
+            },
+          ],
+        },
+        config
+      )
+      .then(function (response) {
+        console.log("리스폰스", response);
+        console.log("체크아웃 아이디", response.data.checkout_id);
+        // if (Number(item.variant_price) < 70000) {
+        //   localStorage.setItem("delivery", 3000);
+        // }
+        // if (Number(item.variant_price) > 70000) {
+        //   localStorage.setItem("delivery", 0);
+        // }
+        history.push(`/checkout/${response.data.checkout_id}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -272,8 +368,12 @@ const Cart = () => {
                         <QuantityCounter
                           flexEnd={false}
                           quantity={item.quantity}
-                          onIncrement={() => handleQuantityIncrement(idx)}
-                          onDecrement={() => handleQuantityDecrement(idx)}
+                          onIncrement={() =>
+                            handleQuantityIncrement(item.id, item.quantity)
+                          }
+                          onDecrement={() =>
+                            handleQuantityDecrement(item.id, item.quantity)
+                          }
                         />
 
                         <div>
@@ -284,7 +384,13 @@ const Cart = () => {
                             원
                           </span>
                         </div>
-                        <button type="button" className="list_buy_btn">
+                        <button
+                          type="button"
+                          className="list_buy_btn"
+                          onClick={() =>
+                            handleListBuyBtnClick(item, item.quantity)
+                          }
+                        >
                           BUY NOW
                         </button>
                       </div>
@@ -350,11 +456,7 @@ const Cart = () => {
       <div className="order_check"></div>
 
       {numCheckedTotalItem >= 1 ? (
-        <button
-          type="button"
-          className="buy_btn"
-          onClick={() => history.push("/order")}
-        >
+        <button type="button" className="buy_btn" onClick={handleBuyBtnClick}>
           BUY NOW
         </button>
       ) : (

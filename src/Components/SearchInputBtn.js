@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router";
 
 const SearchInputBtn = ({
   searchClassName,
   handleSearchBtn,
   handleSearchInput,
+  SearchInputClassName,
+  SearchBtnClassName,
+  show,
 }) => {
   const [searchInput, setSearchInput] = useState("");
 
@@ -18,13 +22,13 @@ const SearchInputBtn = ({
         type="text"
         name="search_input"
         placeholder="Search..."
-        className="board_search_input"
+        className={SearchInputClassName}
         value={searchInput}
         onChange={handleChange}
       />
       <button
         type="button"
-        className="board_search_btn"
+        className={SearchBtnClassName}
         onClick={handleSearchBtn}
       >
         <span className="visually_hidden">검색</span>
@@ -33,4 +37,4 @@ const SearchInputBtn = ({
   );
 };
 
-export default SearchInputBtn;
+export default withRouter(SearchInputBtn);

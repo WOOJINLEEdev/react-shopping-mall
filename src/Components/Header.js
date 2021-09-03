@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
 import { useMediaQuery } from "react-responsive";
@@ -9,9 +9,11 @@ import signInImg from "../images/user.png";
 import searchImg from "../images/search2.png";
 import useMyCart from "../Hooks/useMyCart";
 import useMenuCollapsed from "../Hooks/useMenuCollapsed";
+import useSearch from "../Hooks/useSearch";
+import useSearchLocation from "../Hooks/useSearchLocation";
 import { ReactComponent as MenuImg } from "../images/menu.svg";
 
-const Header = () => {
+const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const isTablet = useMediaQuery({
     query: "(min-width:768px) and (max-width:1023px)",
@@ -24,6 +26,8 @@ const Header = () => {
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { data, mutate } = useMenuCollapsed();
+  const { searchData, searchMutate } = useSearch();
+  const { searchLocationData, searchLocationMutate } = useSearchLocation();
 
   if (cartError)
     return (
@@ -65,6 +69,13 @@ const Header = () => {
     mutate(!data);
   };
 
+  const handleSearchClick = () => {
+    console.log("검색 버튼 클릭했습니다.");
+    searchMutate(!searchData);
+    console.log("검색버튼클릭", location.pathname);
+    searchLocationMutate(location.pathname);
+  };
+
   return (
     <header className="header">
       <MenuHomeWrap>
@@ -79,7 +90,15 @@ const Header = () => {
 
       <SignCartWrap>
         {isPc && (
-          <div className="header_search">
+          <Link to="/" className="about_link">
+            <div className="header_about">
+              <span>ABOUT</span>
+              <span>ME</span>
+            </div>
+          </Link>
+        )}
+        {isPc && (
+          <div className="header_search" onClick={handleSearchClick}>
             <img src={searchImg} className="search_img" alt="search"></img>
             <span className="visually_hidden">검색</span>
           </div>
@@ -104,7 +123,7 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withRouter(Header);
 
 const MenuHomeWrap = styled.div`
   display: flex;
@@ -151,7 +170,7 @@ const MenuWrap = styled.div`
 const SignCartWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  width: 270px;
+  width: 360px;
   height: 80px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {

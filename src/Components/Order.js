@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useMediaQuery } from "react-responsive";
 import OrderDelivery from "./OrderDelivery";
@@ -12,8 +12,10 @@ import {
 } from "./DeliveryValidation";
 import OrderTotalDetail from "./OrderTotalDetail";
 import useMyCart from "../Hooks/useMyCart";
+import axios from "axios";
+import useCheckout from "../Hooks/useCheckout";
 
-const Order = () => {
+const Order = ({ match }) => {
   const token = localStorage.getItem("token");
   const decoded = jwt_decode(token);
   const availableMileage = decoded.user.mileage;
@@ -22,6 +24,8 @@ const Order = () => {
   const [selectOption, setSelectOption] = useState(0);
   const [checkout, setCheckout] = useState({});
   const [validated, setValidated] = useState({});
+  // const [itemCheckout, setItemCheckout] = useState({});
+  const checkoutNumber = Number(match.params.checkoutId);
 
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const isTablet = useMediaQuery({
@@ -31,18 +35,47 @@ const Order = () => {
     query: "(min-width: 320px) and (max-width:767px)",
   });
 
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  // const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
+    useCheckout(checkoutNumber);
 
-  if (cartError) return <div>failed to load</div>;
-  if (loadingCart) return <div>loading...</div>;
+  if (checkoutError) return <div>failed to load...</div>;
+  if (loadingCheckout) return <div>loading...</div>;
+  // if (cartError) return <div>failed to load</div>;
+  // if (loadingCart) return <div>loading...</div>;
 
-  const items = cart.items;
+  console.log("checkoutData ", checkoutData);
+  console.log("checkoutData 가격 ", checkoutData.line_items[0].variant_price);
+  console.log("checkoutData 길이", checkoutData.line_items.length);
+
+  if (checkoutData.line_items.length <= 1) {
+    if (
+      checkoutData.line_items[0].variant_price *
+        checkoutData.line_items[0].quantity <
+      70000
+    ) {
+      console.log("7만원 이하이므로 배송비 3천원이 붙습니다.");
+      localStorage.setItem("delivery", "3000");
+    } else {
+      console.log("7만원 이상이므로 배송비가 무료입니다.");
+      localStorage.setItem("delivery", "0");
+    }
+  }
+
+  const items = checkoutData.line_items;
+  // const items = cart.items;
   const totalPrice = items
     .map((item) => item.variant_price * item.quantity)
     .reduce((sum, itemPrice) => sum + itemPrice, 0);
+
+  if (checkoutData.line_items.length > 1) {
+    if (totalPrice > 70000) {
+      localStorage.setItem("delivery", "0");
+    }
+    if (totalPrice < 70000) {
+      localStorage.setItem("delivery", "3000");
+    }
+  }
 
   const deliveryCharge = localStorage.getItem("delivery");
 
@@ -97,6 +130,18 @@ const Order = () => {
     console.log("handleChangeDelivery checkout ", checkout);
   };
 
+  // const checkOut = (variantId) => {
+  //   axios
+  //     .get(`http://localhost:8282/v1/checkouts/${variantId}`, config)
+  //     .then(function (response) {
+  //       console.log(response);
+  //       console.log("체크아웃 테스트:", response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
+
   return (
     <div className="order_wrapper">
       {isPc && (
@@ -117,6 +162,8 @@ const Order = () => {
           usedMileage={usedMileage}
           selectOption={selectOption}
           handleChangeDelivery={handleChangeDelivery}
+          itemCheckout={checkoutData}
+          checkoutNumber={checkoutNumber}
         />
       )}
 
@@ -127,6 +174,8 @@ const Order = () => {
             usedMileage={usedMileage}
             selectOption={selectOption}
             handleChangeDelivery={handleChangeDelivery}
+            itemCheckout={checkoutData}
+            checkoutNumber={checkoutNumber}
           />
           <OrderCoupon
             mileage={mileage}
@@ -152,6 +201,8 @@ const Order = () => {
             usedMileage={usedMileage}
             selectOption={selectOption}
             handleChangeDelivery={handleChangeDelivery}
+            itemCheckout={checkoutData}
+            checkoutNumber={checkoutNumber}
           />
           <OrderCoupon
             mileage={mileage}
