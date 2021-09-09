@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import { useMediaQuery } from "react-responsive";
 import OrderDelivery from "./OrderDelivery";
@@ -11,8 +11,6 @@ import {
   phoneNumber,
 } from "./DeliveryValidation";
 import OrderTotalDetail from "./OrderTotalDetail";
-import useMyCart from "../Hooks/useMyCart";
-import axios from "axios";
 import useCheckout from "../Hooks/useCheckout";
 
 const Order = ({ match }) => {
@@ -23,9 +21,9 @@ const Order = ({ match }) => {
   const [usedMileage, setUsedMileage] = useState(0);
   const [selectOption, setSelectOption] = useState(0);
   const [checkout, setCheckout] = useState({});
-  const [validated, setValidated] = useState({});
-  // const [itemCheckout, setItemCheckout] = useState({});
+  // const [validated, setValidated] = useState({});
   const checkoutNumber = Number(match.params.checkoutId);
+  // const [chkNum, setChkNum] = useState(checkoutNumber);
 
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const isTablet = useMediaQuery({
@@ -35,18 +33,11 @@ const Order = ({ match }) => {
     query: "(min-width: 320px) and (max-width:767px)",
   });
 
-  // const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
     useCheckout(checkoutNumber);
 
-  if (checkoutError) return <div>failed to load...</div>;
+  if (checkoutError) return <div>failed to load... 안됨</div>;
   if (loadingCheckout) return <div>loading...</div>;
-  // if (cartError) return <div>failed to load</div>;
-  // if (loadingCart) return <div>loading...</div>;
-
-  console.log("checkoutData ", checkoutData);
-  console.log("checkoutData 가격 ", checkoutData.line_items[0].variant_price);
-  console.log("checkoutData 길이", checkoutData.line_items.length);
 
   if (checkoutData.line_items.length <= 1) {
     if (
@@ -63,10 +54,10 @@ const Order = ({ match }) => {
   }
 
   const items = checkoutData.line_items;
-  // const items = cart.items;
   const totalPrice = items
     .map((item) => item.variant_price * item.quantity)
     .reduce((sum, itemPrice) => sum + itemPrice, 0);
+  const deliveryCharge = localStorage.getItem("delivery");
 
   if (checkoutData.line_items.length > 1) {
     if (totalPrice > 70000) {
@@ -76,8 +67,6 @@ const Order = ({ match }) => {
       localStorage.setItem("delivery", "3000");
     }
   }
-
-  const deliveryCharge = localStorage.getItem("delivery");
 
   const handleOrderSubmit = () => {
     console.log("오더버튼 클릭");
@@ -130,25 +119,24 @@ const Order = ({ match }) => {
     console.log("handleChangeDelivery checkout ", checkout);
   };
 
-  // const checkOut = (variantId) => {
-  //   axios
-  //     .get(`http://localhost:8282/v1/checkouts/${variantId}`, config)
-  //     .then(function (response) {
-  //       console.log(response);
-  //       console.log("체크아웃 테스트:", response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // };
-
   return (
     <div className="order_wrapper">
       {isPc && (
         <div className="delivery_coupon_pay_wrap">
-          <OrderDelivery onChange={handleChangeDelivery} />
+          <OrderDelivery
+            checkoutNumber={checkoutNumber}
+            checkoutData={checkoutData}
+            onChange={handleChangeDelivery}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
+          />
           <OrderCoupon
             mileage={mileage}
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            isMobile={isMobile}
+            isTablet={isTablet}
             onChangeMileageInput={handleMileage}
             handleSelectOption={handleSelect}
             allMileage={allMileage}
@@ -164,21 +152,38 @@ const Order = ({ match }) => {
           handleChangeDelivery={handleChangeDelivery}
           itemCheckout={checkoutData}
           checkoutNumber={checkoutNumber}
+          isPc={isPc}
+          isTablet={isTablet}
+          isMobile={isMobile}
         />
       )}
 
       {isTablet && (
         <div>
-          <OrderDelivery onChange={handleChangeDelivery} />
+          <OrderDelivery
+            checkoutNumber={checkoutNumber}
+            checkoutData={checkoutData}
+            onChange={handleChangeDelivery}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
+          />
           <OrderTotal
             usedMileage={usedMileage}
             selectOption={selectOption}
             handleChangeDelivery={handleChangeDelivery}
             itemCheckout={checkoutData}
             checkoutNumber={checkoutNumber}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
           />
           <OrderCoupon
             mileage={mileage}
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            isTablet={isTablet}
+            isMobile={isMobile}
             onChangeMileageInput={handleMileage}
             handleSelectOption={handleSelect}
             allMileage={allMileage}
@@ -191,21 +196,38 @@ const Order = ({ match }) => {
             usedMileage={usedMileage}
             selectOption={selectOption}
             handleOrderSubmit={handleOrderSubmit}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
           />
         </div>
       )}
       {isMobile && (
         <div>
-          <OrderDelivery onChange={handleChangeDelivery} />
+          <OrderDelivery
+            checkoutNumber={checkoutNumber}
+            checkoutData={checkoutData}
+            onChange={handleChangeDelivery}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
+          />
           <OrderTotal
             usedMileage={usedMileage}
             selectOption={selectOption}
             handleChangeDelivery={handleChangeDelivery}
             itemCheckout={checkoutData}
             checkoutNumber={checkoutNumber}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
           />
           <OrderCoupon
             mileage={mileage}
+            usedMileage={usedMileage}
+            selectOption={selectOption}
+            isTablet={isTablet}
+            isMobile={isMobile}
             onChangeMileageInput={handleMileage}
             handleSelectOption={handleSelect}
             allMileage={allMileage}
@@ -218,6 +240,9 @@ const Order = ({ match }) => {
             usedMileage={usedMileage}
             selectOption={selectOption}
             handleOrderSubmit={handleOrderSubmit}
+            isPc={isPc}
+            isTablet={isTablet}
+            isMobile={isMobile}
           />
         </div>
       )}

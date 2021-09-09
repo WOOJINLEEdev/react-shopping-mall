@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
 import Modal from "react-modal";
 import styled from "styled-components";
-import LogoutModal from "./LogoutModal";
+import CommonModal from "./CommonModal";
 import StarRating from "./StarRating";
 import MyPageCouponModal from "./MyPageCouponModal";
+import { useHistory } from "react-router";
+import useMyCart from "../Hooks/useMyCart";
 
 Modal.setAppElement("#root");
 
@@ -24,6 +26,26 @@ const MyPage = () => {
     console.log(decoded.user.coupons);
     console.log("쿠폰", coupons);
   }
+
+  const history = useHistory();
+  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+
+  if (cartError) return <div>에러 발생...</div>;
+  if (loadingCart) return <div>로딩 중...</div>;
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("delivery");
+    localStorage.removeItem("board");
+
+    mutateCart(
+      {
+        items: [],
+      },
+      false
+    );
+    history.push("/");
+  };
 
   const handleLogoutBtn = () => {
     console.log("로그아웃 버튼 클릭");
@@ -45,12 +67,14 @@ const MyPage = () => {
   return (
     <MyPageWrap className="main_wrap">
       <h2 className="main_title">마이페이지</h2>
-      <LogoutModal
+      <CommonModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
         modalText={modalText}
         btnText1={btnText1}
         btnText2={btnText2}
+        btnClick1={logout}
+        btnClick2={onRequestClose}
       />
       <MyPageCouponModal
         isOpen2={isOpen2}

@@ -4,14 +4,19 @@ import useSWR from "swr";
 import { useHistory } from "react-router-dom";
 import QuantityCounter from "./QuantityCounter";
 import Loading from "./Loading";
-import PopupModal from "./PopupModal";
-import styled from "styled-components";
+import CommonModal from "./CommonModal";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
   const [quantity, setQuantity] = useState(1);
-  const [itemOption, setItemOption] = useState({ option: "" });
+  const [itemOption, setItemOption] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [modalText, setModalText] =
+    useState("장바구니에 상품이 추가되었습니다.");
+  const [btnText1, setBtnText1] = useState("장바구니 이동");
+  const [btnText2, setBtnText2] = useState("쇼핑 계속하기");
+  const [btnWidth, setBtnWidth] = useState("40%");
+  const [contentPadding, setContentPadding] = useState("50px 0");
 
   const url = `http://localhost:8282/v1/products/${match.params.productId}`;
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -19,6 +24,8 @@ const ItemDetail = ({ match }) => {
 
   if (error) return "에러 발생";
   if (!data) return <Loading />;
+
+  console.log("아이템 디테일 데이터", data);
 
   const selectOptions = data.variants;
 
@@ -34,6 +41,8 @@ const ItemDetail = ({ match }) => {
       }
     });
   };
+
+  console.log("아이템 디테일 배리언트", itemOption);
 
   const token = localStorage.getItem("token");
   const config = {
@@ -71,8 +80,6 @@ const ItemDetail = ({ match }) => {
       });
   }
 
-  console.log("옵션체크", itemOption);
-
   const onRequestClose = () => {
     setIsOpen(false);
   };
@@ -87,14 +94,49 @@ const ItemDetail = ({ match }) => {
     }
   };
 
+  const itemCheckout = () => {
+    console.log("구매하기 버튼 클릭");
+
+    if (itemOption === "") {
+      console.log("옵션이 선택되지 않았습니다.");
+      return false;
+    }
+
+    axios
+      .post(
+        "http://localhost:8282/v1/checkouts",
+        {
+          line_items: [
+            {
+              variant_id: itemOption,
+              quantity: quantity,
+            },
+          ],
+        },
+        config
+      )
+      .then(function (response) {
+        console.log("리스폰스", response);
+        console.log("체크아웃 아이디", response.data.checkout_id);
+        history.push(`/checkout/${response.data.checkout_id}`);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="list_element_detail">
-      <PopupModal
+      <CommonModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
-        setIsOpen
-        history
-        yesOrNo={yesOrNo}
+        modalText={modalText}
+        btnText1={btnText1}
+        btnText2={btnText2}
+        btnClick1={yesOrNo}
+        btnClick2={yesOrNo}
+        btnWidth={btnWidth}
+        contentPadding={contentPadding}
       />
       <div className="image_wrapper">
         <img className="image" alt="" src={data.images[0].src} />
@@ -167,6 +209,7 @@ const ItemDetail = ({ match }) => {
                   type="button"
                   className="list_btn buy"
                   value="구매하기"
+                  onClick={itemCheckout}
                 />
               </td>
             </tr>
