@@ -15,6 +15,7 @@ const OrderTotal = ({
   isPc,
   isTablet,
   isMobile,
+  handleOrderSubmit,
 }) => {
   const [checkoutNum, setCheckoutNum] = useState(checkoutNumber);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
@@ -38,9 +39,9 @@ const OrderTotal = ({
   const itemQuantity = items.map((item) => item.quantity);
   const sum = itemQuantity.reduce((a, b) => a + b);
 
-  const handleOrderSubmit = () => {
-    console.log("오더버튼 클릭");
-  };
+  // const handleOrderSubmit = () => {
+  //   console.log("오더버튼 클릭");
+  // };
 
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {
@@ -75,19 +76,33 @@ const OrderTotal = ({
 
                 <div className="list_info">
                   <div className="list_info_text infoHead">
-                    <label className="list_info_name">제품명</label>
-                    <p className="list_goods name">{item.product_name}</p>
+                    <label className="list_info_name" htmlfor="itemName">
+                      제품명
+                    </label>
+                    <p className="list_goods name" id="itemName">
+                      {item.product_name}
+                    </p>
                   </div>
 
                   <div className="list_info_text">
-                    <label className="list_info_name opt">옵션 : </label>
-                    <p className="list_goods option">{item.variant_name}</p>
+                    <label className="list_info_name opt" htmlFor="itemOption">
+                      옵션 :{" "}
+                    </label>
+                    <p className="list_goods option" id="itemOption">
+                      {item.variant_name}
+                    </p>
                   </div>
 
                   <div className="list_info_text priceAndQuantity">
-                    <label className="list_info_name pAndq">
+                    <label
+                      className="list_info_name pAndq"
+                      htmlFor="priceAndQuantity"
+                    >
                       가격 / 수량
-                      <span className="list_price_quantity">
+                      <span
+                        className="list_price_quantity"
+                        id="priceAndQuantity"
+                      >
                         {" "}
                         {item.quantity}
                       </span>
@@ -205,22 +220,28 @@ const OrderTotal = ({
                 </li>
               ))}
             </div>
-            <button
-              type="button"
-              className="info_all_btn"
-              onClick={handleInfoOpenBtn}
-            >
-              <span className="info_all_btn_text">
-                총{" "}
-                <strong className="order_item_length">{items.length}건</strong>{" "}
-                전체보기 {closeText}
-              </span>
-              <img
-                src={arrowImg}
-                alt="buttonArrow"
-                className="info_all_btn_arrow"
-              />
-            </button>
+            {items.length > 1 ? (
+              <button
+                type="button"
+                className="info_all_btn"
+                onClick={handleInfoOpenBtn}
+              >
+                <span className="info_all_btn_text">
+                  총{" "}
+                  <strong className="order_item_length">
+                    {items.length}건{" "}
+                  </strong>{" "}
+                  전체보기 {closeText}
+                </span>
+                <img
+                  src={arrowImg}
+                  alt="buttonArrow"
+                  className="info_all_btn_arrow"
+                />
+              </button>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       )}

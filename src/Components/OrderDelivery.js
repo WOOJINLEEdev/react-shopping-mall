@@ -11,6 +11,7 @@ import { FcCheckmark } from "react-icons/fc";
 import styled from "styled-components";
 import downArrow from "../images/down-arrow.png";
 import upArrow from "../images/up-arrow-icon.png";
+import useCheckoutData from "../Hooks/useCheckoutData";
 
 const OrderDelivery = ({
   checkoutNumber,
@@ -19,6 +20,35 @@ const OrderDelivery = ({
   isTablet,
   isMobile,
 }) => {
+  const optionData = [
+    {
+      no: "0",
+      label: "",
+      value: "배송 시 요청사항을 선택해 주세요.",
+      selected: "selected",
+    },
+    {
+      no: "1",
+      label: "부재 시 문 앞에 놓아주세요.",
+      value: "부재 시 문 앞에 놓아주세요.",
+    },
+    {
+      no: "2",
+      label: "부재 시 경비실에 맡겨 주세요.",
+      value: "부재 시 경비실에 맡겨 주세요.",
+    },
+    {
+      no: "3",
+      label: "배송 전에 연락주세요.",
+      value: "배송 전에 연락주세요.",
+    },
+    {
+      no: "4",
+      label: "직접 입력",
+      value: "직접 입력",
+    },
+  ];
+
   const [showDaumPostModal, setShowDaumPostModal] = useState(false);
   const [address, setAddress] = useState("");
   const [address1, setAddress1] = useState("");
@@ -39,16 +69,63 @@ const OrderDelivery = ({
   const [infoHeadAddress, setInfoHeadAddress] = useState("hide");
   const [deliveryWrapClass, setDeliveryWrapClass] = useState("delivery_wrap");
   const [deliveryWrite, setDeliveryWrite] = useState();
-  // const [checkoutNum, setCheckoutNum] = useState(checkoutNumber);
+  const [deliveryRequirementWrite, setDeliveryRequirementWrite] =
+    useState("hide");
+  const [deliveryRequirementWrite1, setDeliveryRequirementWrite1] =
+    useState("hide");
+  const [deliveryRequirementOption, setDeliveryRequirementOption] =
+    useState(optionData);
+  const [deliveryRequirementOption1, setDeliveryRequirementOption1] =
+    useState(optionData);
+
+  const [requirementTest, setRequirementTest] = useState();
+  const [selectedOptionNo, setSelectedOptionNo] = useState();
+
+  const [designation, setDesignation] = useState("");
+  const [recipient, setRecipient] = useState();
+  const [tel1, setTel1] = useState();
+  const [tel2, setTel2] = useState();
+  const [tel3, setTel3] = useState();
+  const [tel4, setTel4] = useState();
+  const [tel5, setTel5] = useState();
+  const [tel6, setTel6] = useState();
+  const [requirement, setRequirement] = useState();
+
+  const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
+
+  MutateCheckoutTotalData({
+    ...checkoutTotalData,
+    designation,
+    recipient,
+    address1,
+    addressDetail1,
+    addressDetail2,
+    tel1,
+    tel2,
+    tel3,
+    tel4,
+    tel5,
+    tel6,
+    requirement,
+    deliveryClassName,
+  });
 
   useEffect(() => {
-    if (!checkoutData.user.shipping_address) {
+    if (checkoutTotalData.checkoutData === undefined) {
+      return console.log("체크아웃 데이터 undefined");
+    }
+
+    if (
+      !checkoutData.user.shipping_address ||
+      (!checkoutTotalData.checkoutData.user.shipping_address &&
+        !checkoutTotalData.deliveryClassName)
+    ) {
       setDeliveryClassName("delivery_write disabled");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
-      return setDeliveryClassName1("delivery_write old");
+      setDeliveryClassName1("delivery_write old");
     }
-  }, []);
+  }, [checkoutTotalData.checkoutData]);
 
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
@@ -106,13 +183,29 @@ const OrderDelivery = ({
       setDeliveryClassName1("delivery_write old");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
+      setRequirement("");
+      setRequirementTest("신규 입력");
+      if (requirement !== "") {
+        return setDeliveryRequirementOption1([
+          { value: "9" },
+          { value: "8" },
+          { value: "7" },
+        ]);
+      }
     } else if (e.target.dataset.name === "기존 배송지") {
       setDeliveryClassName("delivery_write old");
       setDeliveryClassName1("delivery_write new");
       setDeliveryForm("delivery_box_wrap");
       setDeliveryForm1("delivery_box_wrap_second hide");
+      setRequirement("");
+      setRequirementTest("기존 배송지");
+      if (requirement !== "") {
+        return setDeliveryRequirementOption1([1, 2, 3, 4, 5]);
+      }
     }
   };
+
+  console.log("zzzzzz", requirementTest);
 
   const initialValues = {
     deliveryName: "",
@@ -170,6 +263,67 @@ const OrderDelivery = ({
     console.log(e.target.value);
     setAddressDetail2(e.target.value);
   };
+
+  const handleDeliveryInputChange1 = (e) => {
+    console.log("배송지명:", e.target.value);
+    setDesignation(e.target.value);
+  };
+
+  const handleDeliveryInputChange2 = (e) => {
+    console.log("수령인:", e.target.value);
+    setRecipient(e.target.value);
+  };
+
+  const handleDeliveryInputChange3 = (e) => {
+    setTel1(e.target.value);
+  };
+  const handleDeliveryInputChange4 = (e) => {
+    setTel2(e.target.value);
+  };
+  const handleDeliveryInputChange5 = (e) => {
+    setTel3(e.target.value);
+  };
+  const handleDeliveryInputChange6 = (e) => {
+    setTel4(e.target.value);
+  };
+  const handleDeliveryInputChange7 = (e) => {
+    setTel5(e.target.value);
+  };
+  const handleDeliveryInputChange8 = (e) => {
+    setTel6(e.target.value);
+  };
+  const handleDeliveryInputChange9 = (e) => {
+    setRequirement(e.target.value);
+  };
+
+  const handleDeliveryRequirement = (e) => {
+    const targetValue = e.target.value;
+    setRequirement(targetValue);
+
+    if (deliveryClassName === "delivery_write old") {
+      if (requirementTest === "기존 배송지") {
+        console.log(
+          "테스트중입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ111111111111111111111111111111"
+        );
+      }
+
+      if (targetValue === "직접 입력") {
+        return setDeliveryRequirementWrite("delivery_requirement_write");
+      } else {
+        return setDeliveryRequirementWrite("hide");
+      }
+    }
+
+    if (deliveryClassName1 === "delivery_write old") {
+      if (targetValue === "직접 입력") {
+        return setDeliveryRequirementWrite1("delivery_requirement_write");
+      } else {
+        return setDeliveryRequirementWrite1("hide");
+      }
+    }
+  };
+
+  console.log("오더딜리버리:::", checkoutData);
 
   return (
     <section className="delivery_info">
@@ -291,14 +445,18 @@ const OrderDelivery = ({
               <Form>
                 <div className="delivery_box">
                   <div className="label_box">
-                    <label>배송지명</label>
+                    <label htmlfor="deliveryTitle">배송지명</label>
                   </div>
-                  <input type="text" className="delivery_input first" />
+                  <input
+                    type="text"
+                    className="delivery_input first"
+                    id="deliveryTitle"
+                  />
                 </div>
 
                 <div className="delivery_box">
                   <div className="label_box">
-                    <label>
+                    <label htmlfor="deliveryName">
                       수령인<span className="vital">*</span>
                     </label>
                   </div>
@@ -318,7 +476,7 @@ const OrderDelivery = ({
 
                 <div className="delivery_box">
                   <div className="label_box">
-                    <label>
+                    <label htmlfor="sample6_address">
                       배송지<span className="vital">*</span>
                     </label>
                   </div>
@@ -389,7 +547,7 @@ const OrderDelivery = ({
 
                 <div className="delivery_box">
                   <div className="label_box">
-                    <label>
+                    <label htmlfor="phoneFirst">
                       연락처1<span className="vital">*</span>
                     </label>
                   </div>
@@ -461,13 +619,14 @@ const OrderDelivery = ({
 
                 <div className="delivery_box">
                   <div className="label_box">
-                    <label>연락처2</label>
+                    <label htmlfor="subPhoneFirst">연락처2</label>
                   </div>
                   <div className="tel_wrap">
                     <input
                       type="tel"
                       maxLength="4"
                       className="delivery_input tel"
+                      id="subPhoneFirst"
                     />
                     <span className="tel_dash">-</span>
                     <input
@@ -496,6 +655,7 @@ const OrderDelivery = ({
                     type="text"
                     className="delivery_input request"
                     placeholder="배송시 요청사항을 작성해 주세요."
+                    onChange={handleDeliveryInputChange9}
                   />
                 </div>
               </Form>
@@ -519,8 +679,9 @@ const OrderDelivery = ({
                 <FcCheckmark />
                 <div className="preexistence_content">
                   <span className="preexistence_name">
-                    {checkoutData.user.shipping_address &&
-                      checkoutData.user.shipping_address.name}
+                    {checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.recipient_name
+                      : checkoutData.user.name}
                   </span>
                   <p className="preexistence_address">
                     (
@@ -545,21 +706,23 @@ const OrderDelivery = ({
                         11
                       )}
                   </span>
-                  <PreexistenceSelect>
-                    <option value="배송 시 요청사항을 선택해 주세요.">
-                      배송 시 요청사항을 선택해 주세요.
-                    </option>
-                    <option value="부재 시 문 앞에 놓아주세요.">
-                      부재 시 문 앞에 놓아주세요.
-                    </option>
-                    <option value="부재 시 경비실에 맡겨 주세요.">
-                      부재 시 경비실에 맡겨 주세요.
-                    </option>
-                    <option value="배송 전에 연락주세요.">
-                      배송 전에 연락주세요.
-                    </option>
-                    <option value="직접 입력">직접 입력</option>
+                  <PreexistenceSelect
+                    color={"#333"}
+                    margin={"20px 0 0"}
+                    onChange={handleDeliveryRequirement}
+                  >
+                    {deliveryRequirementOption.map((item) => (
+                      <option key={item.no} value={item.label}>
+                        {item.value}
+                      </option>
+                    ))}
                   </PreexistenceSelect>
+                  <SelectRequirementWrite
+                    className={deliveryRequirementWrite}
+                    placeholder="배송시 요청사항을 작성해 주세요."
+                    maxLength="30"
+                    onChange={handleDeliveryInputChange9}
+                  />
                 </div>
               </PreexistenceItem>
             </ul>
@@ -583,8 +746,9 @@ const OrderDelivery = ({
                 <FcCheckmark />
                 <div className="preexistence_content">
                   <span className="preexistence_name">
-                    {checkoutData.user.shipping_address &&
-                      checkoutData.user.shipping_address.name}
+                    {checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.recipient_name
+                      : checkoutData.user.name}
                   </span>
                   <p className="preexistence_address">
                     (
@@ -609,21 +773,23 @@ const OrderDelivery = ({
                         11
                       )}
                   </span>
-                  <PreexistenceSelect>
-                    <option value="배송 시 요청사항을 선택해 주세요.">
-                      배송 시 요청사항을 선택해 주세요.
-                    </option>
-                    <option value="부재 시 문 앞에 놓아주세요.">
-                      부재 시 문 앞에 놓아주세요.
-                    </option>
-                    <option value="부재 시 경비실에 맡겨 주세요.">
-                      부재 시 경비실에 맡겨 주세요.
-                    </option>
-                    <option value="배송 전에 연락주세요.">
-                      배송 전에 연락주세요.
-                    </option>
-                    <option value="직접 입력">직접 입력</option>
+                  <PreexistenceSelect
+                    color={"#333"}
+                    margin={"20px 0 0"}
+                    onChange={handleDeliveryRequirement}
+                  >
+                    {deliveryRequirementOption.map((item) => (
+                      <option key={item.no} value={item.label}>
+                        {item.value}
+                      </option>
+                    ))}
                   </PreexistenceSelect>
+                  <SelectRequirementWrite
+                    className={deliveryRequirementWrite}
+                    placeholder="배송시 요청사항을 작성해 주세요."
+                    maxLength="30"
+                    onChange={handleDeliveryInputChange9}
+                  />
                 </div>
               </PreexistenceItem>
             </ul>
@@ -640,23 +806,33 @@ const OrderDelivery = ({
           <Form>
             <div className="delivery_box">
               <div className="label_box">
-                <label>배송지명</label>
+                <label htmlfor="deliveryTitle1">배송지명</label>
               </div>
-              <input type="text" className="delivery_input first" />
+              <input
+                type="text"
+                className="delivery_input first"
+                id="deliveryTitle1"
+                onChange={handleDeliveryInputChange1}
+              />
             </div>
 
             <div className="delivery_box">
               <div className="label_box">
-                <label>
+                <label htmlfor="deliveryName1">
                   수령인<span className="vital">*</span>
                 </label>
               </div>
-              <input type="text" className="delivery_input second" />
+              <input
+                type="text"
+                className="delivery_input second"
+                id="deliveryName1"
+                onChange={handleDeliveryInputChange2}
+              />
             </div>
 
             <div className="delivery_box">
               <div className="label_box">
-                <label>
+                <label htmlfor="sample5_address">
                   배송지<span className="vital">*</span>
                 </label>
               </div>
@@ -709,33 +885,36 @@ const OrderDelivery = ({
 
             <div className="delivery_box">
               <div className="label_box">
-                <label>
+                <label htmlfor="phone1First">
                   연락처1<span className="vital">*</span>
                 </label>
               </div>
               <div className="tel_wrap">
                 <Field
-                  type="tel"
+                  type="number"
                   maxLength="4"
                   name="phoneOne"
-                  id="tel_fourth"
+                  id="phone1First"
                   className="delivery_input tel"
+                  onChange={handleDeliveryInputChange3}
                 />
                 <span className="tel_dash">-</span>
                 <Field
-                  type="tel"
+                  type="number"
                   maxLength="4"
                   name="phoneTwo"
-                  id="tel_fifth"
+                  id="phone1Second"
                   className="delivery_input tel"
+                  onChange={handleDeliveryInputChange4}
                 />
                 <span className="tel_dash">-</span>
                 <Field
-                  type="tel"
+                  type="number"
                   maxLength="4"
                   name="phoneThree"
-                  id="tel_sixth"
+                  id="phone1Third"
                   className="delivery_input tel"
+                  onChange={handleDeliveryInputChange5}
                 />
               </div>
               <ErrorMessage
@@ -757,40 +936,57 @@ const OrderDelivery = ({
 
             <div className="delivery_box">
               <div className="label_box">
-                <label>연락처2</label>
+                <label htmlfor="phone1Second">연락처2</label>
               </div>
               <div className="tel_wrap">
                 <input
-                  type="tel"
+                  type="number"
                   maxLength="4"
                   className="delivery_input tel"
+                  id="subPhone1First"
+                  onChange={handleDeliveryInputChange6}
                 />
                 <span className="tel_dash">-</span>
                 <input
-                  type="tel"
+                  type="number"
                   maxLength="4"
                   className="delivery_input tel"
+                  onChange={handleDeliveryInputChange7}
                 />
                 <span className="tel_dash">-</span>
                 <input
-                  type="tel"
+                  type="number"
                   maxLength="4"
                   className="delivery_input tel"
+                  onChange={handleDeliveryInputChange8}
                 />
               </div>
             </div>
 
             <div className="delivery_box">
               <div className="label_box"></div>
-              <input
-                type="text"
-                className="delivery_input request"
-                placeholder="배송시 요청사항을 작성해 주세요."
-              />
+              <DeliveryRequirementWrap>
+                <PreexistenceSelect
+                  color={"#333"}
+                  onChange={handleDeliveryRequirement}
+                >
+                  {deliveryRequirementOption1.map((item) => (
+                    <option key={item.no} value={item.label}>
+                      {item.value}
+                    </option>
+                  ))}
+                </PreexistenceSelect>
+                <SelectRequirementWrite
+                  className={deliveryRequirementWrite1}
+                  placeholder="배송시 요청사항을 작성해 주세요."
+                  maxLength="30"
+                  onChange={handleDeliveryInputChange9}
+                />
+              </DeliveryRequirementWrap>
             </div>
             <div className="delivery_box notice">
               <div className="label_box"></div>
-              입력하신 내용으로 기본 배송지로 등록됩니다.
+              입력하신 내용은 기본 배송지로 등록됩니다.
             </div>
           </Form>
         </Formik>
@@ -806,6 +1002,7 @@ const PreexistenceItem = styled.li`
   justify-content: space-between;
   width: 100%;
   height: 100%;
+  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
   font-size: 15px;
 
   svg {
@@ -829,14 +1026,34 @@ const PreexistenceSelect = styled.select`
   width: 100%;
   height: 40px;
   border: 1px solid #d4d4d4;
-  margin: 20px 0;
+  border-radius: 5px;
+  margin: ${(props) => props.margin || "0"};
   outline: none;
   padding: 10px;
-  font-size: 15px;
+  color: ${(props) => props.color || "#bababa"};
+  // font-size: 15px;
+  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     height: 50px;
   }
+`;
+
+const SelectRequirementWrite = styled.textarea`
+  height: 80px;
+  resize: none;
+  padding: 14px;
+  margin-top: 5px;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+  outline: none;
+  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
+`;
+
+const DeliveryRequirementWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 const postCodeStyle = {

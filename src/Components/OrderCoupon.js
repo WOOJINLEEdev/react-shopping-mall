@@ -41,9 +41,13 @@ const OrderCoupon = ({
       <div className="coupon_mileage_wrap">
         <div className="coupon_box">
           <div className="label_box">
-            <label>쿠폰</label>
+            <label htmlFor="couponSelect">쿠폰</label>
           </div>
-          <select className="coupon_select" onChange={handleSelectOption}>
+          <select
+            className="coupon_select"
+            onChange={handleSelectOption}
+            id="couponSelect"
+          >
             <option value=""> 사용가능 쿠폰 {coupons.length}장</option>
             {coupons.map((coupon) => (
               <option key={coupon.id} value={coupon.coupon_name}>
@@ -54,13 +58,14 @@ const OrderCoupon = ({
         </div>
         <div className="coupon_box mileage">
           <div className="label_box">
-            <label>마일리지</label>
+            <label htmlFor="mileageInput">마일리지</label>
           </div>
           <div className="mileage_wrap">
             <div className="mileage_input_btn">
               <input
                 type="text"
                 className="mileage_input"
+                id="mileageInput"
                 onChange={onChangeMileageInput}
                 placeholder="0"
                 value={value}
@@ -78,7 +83,9 @@ const OrderCoupon = ({
               보유 마일리지
               <span className="mileage_unit">
                 <span className="mileage_in">
-                  {mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {!mileage
+                    ? "0"
+                    : mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </span>
                 p
               </span>
