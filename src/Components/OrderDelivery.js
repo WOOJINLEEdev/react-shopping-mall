@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Formik, Form, ErrorMessage, Field } from "formik";
-import * as Yup from "yup";
 import DaumPostcode from "react-daum-postcode";
-import {
-  deliveryName,
-  deliveryAddress,
-  phoneNumber,
-} from "./DeliveryValidation";
 import { FcCheckmark } from "react-icons/fc";
 import styled from "styled-components";
 import downArrow from "../images/down-arrow.png";
@@ -90,6 +83,7 @@ const OrderDelivery = ({
   const [tel5, setTel5] = useState();
   const [tel6, setTel6] = useState();
   const [requirement, setRequirement] = useState();
+  const [requirement1, setRequirement1] = useState();
 
   const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
 
@@ -107,6 +101,7 @@ const OrderDelivery = ({
     tel5,
     tel6,
     requirement,
+    requirement1,
     deliveryClassName,
   });
 
@@ -183,45 +178,17 @@ const OrderDelivery = ({
       setDeliveryClassName1("delivery_write old");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
-      setRequirement("");
       setRequirementTest("신규 입력");
-      if (requirement !== "") {
-        return setDeliveryRequirementOption1([
-          { value: "9" },
-          { value: "8" },
-          { value: "7" },
-        ]);
-      }
     } else if (e.target.dataset.name === "기존 배송지") {
       setDeliveryClassName("delivery_write old");
       setDeliveryClassName1("delivery_write new");
       setDeliveryForm("delivery_box_wrap");
       setDeliveryForm1("delivery_box_wrap_second hide");
-      setRequirement("");
       setRequirementTest("기존 배송지");
-      if (requirement !== "") {
-        return setDeliveryRequirementOption1([1, 2, 3, 4, 5]);
-      }
     }
   };
 
   console.log("zzzzzz", requirementTest);
-
-  const initialValues = {
-    deliveryName: "",
-    deliveryAddress: "",
-    phoneNumber: "",
-  };
-
-  const validationSchema = Yup.object({
-    deliveryName: deliveryName(),
-    deliveryAddress: deliveryAddress(),
-    phoneNumber: phoneNumber(),
-  });
-
-  const onSubmit = () => {
-    console.log(deliveryName);
-  };
 
   const handleAddressBtn = () => {
     console.log(deliveryWrite);
@@ -274,39 +241,25 @@ const OrderDelivery = ({
     setRecipient(e.target.value);
   };
 
-  const handleDeliveryInputChange3 = (e) => {
-    setTel1(e.target.value);
+  const handleDeliveryInputChange3 = (e, setState) => {
+    let curValue = e.target.value;
+    let phoneValue = curValue.replace(/[^0-9]/g, "");
+
+    setState(phoneValue);
   };
+
   const handleDeliveryInputChange4 = (e) => {
-    setTel2(e.target.value);
+    setRequirement(e.target.value);
   };
   const handleDeliveryInputChange5 = (e) => {
-    setTel3(e.target.value);
-  };
-  const handleDeliveryInputChange6 = (e) => {
-    setTel4(e.target.value);
-  };
-  const handleDeliveryInputChange7 = (e) => {
-    setTel5(e.target.value);
-  };
-  const handleDeliveryInputChange8 = (e) => {
-    setTel6(e.target.value);
-  };
-  const handleDeliveryInputChange9 = (e) => {
-    setRequirement(e.target.value);
+    setRequirement1(e.target.value);
   };
 
   const handleDeliveryRequirement = (e) => {
     const targetValue = e.target.value;
-    setRequirement(targetValue);
 
-    if (deliveryClassName === "delivery_write old") {
-      if (requirementTest === "기존 배송지") {
-        console.log(
-          "테스트중입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ111111111111111111111111111111"
-        );
-      }
-
+    if (!deliveryWrite || deliveryWrite === "기존 배송지") {
+      setRequirement(targetValue);
       if (targetValue === "직접 입력") {
         return setDeliveryRequirementWrite("delivery_requirement_write");
       } else {
@@ -314,7 +267,8 @@ const OrderDelivery = ({
       }
     }
 
-    if (deliveryClassName1 === "delivery_write old") {
+    if (deliveryWrite === "신규 입력") {
+      setRequirement1(targetValue);
       if (targetValue === "직접 입력") {
         return setDeliveryRequirementWrite1("delivery_requirement_write");
       } else {
@@ -437,229 +391,214 @@ const OrderDelivery = ({
             </li>
           </ul>
           <div className={deliveryForm}>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={onSubmit}
-            >
-              <Form>
-                <div className="delivery_box">
-                  <div className="label_box">
-                    <label htmlfor="deliveryTitle">배송지명</label>
-                  </div>
+            <div className="delivery_box">
+              <div className="label_box">
+                <label htmlfor="deliveryTitle">배송지명</label>
+              </div>
+              <input
+                type="text"
+                className="delivery_input first"
+                id="deliveryTitle"
+              />
+            </div>
+
+            <div className="delivery_box">
+              <div className="label_box">
+                <label htmlfor="deliveryName">
+                  수령인<span className="vital">*</span>
+                </label>
+              </div>
+              <input
+                type="text"
+                name="deliveryName"
+                id="deliveryName"
+                className="delivery_input second"
+                value={
+                  checkoutData?.user?.shipping_address?.recipient_name ?? ""
+                }
+              />
+            </div>
+
+            <div className="delivery_box">
+              <div className="label_box">
+                <label htmlfor="sample6_address">
+                  배송지<span className="vital">*</span>
+                </label>
+              </div>
+              <div className="delivery_address">
+                <div className="postalCode_wrap">
                   <input
                     type="text"
-                    className="delivery_input first"
-                    id="deliveryTitle"
+                    id="sample6_postcode"
+                    className="delivery_input postalCode"
+                    placeholder="우편번호"
+                    value={
+                      checkoutData.user.shipping_address
+                        ? checkoutData.user.shipping_address.postal_code
+                        : address
+                    }
+                    onClick={handlePostalCode}
+                    disabled={checkoutData ? "disabled" : ""}
+                  />
+                  <input
+                    type="button"
+                    className="postalCode_search"
+                    value="우편번호 찾기"
+                    onClick={handlePostalCode}
                   />
                 </div>
+                <input
+                  type="text"
+                  name="deliveryAddress"
+                  id="sample6_address"
+                  className="delivery_input address"
+                  placeholder="주소"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.address1
+                      : addressDetail
+                  }
+                  disabled
+                />
 
-                <div className="delivery_box">
-                  <div className="label_box">
-                    <label htmlfor="deliveryName">
-                      수령인<span className="vital">*</span>
-                    </label>
-                  </div>
-                  <Field
-                    type="text"
-                    name="deliveryName"
-                    id="deliveryName"
-                    className="delivery_input second"
-                    value={checkoutData?.user?.shipping_address?.name ?? ""}
-                  />
-                  <ErrorMessage
-                    name="deliveryName"
-                    component="div"
-                    className="input_check"
-                  />
-                </div>
-
-                <div className="delivery_box">
-                  <div className="label_box">
-                    <label htmlfor="sample6_address">
-                      배송지<span className="vital">*</span>
-                    </label>
-                  </div>
-                  <div className="delivery_address">
-                    <div className="postalCode_wrap">
-                      <input
-                        type="text"
-                        id="sample6_postcode"
-                        className="delivery_input postalCode"
-                        placeholder="우편번호"
-                        value={
-                          checkoutData.user.shipping_address
-                            ? checkoutData.user.shipping_address.postal_code
-                            : address
-                        }
-                        onClick={handlePostalCode}
-                        disabled={checkoutData ? "disabled" : ""}
-                      />
-                      <input
-                        type="button"
-                        className="postalCode_search"
-                        value="우편번호 찾기"
-                        onClick={handlePostalCode}
-                      />
-                    </div>
-                    <Field
-                      type="text"
-                      name="deliveryAddress"
-                      id="sample6_address"
-                      className="delivery_input address"
-                      placeholder="주소"
-                      value={
-                        checkoutData.user.shipping_address
-                          ? checkoutData.user.shipping_address.address1
-                          : addressDetail
-                      }
-                      disabled
-                    />
-
-                    <input
-                      type="text"
-                      id="sample6_detailAddress"
-                      className="delivery_input address"
-                      placeholder="상세주소"
-                      value={
-                        checkoutData.user.shipping_address
-                          ? checkoutData.user.shipping_address.address2
-                          : ""
-                      }
-                    />
-                    {checkoutData ? (
-                      ""
-                    ) : (
-                      <input
-                        type="text"
-                        id="sample6_extraAddress"
-                        className="delivery_input address"
-                        placeholder="참고항목"
-                      />
-                    )}
-                  </div>
-                  <ErrorMessage
-                    name="deliveryAdderess"
-                    component="div"
-                    className="input_check"
-                  />
-                </div>
-
-                <div className="delivery_box">
-                  <div className="label_box">
-                    <label htmlfor="phoneFirst">
-                      연락처1<span className="vital">*</span>
-                    </label>
-                  </div>
-                  <div className="tel_wrap">
-                    <Field
-                      type="tel"
-                      maxLength="4"
-                      name="phoneFirst"
-                      id="phoneFirst"
-                      className="delivery_input tel"
-                      value={
-                        checkoutData.user.shipping_address
-                          ? checkoutData.user.shipping_address.phone1.substring(
-                              0,
-                              3
-                            )
-                          : ""
-                      }
-                    />
-                    <span className="tel_dash">-</span>
-                    <Field
-                      type="tel"
-                      maxLength="4"
-                      name="phoneSecond"
-                      id="phoneSecond"
-                      className="delivery_input tel"
-                      value={
-                        checkoutData.user.shipping_address
-                          ? checkoutData.user.shipping_address.phone1.substring(
-                              3,
-                              7
-                            )
-                          : ""
-                      }
-                    />
-                    <span className="tel_dash">-</span>
-                    <Field
-                      type="tel"
-                      maxLength="4"
-                      name="phoneThird"
-                      id="phoneThird"
-                      className="delivery_input tel"
-                      value={
-                        checkoutData.user.shipping_address
-                          ? checkoutData.user.shipping_address.phone1.substring(
-                              7,
-                              11
-                            )
-                          : ""
-                      }
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="phoneFirst"
-                    component="div"
-                    className="input_check"
-                  />
-                  <ErrorMessage
-                    name="phoneSecond"
-                    component="div"
-                    className="input_check"
-                  />
-                  <ErrorMessage
-                    name="phoneThird"
-                    component="div"
-                    className="input_check"
-                  />
-                </div>
-
-                <div className="delivery_box">
-                  <div className="label_box">
-                    <label htmlfor="subPhoneFirst">연락처2</label>
-                  </div>
-                  <div className="tel_wrap">
-                    <input
-                      type="tel"
-                      maxLength="4"
-                      className="delivery_input tel"
-                      id="subPhoneFirst"
-                    />
-                    <span className="tel_dash">-</span>
-                    <input
-                      type="tel"
-                      maxLength="4"
-                      className="delivery_input tel"
-                    />
-                    <span className="tel_dash">-</span>
-                    <input
-                      type="tel"
-                      maxLength="4"
-                      className="delivery_input tel"
-                    />
-                  </div>
-                </div>
-
-                <div className="delivery_box notice">
-                  <div className="label_box"></div>
-                  기본 배송지입니다. 주문 시 변경하신 내용으로 기본 배송지
-                  주소가 수정됩니다.
-                </div>
-
-                <div className="delivery_box">
-                  <div className="label_box"></div>
+                <input
+                  type="text"
+                  id="sample6_detailAddress"
+                  className="delivery_input address"
+                  placeholder="상세주소"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.address2
+                      : ""
+                  }
+                />
+                {checkoutData ? (
+                  ""
+                ) : (
                   <input
                     type="text"
-                    className="delivery_input request"
-                    placeholder="배송시 요청사항을 작성해 주세요."
-                    onChange={handleDeliveryInputChange9}
+                    id="sample6_extraAddress"
+                    className="delivery_input address"
+                    placeholder="참고항목"
                   />
-                </div>
-              </Form>
-            </Formik>
+                )}
+              </div>
+            </div>
+
+            <div className="delivery_box">
+              <div className="label_box">
+                <label htmlfor="phoneFirst">
+                  연락처1<span className="vital">*</span>
+                </label>
+              </div>
+              <div className="tel_wrap">
+                <input
+                  type="tel"
+                  maxLength="3"
+                  name="phoneFirst"
+                  id="phoneFirst"
+                  className="delivery_input tel"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.phone1.substring(
+                          0,
+                          3
+                        )
+                      : ""
+                  }
+                />
+                <span className="tel_dash">-</span>
+                <input
+                  type="tel"
+                  maxLength="4"
+                  name="phoneSecond"
+                  id="phoneSecond"
+                  className="delivery_input tel"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.phone1.substring(
+                          3,
+                          7
+                        )
+                      : ""
+                  }
+                />
+                <span className="tel_dash">-</span>
+                <input
+                  type="tel"
+                  maxLength="4"
+                  name="phoneThird"
+                  id="phoneThird"
+                  className="delivery_input tel"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.phone1.substring(
+                          7,
+                          11
+                        )
+                      : ""
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="delivery_box">
+              <div className="label_box">
+                <label htmlfor="subPhoneFirst">연락처2</label>
+              </div>
+              <div className="tel_wrap">
+                <input
+                  type="tel"
+                  maxLength="4"
+                  className="delivery_input tel"
+                  id="subPhoneFirst"
+                />
+                <span className="tel_dash">-</span>
+                <input
+                  type="tel"
+                  maxLength="4"
+                  className="delivery_input tel"
+                />
+                <span className="tel_dash">-</span>
+                <input
+                  type="tel"
+                  maxLength="4"
+                  className="delivery_input tel"
+                />
+              </div>
+            </div>
+
+            <div className="delivery_box notice">
+              <div className="label_box"></div>
+              기본 배송지입니다. 주문 시 변경하신 내용으로 기본 배송지 주소가
+              수정됩니다.
+            </div>
+
+            <div className="delivery_box">
+              <div className="label_box"></div>
+              <DeliveryRequirementWrap>
+                <PreexistenceSelect
+                  color={"#333"}
+                  onChange={handleDeliveryRequirement}
+                >
+                  {deliveryRequirementOption1.map((item) => (
+                    <option
+                      key={item.no}
+                      value={item.label}
+                      className="option_test"
+                    >
+                      {item.value}
+                    </option>
+                  ))}
+                </PreexistenceSelect>
+                <SelectRequirementWrite
+                  className={deliveryRequirementWrite1}
+                  placeholder="배송시 요청사항을 작성해 주세요."
+                  maxLength="30"
+                  onChange={handleDeliveryInputChange4}
+                />
+              </DeliveryRequirementWrap>
+            </div>
           </div>
         </div>
       )}
@@ -721,7 +660,7 @@ const OrderDelivery = ({
                     className={deliveryRequirementWrite}
                     placeholder="배송시 요청사항을 작성해 주세요."
                     maxLength="30"
-                    onChange={handleDeliveryInputChange9}
+                    onChange={handleDeliveryInputChange4}
                   />
                 </div>
               </PreexistenceItem>
@@ -788,7 +727,7 @@ const OrderDelivery = ({
                     className={deliveryRequirementWrite}
                     placeholder="배송시 요청사항을 작성해 주세요."
                     maxLength="30"
-                    onChange={handleDeliveryInputChange9}
+                    onChange={handleDeliveryInputChange4}
                   />
                 </div>
               </PreexistenceItem>
@@ -798,198 +737,176 @@ const OrderDelivery = ({
       )}
 
       <div className={deliveryForm1}>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-        >
-          <Form>
-            <div className="delivery_box">
-              <div className="label_box">
-                <label htmlfor="deliveryTitle1">배송지명</label>
-              </div>
+        <div className="delivery_box">
+          <div className="label_box">
+            <label htmlfor="deliveryTitle1">배송지명</label>
+          </div>
+          <input
+            type="text"
+            className="delivery_input first"
+            id="deliveryTitle1"
+            onChange={handleDeliveryInputChange1}
+          />
+        </div>
+
+        <div className="delivery_box">
+          <div className="label_box">
+            <label htmlfor="deliveryName1">
+              수령인<span className="vital">*</span>
+            </label>
+          </div>
+          <input
+            type="text"
+            className="delivery_input second"
+            id="deliveryName1"
+            onChange={handleDeliveryInputChange2}
+          />
+        </div>
+
+        <div className="delivery_box">
+          <div className="label_box">
+            <label htmlfor="sample5_address">
+              배송지<span className="vital">*</span>
+            </label>
+          </div>
+          <div className="delivery_address">
+            <div className="postalCode_wrap">
               <input
                 type="text"
-                className="delivery_input first"
-                id="deliveryTitle1"
-                onChange={handleDeliveryInputChange1}
+                id="sample5_postcode"
+                className="delivery_input postalCode"
+                placeholder="우편번호"
+                value={address1}
+                onClick={handlePostalCode}
               />
-            </div>
-
-            <div className="delivery_box">
-              <div className="label_box">
-                <label htmlfor="deliveryName1">
-                  수령인<span className="vital">*</span>
-                </label>
-              </div>
               <input
-                type="text"
-                className="delivery_input second"
-                id="deliveryName1"
-                onChange={handleDeliveryInputChange2}
+                type="button"
+                className="postalCode_search"
+                value="우편번호 찾기"
+                onClick={handlePostalCode}
               />
             </div>
+            <input
+              type="text"
+              id="sample5_address"
+              name="deliveryAddress"
+              className="delivery_input address"
+              placeholder="주소"
+              value={addressDetail1}
+              disabled
+            />
+            <input
+              type="text"
+              id="sample5_detailAddress"
+              className="delivery_input address"
+              placeholder="상세주소"
+              onChange={handleAddressDetail2}
+            />
+            <input
+              type="text"
+              id="sample5_extraAddress"
+              className="delivery_input address"
+              placeholder="참고항목"
+            />
+          </div>
+        </div>
 
-            <div className="delivery_box">
-              <div className="label_box">
-                <label htmlfor="sample5_address">
-                  배송지<span className="vital">*</span>
-                </label>
-              </div>
-              <div className="delivery_address">
-                <div className="postalCode_wrap">
-                  <input
-                    type="text"
-                    id="sample5_postcode"
-                    className="delivery_input postalCode"
-                    placeholder="우편번호"
-                    value={address1}
-                    onClick={handlePostalCode}
-                  />
-                  <input
-                    type="button"
-                    className="postalCode_search"
-                    value="우편번호 찾기"
-                    onClick={handlePostalCode}
-                  />
-                </div>
-                <Field
-                  type="text"
-                  id="sample5_address"
-                  name="deliveryAddress"
-                  className="delivery_input address"
-                  placeholder="주소"
-                  value={addressDetail1}
-                  disabled
-                />
-                <input
-                  type="text"
-                  id="sample5_detailAddress"
-                  className="delivery_input address"
-                  placeholder="상세주소"
-                  onChange={handleAddressDetail2}
-                />
-                <input
-                  type="text"
-                  id="sample5_extraAddress"
-                  className="delivery_input address"
-                  placeholder="참고항목"
-                />
-              </div>
-              <ErrorMessage
-                name="deliveryAdderess"
-                component="div"
-                className="input_check"
-              />
-            </div>
+        <div className="delivery_box">
+          <div className="label_box">
+            <label htmlfor="phone1First">
+              연락처1<span className="vital">*</span>
+            </label>
+          </div>
+          <div className="tel_wrap">
+            <input
+              type="text"
+              maxLength="3"
+              name="phoneOne"
+              id="phone1First"
+              className="delivery_input tel"
+              onChange={(e) => handleDeliveryInputChange3(e, setTel1)}
+              value={tel1}
+            />
+            <span className="tel_dash">-</span>
+            <input
+              type="text"
+              maxLength="4"
+              name="phoneTwo"
+              id="phone1Second"
+              className="delivery_input tel"
+              onChange={(e) => handleDeliveryInputChange3(e, setTel2)}
+              value={tel2}
+            />
+            <span className="tel_dash">-</span>
+            <input
+              type="text"
+              maxLength="4"
+              name="phoneThree"
+              id="phone1Third"
+              className="delivery_input tel"
+              onChange={(e) => handleDeliveryInputChange3(e, setTel3)}
+              value={tel3}
+            />
+          </div>
+        </div>
 
-            <div className="delivery_box">
-              <div className="label_box">
-                <label htmlfor="phone1First">
-                  연락처1<span className="vital">*</span>
-                </label>
-              </div>
-              <div className="tel_wrap">
-                <Field
-                  type="number"
-                  maxLength="4"
-                  name="phoneOne"
-                  id="phone1First"
-                  className="delivery_input tel"
-                  onChange={handleDeliveryInputChange3}
-                />
-                <span className="tel_dash">-</span>
-                <Field
-                  type="number"
-                  maxLength="4"
-                  name="phoneTwo"
-                  id="phone1Second"
-                  className="delivery_input tel"
-                  onChange={handleDeliveryInputChange4}
-                />
-                <span className="tel_dash">-</span>
-                <Field
-                  type="number"
-                  maxLength="4"
-                  name="phoneThree"
-                  id="phone1Third"
-                  className="delivery_input tel"
-                  onChange={handleDeliveryInputChange5}
-                />
-              </div>
-              <ErrorMessage
-                name="phoneOne"
-                component="div"
-                className="input_check"
-              />
-              <ErrorMessage
-                name="phoneTwo"
-                component="div"
-                className="input_check"
-              />
-              <ErrorMessage
-                name="phoneThree"
-                component="div"
-                className="input_check"
-              />
-            </div>
+        <div className="delivery_box">
+          <div className="label_box">
+            <label htmlfor="phone1Second">연락처2</label>
+          </div>
+          <div className="tel_wrap">
+            <input
+              type="text"
+              maxLength="4"
+              className="delivery_input tel"
+              id="subPhone1First"
+              onChange={(e) => handleDeliveryInputChange3(e, setTel4)}
+              value={tel4}
+            />
+            <span className="tel_dash">-</span>
+            <input
+              type="text"
+              maxLength="4"
+              className="delivery_input tel"
+              onChange={(e) => handleDeliveryInputChange3(e, setTel5)}
+              value={tel5}
+            />
+            <span className="tel_dash">-</span>
+            <input
+              type="text"
+              maxLength="4"
+              className="delivery_input tel"
+              onChange={(e) => handleDeliveryInputChange3(e, setTel6)}
+              value={tel6}
+            />
+          </div>
+        </div>
 
-            <div className="delivery_box">
-              <div className="label_box">
-                <label htmlfor="phone1Second">연락처2</label>
-              </div>
-              <div className="tel_wrap">
-                <input
-                  type="number"
-                  maxLength="4"
-                  className="delivery_input tel"
-                  id="subPhone1First"
-                  onChange={handleDeliveryInputChange6}
-                />
-                <span className="tel_dash">-</span>
-                <input
-                  type="number"
-                  maxLength="4"
-                  className="delivery_input tel"
-                  onChange={handleDeliveryInputChange7}
-                />
-                <span className="tel_dash">-</span>
-                <input
-                  type="number"
-                  maxLength="4"
-                  className="delivery_input tel"
-                  onChange={handleDeliveryInputChange8}
-                />
-              </div>
-            </div>
-
-            <div className="delivery_box">
-              <div className="label_box"></div>
-              <DeliveryRequirementWrap>
-                <PreexistenceSelect
-                  color={"#333"}
-                  onChange={handleDeliveryRequirement}
-                >
-                  {deliveryRequirementOption1.map((item) => (
-                    <option key={item.no} value={item.label}>
-                      {item.value}
-                    </option>
-                  ))}
-                </PreexistenceSelect>
-                <SelectRequirementWrite
-                  className={deliveryRequirementWrite1}
-                  placeholder="배송시 요청사항을 작성해 주세요."
-                  maxLength="30"
-                  onChange={handleDeliveryInputChange9}
-                />
-              </DeliveryRequirementWrap>
-            </div>
-            <div className="delivery_box notice">
-              <div className="label_box"></div>
-              입력하신 내용은 기본 배송지로 등록됩니다.
-            </div>
-          </Form>
-        </Formik>
+        <div className="delivery_box">
+          <div className="label_box"></div>
+          <DeliveryRequirementWrap>
+            <PreexistenceSelect
+              color={"#333"}
+              onChange={handleDeliveryRequirement}
+            >
+              {deliveryRequirementOption1.map((item) => (
+                <option key={item.no} value={item.label}>
+                  {item.value}
+                </option>
+              ))}
+            </PreexistenceSelect>
+            <SelectRequirementWrite
+              className={deliveryRequirementWrite1}
+              placeholder="배송시 요청사항을 작성해 주세요."
+              maxLength="30"
+              onChange={handleDeliveryInputChange5}
+            />
+          </DeliveryRequirementWrap>
+        </div>
+        <div className="delivery_box notice">
+          <div className="label_box"></div>
+          입력하신 내용은 기본 배송지로 등록됩니다.
+        </div>
       </div>
     </section>
   );
