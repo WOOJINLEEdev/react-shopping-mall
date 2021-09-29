@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useCheckoutData from "../Hooks/useCheckoutData";
 
 const OrderPayments = () => {
-  // const [selectedPaymentIndex, setSelectedPaymentIndex] = useState(-1);
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState("");
   const [paymentName, setPaymentName] = useState("");
   const payments = [
@@ -23,13 +22,6 @@ const OrderPayments = () => {
 
   const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
 
-  // useEffect(() => {
-  //   return MutateCheckoutTotalData({
-  //     ...checkoutTotalData,
-  //     paymentName,
-  //   });
-  // }, [paymentName]);
-
   MutateCheckoutTotalData({
     ...checkoutTotalData,
     paymentName,
@@ -37,18 +29,11 @@ const OrderPayments = () => {
 
   const handlePaymentMethod = (e) => {
     console.log("페이먼트 타겟:", e.target.innerText);
-    setPaymentName(e.target.innerText);
-
-    // const clickedPaymentMethodIndex = Number(e.target.dataset.pay);
-    // const index =
-    //   selectedPaymentIndex === clickedPaymentMethodIndex
-    //     ? -1
-    //     : clickedPaymentMethodIndex;
-    // setSelectedPaymentIndex(index);
+    console.log("타겟밸류:", e.target.value);
 
     const clickedPaymentMethodIndex = e.target.value;
-    // console.log(e.target);
-    console.log("타겟밸류:", e.target.value);
+    setPaymentName(e.target.innerText);
+
     return setSelectedPaymentIndex(clickedPaymentMethodIndex);
   };
 
@@ -61,7 +46,7 @@ const OrderPayments = () => {
         <h2 className="info_head pay">결제방법</h2>
       </div>
       <div className="payment_info_wrap">
-        <ol className="payment_method" onClick={handlePaymentMethod}>
+        <ol className="payment_method">
           {payments.map((payment, i) => (
             <li
               className={
@@ -72,6 +57,7 @@ const OrderPayments = () => {
               key={i}
               data-pay={i}
               value={i}
+              onClick={handlePaymentMethod}
             >
               {payment}
             </li>

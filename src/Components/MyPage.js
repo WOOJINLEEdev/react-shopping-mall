@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import jwt_decode from "jwt-decode";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import CommonModal from "./CommonModal";
@@ -7,6 +6,7 @@ import StarRating from "./StarRating";
 import MyPageCouponModal from "./MyPageCouponModal";
 import { useHistory } from "react-router";
 import useMyCart from "../Hooks/useMyCart";
+import axios from "axios";
 
 Modal.setAppElement("#root");
 
@@ -18,20 +18,41 @@ const MyPage = () => {
   const [btnText2, setBtnText2] = useState("아니오");
 
   const token = localStorage.getItem("token");
-  const decoded = jwt_decode(token);
-  const [coupons, setCoupons] = useState(decoded.user.coupons);
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
 
-  if (token) {
-    console.log(decoded);
-    console.log(decoded.user.coupons);
-    console.log("쿠폰", coupons);
-  }
+  const [myPageData, setMyPageData] = useState();
+  const [myCoupon, setMyCoupon] = useState();
+  const [myMileage, setMyMileage] = useState();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8282/v1/me", config)
+      .then(function (response) {
+        console.log(response);
+        console.log("마이페이지 쿠폰 확인:", response.data);
+        console.log("마이페이지 쿠폰 확인:", response.data);
+        setMyPageData(response.data);
+        setMyCoupon(response.data.coupons);
+        setMyMileage(response.data.mileage);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const history = useHistory();
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
   if (cartError) return <div>에러 발생...</div>;
   if (loadingCart) return <div>로딩 중...</div>;
+  if (!myMileage || myMileage === undefined) {
+    <div>로딩 중.....</div>;
+  }
+
+  console.log("쿠폰확인테스트", cart);
+  console.log("마이페이지 쿠폰 데이터 확인 테스트:::", myCoupon);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -79,13 +100,16 @@ const MyPage = () => {
       <MyPageCouponModal
         isOpen2={isOpen2}
         onRequestClose2={onRequestClose2}
-        coupons={coupons}
+        myCoupon={myCoupon}
       />
 
       <MyInfo>
         <p className="greet">
-          <span className="greet_user">{decoded.user.user_id}</span> 회원님,
-          안녕하세요!
+          <span className="greet_user">
+            {!myPageData || myPageData === undefined ? "" : myPageData.name} (
+            {!myPageData || myPageData === undefined ? "" : myPageData.user_id})
+          </span>{" "}
+          회원님, 안녕하세요!
         </p>
         <ModifyLogoutWrap className="modify_logout_wrap">
           <div className="myInfo_modify">회원정보 수정</div>
@@ -107,15 +131,15 @@ const MyPage = () => {
                 fontSize: "25px",
               }}
             >
-              {coupons.length}
+              {myCoupon === 0 || myCoupon === undefined ? 0 : myCoupon.length}
             </span>
           </Coupon>
           <Mileage>
             마일리지{" "}
             <span className="info_mileage_in">
-              {decoded.user.mileage
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {myMileage === 0 || myMileage === undefined
+                ? 0
+                : myMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </span>
           </Mileage>
         </CouponMileageWrap>

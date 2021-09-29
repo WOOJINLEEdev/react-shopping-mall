@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import jwt_decode from "jwt-decode";
 import { useMediaQuery } from "react-responsive";
 import OrderDelivery from "./OrderDelivery";
 import OrderCoupon from "./OrderCoupon";
@@ -15,21 +14,21 @@ import useCheckout from "../Hooks/useCheckout";
 import useCheckoutData from "../Hooks/useCheckoutData";
 import axios from "axios";
 
+import { validateWhenExistOrderHistory } from "../utils/checkout-validator";
+
 const Order = ({ match }) => {
   const token = localStorage.getItem("token");
-  const decoded = jwt_decode(token);
-  const availableMileage = decoded.user.mileage;
-  const [mileage, setMileage] = useState(decoded.user.mileage);
-  const [coupons, setCoupons] = useState(decoded.user.coupons);
+  const [availableMileage, setAvailableMileage] = useState();
+  const [mileage, setMileage] = useState();
+  const [coupons, setCoupons] = useState();
   const [selectCouponId, setSelectCouponId] = useState(0);
-  const [usedMileage, setUsedMileage] = useState(0);
+  const [usedMileage, setUsedMileage] = useState("");
   const [selectOption, setSelectOption] = useState(0);
   const [checkout, setCheckout] = useState({});
   const checkoutNumber = Number(match.params.checkoutId);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const [chkDat, setChkDat] = useState("");
 
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const isTablet = useMediaQuery({
@@ -41,15 +40,23 @@ const Order = ({ match }) => {
 
   const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
     useCheckout(checkoutNumber);
+
+  useEffect(() => {
+    if (checkoutData) {
+      setAvailableMileage(checkoutData.user.mileage);
+      setMileage(checkoutData.user.mileage);
+      return setCoupons(checkoutData.user.coupons);
+    }
+  }, [checkoutData]);
+
   const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
 
   useEffect(() => {
-    console.log("쳌아웃 훅테스트중1:::", checkoutTotalData);
-
     return MutateCheckoutTotalData({
       ...checkoutTotalData,
       checkoutData,
       selectCouponId,
+      checkoutNumber,
     });
   }, [checkoutTotalData]);
 
@@ -70,14 +77,11 @@ const Order = ({ match }) => {
     }
   }
 
-  // MutateCheckoutTotalData({
-  //   ...checkoutTotalData,
-  //   checkoutData,
-  //   selectCouponId,
-  // });
   console.log("쳌아웃 훅테스트중2:::", checkoutTotalData);
-  // setChkDat(checkoutData);
-  // console.log("쳌 테스트중:::", chkDat);
+  console.log("쳌아웃 훅테스트중33333:::", checkoutNumber);
+
+  const userCoupons = checkoutData.user.coupons;
+  const userMileage = checkoutData.user.mileage;
 
   const items = checkoutData.line_items;
   const totalPrice = items
@@ -104,12 +108,10 @@ const Order = ({ match }) => {
       (checkoutTotalData.checkoutData.user.shipping_address &&
         checkoutTotalData.deliveryClassName === "delivery_write old")
     ) {
-      if (!checkoutTotalData.paymentName) {
-        return alert("결제방법을 선택해주세요.");
-      }
-
-      if (checkoutTotalData.agreeChecked === false) {
-        return alert("주문 동의에 체크를 하셔야 주문이 가능합니다.");
+      const { valid, invalidMsg } =
+        validateWhenExistOrderHistory(checkoutTotalData);
+      if (!valid) {
+        return alert(invalidMsg);
       }
 
       axios
@@ -141,7 +143,7 @@ const Order = ({ match }) => {
           console.log(response);
           console.log("주문성공");
 
-          window.location.replace("/orderCheck");
+          window.location.replace(`/orderCheck/${checkoutNumber}`);
         })
         .catch(function (error) {
           console.log(error);
@@ -220,7 +222,7 @@ const Order = ({ match }) => {
               postal_code: checkoutTotalData.address1,
               address1: checkoutTotalData.addressDetail1,
               address2: checkoutTotalData.addressDetail2,
-              note: checkoutTotalData.requirement,
+              note: checkoutTotalData.requirement1,
               phone1:
                 checkoutTotalData.te1 +
                 checkoutTotalData.tel2 +
@@ -229,7 +231,7 @@ const Order = ({ match }) => {
                 checkoutTotalData.te4 +
                 checkoutTotalData.tel5 +
                 checkoutTotalData.tel6,
-              request_note: checkoutTotalData.requirement,
+              request_note: checkoutTotalData.requirement1,
             },
             user_coupon_id_to_be_used: checkoutTotalData.selectCouponId,
             mileage_to_be_used: checkoutTotalData.usedMileage,
@@ -246,7 +248,7 @@ const Order = ({ match }) => {
           console.log(response);
           console.log("주문성공");
 
-          window.location.replace("/orderCheck");
+          window.location.replace(`/orderCheck/${checkoutNumber}`);
         })
         .catch(function (error) {
           console.log(error);
@@ -328,7 +330,7 @@ const Order = ({ match }) => {
               postal_code: checkoutTotalData.address1,
               address1: checkoutTotalData.addressDetail1,
               address2: checkoutTotalData.addressDetail2,
-              note: checkoutTotalData.requirement,
+              note: checkoutTotalData.requirement1,
               phone1:
                 checkoutTotalData.te1 +
                 checkoutTotalData.tel2 +
@@ -337,7 +339,7 @@ const Order = ({ match }) => {
                 checkoutTotalData.te4 +
                 checkoutTotalData.tel5 +
                 checkoutTotalData.tel6,
-              request_note: checkoutTotalData.requirement,
+              request_note: checkoutTotalData.requirement1,
             },
             user_coupon_id_to_be_used: checkoutTotalData.selectCouponId,
             mileage_to_be_used: checkoutTotalData.usedMileage,
@@ -354,7 +356,7 @@ const Order = ({ match }) => {
           console.log(response);
           console.log("주문성공");
 
-          window.location.replace("/orderCheck");
+          window.location.replace(`/orderCheck/${checkoutNumber}`);
         })
         .catch(function (error) {
           console.log(error);
@@ -363,36 +365,94 @@ const Order = ({ match }) => {
   };
 
   const handleMileage = (e) => {
-    if (e.target.value > availableMileage) {
-      alert("보유 마일리지보다 많이 사용할 수 없습니다.");
-      e.target.value = availableMileage;
+    let targetValue = e.target.value
+      .replace(/[^0-9.]/g, "")
+      .replace(/(\.*)\./g, "")
+      .replace(/(^0+)/, "");
+
+    if (
+      (targetValue > 0 && availableMileage === "0") ||
+      (targetValue > 0 && availableMileage === 0) ||
+      (targetValue > 0 && availableMileage === "") ||
+      (targetValue > 0 && availableMileage === undefined) ||
+      availableMileage === "0" ||
+      availableMileage === ""
+    ) {
+      alert("보유 마일리지보다 많이 입력할 수 없습니다.");
       setMileage(0);
-      setUsedMileage(availableMileage);
+      return setUsedMileage(0);
     }
-    setMileage(availableMileage - e.target.value);
-    setUsedMileage(e.target.value);
+
+    if (targetValue > availableMileage) {
+      alert("보유 마일리지보다 많이 사용할 수 없습니다.");
+      targetValue = availableMileage;
+      setMileage(0);
+      return setUsedMileage(availableMileage);
+    }
+
+    setMileage(availableMileage - targetValue);
+    return setUsedMileage(targetValue);
   };
 
   const allMileage = (e) => {
     if (e.target.name === "allMileage") {
+      if (usedMileage === availableMileage && mileage === 0) {
+        setMileage(availableMileage);
+        setUsedMileage(0);
+        return (e.target.name = "mile");
+      }
+
+      if (!checkoutData.user.mileage) {
+        setMileage(0);
+        return setUsedMileage(0);
+      }
+
+      if (!usedMileage || usedMileage === undefined) {
+        setUsedMileage(0);
+      }
       console.log("모두사용 버튼 클릭");
       setMileage(0);
       setUsedMileage(availableMileage);
-      e.target.name = "mile";
-    } else if (e.target.name === "mile") {
-      setMileage(availableMileage);
-      setUsedMileage(0);
-      e.target.name = "allMileage";
+      return (e.target.name = "mile");
+    }
+
+    if (e.target.name === "mile") {
+      if (usedMileage === availableMileage && mileage === 0) {
+        setMileage(availableMileage);
+        setUsedMileage(0);
+        return (e.target.name = "allMileage");
+      }
+
+      if (!checkoutData.user.mileage) {
+        console.log("마일리지 확인중>>>>>>>>");
+        setMileage(0);
+        return setUsedMileage(0);
+      }
+
+      if (!usedMileage || usedMileage === undefined) {
+        setUsedMileage(0);
+      }
+
+      setMileage(0);
+      setUsedMileage(availableMileage);
+      return (e.target.name = "allMileage");
     }
   };
 
   const handleSelect = (e) => {
     if (e.target.value === "가입축하 20% 할인") {
       console.log("20퍼센트 할인");
+
       setSelectCouponId(coupons[0].id);
       return setSelectOption(0.2);
     } else if (e.target.value === "가입축하 5,000원 할인") {
       console.log("5천원 할인");
+
+      if (coupons.length < 2) {
+        setSelectCouponId(coupons[0].id);
+        return setSelectOption(5000);
+      }
+
       setSelectCouponId(coupons[1].id);
       return setSelectOption(5000);
     } else {
@@ -412,7 +472,8 @@ const Order = ({ match }) => {
     console.log("handleChangeDelivery checkout ", checkout);
   };
 
-  console.log("오더 데이터 확인", checkoutData);
+  console.log("선택쿠폰 아이디값:::", selectCouponId);
+  console.log("선택쿠폰 확인하자...:::", coupons);
 
   return (
     <div className="order_wrapper">
@@ -427,6 +488,8 @@ const Order = ({ match }) => {
             isMobile={isMobile}
           />
           <OrderCoupon
+            checkoutData={checkoutData}
+            coupons={coupons}
             mileage={mileage}
             usedMileage={usedMileage}
             selectOption={selectOption}
@@ -475,6 +538,8 @@ const Order = ({ match }) => {
             isMobile={isMobile}
           />
           <OrderCoupon
+            checkoutData={checkoutData}
+            coupons={coupons}
             mileage={mileage}
             usedMileage={usedMileage}
             selectOption={selectOption}
@@ -520,6 +585,8 @@ const Order = ({ match }) => {
             isMobile={isMobile}
           />
           <OrderCoupon
+            checkoutData={checkoutData}
+            coupons={coupons}
             mileage={mileage}
             usedMileage={usedMileage}
             selectOption={selectOption}
@@ -549,3 +616,23 @@ const Order = ({ match }) => {
 };
 
 export default Order;
+
+export function validateCheckoutWhenExistOrderHistory(checkoutTotalData) {
+  if (!checkoutTotalData.paymentName) {
+    return {
+      valid: false,
+      invalidMsg: "결제방법을 선택해주세요.",
+    };
+  }
+
+  if (checkoutTotalData.agreeChecked === false) {
+    return {
+      valid: false,
+      invalidMsg: "주문 동의에 체크를 하셔야 주문이 가능합니다.",
+    };
+  }
+
+  return {
+    valid: true,
+  };
+}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import jwt_decode from "jwt-decode";
 
 const OrderCoupon = ({
+  checkoutData,
   mileage,
   usedMileage,
   selectOption,
@@ -12,10 +12,7 @@ const OrderCoupon = ({
   allMileage,
   value,
 }) => {
-  const token = localStorage.getItem("token");
-  const decoded = jwt_decode(token);
-  const [coupons, setCoupons] = useState(decoded.user.coupons);
-  console.log(coupons);
+  const [coupons, setCoupons] = useState(checkoutData.user.coupons);
 
   return (
     <section className="coupon_zone">
@@ -25,14 +22,18 @@ const OrderCoupon = ({
         {isTablet && (
           <div className="info_head_coupon">
             <span>
-              쿠폰 {selectOption > 0 ? "1" : "0"}장 / {usedMileage}p 사용
+              쿠폰 {selectOption > 0 ? "1" : "0"}장 /{" "}
+              {usedMileage === 0 || usedMileage === "" ? "0" : usedMileage}p
+              사용
             </span>
           </div>
         )}
         {isMobile && (
           <div className="info_head_coupon">
             <span>
-              쿠폰 {selectOption > 0 ? "1" : "0"}장 / {usedMileage}p 사용
+              쿠폰 {selectOption > 0 ? "1" : "0"}장 /{" "}
+              {usedMileage === 0 || usedMileage === "" ? "0" : usedMileage}p
+              사용
             </span>
           </div>
         )}
@@ -48,12 +49,17 @@ const OrderCoupon = ({
             onChange={handleSelectOption}
             id="couponSelect"
           >
-            <option value=""> 사용가능 쿠폰 {coupons.length}장</option>
-            {coupons.map((coupon) => (
-              <option key={coupon.id} value={coupon.coupon_name}>
-                {coupon.coupon_name}
-              </option>
-            ))}
+            <option value="">
+              {" "}
+              사용가능 쿠폰 {coupons ? coupons.length : "0"}장
+            </option>
+            {coupons
+              ? coupons.map((coupon) => (
+                  <option key={coupon.id} value={coupon.coupon_name}>
+                    {coupon.coupon_name}
+                  </option>
+                ))
+              : ""}
           </select>
         </div>
         <div className="coupon_box mileage">

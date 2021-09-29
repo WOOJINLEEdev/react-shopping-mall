@@ -103,6 +103,7 @@ const OrderDelivery = ({
     requirement,
     requirement1,
     deliveryClassName,
+    deliveryClassName1,
   });
 
   useEffect(() => {
@@ -118,9 +119,9 @@ const OrderDelivery = ({
       setDeliveryClassName("delivery_write disabled");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
-      setDeliveryClassName1("delivery_write old");
+      return setDeliveryClassName1("delivery_write old");
     }
-  }, [checkoutTotalData.checkoutData]);
+  }, [checkoutTotalData]);
 
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
@@ -187,8 +188,6 @@ const OrderDelivery = ({
       setRequirementTest("기존 배송지");
     }
   };
-
-  console.log("zzzzzz", requirementTest);
 
   const handleAddressBtn = () => {
     console.log(deliveryWrite);
@@ -258,7 +257,10 @@ const OrderDelivery = ({
   const handleDeliveryRequirement = (e) => {
     const targetValue = e.target.value;
 
-    if (!deliveryWrite || deliveryWrite === "기존 배송지") {
+    if (
+      deliveryWrite === "기존 배송지" ||
+      deliveryClassName === "delivery_write old"
+    ) {
       setRequirement(targetValue);
       if (targetValue === "직접 입력") {
         return setDeliveryRequirementWrite("delivery_requirement_write");
@@ -268,6 +270,18 @@ const OrderDelivery = ({
     }
 
     if (deliveryWrite === "신규 입력") {
+      setRequirement1(targetValue);
+      if (targetValue === "직접 입력") {
+        return setDeliveryRequirementWrite1("delivery_requirement_write");
+      } else {
+        return setDeliveryRequirementWrite1("hide");
+      }
+    }
+
+    if (
+      deliveryClassName === "delivery_write disabled" ||
+      deliveryClassName1 === "delivery_write old"
+    ) {
       setRequirement1(targetValue);
       if (targetValue === "직접 입력") {
         return setDeliveryRequirementWrite1("delivery_requirement_write");
@@ -393,7 +407,7 @@ const OrderDelivery = ({
           <div className={deliveryForm}>
             <div className="delivery_box">
               <div className="label_box">
-                <label htmlfor="deliveryTitle">배송지명</label>
+                <label htmlFor="deliveryTitle">배송지명</label>
               </div>
               <input
                 type="text"
@@ -404,7 +418,7 @@ const OrderDelivery = ({
 
             <div className="delivery_box">
               <div className="label_box">
-                <label htmlfor="deliveryName">
+                <label htmlFor="deliveryName">
                   수령인<span className="vital">*</span>
                 </label>
               </div>
@@ -421,7 +435,7 @@ const OrderDelivery = ({
 
             <div className="delivery_box">
               <div className="label_box">
-                <label htmlfor="sample6_address">
+                <label htmlFor="sample6_address">
                   배송지<span className="vital">*</span>
                 </label>
               </div>
@@ -487,7 +501,7 @@ const OrderDelivery = ({
 
             <div className="delivery_box">
               <div className="label_box">
-                <label htmlfor="phoneFirst">
+                <label htmlFor="phoneFirst">
                   연락처1<span className="vital">*</span>
                 </label>
               </div>
@@ -544,7 +558,7 @@ const OrderDelivery = ({
 
             <div className="delivery_box">
               <div className="label_box">
-                <label htmlfor="subPhoneFirst">연락처2</label>
+                <label htmlFor="subPhoneFirst">연락처2</label>
               </div>
               <div className="tel_wrap">
                 <input
@@ -739,7 +753,7 @@ const OrderDelivery = ({
       <div className={deliveryForm1}>
         <div className="delivery_box">
           <div className="label_box">
-            <label htmlfor="deliveryTitle1">배송지명</label>
+            <label htmlFor="deliveryTitle1">배송지명</label>
           </div>
           <input
             type="text"
@@ -751,7 +765,7 @@ const OrderDelivery = ({
 
         <div className="delivery_box">
           <div className="label_box">
-            <label htmlfor="deliveryName1">
+            <label htmlFor="deliveryName1">
               수령인<span className="vital">*</span>
             </label>
           </div>
@@ -765,7 +779,7 @@ const OrderDelivery = ({
 
         <div className="delivery_box">
           <div className="label_box">
-            <label htmlfor="sample5_address">
+            <label htmlFor="sample5_address">
               배송지<span className="vital">*</span>
             </label>
           </div>
@@ -813,7 +827,7 @@ const OrderDelivery = ({
 
         <div className="delivery_box">
           <div className="label_box">
-            <label htmlfor="phone1First">
+            <label htmlFor="phone1First">
               연락처1<span className="vital">*</span>
             </label>
           </div>
@@ -852,7 +866,7 @@ const OrderDelivery = ({
 
         <div className="delivery_box">
           <div className="label_box">
-            <label htmlfor="phone1Second">연락처2</label>
+            <label htmlFor="phone1Second">연락처2</label>
           </div>
           <div className="tel_wrap">
             <input
