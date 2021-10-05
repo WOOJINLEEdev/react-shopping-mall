@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import SearchInputBtn from "./SearchInputBtn";
 import useMenuCollapsed from "../Hooks/useMenuCollapsed";
+import useSearchResult from "../Hooks/useSearchResult";
+import axios from "axios";
+import { GiMatterStates } from "react-icons/gi";
 
 const Menu = ({ show }) => {
   const [searchClassName, setSearchClassName] = useState("menu_search");
@@ -11,7 +14,29 @@ const Menu = ({ show }) => {
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("menu_search_btn");
   const history = useHistory();
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
   const { data, mutate } = useMenuCollapsed();
+  const { searchResultData, searchResultMutate } = useSearchResult();
+
+  const handleSearchBtn = () => {
+    axios
+      .get(
+        `http://localhost:8282/v1/products?limit=8&offset=10&name=${searchResultData}`,
+        config
+      )
+      .then(function (response) {
+        console.log(response);
+        history.push("/searchResult");
+        mutate(!data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   const handleItemClick = () => {
     history.push("/selectBoard");
@@ -29,6 +54,7 @@ const Menu = ({ show }) => {
             searchClassName={searchClassName}
             SearchInputClassName={SearchInputClassName}
             SearchBtnClassName={SearchBtnClassName}
+            handleSearchBtn={handleSearchBtn}
           />
         </MenuItem>
       </MenuList>
@@ -69,6 +95,8 @@ const MenuItem = styled.li`
   padding: 20px 30px;
   vertical-align: middle;
   border: 2px solid #efefef;
+  border-left: none;
+  border-right: none;
 
   & + & {
     border-top: none;
