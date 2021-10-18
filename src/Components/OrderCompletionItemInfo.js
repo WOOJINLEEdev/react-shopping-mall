@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -20,7 +20,7 @@ const OrderCompletionItemInfo = ({
   return (
     <OrderItemInfoWrap>
       <div className="order_item_info">
-        <div className="order_info_head_wrap">
+        <div className="order_info_head_wrap orderItemInfo">
           <h2 className="order_info_header">주문상품 정보</h2>
           {isPc && (
             <button
@@ -64,7 +64,7 @@ const OrderCompletionItemInfo = ({
 
                 <div className="list_info">
                   <div className="list_info_text infoHead">
-                    <label className="list_info_name" htmlfor="itemName">
+                    <label className="list_info_name" htmlFor="itemName">
                       제품명
                     </label>
                     <p className="list_goods name" id="itemName">

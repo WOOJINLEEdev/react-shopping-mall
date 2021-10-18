@@ -58,10 +58,6 @@ const OrderCompletion = ({ match }) => {
   const remainder = items.filter((item) => item !== firstItem);
   const itemQuantity = items.map((item) => item.quantity);
   const sum = itemQuantity.reduce((a, b) => a + b);
-  console.log("오더완료 아이템즈::", items);
-  console.log("오더완료 퍼스트아이템::", firstItem);
-  console.log("오더완료 리메인더::", remainder);
-  console.log("오더완료 합계::", sum);
 
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {
@@ -119,8 +115,6 @@ const OrderCompletion = ({ match }) => {
         </HeadContent>
       </Head>
 
-      <OrderCompletionDeliveryInfo orderData={orderData} />
-      <OrderCompletionPayInfo orderData={orderData} />
       <OrderCompletionItemInfo
         items={items}
         firstItem={firstItem}
@@ -136,6 +130,8 @@ const OrderCompletion = ({ match }) => {
         isTablet={isTablet}
         isMobile={isMobile}
       />
+      <OrderCompletionDeliveryInfo orderData={orderData} />
+      <OrderCompletionPayInfo orderData={orderData} />
     </Wrapper>
   );
 };
@@ -162,13 +158,11 @@ const Head = styled.div`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     border: none;
-
     padding: 20px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     border: none;
-
     padding: 20px;
   }
 `;
@@ -203,7 +197,6 @@ const CompletionHead = styled.div`
       height: 100px;
       margin: 0 auto;
     }
-  }
   }
 `;
 
@@ -245,6 +238,7 @@ const HeadTitle = styled.h2`
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    line-height: 100px;
   }
 `;
 

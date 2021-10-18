@@ -20,7 +20,7 @@ const OrderCompletionPayInfo = ({ orderData }) => {
   };
 
   return (
-    <div>
+    <div style={{ borderBottom: "3px solid #333" }}>
       <div className="order_info_head_wrap">
         <h2 className="order_info_header">결제 정보</h2>
         <button
@@ -43,14 +43,18 @@ const OrderCompletionPayInfo = ({ orderData }) => {
         <li className="order_pay_info">
           <div className="order_pay_info_label">총 상품금액</div>
           <div>
-            {orderData[0].total_price
+            {orderData[0].product_price
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">배송비</div>
-          <div>{orderData[0].total_price < 70000 ? "+3,000" : "0"}</div>
+          <div>
+            {orderData[0].shipping_price !== "0" ? "+" : ""}
+            {orderData[0].shipping_price}
+          </div>
+          {/* <div>{orderData[0].total_price < 70000 ? "+3,000" : "0"}</div> */}
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">할인금액</div>
@@ -63,6 +67,7 @@ const OrderCompletionPayInfo = ({ orderData }) => {
             }}
           >
             <span style={{ paddingBottom: "10px" }}>
+              {orderData[0].total_discount > 0 ? "-" : ""}
               {orderData[0].total_discount
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -70,11 +75,23 @@ const OrderCompletionPayInfo = ({ orderData }) => {
             <ul style={{ width: "100%" }}>
               <UsedCouponMileage>
                 <CouponTitle>쿠폰</CouponTitle>
-                <div>{orderData[0].used_coupon_id}</div>
+                <div>
+                  {!orderData[0].used_coupon
+                    ? 0
+                    : orderData[0].used_coupon.applied_amount
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </div>
               </UsedCouponMileage>
               <UsedCouponMileage>
                 <MileageTitle>마일리지</MileageTitle>
-                <div>{orderData[0].used_point}</div>
+                <div>
+                  {!orderData[0].used_point
+                    ? "0"
+                    : orderData[0].used_point
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </div>
               </UsedCouponMileage>
             </ul>
           </div>

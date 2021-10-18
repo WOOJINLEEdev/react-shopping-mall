@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 import CommonModal from "./CommonModal";
@@ -13,6 +14,7 @@ Modal.setAppElement("#root");
 const MyPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+
   const [modalText, setModalText] = useState("정말 로그아웃 하시겠습니까?");
   const [btnText1, setBtnText1] = useState("예");
   const [btnText2, setBtnText2] = useState("아니오");
@@ -31,8 +33,6 @@ const MyPage = () => {
       .get("http://localhost:8282/v1/me", config)
       .then(function (response) {
         console.log(response);
-        console.log("마이페이지 쿠폰 확인:", response.data);
-        console.log("마이페이지 쿠폰 확인:", response.data);
         setMyPageData(response.data);
         setMyCoupon(response.data.coupons);
         setMyMileage(response.data.mileage);
@@ -50,9 +50,6 @@ const MyPage = () => {
   if (!myMileage || myMileage === undefined) {
     <div>로딩 중.....</div>;
   }
-
-  console.log("쿠폰확인테스트", cart);
-  console.log("마이페이지 쿠폰 데이터 확인 테스트:::", myCoupon);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -143,7 +140,12 @@ const MyPage = () => {
             </span>
           </Mileage>
         </CouponMileageWrap>
-        <li className="info_li">주문내역 조회</li>
+        <Link
+          to="/myOrderCheck"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <li className="info_li">주문내역 조회</li>
+        </Link>
         <li className="info_li">배송지 등록 / 변경</li>
         <li className="info_li">
           <StarRating />
@@ -217,8 +219,9 @@ const Coupon = styled.li`
   border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   margin: 0;
+  cursor: pointer;
 
-  :hover {
+  &:hover {
     border: 1px solid #efefef;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
     transition: all 0.25s;
@@ -241,14 +244,6 @@ const Mileage = styled.li`
   font-weight: bold;
   border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-
-  // :hover {
-  //   border: 1px solid #efefef;
-  //   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-  //   transition: all 0.25s;
-  //   transform: translateY(-2px);
-  //   color: green;
-  // }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 40%;

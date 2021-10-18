@@ -39,7 +39,7 @@ const OrderCompletionDeliveryInfo = ({ orderData }) => {
       <div className={deliveryInfoClass}>
         <ul>
           <DeliveryInfo>
-            <div>수령인</div>
+            <div style={{ width: "20%" }}>수령인</div>
             <div>
               {orderData[0].shipping_address.recipient_name} /{" "}
               {orderData[0].shipping_address.phone1.substring(0, 3)}-
@@ -48,7 +48,7 @@ const OrderCompletionDeliveryInfo = ({ orderData }) => {
             </div>
           </DeliveryInfo>
           <DeliveryInfo>
-            <div>배송지</div>
+            <div style={{ minWidth: "20%" }}>배송지</div>
             <div>
               {orderData[0].shipping_address.address1}{" "}
               {orderData[0].shipping_address.address2}
