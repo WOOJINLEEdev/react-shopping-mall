@@ -1,30 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiTwotoneStar } from "react-icons/ai";
 import styled from "styled-components";
+import axios from "axios";
 
-const StarWrap = styled.div`
-  & svg {
-    color: #c7c7c7;
-    cursor: pointer;
-  }
-
-  & div:hover svg {
-    color: orange;
-  }
-
-  & svg:hover ~ svg {
-    color: #c7c7c7;
-  }
-
-  .clickedstar {
-    color: gold;
-  }
-`;
-
-const StarRating = () => {
+const StarRating = ({ myRating }) => {
   const stars = [1, 2, 3, 4, 5];
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const [point, setPoint] = useState("0");
+
+  const token = localStorage.getItem("token");
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  useEffect(() => {
+    if (myRating) {
+      setPoint(myRating);
+      let clickStates = [...clicked];
+      for (let i = 0; i < myRating; i++) {
+        clickStates[i] = true;
+      }
+
+      setClicked(clickStates);
+    }
+  }, [myRating]);
 
   const handleStarClick = (e, index) => {
     e.preventDefault();
@@ -40,6 +39,21 @@ const StarRating = () => {
 
     setClicked(clickStates);
     setPoint(point);
+
+    axios
+      .put(
+        "http://localhost:8282/v1/me/rating",
+        {
+          rating: point,
+        },
+        config
+      )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -59,31 +73,27 @@ const StarRating = () => {
         </div>
         <div style={{ lineHeight: "27px", padding: "5px" }}>{point}</div>
       </div>
-
-      <div class="star-rating">
-        <input type="radio" id="5-stars" name="rating" value="5" />
-        <label for="5-stars" class="star">
-          &#9733;
-        </label>
-        <input type="radio" id="4-stars" name="rating" value="4" />
-        <label for="4-stars" class="star">
-          &#9733;
-        </label>
-        <input type="radio" id="3-stars" name="rating" value="3" />
-        <label for="3-stars" class="star">
-          &#9733;
-        </label>
-        <input type="radio" id="2-stars" name="rating" value="2" />
-        <label for="2-stars" class="star">
-          &#9733;
-        </label>
-        <input type="radio" id="1-star" name="rating" value="1" />
-        <label for="1-star" class="star">
-          &#9733;
-        </label>
-      </div>
     </StarWrap>
   );
 };
 
 export default StarRating;
+
+const StarWrap = styled.div`
+  & svg {
+    color: #c7c7c7;
+    cursor: pointer;
+  }
+
+  & div:hover svg {
+    color: orange;
+  }
+
+  & svg:hover ~ svg {
+    color: #c7c7c7;
+  }
+
+  .clickedstar {
+    color: gold;
+  }
+`;
