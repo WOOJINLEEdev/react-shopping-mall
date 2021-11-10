@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
-import useSWR from "swr";
-import axios from "axios";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import shoppingCartImg from "../images/shopping-cart.png";
@@ -12,65 +10,42 @@ import useMenuCollapsed from "../Hooks/useMenuCollapsed";
 import useSearch from "../Hooks/useSearch";
 import useSearchLocation from "../Hooks/useSearchLocation";
 import { ReactComponent as MenuImg } from "../images/menu.svg";
+import axios from "axios";
 
 const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
-
   const token = localStorage.getItem("token");
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  useEffect(() => {
+    axios
+      .put("http://localhost:8282/v1/me/visit", null, config)
+      .then(function (response) {
+        console.log(response);
+        console.log("visit", response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { data, mutate } = useMenuCollapsed();
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
 
-  if (cartError)
-    return (
-      <header className="header">
-        <Link to="/" className="header_link">
-          <h1 className="header_title">
-            <span className="visually_hidden">LOGO</span>
-          </h1>
-        </Link>
-
-        <SignCartWrap>
-          {isPc && (
-            <div className="header_search">
-              <img src={searchImg} className="search_img" alt="search"></img>
-              <span className="visually_hidden">검색</span>
-            </div>
-          )}
-          <Link to={!token ? "/login" : "/mypage"} className="signin_link">
-            <div className="signin">
-              <img src={signInImg} className="signin_img" alt="로그인"></img>
-              <span className="visually_hidden">로그인</span>
-            </div>
-          </Link>
-          <Link to="/cart" className="cart_link">
-            <div className="header_cart">
-              <img src={shoppingCartImg} className="cart_img" alt="cart"></img>
-              <span className="visually_hidden">장바구니</span>
-            </div>
-          </Link>
-        </SignCartWrap>
-      </header>
-    );
+  if (cartError) return "에러 발생...";
   if (loadingCart) return "로딩중...";
 
   const cartAmount = cart.items.length;
 
   const handleMenuClick = () => {
-    console.log("메뉴 클릭");
     mutate(!data);
   };
 
   const handleSearchClick = () => {
-    console.log("검색 버튼 클릭했습니다.");
     searchMutate(!searchData);
     console.log("검색버튼클릭", location.pathname);
     searchLocationMutate(location.pathname);
@@ -79,18 +54,22 @@ const Header = ({ location }) => {
   return (
     <header className="header">
       <MenuHomeWrap>
-        <MenuWrap onClick={handleMenuClick}>
+        <MenuWrap
+          onClick={handleMenuClick}
+          tabIndex="0"
+          onKeyPress={handleMenuClick}
+        >
           <MenuImg fill="#333" width="20" height="20" margin="20px" />
         </MenuWrap>
 
         <Link to="/" className="header_link">
-          <h1 className="header_title">WOOJINLEE</h1>
+          <h1 className="header_title">WJ Shop</h1>
         </Link>
       </MenuHomeWrap>
 
       <SignCartWrap>
         {isPc && (
-          <Link to="/" className="about_link">
+          <Link to="/aboutMe" className="about_link">
             <div className="header_about">
               <span>ABOUT</span>
               <span>ME</span>
@@ -98,14 +77,22 @@ const Header = ({ location }) => {
           </Link>
         )}
         {isPc && (
-          <div className="header_search" onClick={handleSearchClick}>
-            <img src={searchImg} className="search_img" alt="search"></img>
+          <div
+            className="header_search"
+            onClick={handleSearchClick}
+            tabIndex="0"
+          >
+            <img
+              src={searchImg}
+              className="search_img"
+              alt="search_button_image"
+            ></img>
             <span className="visually_hidden">검색</span>
           </div>
         )}
         <Link to={!token ? "/login" : "/mypage"} className="signin_link">
           <div className="signin">
-            <img src={signInImg} className="signin_img" alt="로그인"></img>
+            <img src={signInImg} className="signin_img" alt="sign_in"></img>
             <span className="visually_hidden">로그인</span>
           </div>
         </Link>
