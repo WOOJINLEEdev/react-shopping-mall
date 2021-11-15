@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import styled from "styled-components";
-import axios from "axios";
+import { instance } from "../utils/http-client";
 
 const MyPageChart = () => {
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
   const [series, setSeries] = useState();
   const [options, setOptions] = useState();
 
@@ -40,10 +35,9 @@ const MyPageChart = () => {
     const visitStartDate = `${yyyymm}-${firstDay}`;
     const visitEndDate = `${yyyymmdd}`;
 
-    axios
+    instance
       .get(
-        `http://localhost:8282/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`,
-        config
+        `/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
       )
       .then(function (response) {
         let visitCount =

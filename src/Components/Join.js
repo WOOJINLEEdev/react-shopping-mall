@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
@@ -11,6 +10,7 @@ import {
   userMonth,
   userDate,
 } from "./LogInValidation";
+import { instance } from "../utils/http-client";
 
 const Join = () => {
   const [items, setItems] = useState({
@@ -46,8 +46,8 @@ const Join = () => {
     console.log("Form data", values);
     console.log("이메일, 이름", values.email, values.name);
 
-    axios
-      .post("http://localhost:8282/v1/auth/join", {
+    instance
+      .post("/v1/auth/join", {
         user_id: values.id,
         user_password: values.password2,
         name: values.name,

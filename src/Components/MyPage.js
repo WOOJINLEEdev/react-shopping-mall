@@ -5,37 +5,39 @@ import styled from "styled-components";
 import CommonModal from "./CommonModal";
 import StarRating from "./StarRating";
 import MyPageCouponModal from "./MyPageCouponModal";
+import MyPageDeliveryModal from "./MyPageDeliveryModal";
 import { useHistory } from "react-router";
 import useMyCart from "../Hooks/useMyCart";
-import axios from "axios";
+import MyPageChart from "./MyPageChart";
+import { instance } from "../utils/http-client";
 
 Modal.setAppElement("#root");
 
 const MyPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen3, setIsOpen3] = useState(false);
 
   const [modalText, setModalText] = useState("정말 로그아웃 하시겠습니까?");
   const [btnText1, setBtnText1] = useState("예");
   const [btnText2, setBtnText2] = useState("아니오");
 
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
   const [myPageData, setMyPageData] = useState();
   const [myCoupon, setMyCoupon] = useState();
   const [myMileage, setMyMileage] = useState();
+  const [myDeliveryAddress, setMyDeliveryAddress] = useState([]);
+  const [myRating, setMyRating] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8282/v1/me", config)
+    instance
+      .get("/v1/me")
       .then(function (response) {
         console.log(response);
         setMyPageData(response.data);
         setMyCoupon(response.data.coupons);
         setMyMileage(response.data.mileage);
+        setMyDeliveryAddress(response.data.shipping_address);
+        setMyRating(response.data.rating);
       })
       .catch(function (error) {
         console.log(error);
@@ -43,11 +45,12 @@ const MyPage = () => {
   }, []);
 
   const history = useHistory();
+
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
   if (cartError) return <div>에러 발생...</div>;
   if (loadingCart) return <div>로딩 중...</div>;
-  if (!myMileage || myMileage === undefined) {
+  if (!myMileage) {
     <div>로딩 중.....</div>;
   }
 
@@ -82,6 +85,14 @@ const MyPage = () => {
     setIsOpen2(false);
   };
 
+  const handleDeliveryAddress = () => {
+    setIsOpen3(true);
+  };
+
+  const onRequestClose3 = () => {
+    setIsOpen3(false);
+  };
+
   return (
     <MyPageWrap className="main_wrap">
       <h2 className="main_title">마이페이지</h2>
@@ -99,27 +110,37 @@ const MyPage = () => {
         onRequestClose2={onRequestClose2}
         myCoupon={myCoupon}
       />
+      <MyPageDeliveryModal
+        isOpen3={isOpen3}
+        onRequestClose3={onRequestClose3}
+        myDeliveryAddress={myDeliveryAddress}
+      />
 
       <MyInfo>
-        <p className="greet">
+        <h3 className="greet">
           <span className="greet_user">
             {!myPageData || myPageData === undefined ? "" : myPageData.name} (
             {!myPageData || myPageData === undefined ? "" : myPageData.user_id})
           </span>{" "}
           회원님, 안녕하세요!
-        </p>
+        </h3>
         <ModifyLogoutWrap className="modify_logout_wrap">
-          <div className="myInfo_modify">회원정보 수정</div>
-          <div className="myInfo_logout" onClick={handleLogoutBtn}>
+          <button className="myInfo_modify">회원정보 수정</button>
+          <button className="myInfo_logout" onClick={handleLogoutBtn}>
             로그아웃
-          </div>
+          </button>
         </ModifyLogoutWrap>
       </MyInfo>
 
       <ul className="my_info_wrap">
         <CouponMileageWrap>
-          <Coupon className="info_li_coupon" onClick={handleCouponModal}>
-            사용가능 쿠폰
+          <Coupon
+            className="info_li_coupon"
+            onClick={handleCouponModal}
+            tabIndex="0"
+            onKeyPress={handleCouponModal}
+          >
+            <h3>사용가능 쿠폰</h3>
             <span
               style={{
                 display: "block",
@@ -131,8 +152,8 @@ const MyPage = () => {
               {myCoupon === 0 || myCoupon === undefined ? 0 : myCoupon.length}
             </span>
           </Coupon>
-          <Mileage>
-            마일리지{" "}
+          <Mileage tabIndex="0">
+            <h3>마일리지</h3>{" "}
             <span className="info_mileage_in">
               {myMileage === 0 || myMileage === undefined
                 ? 0
@@ -143,12 +164,26 @@ const MyPage = () => {
         <Link
           to="/myOrderCheck"
           style={{ textDecoration: "none", color: "black" }}
+          tabIndex="0"
         >
-          <li className="info_li">주문내역 조회</li>
+          <li className="info_li">
+            <h3>주문내역 조회</h3>
+          </li>
         </Link>
-        <li className="info_li">배송지 등록 / 변경</li>
+        <li
+          className="info_li"
+          onClick={handleDeliveryAddress}
+          tabIndex="0"
+          onKeyPress={handleDeliveryAddress}
+        >
+          <h3>배송지 등록 / 변경</h3>
+        </li>
+        <li className="info_li" tabIndex="0">
+          <StarRating myRating={myRating} />
+        </li>
         <li className="info_li">
-          <StarRating />
+          <h3> Chart</h3>
+          <MyPageChart />
         </li>
       </ul>
     </MyPageWrap>
@@ -196,8 +231,9 @@ const MyInfo = styled.div`
 `;
 
 const ModifyLogoutWrap = styled.div`
+  display: flex;
+
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    display: flex;
     width: 100%;
     justify-content: center;
   }

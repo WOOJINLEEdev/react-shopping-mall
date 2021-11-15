@@ -1,15 +1,10 @@
 import useSWR from "swr";
-import axios from "axios";
+import { instance } from "../utils/http-client";
 
 function useMyPageData() {
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
-  const myPageUrl = "http://localhost:8282/v1/me";
+  const myPageUrl = "/v1/me";
   const fetcher = (url) => {
-    return axios.get(url, config).then((res) => res.data);
+    return instance.get(url).then((res) => res.data);
   };
 
   const { data, error, mutate } = useSWR(myPageUrl, fetcher);

@@ -4,8 +4,7 @@ import { useHistory } from "react-router-dom";
 import SearchInputBtn from "./SearchInputBtn";
 import useMenuCollapsed from "../Hooks/useMenuCollapsed";
 import useSearchResult from "../Hooks/useSearchResult";
-import axios from "axios";
-import { GiMatterStates } from "react-icons/gi";
+import { instance } from "../utils/http-client";
 
 const Menu = ({ show }) => {
   const [searchClassName, setSearchClassName] = useState("menu_search");
@@ -14,23 +13,25 @@ const Menu = ({ show }) => {
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("menu_search_btn");
   const history = useHistory();
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
 
   const { data, mutate } = useMenuCollapsed();
   const { searchResultData, searchResultMutate } = useSearchResult();
 
-  const handleSearchBtn = () => {
-    axios
-      .get(
-        `http://localhost:8282/v1/products?limit=8&offset=10&name=${searchResultData}`,
-        config
-      )
+  const handleSearchBtn = async (searchInput) => {
+    if (searchInput === "") {
+      alert("검색어를 입력해주세요.");
+      return false;
+    }
+
+    await instance
+      .get(`/v1/products?limit=8&offset=10&name=${searchInput}`)
       .then(function (response) {
         console.log(response);
+        console.log("ddddd", searchInput);
         history.push("/searchResult");
+
+        searchResultMutate(searchInput);
+
         mutate(!data);
       })
       .catch(function (error) {
@@ -38,8 +39,17 @@ const Menu = ({ show }) => {
       });
   };
 
-  const handleItemClick = () => {
-    history.push("/selectBoard");
+  const handleItemClick = (e) => {
+    console.log("itemclick", e.target.dataset.name);
+    const itemName = e.target.dataset.name;
+
+    if (itemName === "ABOUT ME") {
+      history.push("/aboutMe");
+    }
+
+    if (itemName === "COMMUNITY") {
+      history.push("/selectBoard");
+    }
     mutate(!data);
   };
 
@@ -47,10 +57,25 @@ const Menu = ({ show }) => {
     <MenuWrap className={show ? "" : "menu_hidden"}>
       <MenuTitle>MENU</MenuTitle>
       <MenuList>
-        <MenuItem>ABOUT ME</MenuItem>
-        <MenuItem onClick={handleItemClick}>COMMUNITY</MenuItem>
+        <MenuItem
+          data-name="ABOUT ME"
+          onClick={handleItemClick}
+          onKeyPress={handleItemClick}
+          tabIndex="0"
+        >
+          ABOUT ME
+        </MenuItem>
+        <MenuItem
+          data-name="COMMUNITY"
+          onClick={handleItemClick}
+          onKeyPress={handleItemClick}
+          tabIndex="0"
+        >
+          COMMUNITY
+        </MenuItem>
         <MenuItem>
           <SearchInputBtn
+            show={show}
             searchClassName={searchClassName}
             SearchInputClassName={SearchInputClassName}
             SearchBtnClassName={SearchBtnClassName}
@@ -95,11 +120,11 @@ const MenuItem = styled.li`
   padding: 20px 30px;
   vertical-align: middle;
   border: 2px solid #efefef;
-  border-left: none;
-  border-right: none;
+  border-left: 0;
+  border-right: 0;
 
   & + & {
-    border-top: none;
+    border-top: 0;
   }
 
   &:active {

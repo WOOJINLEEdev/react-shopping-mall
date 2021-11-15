@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import MyOrderCheckModal from "./MyOrderCheckModal";
-import axios from "axios";
+import Loading from "./Loading";
+import { instance } from "../utils/http-client";
 
 Modal.setAppElement("#root");
 
@@ -11,15 +12,9 @@ const MyOrderCheck = () => {
   const [myOrderList, setMyOrderList] = useState();
   const [selectItemId, setSelectItemId] = useState();
 
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-  const date = new Date();
-
   useEffect(() => {
-    axios
-      .get("http://localhost:8282/v1/orders", config)
+    instance
+      .get("/v1/orders")
       .then(function (response) {
         console.log("주문조회:", response.data);
         setMyOrderList(response.data);
@@ -30,10 +25,8 @@ const MyOrderCheck = () => {
   }, []);
 
   if (!myOrderList) {
-    return <div>로딩 중.....</div>;
+    return <Loading />;
   }
-
-  const reverseItem = myOrderList.map((item) => item).reverse();
 
   const handleOrderListItem = (itemId) => {
     setSelectItemId(itemId);
@@ -50,35 +43,35 @@ const MyOrderCheck = () => {
       <MyOrderCheckModal
         isOpen3={isOpen3}
         onRequestClose3={onRequestClose3}
-        myOrderList={reverseItem}
+        myOrderList={myOrderList}
         orderItemId={selectItemId}
       />
 
+      {myOrderList.length < 1 && (
+        <NotOrderData>주문내역이 없습니다.</NotOrderData>
+      )}
       <ul>
-        {reverseItem.map((item) => {
+        {myOrderList.map((item) => {
           return (
             <OrderListItem
-              key={item.id}
-              onClick={() => handleOrderListItem(item.id)}
+              key={item.checkout_id}
+              onClick={() => handleOrderListItem(item.checkout_id)}
             >
               <ListItemContent>
-                {date.getFullYear()}.
-                {date.getMonth() < 9
-                  ? "0" + (date.getMonth() + 1)
-                  : date.getMonth() + 1}
-                .{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}{" "}
+                {item.created_at.substring(0, 4)}.
+                {item.created_at.substring(5, 7)}.
+                {item.created_at.substring(8, 10)}
               </ListItemContent>
               <ListItemContent>
-                주문번호: {date.getFullYear()}
-                {date.getMonth() < 9
-                  ? "0" + (date.getMonth() + 1)
-                  : date.getMonth() + 1}
-                {date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
+                주문번호: {item.created_at.substring(0, 4)}
+                {item.created_at.substring(5, 7)}
+                {item.created_at.substring(8, 10)}
                 -000
-                {item.id}
+                {item.checkout_id}
               </ListItemContent>
               <ListItemContent>
-                주문상품: {item.line_items[0].product_name} 외{" "}
+                주문상품: {item.line_items[0].product_name}{" "}
+                {item.line_items.length === 1 ? "" : "외"}{" "}
                 {item.line_items.length === 1 ? "" : item.line_items.length - 1}
                 {item.line_items.length === 1 ? "" : "건"}
               </ListItemContent>
@@ -139,4 +132,11 @@ const ListItemContent = styled.p`
   &: last-child {
     padding-bottom: 0;
   }
+`;
+
+const NotOrderData = styled.div`
+  font-size: 18px;
+  padding: 10px;
+  margin-top: 30px;
+  min-height: 500px;
 `;

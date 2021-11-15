@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import useSWR from "swr";
 import { useHistory } from "react-router-dom";
 import QuantityCounter from "./QuantityCounter";
 import Loading from "./Loading";
 import CommonModal from "./CommonModal";
+import { instance } from "../utils/http-client";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
@@ -18,35 +18,33 @@ const ItemDetail = ({ match }) => {
   const [btnWidth, setBtnWidth] = useState("40%");
   const [contentPadding, setContentPadding] = useState("50px 0");
 
-  const url = `http://localhost:8282/v1/products/${match.params.productId}`;
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const token = localStorage.getItem("token");
+
+  const url = `/v1/products/${match.params.productId}`;
+  const fetcher = (url) => {
+    return instance.get(url).then((res) => res.data);
+  };
+
   const { data, error } = useSWR(url, fetcher);
 
   if (error) return "에러 발생";
   if (!data) return <Loading />;
 
-  console.log("아이템 디테일 데이터", data);
-
   const selectOptions = data.variants;
 
   const handleSelectChange = (e) => {
     console.log(e.target.value);
+    if (e.target.value === "") {
+      setItemOption("");
+    }
 
     selectOptions.map((variant) => {
-      console.log("variant:", variant);
       if (e.target.value === variant.name) {
         console.log(variant.id);
         setItemOption(variant.id);
         return variant.id;
       }
     });
-  };
-
-  console.log("아이템 디테일 배리언트", itemOption);
-
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
   };
 
   function putItem() {
@@ -56,26 +54,25 @@ const ItemDetail = ({ match }) => {
       return alert("로그인 후 이용해주세요!");
     }
 
-    axios
-      .put(
-        "http://localhost:8282/v1/me/cart",
-        {
-          items: [
-            {
-              product_id: data.id,
-              variant_id: itemOption,
-              quantity: quantity,
-            },
-          ],
-        },
-        config
-      )
+    if (itemOption === "") {
+      return alert("옵션을 선택해주세요.");
+    }
+
+    instance
+      .put("/v1/me/cart", {
+        items: [
+          {
+            product_id: data.id,
+            variant_id: itemOption,
+            quantity: quantity,
+          },
+        ],
+      })
       .then(function (response) {
         console.log(response);
         setIsOpen(true);
       })
       .catch(function (error) {
-        alert("옵션을 선택해주세요.");
         console.log(error);
       });
   }
@@ -97,24 +94,31 @@ const ItemDetail = ({ match }) => {
   const itemCheckout = () => {
     console.log("구매하기 버튼 클릭");
 
-    if (itemOption === "") {
-      console.log("옵션이 선택되지 않았습니다.");
-      return false;
+    if (!token) {
+      return alert("로그인 후 이용해주세요!");
     }
 
-    axios
-      .post(
-        "http://localhost:8282/v1/checkouts",
-        {
-          line_items: [
-            {
-              variant_id: itemOption,
-              quantity: quantity,
-            },
-          ],
-        },
-        config
-      )
+    if (itemOption === "") {
+      return alert("옵션을 선택해주세요.");
+    }
+
+    if (data.variants[0].price * quantity >= 70000) {
+      localStorage.setItem("delivery", 0);
+    }
+
+    if (data.variants[0].price * quantity < 70000) {
+      localStorage.setItem("delivery", 3000);
+    }
+
+    instance
+      .post("/v1/checkouts", {
+        line_items: [
+          {
+            variant_id: itemOption,
+            quantity: quantity,
+          },
+        ],
+      })
       .then(function (response) {
         console.log("리스폰스", response);
         console.log("체크아웃 아이디", response.data.checkout_id);
@@ -150,7 +154,7 @@ const ItemDetail = ({ match }) => {
           </colgroup>
           <thead>
             <tr>
-              <th className="thead_th" colspan="2" id="imageTextHead">
+              <th className="thead_th" colSpan="2" id="imageTextHead">
                 {data.name}
               </th>
             </tr>
@@ -172,8 +176,8 @@ const ItemDetail = ({ match }) => {
               <td className="tbody_td">
                 <select className="td_select" onChange={handleSelectChange}>
                   <option value="">- [필수] 옵션을 선택해주세요 -</option>
-                  {selectOptions.map((option) => (
-                    <option>{option.option1}</option>
+                  {selectOptions.map((option, i) => (
+                    <option key={option.option1}>{option.option1}</option>
                   ))}
                 </select>
               </td>

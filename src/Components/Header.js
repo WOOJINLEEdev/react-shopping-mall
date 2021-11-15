@@ -2,26 +2,24 @@ import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
-import shoppingCartImg from "../images/shopping-cart.png";
 import signInImg from "../images/user.png";
-import searchImg from "../images/search2.png";
 import useMyCart from "../Hooks/useMyCart";
 import useMenuCollapsed from "../Hooks/useMenuCollapsed";
 import useSearch from "../Hooks/useSearch";
 import useSearchLocation from "../Hooks/useSearchLocation";
+import useSearchResult from "../Hooks/useSearchResult";
 import { ReactComponent as MenuImg } from "../images/menu.svg";
-import axios from "axios";
+import { GoSearch } from "react-icons/go";
+import { FiShoppingCart } from "react-icons/fi";
+import { instance } from "../utils/http-client";
 
 const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
 
   useEffect(() => {
-    axios
-      .put("http://localhost:8282/v1/me/visit", null, config)
+    instance
+      .put("/v1/me/visit", null)
       .then(function (response) {
         console.log(response);
         console.log("visit", response.data);
@@ -35,6 +33,7 @@ const Header = ({ location }) => {
   const { data, mutate } = useMenuCollapsed();
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
+  const { searchResultData, searchResultMutate } = useSearchResult();
 
   if (cartError) return "에러 발생...";
   if (loadingCart) return "로딩중...";
@@ -47,6 +46,7 @@ const Header = ({ location }) => {
 
   const handleSearchClick = () => {
     searchMutate(!searchData);
+
     console.log("검색버튼클릭", location.pathname);
     searchLocationMutate(location.pathname);
   };
@@ -70,40 +70,36 @@ const Header = ({ location }) => {
       <SignCartWrap>
         {isPc && (
           <Link to="/aboutMe" className="about_link">
-            <div className="header_about">
+            <HeaderAbout>
               <span>ABOUT</span>
               <span>ME</span>
-            </div>
+            </HeaderAbout>
           </Link>
         )}
         {isPc && (
-          <div
-            className="header_search"
+          <HeaderSearch
             onClick={handleSearchClick}
+            onKeyPress={handleSearchClick}
             tabIndex="0"
           >
-            <img
-              src={searchImg}
-              className="search_img"
-              alt="search_button_image"
-            ></img>
+            <GoSearch />
             <span className="visually_hidden">검색</span>
-          </div>
+          </HeaderSearch>
         )}
         <Link to={!token ? "/login" : "/mypage"} className="signin_link">
-          <div className="signin">
+          <HeaderSignIn>
             <img src={signInImg} className="signin_img" alt="sign_in"></img>
             <span className="visually_hidden">로그인</span>
-          </div>
+          </HeaderSignIn>
         </Link>
         <Link to="/cart" className="cart_link">
-          <div className="header_cart">
-            <img src={shoppingCartImg} className="cart_img" alt="cart"></img>
+          <HeaderCart>
+            <FiShoppingCart />
             <span className="visually_hidden">장바구니</span>
             {token && cartAmount > 0 ? (
               <CartAmount>{cartAmount}</CartAmount>
             ) : null}
-          </div>
+          </HeaderCart>
         </Link>
       </SignCartWrap>
     </header>
@@ -148,8 +144,113 @@ const MenuWrap = styled.div`
     svg {
       width: 30px;
       height: 30px;
-
       margin: 25px 30px;
+    }
+  }
+`;
+
+const HeaderAbout = styled.div`
+  display: flex;
+  width: 90px;
+  height: 80px;
+  flex-direction: column;
+  text-align: center;
+  font-weight: bold;
+  justify-content: center;
+
+  &:hover {
+    border-bottom: 3px solid #333;
+  }
+`;
+
+const HeaderSearch = styled.div`
+  display: inline-block;
+  width: 90px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+
+  & svg {
+    width: 32px;
+    height: 32px;
+    margin: 24px 29px;
+  }
+
+  &:hover {
+    border-bottom: 3px solid #333;
+  }
+`;
+
+const HeaderSignIn = styled.div`
+  display: inline-block;
+  width: 90px;
+  height: 80px;
+  line-height: 80px;
+  color: #333;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+
+  & img {
+    width: 32px;
+    height: 32px;
+    margin: 24px 29px;
+  }
+
+  &:hover {
+    border-bottom: 3px solid #333;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 60px;
+    height: 60px;
+
+    & img {
+      width: 20px;
+      height: 20px;
+      margin: 20px;
+    }
+
+    &:hover {
+      border-bottom: 0;
+    }
+  }
+`;
+
+const HeaderCart = styled.div`
+  display: inline-block;
+  width: 90px;
+  height: 80px;
+  color: #333;
+  line-height: 80px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+
+  & svg {
+    width: 32px;
+    height: 32px;
+    margin: 24px 29px;
+  }
+
+  &:hover {
+    border-bottom: 3px solid #333;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 60px;
+    height: 60px;
+
+    & svg {
+      width: 20px;
+      height: 20px;
+      margin: 20px;
+    }
+
+    &:hover {
+      border-bottom: 0;
     }
   }
 `;

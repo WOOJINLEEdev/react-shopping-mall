@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import useSearchResult from "../Hooks/useSearchResult";
 import ListItem from "./ListItem";
+import { instance } from "../utils/http-client";
 
 const SearchResult = () => {
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState();
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
+  const [searchWord, setSearchWord] = useState("");
 
   const { searchResultData, searchResultMutate } = useSearchResult();
 
@@ -20,11 +16,8 @@ const SearchResult = () => {
     setSearchWord(searchResultData);
 
     setLoading(true);
-    axios
-      .get(
-        `http://localhost:8282/v1/products?limit=8&offset=10&name=${searchResultData}`,
-        config
-      )
+    instance
+      .get(`/v1/products?limit=8&offset=10&name=${searchResultData}`)
       .then(function (response) {
         console.log(response);
         setResult(response.data);
@@ -40,10 +33,10 @@ const SearchResult = () => {
   if (!searchResultData)
     return (
       <NoSearchWord>
-        <span>검색어를 입력 후 다시 검색해주세요.</span>
+        <span>검색 중입니다...</span>
       </NoSearchWord>
     );
-  if (loading) return <div>로딩중</div>;
+  if (loading) return <div>로딩중...</div>;
   if (!result.length === 0) return <div>검색 결과가 없습니다.</div>;
   console.log("결과", result);
   console.log("검색어", searchWord);

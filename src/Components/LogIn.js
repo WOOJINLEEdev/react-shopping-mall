@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { Formik, Form, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
 import { userId, userPassword } from "./LogInValidation";
+import { instance } from "../utils/http-client";
 
 const LogIn = () => {
   const initialValues = {
@@ -20,8 +20,8 @@ const LogIn = () => {
     console.log("Form data", values);
     console.log("아이디", values.userId);
 
-    axios
-      .post("http://localhost:8282/v1/auth/login", {
+    instance
+      .post("/v1/auth/login", {
         user_id: values.userId,
         user_password: values.userPassword,
       })
@@ -63,6 +63,7 @@ const LogIn = () => {
                 id="userId"
                 className="login_input id"
                 placeholder="아이디"
+                autoFocus
               />
               <ErrorMessage
                 name="userId"

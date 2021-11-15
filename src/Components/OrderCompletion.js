@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
 import { FcCheckmark } from "react-icons/fc";
 import { ReactComponent as ShoppingBag } from "../images/shopping-bag.svg";
-import axios from "axios";
 import downArrow from "../images/down-arrow.png";
 import upArrow from "../images/up-arrow-icon.png";
 import OrderCompletionPayInfo from "./OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "./OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "./OrderCompletionDeliveryInfo";
-import { useMediaQuery } from "react-responsive";
+import { instance } from "../utils/http-client";
 
 const OrderCompletion = ({ match }) => {
   const [orderData, setOrderData] = useState([]);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
-  const [arrowImg, setArrowImg] = useState(downArrow);
+  const [arrowImg, setArrowImg] = useState(upArrow);
+  const [arrowImg1, setArrowImg1] = useState(downArrow);
   const [closeText, setCloseText] = useState("");
-  const [itemInfoClass, setItemInfoClass] = useState("hide");
+  const [itemInfoClass, setItemInfoClass] = useState("info_group");
 
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const isTablet = useMediaQuery({
@@ -27,20 +28,12 @@ const OrderCompletion = ({ match }) => {
 
   const checkoutNumber = Number(match.params.checkoutId);
   const date = new Date();
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8282/v1/orders?checkout_id=${checkoutNumber}`,
-        config
-      )
+    instance
+      .get(`/v1/orders?checkout_id=${checkoutNumber}`)
       .then(function (response) {
         console.log(response);
-        console.log("리스폰스 데이터:", response.data);
         setOrderData(response.data);
       })
       .catch(function (error) {
@@ -52,7 +45,6 @@ const OrderCompletion = ({ match }) => {
     return <div>loading...</div>;
   }
 
-  console.log("오더완료 데이터", orderData);
   const items = orderData[0].line_items;
   const firstItem = items[0];
   const remainder = items.filter((item) => item !== firstItem);
@@ -61,13 +53,13 @@ const OrderCompletion = ({ match }) => {
 
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {
-      setArrowImg(upArrow);
+      setArrowImg1(upArrow);
       setCloseText("닫기");
       return setRemainderClass("open");
     }
 
     if (remainderClass === "open") {
-      setArrowImg(downArrow);
+      setArrowImg1(downArrow);
       setCloseText("");
       return setRemainderClass("info_remainder");
     }
@@ -96,6 +88,7 @@ const OrderCompletion = ({ match }) => {
             주문이 정상적으로 완료되었습니다.
           </HeadTitle>
         </CompletionHead>
+
         <HeadContent>
           <HeadContentText>
             <Text>
@@ -124,6 +117,7 @@ const OrderCompletion = ({ match }) => {
         handleOpenCloseBtn={handleOpenCloseBtn}
         handleInfoOpenBtn={handleInfoOpenBtn}
         arrowImg={arrowImg}
+        arrowImg1={arrowImg1}
         closeText={closeText}
         sum={sum}
         isPc={isPc}

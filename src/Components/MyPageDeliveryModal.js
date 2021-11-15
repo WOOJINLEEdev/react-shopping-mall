@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import AddDeliveryAddressModal from "./AddDeliveryAddressModal";
-import axios from "axios";
 import useDeliveryData from "../Hooks/useDeliveryData";
 import useMyPageData from "../Hooks/useMyPageData";
+import { instance } from "../utils/http-client";
 
 Modal.setAppElement("#root");
 
@@ -19,11 +19,6 @@ const MyPageDeliveryModal = ({
   const [btnWrapDisplay, setBtnWrapDisplay] = useState("none");
   const [closBtnDisplay, setClosBtnDisplay] = useState("");
   const [notAddressClassName, setNotAddressClassName] = useState("");
-
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
 
   const { myDeliveryData, MutateMyDeliveryData } = useDeliveryData();
 
@@ -115,9 +110,9 @@ const MyPageDeliveryModal = ({
       return alert("연락처 세번째 칸은 4자리를 입력해주세요.");
     }
 
-    axios
+    instance
       .put(
-        "http://localhost:8282/v1/me/shipping-address",
+        "/v1/me/shipping-address",
 
         {
           name: myDeliveryData.recipient,
@@ -130,8 +125,7 @@ const MyPageDeliveryModal = ({
             myDeliveryData.tel1 + myDeliveryData.tel2 + myDeliveryData.tel3,
           phone2:
             myDeliveryData.tel4 + myDeliveryData.tel5 + myDeliveryData.tel6,
-        },
-        config
+        }
       )
       .then(function (response) {
         console.log(response);
@@ -212,6 +206,7 @@ const customModalStyle = {
     position: "fixed",
     width: "100%",
     height: "100%",
+    zIndex: "99",
   },
   content: {
     display: "flex",

@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { AiTwotoneStar } from "react-icons/ai";
 import styled from "styled-components";
-import axios from "axios";
+import { instance } from "../utils/http-client";
 
 const StarRating = ({ myRating }) => {
   const stars = [1, 2, 3, 4, 5];
   const [clicked, setClicked] = useState([false, false, false, false, false]);
   const [point, setPoint] = useState("0");
-
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
 
   useEffect(() => {
     if (myRating) {
@@ -40,14 +35,10 @@ const StarRating = ({ myRating }) => {
     setClicked(clickStates);
     setPoint(point);
 
-    axios
-      .put(
-        "http://localhost:8282/v1/me/rating",
-        {
-          rating: point,
-        },
-        config
-      )
+    instance
+      .put("/v1/me/rating", {
+        rating: point,
+      })
       .then(function (response) {
         console.log(response);
       })
@@ -58,20 +49,28 @@ const StarRating = ({ myRating }) => {
 
   return (
     <StarWrap>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <h3>별점 등록</h3>
         <div
-          style={{ display: "inline-block", width: "140px", padding: "5px" }}
+          style={{
+            display: "flex",
+            width: "140px",
+            padding: "20px 0 0",
+            lineHeight: "27px",
+          }}
         >
           {stars.map((star, i) => (
             <AiTwotoneStar
-              key={i}
+              key={star.toString()}
               onClick={(e) => handleStarClick(e, i)}
               className={clicked[i] ? "clickedstar" : null}
               size="27px"
+              tabIndex="0"
+              onKeyPress={(e) => handleStarClick(e, i)}
             />
           ))}
+          <div style={{ marginLeft: "10px" }}>{point}</div>
         </div>
-        <div style={{ lineHeight: "27px", padding: "5px" }}>{point}</div>
       </div>
     </StarWrap>
   );

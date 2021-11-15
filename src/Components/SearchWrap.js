@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import SearchInputBtn from "./SearchInputBtn";
 import { withRouter, useHistory } from "react-router";
-import useSearchResult from "../Hooks/useSearchResult";
-import axios from "axios";
+import { instance } from "../utils/http-client";
 
 const SearchWrap = ({
   searchData,
@@ -12,25 +11,21 @@ const SearchWrap = ({
   SearchBtnClassName,
   location,
 }) => {
-  const [pathName, setPathName] = useState();
   const history = useHistory();
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
+  const [pathName, setPathName] = useState();
 
   useEffect(() => {
     setPathName(location.pathname);
   }, []);
 
-  const { searchResultData, searchResultMutate } = useSearchResult();
+  const handleSearchBtn = (searchInput) => {
+    if (searchInput === "") {
+      alert("검색어를 입력해주세요.");
+      return false;
+    }
 
-  const handleSearchBtn = () => {
-    axios
-      .get(
-        `http://localhost:8282/v1/products?limit=8&offset=10&name=${searchResultData}`,
-        config
-      )
+    instance
+      .get(`/v1/products?limit=8&offset=10&name=${searchInput}`)
       .then(function (response) {
         console.log(response);
         history.push("/searchResult");
@@ -56,8 +51,9 @@ const SearchWrap = ({
 export default withRouter(SearchWrap);
 
 const SearchWrapper = styled.div`
+  position: relative;
   width: 50%;
   height: 80px;
   margin: 0 auto;
-  transition: all ease 1s 0s;
+  transition: transform 1.5s easy-in-out;
 `;

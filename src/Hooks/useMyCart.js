@@ -1,16 +1,11 @@
 import useSWR from "swr";
-import axios from "axios";
+import { instance } from "../utils/http-client";
 
 export default function useMyCart() {
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
-  const cartUrl = "http://localhost:8282/v1/me/cart";
+  const cartUrl = "/v1/me/cart";
   const fetcher = (url) => {
-    return axios
-      .get(url, config)
+    return instance
+      .get(url)
       .then((res) => ({
         ...res.data,
         items: res.data.items.map((cartItem) => ({
@@ -19,7 +14,7 @@ export default function useMyCart() {
         })),
       }))
       .catch((error) => {
-        if (error.response && error.response.status === 404) {
+        if (error.response && [401, 404].includes(error.response.status)) {
           return {
             items: [],
           };
