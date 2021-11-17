@@ -19,6 +19,10 @@ import useSearch from "../Hooks/useSearch.js";
 import { useMediaQuery } from "react-responsive";
 import SearchWrap from "./SearchWrap.js";
 import useSearchLocation from "../Hooks/useSearchLocation.js";
+import OrderCompletion from "./OrderCompletion.js";
+import SearchResult from "./SearchResult.js";
+import MyOrderCheck from "./MyOrderCheck.js";
+import AboutMe from "./AboutMe.js";
 
 const Main = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -34,7 +38,11 @@ const Main = ({ location }) => {
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
 
   useEffect(() => {
+    console.log("Main 테스트중:", mainPathName);
+    console.log("새로운 훅 useSearchLocation:", searchLocationData);
+
     setMainPathName(location.pathname);
+    window.scrollTo(0, 0);
 
     return () => {
       if (location.pathname !== searchLocationData) {
@@ -42,9 +50,6 @@ const Main = ({ location }) => {
       }
     };
   }, [location.pathname]);
-
-  console.log("Main 테스트중:", mainPathName);
-  console.log("새로운 훅 useSearchLocation:", searchLocationData);
 
   return (
     <main>
@@ -71,6 +76,18 @@ const Main = ({ location }) => {
       <Route path="/selectBoard" component={SelectBoardPage} exact />
       <Route path="/selectBoard1" component={BoardFirst} exact />
       <Route path="/selectBoard2" component={BoardSecond} exact />
+      <Route
+        path={"/orderCheck/:checkoutId"}
+        component={OrderCompletion}
+        exact
+      />
+      <Route path={"/myOrderCheck"} component={MyOrderCheck} exact />
+      <Route
+        path={"/searchResult/:searchWord"}
+        component={SearchResult}
+        exact
+      />
+      <Route path={"/aboutMe"} component={AboutMe} exact />
     </main>
   );
 };

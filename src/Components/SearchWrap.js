@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import SearchInputBtn from "./SearchInputBtn";
 import { withRouter, useHistory } from "react-router";
 import { instance } from "../utils/http-client";
+import useSearchResult from "../Hooks/useSearchResult";
 
 const SearchWrap = ({
   searchData,
@@ -13,22 +14,32 @@ const SearchWrap = ({
 }) => {
   const history = useHistory();
   const [pathName, setPathName] = useState();
+  const ref = useRef();
+
+  const { searchResultData, searchResultMutate } = useSearchResult();
 
   useEffect(() => {
     setPathName(location.pathname);
-  }, []);
 
-  const handleSearchBtn = (searchInput) => {
-    if (searchInput === "") {
+    if (searchData) {
+      return ref.current.focus();
+    }
+  }, [searchData]);
+
+  const handleSearchBtn = async (searchInput) => {
+    if (searchInput === "" || searchInput === null) {
       alert("검색어를 입력해주세요.");
+      ref.current.focus();
       return false;
     }
 
-    instance
+    await instance
       .get(`/v1/products?limit=8&offset=10&name=${searchInput}`)
       .then(function (response) {
         console.log(response);
-        history.push("/searchResult");
+        history.push(`/searchResult/${searchInput}`);
+        console.log("ref.current", ref.current.value);
+        ref.current.focus();
       })
       .catch(function (error) {
         console.log(error);
@@ -43,6 +54,7 @@ const SearchWrap = ({
         SearchInputClassName={SearchInputClassName}
         SearchBtnClassName={SearchBtnClassName}
         handleSearchBtn={handleSearchBtn}
+        ref={ref}
       />
     </SearchWrapper>
   );

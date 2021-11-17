@@ -1,22 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router";
+import React, { useState, useMemo, forwardRef } from "react";
+// import { withRouter } from "react-router";
 import useSearchResult from "../Hooks/useSearchResult";
+import { debounce } from "lodash";
 
-const SearchInputBtn = ({
-  searchClassName,
-  handleSearchBtn,
-  handleSearchInput,
-  SearchInputClassName,
-  SearchBtnClassName,
-  show,
-}) => {
+const SearchInputBtn = (
+  {
+    show,
+    searchClassName,
+    handleSearchBtn,
+    handleSearchInput,
+    SearchInputClassName,
+    SearchBtnClassName,
+  },
+  ref
+) => {
   const [searchInput, setSearchInput] = useState("");
 
   const { searchResultData, searchResultMutate } = useSearchResult();
 
+  const debouncedSearchResultMutate = useMemo(
+    () => debounce(searchResultMutate, 1000),
+    []
+  );
+
   const handleChange = (e) => {
     setSearchInput(e.target.value);
-    searchResultMutate(e.target.value);
+
+    if (show) {
+      debouncedSearchResultMutate(e.target.value);
+    }
 
     if (handleSearchInput) {
       handleSearchInput(e);
@@ -25,11 +37,9 @@ const SearchInputBtn = ({
 
   const onCheckEnter = (e) => {
     if (e.key === "Enter") {
-      handleSearchBtn();
+      handleSearchBtn(searchInput);
     }
   };
-
-  console.log(searchResultData);
 
   return (
     <div className={searchClassName}>
@@ -41,11 +51,13 @@ const SearchInputBtn = ({
         value={searchInput}
         onChange={handleChange}
         onKeyPress={onCheckEnter}
+        ref={ref}
       />
+
       <button
         type="button"
         className={SearchBtnClassName}
-        onClick={handleSearchBtn}
+        onClick={() => handleSearchBtn(searchInput)}
       >
         <span className="visually_hidden">검색</span>
       </button>
@@ -53,4 +65,5 @@ const SearchInputBtn = ({
   );
 };
 
-export default withRouter(SearchInputBtn);
+// export default withRouter(SearchInputBtn);
+export default forwardRef(SearchInputBtn);

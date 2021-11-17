@@ -3,23 +3,40 @@ import styled from "styled-components";
 import useSearchResult from "../Hooks/useSearchResult";
 import ListItem from "./ListItem";
 import { instance } from "../utils/http-client";
+import { IoIosArrowDown } from "react-icons/io";
+import { useSWRInfinite } from "swr";
 
 const SearchResult = () => {
   const [result, setResult] = useState([]);
+  const [resultCount, setResultCount] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchWord, setSearchWord] = useState("");
+  const [pageOffset, setPageOffset] = useState(0);
 
   const { searchResultData, searchResultMutate } = useSearchResult();
 
   useEffect(() => {
     console.log("검색 결과:::", searchResultData);
     setSearchWord(searchResultData);
-
     setLoading(true);
+
     instance
-      .get(`/v1/products?limit=8&offset=10&name=${searchResultData}`)
+      .get(`/v1/products?count=true&name=${searchResultData}`)
       .then(function (response) {
-        console.log(response);
+        console.log("result count", response);
+        setResultCount(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
+    instance
+      .get(`/v1/products?limit=9&offset=0&name=${searchResultData}`)
+      .then(function (response) {
+        console.log("result", response.data);
         setResult(response.data);
       })
       .catch(function (error) {
@@ -30,28 +47,70 @@ const SearchResult = () => {
       });
   }, [searchResultData]);
 
+  const PAGE_LIMIT = 8;
+  const pageLimit = 8;
+
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) {
+      return null;
+    }
+
+    return `/v1/products?limit=${PAGE_LIMIT}&offset=${
+      pageIndex * PAGE_LIMIT
+    }&name=${searchResultData}`;
+  };
+
+  const url = `/v1/products?limit=${pageLimit}&offset=${pageOffset}&name=${searchResultData}`;
+  const fetcher = async (url) => {
+    const res = await instance.get(url);
+    return res.data;
+  };
+
+  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
+
+  if (error) return "에러 발생";
+  if (!data) return "로딩 중...";
+
   if (!searchResultData)
+    return <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>;
+  if (loading) return <NoSearchWord>검색 중입니다...</NoSearchWord>;
+  if (result.length === 0)
     return (
-      <NoSearchWord>
-        <span>검색 중입니다...</span>
-      </NoSearchWord>
+      <>
+        {" "}
+        <SearchResultTitle>
+          <SearchWord>{searchWord}</SearchWord>
+          <span>검색결과 {resultCount}건</span>
+        </SearchResultTitle>
+        <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>
+      </>
     );
-  if (loading) return <div>로딩중...</div>;
-  if (!result.length === 0) return <div>검색 결과가 없습니다.</div>;
-  console.log("결과", result);
-  console.log("검색어", searchWord);
+
+  function handleClick() {
+    console.log("더보기 클릭");
+    setSize(size + 1);
+  }
 
   return (
     <ResultWrap>
       <SearchResultTitle>
         <SearchWord>{searchWord}</SearchWord>
-        <span>검색결과 {result.length}건</span>
+        <span>검색결과 {resultCount}건</span>
       </SearchResultTitle>
       <ul className="list_group">
-        {result.map((product) => {
-          return <ListItem key={product.id} item={product} />;
+        {data.map((products) => {
+          return products.map((product) => (
+            <ListItem key={product.id} item={product} />
+          ));
         })}
       </ul>
+      {resultCount > 9 && size * pageLimit < resultCount ? (
+        <ResultMoreBtn onClick={handleClick}>
+          더보기 <IoIosArrowDown />
+        </ResultMoreBtn>
+      ) : (
+        ""
+      )}
     </ResultWrap>
   );
 };
@@ -92,12 +151,27 @@ const SearchWord = styled.span`
 const NoSearchWord = styled.div`
   min-height: 500px;
   height: 100%;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
+  line-height: 500px;
+`;
 
-  & span {
-    font-size: 20px;
-    line-height: 500px;
+const ResultMoreBtn = styled.button`
+  width: 100%;
+  height: 50px;
+  color: #333;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #fff;
+  border: 2px solid #d4d4d4;
+  border-radius: 3px;
+  outline: none;
+  box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid #333;
   }
 `;
