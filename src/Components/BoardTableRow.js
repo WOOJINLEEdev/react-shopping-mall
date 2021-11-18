@@ -1,6 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
+const BoardTableRow = ({ children, background }) => {
+  return <TableRow background={background}>{children}</TableRow>;
+};
+
+export default BoardTableRow;
+
 const TableRow = styled.tr`
   &:hover {
     background: ${(props) =>
@@ -13,9 +19,3 @@ const TableRow = styled.tr`
     background-color: rgb(245, 245, 245);
   }
 `;
-
-const BoardTableRow = ({ children, background }) => {
-  return <TableRow background={background}>{children}</TableRow>;
-};
-
-export default BoardTableRow;

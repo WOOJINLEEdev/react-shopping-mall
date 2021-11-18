@@ -73,6 +73,10 @@ const MyPage = () => {
     setIsOpen(true);
   };
 
+  const handleModifyBtn = () => {
+    alert("현재 서비스 준비 중입니다.");
+  };
+
   const onRequestClose = () => {
     setIsOpen(false);
   };
@@ -120,12 +124,14 @@ const MyPage = () => {
         <h3 className="greet">
           <span className="greet_user">
             {!myPageData || myPageData === undefined ? "" : myPageData.name} (
-            {!myPageData || myPageData === undefined ? "" : myPageData.user_id})
+            {!myPageData || myPageData === undefined ? "" : myPageData.user_id}){" "}
           </span>{" "}
-          회원님, 안녕하세요!
+          님, <span>안녕하세요!</span>
         </h3>
         <ModifyLogoutWrap className="modify_logout_wrap">
-          <button className="myInfo_modify">회원정보 수정</button>
+          <button className="myInfo_modify" onClick={handleModifyBtn}>
+            회원정보 수정
+          </button>
           <button className="myInfo_logout" onClick={handleLogoutBtn}>
             로그아웃
           </button>

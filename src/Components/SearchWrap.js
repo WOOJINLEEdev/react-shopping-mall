@@ -14,6 +14,7 @@ const SearchWrap = ({
 }) => {
   const history = useHistory();
   const [pathName, setPathName] = useState();
+  const [searchPlaceHolder, setSearchPlaceHolder] = useState("Search");
   const ref = useRef();
 
   const { searchResultData, searchResultMutate } = useSearchResult();
@@ -54,6 +55,7 @@ const SearchWrap = ({
         SearchInputClassName={SearchInputClassName}
         SearchBtnClassName={SearchBtnClassName}
         handleSearchBtn={handleSearchBtn}
+        searchPlaceHolder={searchPlaceHolder}
         ref={ref}
       />
     </SearchWrapper>
@@ -67,5 +69,5 @@ const SearchWrapper = styled.div`
   width: 50%;
   height: 80px;
   margin: 0 auto;
-  transition: transform 1.5s easy-in-out;
+  box-shadow: 0 5px 5px -5px #333;
 `;

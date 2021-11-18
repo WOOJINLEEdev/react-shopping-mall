@@ -13,12 +13,12 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
   const [designation, setDesignation] = useState("");
   const [recipient, setRecipient] = useState("");
 
-  const [tel1, setTel1] = useState();
-  const [tel2, setTel2] = useState();
-  const [tel3, setTel3] = useState();
-  const [tel4, setTel4] = useState();
-  const [tel5, setTel5] = useState();
-  const [tel6, setTel6] = useState();
+  const [tel1, setTel1] = useState("");
+  const [tel2, setTel2] = useState("");
+  const [tel3, setTel3] = useState("");
+  const [tel4, setTel4] = useState("");
+  const [tel5, setTel5] = useState("");
+  const [tel6, setTel6] = useState("");
   const [showDaumPostModal, setShowDaumPostModal] = useState(false);
 
   const { myDeliveryData, MutateMyDeliveryData } = useDeliveryData();
@@ -144,6 +144,7 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
             className="delivery_input first"
             id="deliveryTitle1"
             onChange={handleDeliveryInputChange1}
+            value={designation}
           />
         </div>
 
@@ -177,6 +178,7 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
                 placeholder="우편번호"
                 value={address1}
                 onClick={handlePostalCode}
+                readOnly
               />
               <input
                 type="button"
@@ -192,6 +194,7 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
               className="delivery_input address"
               placeholder="주소"
               value={addressDetail1}
+              readOnly
               disabled
             />
             <input
@@ -201,12 +204,6 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
               placeholder="상세주소"
               value={addressDetail2}
               onChange={handleAddressDetail2}
-            />
-            <input
-              type="text"
-              id="sample5_extraAddress"
-              className="delivery_input address"
-              placeholder="참고항목"
             />
           </div>
         </div>

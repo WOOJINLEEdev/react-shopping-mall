@@ -19,8 +19,6 @@ const getKey = (pageIndex, previousPageData) => {
 function ListGroup() {
   const pageLimit = 8;
 
-  const [test, setTest] = useState("loading");
-  const [products, setProducts] = useState([]);
   const [pageOffset, setPageOffset] = useState(0);
 
   const url = `/v1/products?limit=${pageLimit}&offset=${pageOffset}`;
@@ -39,7 +37,7 @@ function ListGroup() {
   if (error) return "에러 발생";
   if (!data) return <ListGroupSkeleton />;
 
-  function handleClick(e) {
+  function handleClick() {
     console.log("더보기 클릭");
     setSize(size + 1);
   }

@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
-const FilterWrap = styled.div`
-  width: 100px;
-  margin-right: 20px;
-`;
+import PropTypes from "prop-types";
 
 const BoardFilter = ({ handleSelectOption, selectedOption }) => {
   const boardType = ["공지사항", "일반"];
@@ -17,7 +13,9 @@ const BoardFilter = ({ handleSelectOption, selectedOption }) => {
       >
         <option value="">구분</option>
         {boardType.map((type) => (
-          <option value={type}>{type}</option>
+          <option key={type} value={type}>
+            {type}
+          </option>
         ))}
       </select>
     </FilterWrap>
@@ -25,3 +23,13 @@ const BoardFilter = ({ handleSelectOption, selectedOption }) => {
 };
 
 export default BoardFilter;
+
+BoardFilter.propTypes = {
+  handleSelectOption: PropTypes.func,
+  selectedOption: PropTypes.string,
+};
+
+const FilterWrap = styled.div`
+  width: 100px;
+  margin-right: 20px;
+`;

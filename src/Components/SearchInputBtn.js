@@ -11,6 +11,7 @@ const SearchInputBtn = (
     handleSearchInput,
     SearchInputClassName,
     SearchBtnClassName,
+    searchPlaceHolder,
   },
   ref
 ) => {
@@ -46,7 +47,7 @@ const SearchInputBtn = (
       <input
         type="text"
         name="search_input"
-        placeholder="Search..."
+        placeholder={searchPlaceHolder ? searchPlaceHolder : "Search..."}
         className={SearchInputClassName}
         value={searchInput}
         onChange={handleChange}

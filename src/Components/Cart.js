@@ -11,7 +11,6 @@ const Cart = () => {
   const [allChecked, setAllChecked] = useState(true);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-  console.log("swr cart:", cart);
 
   if (cartError)
     return (
@@ -25,7 +24,6 @@ const Cart = () => {
   if (loadingCart) return <Loading />;
 
   const items = cart.items;
-  console.log("카트 아이템스:::", items);
 
   const onRemove = async (e) => {
     const targetName = e.target.name;
@@ -150,6 +148,12 @@ const Cart = () => {
 
   const handleListBuyBtnClick = (item, quantity) => {
     console.log("작은 구매버튼 클릭");
+
+    if (item.variant_price * item.quantity < 70000) {
+      localStorage.setItem("delivery", 3000);
+    } else {
+      localStorage.setItem("delivery", 0);
+    }
 
     instance
       .post("/v1/checkouts", {

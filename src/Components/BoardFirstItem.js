@@ -3,23 +3,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 import { postList } from "./BoardFirstData";
 
-const ListItemWrap = styled.div`
-  padding: 50px;
-`;
-
-const ListButtonWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const BoardContent = styled.div`
-  height: 300px;
-  padding: 20px;
-  margin: 20px 0;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
-`;
-
 const BoardFirstItem = ({ match, item }) => {
   const history = useHistory();
 
@@ -32,14 +15,7 @@ const BoardFirstItem = ({ match, item }) => {
 
   return (
     <ListItemWrap>
-      <div
-        style={{
-          border: "2px solid #acacac",
-          borderRadius: "5px",
-          height: "100%",
-          padding: "20px",
-        }}
-      >
+      <ItemWrap>
         <ListButtonWrap>
           <button type="button" className="board_item_back" onClick={moveBoard}>
             목록
@@ -81,9 +57,37 @@ const BoardFirstItem = ({ match, item }) => {
         <div>
           <BoardContent>{boardItem.content}</BoardContent>
         </div>
-      </div>
+      </ItemWrap>
     </ListItemWrap>
   );
 };
 
 export default BoardFirstItem;
+
+const ListItemWrap = styled.div`
+  padding: 50px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    padding: 20px;
+  }
+`;
+
+const ItemWrap = styled.div`
+  height: 100%;
+  padding: 20px;
+  border: 2px solid #acacac;
+  border-radius: 5px;
+`;
+
+const ListButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const BoardContent = styled.div`
+  height: 300px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #d4d4d4;
+  border-radius: 5px;
+`;

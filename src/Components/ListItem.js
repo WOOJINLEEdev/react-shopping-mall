@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ListItem = ({ item }) => {
+  // console.log("리스트 아이템");
   return (
     <li className="list">
       <div className="list_element">

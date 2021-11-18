@@ -11,6 +11,7 @@ const OrderCompletionItemInfo = ({
   handleInfoOpenBtn,
   itemInfoClass,
   arrowImg,
+  arrowImg1,
   closeText,
   sum,
   isPc,
@@ -59,7 +60,11 @@ const OrderCompletionItemInfo = ({
                   to={`/products/${item.product_id}`}
                   className="info_list_box"
                 >
-                  <img className="info_list_img" alt="" src={item.image_src} />
+                  <img
+                    className="info_list_img"
+                    alt={item.product_name}
+                    src={item.image_src}
+                  />
                 </Link>
 
                 <div className="list_info">
@@ -150,7 +155,7 @@ const OrderCompletionItemInfo = ({
                 >
                   <img
                     className="info_list_img"
-                    alt=""
+                    alt={firstItem.product_name}
                     src={firstItem.image_src}
                   />
                 </Link>
@@ -191,7 +196,7 @@ const OrderCompletionItemInfo = ({
                   >
                     <img
                       className="info_list_img"
-                      alt=""
+                      alt={item.product_name}
                       src={item.image_src}
                     />
                   </Link>
@@ -212,8 +217,8 @@ const OrderCompletionItemInfo = ({
                   전체보기 {closeText}
                 </span>
                 <img
-                  src={arrowImg}
-                  alt="buttonArrow"
+                  src={arrowImg1}
+                  alt="button_arrow_image"
                   className="info_all_btn_arrow"
                 />
               </button>
@@ -322,7 +327,7 @@ const OrderCompletionItemInfo = ({
                   전체보기 {closeText}
                 </span>
                 <img
-                  src={arrowImg}
+                  src={arrowImg1}
                   alt="buttonArrow"
                   className="info_all_btn_arrow"
                 />

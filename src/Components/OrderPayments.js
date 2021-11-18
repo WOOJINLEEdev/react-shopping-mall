@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useCheckoutData from "../Hooks/useCheckoutData";
 
 const OrderPayments = () => {
@@ -22,23 +22,19 @@ const OrderPayments = () => {
 
   const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
 
-  MutateCheckoutTotalData({
-    ...checkoutTotalData,
-    paymentName,
-  });
+  useEffect(() => {
+    MutateCheckoutTotalData({
+      ...checkoutTotalData,
+      paymentName,
+    });
+  }, [paymentName]);
 
   const handlePaymentMethod = (e) => {
-    console.log("페이먼트 타겟:", e.target.innerText);
-    console.log("타겟밸류:", e.target.value);
-
     const clickedPaymentMethodIndex = e.target.value;
     setPaymentName(e.target.innerText);
 
     return setSelectedPaymentIndex(clickedPaymentMethodIndex);
   };
-
-  console.log("페이먼트 네임:", paymentName);
-  console.log("타겟밸류 저장:", selectedPaymentIndex);
 
   return (
     <section className="pay_zone">
@@ -58,6 +54,7 @@ const OrderPayments = () => {
               data-pay={i}
               value={i}
               onClick={handlePaymentMethod}
+              tabIndex="0"
             >
               {payment}
             </li>

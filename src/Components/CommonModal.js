@@ -34,6 +34,9 @@ const CommonModal = ({
     >
       <ModalText contentPadding={contentPadding}>{modalText}</ModalText>
       <ModalBtnWrap>
+        <ModalBtn width={btnWidth} onClick={btnClick2} name="no">
+          {btnText2}
+        </ModalBtn>
         <ModalBtn
           width={btnWidth}
           backgroundColor={"black"}
@@ -42,9 +45,6 @@ const CommonModal = ({
           name="yes"
         >
           {btnText1}
-        </ModalBtn>
-        <ModalBtn width={btnWidth} onClick={btnClick2} name="no">
-          {btnText2}
         </ModalBtn>
       </ModalBtnWrap>
     </Modal>

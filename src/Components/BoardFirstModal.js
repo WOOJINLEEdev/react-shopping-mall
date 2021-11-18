@@ -14,36 +14,6 @@ const BoardItemModal = ({
   const boardItemNumber = boardItemNo;
   const boardItem = postList.find((post) => post.no === boardItemNumber);
 
-  const BoardContent = styled.div`
-    height: 300px;
-    padding: 20px;
-    margin-top: 20px;
-    border: 1px solid #d4d4d4;
-    text-align: left;
-  `;
-
-  const customModalStyle = {
-    overlay: {
-      backgroundColor: "rgba(0,0,0, 0.5)",
-    },
-    content: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      width: "70%",
-      height: "500px",
-      textAlign: "center",
-      padding: "20px",
-      boxShadow: "10px 10px 35px 20px rgb(0 0 0 / 36%)",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -94,3 +64,33 @@ const BoardItemModal = ({
 };
 
 export default BoardItemModal;
+
+const BoardContent = styled.div`
+  height: 300px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #d4d4d4;
+  text-align: left;
+`;
+
+const customModalStyle = {
+  overlay: {
+    backgroundColor: "rgba(0,0,0, 0.5)",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "70%",
+    height: "500px",
+    textAlign: "center",
+    padding: "20px",
+    boxShadow: "10px 10px 35px 20px rgb(0 0 0 / 36%)",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};

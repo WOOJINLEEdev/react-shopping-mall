@@ -4,15 +4,6 @@ import { useHistory } from "react-router";
 import useBoardItem from "../Hooks/useBoardItem";
 import Loading from "./Loading";
 
-const ListItemWrap = styled.div`
-  padding: 50px;
-`;
-
-const ListButtonWrap = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const BoardItem = ({ match, item }) => {
   const history = useHistory();
   const date = new Date();
@@ -23,8 +14,8 @@ const BoardItem = ({ match, item }) => {
   if (boardItemError) return <div>failed to load</div>;
   if (!boardItem) return <Loading />;
 
-  console.log("게시판 테스트2: boardItem ", boardItem);
-  console.log("게시판 테스트3: item ", item);
+  // console.log("게시판 테스트2: boardItem ", boardItem);
+  // console.log("게시판 테스트3: item ", item);
 
   const moveBoard = () => {
     history.goBack();
@@ -32,14 +23,7 @@ const BoardItem = ({ match, item }) => {
 
   return (
     <ListItemWrap>
-      <div
-        style={{
-          border: "2px solid #acacac",
-          borderRadius: "5px",
-          height: "100%",
-          padding: "20px",
-        }}
-      >
+      <ItemWrap>
         <ListButtonWrap>
           <button type="button" className="board_item_back" onClick={moveBoard}>
             목록
@@ -79,9 +63,29 @@ const BoardItem = ({ match, item }) => {
         <div>
           <div className="board_item_textarea">{boardItem.body}</div>
         </div>
-      </div>
+      </ItemWrap>
     </ListItemWrap>
   );
 };
 
 export default BoardItem;
+
+const ListItemWrap = styled.div`
+  padding: 50px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    padding: 20px;
+  }
+`;
+
+const ItemWrap = styled.div`
+  height: 100%;
+  padding: 20px;
+  border: 2px solid #acacac;
+  border-radius: 5px;
+`;
+
+const ListButtonWrap = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

@@ -4,8 +4,8 @@ import downArrow from "../images/down-arrow.png";
 import upArrow from "../images/up-arrow-icon.png";
 
 const OrderCompletionPayInfo = ({ orderData }) => {
-  const [arrowImg, setArrowImg] = useState(downArrow);
-  const [payInfoClass, setPayInfoClass] = useState("hide");
+  const [arrowImg, setArrowImg] = useState(upArrow);
+  const [payInfoClass, setPayInfoClass] = useState("order_pay_info_wrap");
 
   const handleOpenCloseBtn = () => {
     if (arrowImg === downArrow) {
@@ -38,7 +38,7 @@ const OrderCompletionPayInfo = ({ orderData }) => {
       <ul className={payInfoClass}>
         <li className="order_pay_info">
           <div className="order_pay_info_label">결제 수단</div>
-          <div>{orderData[0].payment.payment_method.type}</div>
+          <div>{orderData[0].payment_method}</div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">총 상품금액</div>
@@ -52,9 +52,10 @@ const OrderCompletionPayInfo = ({ orderData }) => {
           <div className="order_pay_info_label">배송비</div>
           <div>
             {orderData[0].shipping_price !== "0" ? "+" : ""}
-            {orderData[0].shipping_price}
+            {orderData[0].shipping_price
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </div>
-          {/* <div>{orderData[0].total_price < 70000 ? "+3,000" : "0"}</div> */}
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">할인금액</div>
@@ -101,7 +102,7 @@ const OrderCompletionPayInfo = ({ orderData }) => {
             총 결제금액
           </div>
           <div className="order_final_price">
-            {orderData[0].payment.amount
+            {orderData[0].total_price
               .toString()
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </div>
@@ -121,10 +122,10 @@ const UsedCouponMileage = styled.li`
   color: rgb(82, 82, 82);
 `;
 
-const CouponTitle = styled.li`
-  width: 40%;
+const CouponTitle = styled.div`
+  width: 45%;
 `;
 
-const MileageTitle = styled.li`
-  width: 40%;
+const MileageTitle = styled.div`
+  width: 45%;
 `;

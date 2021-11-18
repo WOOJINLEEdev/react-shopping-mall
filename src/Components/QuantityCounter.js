@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const QuantityCounter = ({
   quantity,
@@ -8,16 +8,9 @@ const QuantityCounter = ({
   margin,
   flexEnd,
 }) => {
-  const QuantityArea = styled.div`
-    display: flex;
-    margin: ${(props) => (props.margin ? "0 70px" : "0")};
-
-    @media only screen and (min-width: 320px) and (max-width: 767px) {
-      justify-content: ${(props) =>
-        props.flexEnd ? "flex-end" : "flex-start"};
-      margin: 0;
-    }
-  `;
+  const handleQtyChange = () => {
+    console.log(quantity);
+  };
 
   return (
     <QuantityArea margin={margin}>
@@ -34,6 +27,7 @@ const QuantityCounter = ({
         name="itemQty"
         className="item_quantity"
         value={quantity}
+        onChange={handleQtyChange}
       />
       <input
         type="button"
@@ -41,10 +35,20 @@ const QuantityCounter = ({
         value="+"
         name="count"
         onClick={onIncrement}
-        disabled={quantity === 5}
+        disabled={quantity === 8}
       />
     </QuantityArea>
   );
 };
 
 export default QuantityCounter;
+
+const QuantityArea = styled.div`
+  display: flex;
+  margin: ${(props) => (props.margin ? "0 70px" : "0")};
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    justify-content: ${(props) => (props.flexEnd ? "flex-end" : "flex-start")};
+    margin: 0;
+  }
+`;

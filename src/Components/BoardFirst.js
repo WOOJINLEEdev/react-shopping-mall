@@ -16,7 +16,7 @@ import { GiSpeaker } from "react-icons/gi";
 
 Modal.setAppElement("#root");
 
-const BoardFirst = (props) => {
+const BoardFirst = () => {
   const [dataList, setDataList] = useState([]);
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +24,13 @@ const BoardFirst = (props) => {
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
   const [searchClassName, setSearchClassName] = useState("search_wrap");
+  const [SearchInputClassName, setSearchInputClassName] =
+    useState("board_search_input");
+  const [SearchBtnClassName, setSearchBtnClassName] =
+    useState("board_search_btn");
   const [selectedOption, setSelectedOption] = useState("");
 
+  const token = localStorage.getItem("token");
   const headersName = [
     "번호",
     "구분",
@@ -59,24 +64,6 @@ const BoardFirst = (props) => {
     return currentPosts;
   }
 
-  const BoardWrap = styled.div`
-    width: 984px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 20px;
-
-    @media only screen and (min-width: 320px) and (max-width: 767px) {
-      width: calc(100% - 40px);
-      height: 100%;
-    }
-
-    @media only screen and (min-width: 768px) and (max-width: 1023px) {
-      width: calc(100% - 40px);
-      height: 100%;
-    }
-  `;
-
-  const token = localStorage.getItem("token");
   const handleWriteBtn = () => {
     if (token) {
       history.push("/boardPost");
@@ -153,7 +140,9 @@ const BoardFirst = (props) => {
 
   return (
     <BoardWrap>
-      <h2 className="board_first_head">커뮤니티 (Board First)</h2>
+      <h2 className="board_first_head">
+        커뮤니티 (Board {localStorage.getItem("board")})
+      </h2>
       <div className="board_write_wrap">
         <BoardFilter
           handleSelectOption={handleSelectOption}
@@ -161,6 +150,8 @@ const BoardFirst = (props) => {
         />
         <SearchInputBtn
           searchClassName={searchClassName}
+          SearchInputClassName={SearchInputClassName}
+          SearchBtnClassName={SearchBtnClassName}
           handleSearchBtn={handleSearchBtn}
           handleSearchInput={handleSearchInput}
         />
@@ -182,7 +173,7 @@ const BoardFirst = (props) => {
 
       <BoardTable headersName={getHeadersName()} boardLocal="first">
         {notice.map((item, i) => (
-          <BoardTableRow key={i} background>
+          <BoardTableRow key={item.no} background>
             {isTablet && (
               <BoardTableColumn>
                 <GiSpeaker />
@@ -269,3 +260,20 @@ const BoardFirst = (props) => {
 };
 
 export default BoardFirst;
+
+const BoardWrap = styled.div`
+  width: 984px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: calc(100% - 40px);
+    height: 100%;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: calc(100% - 40px);
+    height: 100%;
+  }
+`;

@@ -3,46 +3,48 @@ import "./App.css";
 import Header from "../src/Components/Header.js";
 import Footer from "../src/Components/Footer.js";
 import Main from "../src/Components/Main";
-import { Provider } from "react-redux";
-import store from "./redux/store";
+import Menu from "../src/Components/Menu";
 import { ReactComponent as UpArrow } from "./images/up.svg";
 import styled from "styled-components";
-import Menu from "../src/Components/Menu";
 import useMenuCollapsed from "./Hooks/useMenuCollapsed";
 
-function debounce(fn, delayMs) {
-  let ref = null;
-  return () => {
-    if (ref) {
-      clearTimeout(ref);
-    }
-    ref = setTimeout(() => {
-      fn();
-      ref = null;
-    }, delayMs);
-  };
-}
-
 const App = () => {
-  const [ScrollActive, setScrollActive] = useState(false);
+  const [scrollY, setScrollY] = useState(false);
 
   const { data, mutate } = useMenuCollapsed();
 
-  function handleScroll() {
-    console.log("handleScroll window.pageYOffset: ", window.pageYOffset);
-    if (window.pageYOffset > 299) {
-      setScrollActive(true);
-    } else {
-      setScrollActive(false);
-    }
-  }
-
   useEffect(() => {
-    window.addEventListener("scroll", debounce(handleScroll, 100));
+    window.addEventListener("scroll", handleScrollY);
+    window.addEventListener("scroll", throttle(handleScroll, 1000));
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, []);
+
+  function throttle(fn, delay) {
+    let timer;
+    return function () {
+      if (!timer) {
+        timer = setTimeout(() => {
+          timer = null;
+          fn.apply(this, arguments);
+        }, delay);
+      }
+    };
+  }
+
+  function handleScroll() {
+    console.log("handleScroll window.pageYOffset: ", window.pageYOffset);
+  }
+
+  function handleScrollY() {
+    if (window.pageYOffset > 299) {
+      setScrollY(true);
+    } else {
+      setScrollY(false);
+    }
+  }
 
   const handleTopBtn = () => {
     window.scrollTo(0, 0);
@@ -53,21 +55,16 @@ const App = () => {
   };
 
   return (
-    <Provider store={store}>
-      <div className="App">
-        <Header />
-        <DimmedLayer className={data ? "" : "hide"} onClick={handleDimClick} />
-        <Menu show={data} />
-        <Main />
-        <Footer />
-        <TopBtn
-          className={ScrollActive ? "top_btn" : "hidden"}
-          onClick={handleTopBtn}
-        >
-          <UpArrow fill="gray" width="20" height="20" />
-        </TopBtn>
-      </div>
-    </Provider>
+    <div className="App">
+      <Header />
+      <DimmedLayer className={data ? "" : "hide"} onClick={handleDimClick} />
+      <Menu show={data} />
+      <Main />
+      <Footer />
+      <TopBtn className={scrollY ? "top_btn" : "hidden"} onClick={handleTopBtn}>
+        <UpArrow fill="gray" width="20" height="20" />
+      </TopBtn>
+    </div>
   );
 };
 
@@ -96,6 +93,7 @@ const TopBtn = styled.button`
   background-color: #fff;
   padding: 0;
   z-index: 100;
+  cursor: pointer;
 
   svg {
     margin: 15px 0;
@@ -114,7 +112,7 @@ const TopBtn = styled.button`
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 36px;
     height: 36px;
-    bottom: 80px;
+    bottom: 100px;
 
     svg {
       width: 16px;

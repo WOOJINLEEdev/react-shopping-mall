@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import OrderTotalDetail from "./OrderTotalDetail";
 import useCheckout from "../Hooks/useCheckout";
 import downArrow from "../images/down-arrow.png";
 import upArrow from "../images/up-arrow-icon.png";
-import axios from "axios";
 
 const OrderTotal = ({
   usedMileage,
@@ -39,10 +38,6 @@ const OrderTotal = ({
   const itemQuantity = items.map((item) => item.quantity);
   const sum = itemQuantity.reduce((a, b) => a + b);
 
-  // const handleOrderSubmit = () => {
-  //   console.log("오더버튼 클릭");
-  // };
-
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {
       setArrowImg(upArrow);
@@ -66,7 +61,7 @@ const OrderTotal = ({
           </h2>
           <ul className="info_group">
             {items.map((item) => (
-              <li key={item.product_id} className="info_list_wrap">
+              <li key={item.variant_id} className="info_list_wrap">
                 <Link
                   to={`/products/${item.product_id}`}
                   className="info_list_box"
@@ -76,7 +71,7 @@ const OrderTotal = ({
 
                 <div className="list_info">
                   <div className="list_info_text infoHead">
-                    <label className="list_info_name" htmlfor="itemName">
+                    <label className="list_info_name" htmlFor="itemName">
                       제품명
                     </label>
                     <p className="list_goods name" id="itemName">
@@ -137,7 +132,7 @@ const OrderTotal = ({
           </div>
           <ul className="info_group">
             {
-              <li key={firstItem.product_id} className="info_list_wrap">
+              <li key={firstItem.variant_id} className="info_list_wrap">
                 <div className="list_info">
                   <div className="list_info_text infoHead">
                     <p className="list_goods name">{firstItem.product_name}</p>
@@ -180,7 +175,7 @@ const OrderTotal = ({
             }
             <div className={remainderClass}>
               {remainder.map((item) => (
-                <li key={item.product_id} className="info_list_wrap">
+                <li key={item.variant_id} className="info_list_wrap">
                   <div className="list_info">
                     <div className="list_info_text infoHead">
                       <p className="list_goods name">{item.product_name}</p>
@@ -259,7 +254,7 @@ const OrderTotal = ({
 
           <ul className="info_group">
             {
-              <li key={firstItem.product_id} className="info_list_wrap">
+              <li key={firstItem.variant_id} className="info_list_wrap">
                 <div className="list_info">
                   <div className="list_info_text infoHead">
                     <p className="list_goods name">{firstItem.product_name}</p>
@@ -302,7 +297,7 @@ const OrderTotal = ({
             }
             <div className={remainderClass}>
               {remainder.map((item) => (
-                <li key={item.product_id} className="info_list_wrap">
+                <li key={item.variant_id} className="info_list_wrap">
                   <div className="list_info">
                     <div className="list_info_text infoHead">
                       <p className="list_goods name">{item.product_name}</p>

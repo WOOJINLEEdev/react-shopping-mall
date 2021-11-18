@@ -1,6 +1,5 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
-import styled from "styled-components";
 
 const BoardTable = ({ headersName, children, loading, boardLocal }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });

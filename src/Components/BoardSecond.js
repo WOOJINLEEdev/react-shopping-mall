@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
@@ -15,15 +15,23 @@ import SearchInputBtn from "./SearchInputBtn";
 
 Modal.setAppElement("#root");
 
-const BoardSecond = (props) => {
+const BoardSecond = () => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
   const [searchClassName, setSearchClassName] = useState("search_wrap");
+  const [SearchInputClassName, setSearchInputClassName] =
+    useState("board_search_input");
+  const [SearchBtnClassName, setSearchBtnClassName] =
+    useState("board_search_btn");
+
+  const ref = useRef();
+
   const token = localStorage.getItem("token");
   const date = new Date();
+  let searchInput = "";
 
   const headersName = [
     "번호",
@@ -40,6 +48,12 @@ const BoardSecond = (props) => {
   const isMobile = useMediaQuery({
     query: "(min-width: 320px) and (max-width:767px)",
   });
+
+  useEffect(() => {
+    if (ref.current) {
+      return ref.current.focus();
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("board", "second");
@@ -71,23 +85,6 @@ const BoardSecond = (props) => {
 
   testing();
 
-  const BoardWrap = styled.div`
-    width: 984px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 20px;
-
-    @media only screen and (min-width: 320px) and (max-width: 767px) {
-      width: calc(100% - 40px);
-      height: 100%;
-    }
-
-    @media only screen and (min-width: 768px) and (max-width: 1023px) {
-      width: calc(100% - 40px);
-      height: 100%;
-    }
-  `;
-
   const handleWriteBtn = () => {
     if (token) {
       history.push("/boardPost");
@@ -106,6 +103,18 @@ const BoardSecond = (props) => {
     setIsOpen(false);
   };
 
+  const handleSearchInput = (e) => {
+    const targetValue = e.target.value;
+    searchInput = targetValue;
+  };
+
+  const handleSearchBtn = () => {
+    const searchFilter = board.filter((item) =>
+      item.title.includes(searchInput)
+    );
+    console.log(searchFilter);
+  };
+
   const getHeadersName = () => {
     if (isTablet) {
       return ["번호", "제목", "작성자", "등록일", "조회수"];
@@ -119,9 +128,18 @@ const BoardSecond = (props) => {
 
   return (
     <BoardWrap>
-      <h2 className="board_second_head">커뮤니티 (Board Second)</h2>
+      <h2 className="board_second_head">
+        커뮤니티 (Board {localStorage.getItem("board")})
+      </h2>
       <div className="board_write_wrap">
-        <SearchInputBtn searchClassName={searchClassName} />
+        <SearchInputBtn
+          searchClassName={searchClassName}
+          SearchInputClassName={SearchInputClassName}
+          SearchBtnClassName={SearchBtnClassName}
+          handleSearchBtn={handleSearchBtn}
+          handleSearchInput={handleSearchInput}
+          ref={ref}
+        />
         <button
           type="button"
           className="board_write_btn"
@@ -140,19 +158,38 @@ const BoardSecond = (props) => {
         {currentPosts(board).map((item, i) => (
           <BoardTableRow key={i}>
             <BoardTableColumn>{item.id}</BoardTableColumn>
-            <Link to={`/postView/${item.id}`} className="board_link">
-              <BoardTableColumn>
-                <span className="board_item_title">{item.title}</span>
-              </BoardTableColumn>
-            </Link>
-            <BoardTableColumn>{item.userId}</BoardTableColumn>
             <BoardTableColumn>
-              {date.getFullYear()}-
-              {date.getMonth() < 9
-                ? "0" + (date.getMonth() + 1)
-                : date.getMonth() + 1}
-              -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
+              <Link to={`/postView/${item.id}`} className="board_link">
+                <span className="board_item_title">{item.title}</span>
+              </Link>
             </BoardTableColumn>
+            <BoardTableColumn>{item.userId}</BoardTableColumn>
+            {isMobile && (
+              <BoardTableColumn>
+                {date.getMonth() < 9
+                  ? "0" + (date.getMonth() + 1)
+                  : date.getMonth() + 1}
+                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
+              </BoardTableColumn>
+            )}
+            {isTablet && (
+              <BoardTableColumn>
+                {date.getFullYear()}-
+                {date.getMonth() < 9
+                  ? "0" + (date.getMonth() + 1)
+                  : date.getMonth() + 1}
+                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
+              </BoardTableColumn>
+            )}
+            {isPc && (
+              <BoardTableColumn>
+                {date.getFullYear()}-
+                {date.getMonth() < 9
+                  ? "0" + (date.getMonth() + 1)
+                  : date.getMonth() + 1}
+                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
+              </BoardTableColumn>
+            )}
             {isTablet && <BoardTableColumn>{item.id}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.id}</BoardTableColumn>}
             {isPc && (
@@ -180,3 +217,20 @@ const BoardSecond = (props) => {
 };
 
 export default BoardSecond;
+
+const BoardWrap = styled.div`
+  width: 984px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: calc(100% - 40px);
+    height: 100%;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: calc(100% - 40px);
+    height: 100%;
+  }
+`;

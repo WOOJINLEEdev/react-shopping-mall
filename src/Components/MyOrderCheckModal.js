@@ -16,9 +16,10 @@ const MyOrderCheckModal = ({
   myOrderList,
   orderItemId,
 }) => {
-  const [arrowImg, setArrowImg] = useState(downArrow);
+  const [arrowImg, setArrowImg] = useState(upArrow);
+  const [arrowImg1, setArrowImg1] = useState(downArrow);
   const [closeText, setCloseText] = useState("");
-  const [itemInfoClass, setItemInfoClass] = useState("hide");
+  const [itemInfoClass, setItemInfoClass] = useState("info_group");
   const [remainderClass, setRemainderClass] = useState("info_remainder");
 
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -38,17 +39,15 @@ const MyOrderCheckModal = ({
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
       };
     }
-  }, []);
+  }, [isOpen3]);
 
   if (!myOrderList) {
     return <div>로딩 중.....</div>;
   }
 
   const selectedOrderData = myOrderList.filter(
-    (item) => item.id === orderItemId
+    (item) => item.checkout_id === orderItemId
   );
-  console.log("zzzzzz", selectedOrderData);
-  console.log(orderItemId);
 
   if (
     selectedOrderData.length === 0 ||
@@ -64,15 +63,17 @@ const MyOrderCheckModal = ({
   const itemQuantity = items.map((item) => item.quantity);
   const sum = itemQuantity.reduce((a, b) => a + b);
 
+  console.log("checking", items);
+
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {
-      setArrowImg(upArrow);
+      setArrowImg1(upArrow);
       setCloseText("닫기");
       return setRemainderClass("open");
     }
 
     if (remainderClass === "open") {
-      setArrowImg(downArrow);
+      setArrowImg1(downArrow);
       setCloseText("");
       return setRemainderClass("info_remainder");
     }
@@ -90,8 +91,6 @@ const MyOrderCheckModal = ({
     }
   };
 
-  const date = new Date();
-
   return (
     <Modal
       isOpen={isOpen3}
@@ -102,13 +101,11 @@ const MyOrderCheckModal = ({
       <ModalContent>
         <ModalTitle>
           <FcCheckmark />
-          주문번호 : {date.getFullYear()}
-          {date.getMonth() < 9
-            ? "0" + (date.getMonth() + 1)
-            : date.getMonth() + 1}
-          {date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
+          주문번호 : {selectedOrderData[0].created_at.substring(0, 4)}
+          {selectedOrderData[0].created_at.substring(5, 7)}
+          {selectedOrderData[0].created_at.substring(8, 10)}
           -000
-          {orderItemId}
+          {selectedOrderData[0].checkout_id}
         </ModalTitle>
         <OrderCompletionItemInfo
           items={items}
@@ -119,6 +116,7 @@ const MyOrderCheckModal = ({
           handleOpenCloseBtn={handleOpenCloseBtn}
           handleInfoOpenBtn={handleInfoOpenBtn}
           arrowImg={arrowImg}
+          arrowImg1={arrowImg1}
           closeText={closeText}
           sum={sum}
           isPc={isPc}

@@ -5,14 +5,9 @@ import styled from "styled-components";
 import downArrow from "../images/down-arrow.png";
 import upArrow from "../images/up-arrow-icon.png";
 import useCheckoutData from "../Hooks/useCheckoutData";
+// import PropTypes from "prop-types";
 
-const OrderDelivery = ({
-  checkoutNumber,
-  checkoutData,
-  isPc,
-  isTablet,
-  isMobile,
-}) => {
+const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   const optionData = [
     {
       no: "0",
@@ -75,20 +70,38 @@ const OrderDelivery = ({
   const [selectedOptionNo, setSelectedOptionNo] = useState();
 
   const [designation, setDesignation] = useState("");
-  const [recipient, setRecipient] = useState();
-  const [tel1, setTel1] = useState();
-  const [tel2, setTel2] = useState();
-  const [tel3, setTel3] = useState();
-  const [tel4, setTel4] = useState();
-  const [tel5, setTel5] = useState();
-  const [tel6, setTel6] = useState();
-  const [requirement, setRequirement] = useState();
-  const [requirement1, setRequirement1] = useState();
+  const [recipient, setRecipient] = useState("");
+  const [tel1, setTel1] = useState("");
+  const [tel2, setTel2] = useState("");
+  const [tel3, setTel3] = useState("");
+  const [tel4, setTel4] = useState("");
+  const [tel5, setTel5] = useState("");
+  const [tel6, setTel6] = useState("");
+  const [requirement, setRequirement] = useState("");
+  const [requirement1, setRequirement1] = useState("");
 
   const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
 
-  MutateCheckoutTotalData({
-    ...checkoutTotalData,
+  useEffect(() => {
+    MutateCheckoutTotalData({
+      ...checkoutTotalData,
+      designation,
+      recipient,
+      address1,
+      addressDetail1,
+      addressDetail2,
+      tel1,
+      tel2,
+      tel3,
+      tel4,
+      tel5,
+      tel6,
+      requirement,
+      requirement1,
+      deliveryClassName,
+      deliveryClassName1,
+    });
+  }, [
     designation,
     recipient,
     address1,
@@ -104,7 +117,7 @@ const OrderDelivery = ({
     requirement1,
     deliveryClassName,
     deliveryClassName1,
-  });
+  ]);
 
   useEffect(() => {
     if (checkoutTotalData.checkoutData === undefined) {
@@ -291,8 +304,6 @@ const OrderDelivery = ({
     }
   };
 
-  console.log("오더딜리버리:::", checkoutData);
-
   return (
     <section className="delivery_info">
       <div className="info_head_wrap">
@@ -397,10 +408,15 @@ const OrderDelivery = ({
                 !checkoutData.user.shipping_address ? "disabled" : false
               }
               data-name="기존 배송지"
+              tabIndex="0"
             >
               기존 배송지
             </li>
-            <li className={deliveryClassName1} data-name="신규 입력">
+            <li
+              className={deliveryClassName1}
+              data-name="신규 입력"
+              tabIndex="0"
+            >
               신규입력
             </li>
           </ul>
@@ -413,6 +429,8 @@ const OrderDelivery = ({
                 type="text"
                 className="delivery_input first"
                 id="deliveryTitle"
+                value={designation}
+                readOnly
               />
             </div>
 
@@ -428,8 +446,11 @@ const OrderDelivery = ({
                 id="deliveryName"
                 className="delivery_input second"
                 value={
-                  checkoutData?.user?.shipping_address?.recipient_name ?? ""
+                  checkoutData.user.shipping_address
+                    ? checkoutData.user.shipping_address.recipient_name
+                    : ""
                 }
+                readOnly
               />
             </div>
 
@@ -452,13 +473,15 @@ const OrderDelivery = ({
                         : address
                     }
                     onClick={handlePostalCode}
-                    disabled={checkoutData ? "disabled" : ""}
+                    disabled
+                    readOnly
                   />
                   <input
                     type="button"
                     className="postalCode_search"
                     value="우편번호 찾기"
                     onClick={handlePostalCode}
+                    disabled
                   />
                 </div>
                 <input
@@ -470,9 +493,10 @@ const OrderDelivery = ({
                   value={
                     checkoutData.user.shipping_address
                       ? checkoutData.user.shipping_address.address1
-                      : addressDetail
+                      : ""
                   }
                   disabled
+                  readOnly
                 />
 
                 <input
@@ -485,17 +509,8 @@ const OrderDelivery = ({
                       ? checkoutData.user.shipping_address.address2
                       : ""
                   }
+                  readOnly
                 />
-                {checkoutData ? (
-                  ""
-                ) : (
-                  <input
-                    type="text"
-                    id="sample6_extraAddress"
-                    className="delivery_input address"
-                    placeholder="참고항목"
-                  />
-                )}
               </div>
             </div>
 
@@ -520,6 +535,7 @@ const OrderDelivery = ({
                         )
                       : ""
                   }
+                  readOnly
                 />
                 <span className="tel_dash">-</span>
                 <input
@@ -536,6 +552,7 @@ const OrderDelivery = ({
                         )
                       : ""
                   }
+                  readOnly
                 />
                 <span className="tel_dash">-</span>
                 <input
@@ -552,6 +569,7 @@ const OrderDelivery = ({
                         )
                       : ""
                   }
+                  readOnly
                 />
               </div>
             </div>
@@ -566,26 +584,47 @@ const OrderDelivery = ({
                   maxLength="4"
                   className="delivery_input tel"
                   id="subPhoneFirst"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.phone2.substring(
+                          0,
+                          3
+                        )
+                      : ""
+                  }
+                  readOnly
                 />
                 <span className="tel_dash">-</span>
                 <input
                   type="tel"
                   maxLength="4"
                   className="delivery_input tel"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.phone2.substring(
+                          3,
+                          7
+                        )
+                      : ""
+                  }
+                  readOnly
                 />
                 <span className="tel_dash">-</span>
                 <input
                   type="tel"
                   maxLength="4"
                   className="delivery_input tel"
+                  value={
+                    checkoutData.user.shipping_address
+                      ? checkoutData.user.shipping_address.phone2.substring(
+                          7,
+                          11
+                        )
+                      : ""
+                  }
+                  readOnly
                 />
               </div>
-            </div>
-
-            <div className="delivery_box notice">
-              <div className="label_box"></div>
-              기본 배송지입니다. 주문 시 변경하신 내용으로 기본 배송지 주소가
-              수정됩니다.
             </div>
 
             <div className="delivery_box">
@@ -606,12 +645,17 @@ const OrderDelivery = ({
                   ))}
                 </PreexistenceSelect>
                 <SelectRequirementWrite
-                  className={deliveryRequirementWrite1}
+                  className={deliveryRequirementWrite}
                   placeholder="배송시 요청사항을 작성해 주세요."
                   maxLength="30"
                   onChange={handleDeliveryInputChange4}
                 />
               </DeliveryRequirementWrap>
+            </div>
+
+            <div className="delivery_box notice">
+              <div className="label_box"></div>※ 배송지를 수정하길 원하시면
+              신규입력 탭을 이용해주세요.
             </div>
           </div>
         </div>
@@ -619,10 +663,18 @@ const OrderDelivery = ({
       {isTablet && (
         <div className={deliveryWrapClass}>
           <ul className="delivery_write_choice" onClick={handleDeliveryWrite}>
-            <li className={deliveryClassName} data-name="기존 배송지">
+            <li
+              className={deliveryClassName}
+              data-name="기존 배송지"
+              tabIndex="0"
+            >
               기존 배송지
             </li>
-            <li className={deliveryClassName1} data-name="신규 입력">
+            <li
+              className={deliveryClassName1}
+              data-name="신규 입력"
+              tabIndex="0"
+            >
               신규입력
             </li>
           </ul>
@@ -663,6 +715,7 @@ const OrderDelivery = ({
                     color={"#333"}
                     margin={"20px 0 0"}
                     onChange={handleDeliveryRequirement}
+                    tabIndex="0"
                   >
                     {deliveryRequirementOption.map((item) => (
                       <option key={item.no} value={item.label}>
@@ -686,10 +739,18 @@ const OrderDelivery = ({
       {isMobile && (
         <div className={deliveryWrapClass}>
           <ul className="delivery_write_choice" onClick={handleDeliveryWrite}>
-            <li className={deliveryClassName} data-name="기존 배송지">
+            <li
+              className={deliveryClassName}
+              data-name="기존 배송지"
+              tabIndex="0"
+            >
               기존 배송지
             </li>
-            <li className={deliveryClassName1} data-name="신규 입력">
+            <li
+              className={deliveryClassName1}
+              data-name="신규 입력"
+              tabIndex="0"
+            >
               신규입력
             </li>
           </ul>
@@ -730,6 +791,7 @@ const OrderDelivery = ({
                     color={"#333"}
                     margin={"20px 0 0"}
                     onChange={handleDeliveryRequirement}
+                    tabIndex="0"
                   >
                     {deliveryRequirementOption.map((item) => (
                       <option key={item.no} value={item.label}>
@@ -759,6 +821,7 @@ const OrderDelivery = ({
             type="text"
             className="delivery_input first"
             id="deliveryTitle1"
+            value={designation}
             onChange={handleDeliveryInputChange1}
           />
         </div>
@@ -773,6 +836,7 @@ const OrderDelivery = ({
             type="text"
             className="delivery_input second"
             id="deliveryName1"
+            value={recipient}
             onChange={handleDeliveryInputChange2}
           />
         </div>
@@ -792,6 +856,7 @@ const OrderDelivery = ({
                 placeholder="우편번호"
                 value={address1}
                 onClick={handlePostalCode}
+                readOnly
               />
               <input
                 type="button"
@@ -808,19 +873,15 @@ const OrderDelivery = ({
               placeholder="주소"
               value={addressDetail1}
               disabled
+              readOnly
             />
             <input
               type="text"
               id="sample5_detailAddress"
               className="delivery_input address"
               placeholder="상세주소"
+              value={addressDetail2}
               onChange={handleAddressDetail2}
-            />
-            <input
-              type="text"
-              id="sample5_extraAddress"
-              className="delivery_input address"
-              placeholder="참고항목"
             />
           </div>
         </div>
