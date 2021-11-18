@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "http://localhost:8282",
+  baseURL: process.env.REACT_APP_SHOPPING_API_BASE_URL,
   timeout: 5000,
 });
 
