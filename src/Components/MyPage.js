@@ -25,7 +25,7 @@ const MyPage = () => {
   const [myPageData, setMyPageData] = useState();
   const [myCoupon, setMyCoupon] = useState();
   const [myMileage, setMyMileage] = useState();
-  const [myDeliveryAddress, setMyDeliveryAddress] = useState([]);
+  const [myDeliveryAddress, setMyDeliveryAddress] = useState();
   const [myRating, setMyRating] = useState([]);
 
   useEffect(() => {

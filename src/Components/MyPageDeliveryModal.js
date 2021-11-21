@@ -157,14 +157,11 @@ const MyPageDeliveryModal = ({
             <DeliveryAddressItem display={addressDisplay}>
               <strong>기본 배송지</strong>
               <ItemContentWrap>
+                <ItemContent>{myDeliveryAddress.recipient_name}</ItemContent>
                 <ItemContent>
-                  {myData.shipping_address.recipient_name}
+                  {myDeliveryAddress.address1} {myDeliveryAddress.address2}
                 </ItemContent>
-                <ItemContent>
-                  {myData.shipping_address.address1}{" "}
-                  {myData.shipping_address.address2}
-                </ItemContent>
-                <ItemContent>{myData.shipping_address.phone1}</ItemContent>
+                <ItemContent>{myDeliveryAddress.phone1}</ItemContent>
               </ItemContentWrap>
               <ModifyBtn onClick={handleModifyBtn}>수정</ModifyBtn>
             </DeliveryAddressItem>
