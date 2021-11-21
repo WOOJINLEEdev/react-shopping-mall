@@ -61,7 +61,11 @@ const App = () => {
       <Menu show={data} />
       <Main />
       <Footer />
-      <TopBtn className={scrollY ? "top_btn" : "hidden"} onClick={handleTopBtn}>
+      <TopBtn
+        value="top"
+        className={scrollY ? "top_btn" : "hidden"}
+        onClick={handleTopBtn}
+      >
         <UpArrow fill="gray" width="20" height="20" />
       </TopBtn>
     </div>
