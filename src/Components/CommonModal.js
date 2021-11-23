@@ -103,4 +103,5 @@ const ModalBtn = styled.button`
   border-radius: 5px;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   margin: 0 5px;
+  cursor: pointer;
 `;

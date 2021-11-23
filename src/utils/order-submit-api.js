@@ -18,7 +18,7 @@ export function orderExistedDeliverySubmit(
         request_note: checkoutTotalData.requirement,
       },
       user_coupon_id_to_be_used: checkoutTotalData.selectCouponId,
-      mileage_to_be_used: checkoutTotalData.usedMileage,
+      mileage_to_be_used: Number(checkoutTotalData.usedMileage),
       payment_method: checkoutTotalData.paymentName,
     })
     .then(function (response) {
@@ -53,7 +53,7 @@ export function orderNewDeliverySubmit(checkoutTotalData, checkoutNumber) {
         request_note: checkoutTotalData.requirement1,
       },
       user_coupon_id_to_be_used: checkoutTotalData.selectCouponId,
-      mileage_to_be_used: checkoutTotalData.usedMileage,
+      mileage_to_be_used: Number(checkoutTotalData.usedMileage),
       payment_method: checkoutTotalData.paymentName,
     })
     .then(function (response) {
