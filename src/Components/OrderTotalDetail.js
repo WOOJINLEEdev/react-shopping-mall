@@ -40,14 +40,6 @@ const OrderTotalDetail = ({
     });
   }, [usedCoupon, usedMileage, finalPrice, agreeChecked]);
 
-  // MutateCheckoutTotalData({
-  //   ...checkoutTotalData,
-  //   usedCoupon,
-  //   usedMileage,
-  //   finalPrice,
-  //   agreeChecked,
-  // });
-
   const handleAgreeCheck = (e) => {
     const checked = e.target.checked;
     if (checked) {

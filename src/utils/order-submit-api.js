@@ -25,7 +25,7 @@ export function orderExistedDeliverySubmit(
       console.log(response);
       console.log("주문성공");
 
-      // window.location.replace(`/orderCheck/${checkoutNumber}`);
+      window.location.replace(`/orderCheck/${checkoutNumber}`);
     })
     .catch(function (error) {
       console.log(error);
@@ -60,7 +60,7 @@ export function orderNewDeliverySubmit(checkoutTotalData, checkoutNumber) {
       console.log(response);
       console.log("주문성공");
 
-      // window.location.replace(`/orderCheck/${checkoutNumber}`);
+      window.location.replace(`/orderCheck/${checkoutNumber}`);
     })
     .catch(function (error) {
       console.log(error);

@@ -62,8 +62,8 @@ const StarRating = ({ myRating }) => {
           {stars.map((star, i) => (
             <AiTwotoneStar
               key={star.toString()}
-              onClick={(e) => handleStarClick(e, i)}
               className={clicked[i] ? "clickedstar" : null}
+              onClick={(e) => handleStarClick(e, i)}
               size="27px"
               tabIndex="0"
               onKeyPress={(e) => handleStarClick(e, i)}

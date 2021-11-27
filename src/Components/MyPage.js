@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -9,7 +9,7 @@ import MyPageDeliveryModal from "./MyPageDeliveryModal";
 import { useHistory } from "react-router";
 import useMyCart from "../Hooks/useMyCart";
 import MyPageChart from "./MyPageChart";
-import { instance } from "../utils/http-client";
+import useMyPageData from "../Hooks/useMyPageData";
 
 Modal.setAppElement("#root");
 
@@ -22,37 +22,16 @@ const MyPage = () => {
   const [btnText1, setBtnText1] = useState("예");
   const [btnText2, setBtnText2] = useState("아니오");
 
-  const [myPageData, setMyPageData] = useState();
-  const [myCoupon, setMyCoupon] = useState();
-  const [myMileage, setMyMileage] = useState();
-  const [myDeliveryAddress, setMyDeliveryAddress] = useState();
-  const [myRating, setMyRating] = useState([]);
-
-  useEffect(() => {
-    instance
-      .get("/v1/me")
-      .then(function (response) {
-        console.log(response);
-        setMyPageData(response.data);
-        setMyCoupon(response.data.coupons);
-        setMyMileage(response.data.mileage);
-        setMyDeliveryAddress(response.data.shipping_address);
-        setMyRating(response.data.rating);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
-
   const history = useHistory();
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
 
   if (cartError) return <div>에러 발생...</div>;
   if (loadingCart) return <div>로딩 중...</div>;
-  if (!myMileage) {
-    <div>로딩 중.....</div>;
-  }
+
+  if (loadingMyData) return <div>로딩중...</div>;
+  if (myDataError) return <div>에러발생...</div>;
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -112,19 +91,19 @@ const MyPage = () => {
       <MyPageCouponModal
         isOpen2={isOpen2}
         onRequestClose2={onRequestClose2}
-        myCoupon={myCoupon}
+        myCoupon={myData.coupons}
       />
       <MyPageDeliveryModal
         isOpen3={isOpen3}
         onRequestClose3={onRequestClose3}
-        myDeliveryAddress={myDeliveryAddress}
+        myDeliveryAddress={myData.shipping_address}
       />
 
       <MyInfo>
         <h3 className="greet">
           <span className="greet_user">
-            {!myPageData || myPageData === undefined ? "" : myPageData.name} (
-            {!myPageData || myPageData === undefined ? "" : myPageData.user_id}){" "}
+            {!myData || myData === undefined ? "" : myData.name} (
+            {!myData || myData === undefined ? "" : myData.user_id}){" "}
           </span>{" "}
           님, <span>안녕하세요!</span>
         </h3>
@@ -155,15 +134,19 @@ const MyPage = () => {
                 fontSize: "25px",
               }}
             >
-              {myCoupon === 0 || myCoupon === undefined ? 0 : myCoupon.length}
+              {myData.coupons === 0 || myData.coupons === undefined
+                ? 0
+                : myData.coupons.length}
             </span>
           </Coupon>
           <Mileage tabIndex="0">
             <h3>마일리지</h3>{" "}
             <span className="info_mileage_in">
-              {myMileage === 0 || myMileage === undefined
+              {myData.mileage === 0 || myData.mileage === undefined
                 ? 0
-                : myMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                : myData.mileage
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </span>
           </Mileage>
         </CouponMileageWrap>
@@ -185,7 +168,7 @@ const MyPage = () => {
           <h3>배송지 등록 / 변경</h3>
         </li>
         <li className="info_li" tabIndex="0">
-          <StarRating myRating={myRating} />
+          <StarRating myRating={myData.rating} />
         </li>
         <li className="info_li">
           <h3> Chart</h3>
