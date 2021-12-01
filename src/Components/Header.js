@@ -59,7 +59,7 @@ const Header = ({ location }) => {
           tabIndex="0"
           onKeyPress={handleMenuClick}
         >
-          <MenuImg fill="#333" width="20" height="20" margin="20px" />
+          <MenuImg />
         </MenuWrap>
 
         <Link to="/" className="header_link">
@@ -116,6 +116,7 @@ const MenuHomeWrap = styled.div`
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     display: flex;
     width: 180px;
+    height: 50px;
     margin: 0;
   }
 `;
@@ -128,13 +129,15 @@ const MenuWrap = styled.div`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     display: inline-block;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     margin: 0;
     text-align: center;
 
     svg {
-      margin: 20px;
+      width: 20px;
+      height: 20px;
+      margin: 15px;
     }
   }
 
@@ -204,13 +207,13 @@ const HeaderSignIn = styled.div`
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 
     & img {
       width: 20px;
       height: 20px;
-      margin: 20px;
+      margin: 15px;
     }
 
     &:hover {
@@ -240,13 +243,13 @@ const HeaderCart = styled.div`
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 
     & svg {
       width: 20px;
       height: 20px;
-      margin: 20px;
+      margin: 15px;
     }
 
     &:hover {
@@ -282,12 +285,12 @@ const CartAmount = styled.div`
   line-height: 22px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-    line-height: 18px;
-    top: 10px;
-    right: 10px;
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+    line-height: 16px;
+    top: 7px;
+    right: 7px;
   }
 
   @media only screen and (min-width: 768) and (max-width: 1023px) {
