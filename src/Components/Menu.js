@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import SearchInputBtn from "./SearchInputBtn";
@@ -13,13 +13,6 @@ const Menu = ({ show }) => {
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("menu_search_btn");
   const history = useHistory();
-  const ref = useRef();
-
-  useEffect(() => {
-    if (show) {
-      ref.current.focus();
-    }
-  }, [show]);
 
   const { data, mutate } = useMenuCollapsed();
   const { searchResultData, searchResultMutate } = useSearchResult();
@@ -88,7 +81,6 @@ const Menu = ({ show }) => {
             SearchInputClassName={SearchInputClassName}
             SearchBtnClassName={SearchBtnClassName}
             handleSearchBtn={handleSearchBtn}
-            ref={ref}
           />
         </MenuItem>
       </MenuList>

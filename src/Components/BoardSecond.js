@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import Modal from "react-modal";
 import { useMediaQuery } from "react-responsive";
+import Modal from "react-modal";
 import BoardTable from "./BoardTable";
 import BoardTableRow from "./BoardTableRow";
 import BoardTableColumn from "./BoardTableColumn";
@@ -27,8 +27,6 @@ const BoardSecond = () => {
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("board_search_btn");
 
-  const ref = useRef();
-
   const token = localStorage.getItem("token");
   const date = new Date();
   let searchInput = "";
@@ -48,12 +46,6 @@ const BoardSecond = () => {
   const isMobile = useMediaQuery({
     query: "(min-width: 320px) and (max-width:767px)",
   });
-
-  useEffect(() => {
-    if (ref.current) {
-      return ref.current.focus();
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("board", "second");
@@ -138,7 +130,6 @@ const BoardSecond = () => {
           SearchBtnClassName={SearchBtnClassName}
           handleSearchBtn={handleSearchBtn}
           handleSearchInput={handleSearchInput}
-          ref={ref}
         />
         <button
           type="button"
