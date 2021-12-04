@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import signInImg from "../images/user.png";
@@ -12,10 +12,14 @@ import { ReactComponent as MenuImg } from "../images/menu.svg";
 import { GoSearch } from "react-icons/go";
 import { FiShoppingCart } from "react-icons/fi";
 import { instance } from "../utils/http-client";
+import useActiveHeaderItem from "../Hooks/useActiveHeaderItem";
+import { GrHomeRounded } from "react-icons/gr";
+import { RiLoginBoxLine } from "react-icons/ri";
 
 const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const token = localStorage.getItem("token");
+  const history = useHistory();
 
   useEffect(() => {
     instance
@@ -34,6 +38,7 @@ const Header = ({ location }) => {
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
   const { searchResultData, searchResultMutate } = useSearchResult();
+  const { clickedData, clickedMutate } = useActiveHeaderItem();
 
   if (cartError) return "에러 발생...";
   if (loadingCart) return "로딩중...";
@@ -51,6 +56,24 @@ const Header = ({ location }) => {
     searchLocationMutate(location.pathname);
   };
 
+  const handleHeaderTitleClick = () => {
+    history.push("/");
+    clickedMutate("");
+  };
+
+  const handleHeaderAboutClick = () => {
+    history.push("/aboutMe");
+  };
+
+  const handleHeaderSignInClick = () => {
+    const path = !token ? "/login" : "/mypage";
+    history.push(path);
+  };
+
+  const handleHeaderCartClick = () => {
+    history.push("/cart");
+  };
+
   return (
     <header className="header">
       <MenuHomeWrap>
@@ -62,45 +85,58 @@ const Header = ({ location }) => {
           <MenuImg />
         </MenuWrap>
 
-        <Link to="/" className="header_link">
+        <HeaderTitle className="header_link" onClick={handleHeaderTitleClick}>
           <h1 className="header_title">WJ Shop</h1>
-        </Link>
+        </HeaderTitle>
       </MenuHomeWrap>
 
       <SignCartWrap>
-        {isPc && (
-          <Link to="/aboutMe" className="about_link">
-            <HeaderAbout>
-              <span>ABOUT</span>
-              <span>ME</span>
-            </HeaderAbout>
-          </Link>
-        )}
         {isPc && (
           <HeaderSearch
             onClick={handleSearchClick}
             onKeyPress={handleSearchClick}
             tabIndex="0"
+            className={clickedData === "search" ? "headerClicked" : ""}
           >
             <GoSearch />
             <span className="visually_hidden">검색</span>
           </HeaderSearch>
         )}
-        <Link to={!token ? "/login" : "/mypage"} className="signin_link">
-          <HeaderSignIn>
+        {isPc && (
+          <HeaderAbout
+            className={clickedData === "/aboutMe" ? "headerClicked" : ""}
+            onClick={handleHeaderAboutClick}
+          >
+            <GrHomeRounded />
+          </HeaderAbout>
+        )}
+
+        <HeaderSignIn
+          className={
+            clickedData === "/mypage" || clickedData === "/login"
+              ? "headerClicked"
+              : ""
+          }
+          onClick={handleHeaderSignInClick}
+        >
+          {!token ? (
+            <RiLoginBoxLine />
+          ) : (
             <img src={signInImg} className="signin_img" alt="sign_in"></img>
-            <span className="visually_hidden">로그인</span>
-          </HeaderSignIn>
-        </Link>
-        <Link to="/cart" className="cart_link">
-          <HeaderCart>
-            <FiShoppingCart />
-            <span className="visually_hidden">장바구니</span>
-            {token && cartAmount > 0 ? (
-              <CartAmount>{cartAmount}</CartAmount>
-            ) : null}
-          </HeaderCart>
-        </Link>
+          )}
+          <span className="visually_hidden">로그인</span>
+        </HeaderSignIn>
+
+        <HeaderCart
+          className={clickedData === "/cart" ? "headerClicked" : ""}
+          onClick={handleHeaderCartClick}
+        >
+          <FiShoppingCart />
+          <span className="visually_hidden">장바구니</span>
+          {token && cartAmount > 0 ? (
+            <CartAmount>{cartAmount}</CartAmount>
+          ) : null}
+        </HeaderCart>
       </SignCartWrap>
     </header>
   );
@@ -134,7 +170,7 @@ const MenuWrap = styled.div`
     margin: 0;
     text-align: center;
 
-    svg {
+    & svg {
       width: 20px;
       height: 20px;
       margin: 15px;
@@ -144,13 +180,15 @@ const MenuWrap = styled.div`
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     display: inline-block;
 
-    svg {
+    & svg {
       width: 30px;
       height: 30px;
       margin: 25px 30px;
     }
   }
 `;
+
+const HeaderTitle = styled.div``;
 
 const HeaderAbout = styled.div`
   display: flex;
@@ -160,9 +198,12 @@ const HeaderAbout = styled.div`
   text-align: center;
   font-weight: bold;
   justify-content: center;
+  cursor: pointer;
 
-  &:hover {
-    border-bottom: 3px solid #333;
+  & svg {
+    width: 32px;
+    min-height: 32px;
+    margin: 24px 29px;
   }
 `;
 
@@ -180,10 +221,6 @@ const HeaderSearch = styled.div`
     height: 32px;
     margin: 24px 29px;
   }
-
-  &:hover {
-    border-bottom: 3px solid #333;
-  }
 `;
 
 const HeaderSignIn = styled.div`
@@ -196,23 +233,20 @@ const HeaderSignIn = styled.div`
   text-align: center;
   cursor: pointer;
 
-  & img {
+  & svg {
     width: 32px;
-    height: 32px;
+    min-height: 32px;
     margin: 24px 29px;
-  }
-
-  &:hover {
-    border-bottom: 3px solid #333;
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 50px;
     height: 50px;
 
-    & img {
+    & svg,
+    img {
       width: 20px;
-      height: 20px;
+      min-height: 20px;
       margin: 15px;
     }
 
@@ -236,10 +270,6 @@ const HeaderCart = styled.div`
     width: 32px;
     height: 32px;
     margin: 24px 29px;
-  }
-
-  &:hover {
-    border-bottom: 3px solid #333;
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
@@ -266,7 +296,7 @@ const SignCartWrap = styled.div`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 120px;
-    height: 60px;
+    height: 50px;
   }
 `;
 

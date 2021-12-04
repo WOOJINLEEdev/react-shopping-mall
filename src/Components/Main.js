@@ -23,6 +23,7 @@ import OrderCompletion from "./OrderCompletion.js";
 import SearchResult from "./SearchResult.js";
 import MyOrderCheck from "./MyOrderCheck.js";
 import AboutMe from "./AboutMe.js";
+import useActiveHeaderItem from "../Hooks/useActiveHeaderItem.js";
 
 const Main = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -36,6 +37,7 @@ const Main = ({ location }) => {
 
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
+  const { clickedData, clickedMutate } = useActiveHeaderItem();
 
   useEffect(() => {
     console.log("Main 테스트중:", mainPathName);
@@ -50,6 +52,8 @@ const Main = ({ location }) => {
       }
     };
   }, [location.pathname]);
+
+  clickedMutate(location.pathname);
 
   return (
     <main>
