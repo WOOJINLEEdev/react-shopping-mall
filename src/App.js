@@ -67,6 +67,7 @@ const App = () => {
         onClick={handleTopBtn}
       >
         <UpArrow fill="gray" width="20" height="20" />
+        <span className="visually_hidden">Top 버튼</span>
       </TopBtn>
     </div>
   );
