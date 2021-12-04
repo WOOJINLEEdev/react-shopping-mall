@@ -44,6 +44,7 @@ const MyPage = () => {
       },
       false
     );
+
     history.push("/");
   };
 
@@ -99,82 +100,72 @@ const MyPage = () => {
         myDeliveryAddress={myData.shipping_address}
       />
 
-      <MyInfo>
-        <h3 className="greet">
-          <span className="greet_user">
-            {!myData || myData === undefined ? "" : myData.name} (
-            {!myData || myData === undefined ? "" : myData.user_id}){" "}
-          </span>{" "}
-          님, <span>안녕하세요!</span>
-        </h3>
-        <ModifyLogoutWrap className="modify_logout_wrap">
-          <button className="myInfo_modify" onClick={handleModifyBtn}>
-            회원정보 수정
-          </button>
-          <button className="myInfo_logout" onClick={handleLogoutBtn}>
-            로그아웃
-          </button>
-        </ModifyLogoutWrap>
-      </MyInfo>
+      <MyInfoWrap>
+        <MyInfo>
+          <Greet>
+            <span className="greet_user">
+              {!myData || myData === undefined ? "" : myData.name} (
+              {!myData || myData === undefined ? "" : myData.user_id}){" "}
+            </span>{" "}
+            님, <span>안녕하세요!</span>
+          </Greet>
+          <ModifyLogoutWrap className="modify_logout_wrap">
+            <Btn onClick={handleModifyBtn}>회원정보 수정</Btn>
+            <Btn onClick={handleLogoutBtn}>로그아웃</Btn>
+          </ModifyLogoutWrap>
 
-      <ul className="my_info_wrap">
-        <CouponMileageWrap>
-          <Coupon
-            className="info_li_coupon"
-            onClick={handleCouponModal}
-            tabIndex="0"
-            onKeyPress={handleCouponModal}
-          >
-            <h3>사용가능 쿠폰</h3>
-            <span
-              style={{
-                display: "block",
-                paddingTop: "15px",
-                fontWeight: "initial",
-                fontSize: "25px",
-              }}
+          <CouponMileageWrap>
+            <Coupon
+              onClick={handleCouponModal}
+              onKeyPress={handleCouponModal}
+              tabIndex="0"
             >
-              {myData.coupons === 0 || myData.coupons === undefined
-                ? 0
-                : myData.coupons.length}
-            </span>
-          </Coupon>
-          <Mileage tabIndex="0">
-            <h3>마일리지</h3>{" "}
-            <span className="info_mileage_in">
-              {myData.mileage === 0 || myData.mileage === undefined
-                ? 0
-                : myData.mileage
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            </span>
-          </Mileage>
-        </CouponMileageWrap>
-        <Link
-          to="/myOrderCheck"
-          style={{ textDecoration: "none", color: "black" }}
-          tabIndex="0"
-        >
-          <li className="info_li">
-            <h3>주문내역 조회</h3>
-          </li>
-        </Link>
-        <li
-          className="info_li"
-          onClick={handleDeliveryAddress}
-          tabIndex="0"
-          onKeyPress={handleDeliveryAddress}
-        >
-          <h3>배송지 등록 / 변경</h3>
-        </li>
-        <li className="info_li" tabIndex="0">
-          <StarRating myRating={myData.rating} />
-        </li>
-        <li className="info_li">
-          <h3> Chart</h3>
-          <MyPageChart />
-        </li>
-      </ul>
+              <CouponTitle>쿠폰</CouponTitle>
+              <CouponText>
+                {myData.coupons === 0 || myData.coupons === undefined
+                  ? 0
+                  : myData.coupons.length}
+              </CouponText>
+            </Coupon>
+            <Mileage tabIndex="0">
+              <MileageTitle>마일리지</MileageTitle>{" "}
+              <MileageText>
+                {myData.mileage === 0 || myData.mileage === undefined
+                  ? 0
+                  : myData.mileage
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              </MileageText>
+            </Mileage>
+          </CouponMileageWrap>
+        </MyInfo>
+
+        <MyInfoDetail>
+          <Link
+            to="/myOrderCheck"
+            style={{ textDecoration: "none", color: "black" }}
+            tabIndex="0"
+          >
+            <MyInfoDetailList>
+              <h3>주문내역 조회</h3>
+            </MyInfoDetailList>
+          </Link>
+          <MyInfoDetailList
+            onClick={handleDeliveryAddress}
+            onKeyPress={handleDeliveryAddress}
+            tabIndex="0"
+          >
+            <h3>배송지 등록 / 변경</h3>
+          </MyInfoDetailList>
+          <MyInfoDetailList tabIndex="0">
+            <StarRating myRating={myData.rating} />
+          </MyInfoDetailList>
+        </MyInfoDetail>
+      </MyInfoWrap>
+      <div className="info_li">
+        <h3> Chart</h3>
+        <MyPageChart />
+      </div>
     </MyPageWrap>
   );
 };
@@ -182,10 +173,9 @@ const MyPage = () => {
 export default MyPage;
 
 const MyPageWrap = styled.div`
-  width: 824px;
+  width: calc(100% - 60px);
   height: 100%;
-  margin: 0 auto;
-  padding: 50px 100px;
+  padding: 50px 30px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 40px);
@@ -198,13 +188,24 @@ const MyPageWrap = styled.div`
   }
 `;
 
-const MyInfo = styled.div`
+const MyInfoWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 100px;
+  margin: 20px 0;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    flex-direction: column;
+  }
+`;
+
+const MyInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 20px);
+  height: 50%;
   line-height: 100px;
   padding: 10px;
-  margin: 30px 0;
+  margin: 0;
   background-color: #fff;
   color: #686464;
   border-radius: 5px;
@@ -212,33 +213,85 @@ const MyInfo = styled.div`
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: calc(100% - 24px);
     justify-content: flex-start;
     flex-direction: column;
-    height: 200px;
     align-items: center;
   }
 `;
 
+const Greet = styled.strong`
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  margin: 30px 0;
+  text-align: center;
+`;
+
 const ModifyLogoutWrap = styled.div`
   display: flex;
+  justify-content: center;
+  width: 450px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 100%;
     justify-content: center;
   }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
-const CouponMileageWrap = styled.div`
+const Btn = styled.button`
+  display: inline-block;
+  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
+  font-size: 15px;
+  width: 150px;
+  height: 80px;
+  line-height: 80px;
+  text-align: center;
+  margin: 0;
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #d4d4d4;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid #333;
+    font-weight: bold;
+  }
+`;
+
+const CouponMileageWrap = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  width: 450px;
+  margin: 20px 0;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 const Coupon = styled.li`
-  display: inline-block;
-  width: 40%;
-  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+  width: calc(150px - 24px);
+  height: 80px;
+  padding: 10px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 3px;
   font-size: 16px;
   font-weight: bold;
   border: 2px solid #d4d4d4;
@@ -247,31 +300,84 @@ const Coupon = styled.li`
   cursor: pointer;
 
   &:hover {
-    border: 1px solid #efefef;
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-    transition: all 0.25s;
-    transform: translateY(-2px);
+    border: 2px solid green;
     color: green;
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 40%;
-    padding: 20px;
+    padding: 20px 10px;
   }
 `;
 
+const CouponTitle = styled.h3`
+  line-height: 16px;
+`;
+
+const CouponText = styled.span`
+  line-height: 16px;
+  color: green;
+`;
+
 const Mileage = styled.li`
-  width: 40%;
-  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
+  width: calc(150px - 22px);
+  height: 80px;
+  padding: 10px;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 3px;
   font-size: 16px;
   font-weight: bold;
   border: 2px solid #d4d4d4;
+  border-left: 0;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 40%;
-    padding: 20px;
+    padding: 20px 10px;
+  }
+`;
+
+const MileageTitle = styled.h3`
+  line-height: 16px;
+`;
+
+const MileageText = styled.span`
+  line-height: 16px;
+  color: green;
+`;
+
+const MyInfoDetail = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  padding-left: 10px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+    padding: 0;
+    margin-top: 20px;
+  }
+`;
+
+const MyInfoDetailList = styled.li`
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #d4d4d4;
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid green;
+    color: green;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    margin-top: 10px;
   }
 `;

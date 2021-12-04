@@ -394,6 +394,10 @@ button:focus:not(:focus-visible) {
   height: 80px;
 }
 
+.headerClicked {
+  border-bottom: 3px solid #333;
+}
+
 .footer {
   width: 1024px;
   margin: 0 auto;
@@ -1054,6 +1058,7 @@ main {
   color: #d4d4d4;
   font-size: 30px;
   text-align: center;
+  cursor: pointer;
 }
 
 .minus {
@@ -1770,6 +1775,10 @@ main {
   font-size: 18px;
   font-weight: bold;
   padding-left: 10px;
+}
+
+.greet_user {
+  color: green;
 }
 
 .myInfo_modify {

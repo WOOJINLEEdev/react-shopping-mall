@@ -39,7 +39,8 @@ const CommonModal = ({
         </ModalBtn>
         <ModalBtn
           width={btnWidth}
-          backgroundColor={"black"}
+          backgroundColor={"green"}
+          border={"3px solid green"}
           color={"white"}
           onClick={btnClick1}
           name="yes"
@@ -98,8 +99,8 @@ const ModalBtn = styled.button`
   font-size: 15px;
   font-weight: bold;
   color: ${(props) => props.color || "rgb(126, 126, 126)"};
-  border: 1px solid #dadada;
-  background-color: ${(props) => props.backgroundColor || "rgb(236, 236, 236)"};
+  border: ${(props) => props.border || "3px solid rgb(172, 172, 172)"};
+  background-color: ${(props) => props.backgroundColor || "white"};
   border-radius: 5px;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   margin: 0 5px;

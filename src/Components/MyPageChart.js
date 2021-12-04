@@ -64,6 +64,7 @@ const MyPageChart = () => {
         ]);
 
         setOptions({
+          colors: ["#228B22", "#228B22"],
           chart: {
             height: 350,
             type: "line",
@@ -103,7 +104,13 @@ const MyPageChart = () => {
 
   return (
     <ChartWrap>
-      <Chart options={options} series={series} type="line" height={350} />
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+        height={350}
+        fill="green"
+      />
     </ChartWrap>
   );
 };
