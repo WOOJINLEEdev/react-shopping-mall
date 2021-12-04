@@ -11,6 +11,7 @@ const SearchInputBtn = (
     SearchInputClassName,
     SearchBtnClassName,
     searchPlaceHolder,
+    searchInputId,
   },
   ref
 ) => {
@@ -43,12 +44,12 @@ const SearchInputBtn = (
 
   return (
     <div className={searchClassName}>
-      <label htmlFor="searchInputBox" className="visually_hidden">
+      <label htmlFor={searchInputId} className="visually_hidden">
         검색 입력창
       </label>
       <input
         type="text"
-        id="searchInputBox"
+        id={searchInputId}
         name="search_input"
         placeholder={searchPlaceHolder ? searchPlaceHolder : "Search..."}
         className={SearchInputClassName}

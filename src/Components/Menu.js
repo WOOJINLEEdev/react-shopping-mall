@@ -12,6 +12,7 @@ const Menu = ({ show }) => {
     useState("menu_search_input");
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("menu_search_btn");
+  const [searchInputId, setSearchInputId] = useState("menuSearchInput");
   const history = useHistory();
 
   const { data, mutate } = useMenuCollapsed();
@@ -81,6 +82,7 @@ const Menu = ({ show }) => {
             SearchInputClassName={SearchInputClassName}
             SearchBtnClassName={SearchBtnClassName}
             handleSearchBtn={handleSearchBtn}
+            searchInputId={searchInputId}
           />
         </MenuItem>
       </MenuList>
