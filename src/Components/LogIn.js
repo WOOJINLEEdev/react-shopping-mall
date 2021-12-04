@@ -26,8 +26,6 @@ const LogIn = () => {
         user_password: values.userPassword,
       })
       .then(function (response) {
-        console.log("리스폰", response);
-        console.log("토큰", response.data);
         localStorage.setItem("token", response.data);
 
         const token = localStorage.getItem("token");
