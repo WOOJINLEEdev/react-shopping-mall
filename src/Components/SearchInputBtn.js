@@ -43,7 +43,9 @@ const SearchInputBtn = (
 
   return (
     <div className={searchClassName}>
-      <label htmlFor="searchInputBox"></label>
+      <label htmlFor="searchInputBox">
+        <span className="visually_hidden">검색 입력창</span>
+      </label>
       <input
         type="text"
         id="searchInputBox"
