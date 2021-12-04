@@ -1,5 +1,4 @@
 import React, { useState, useMemo, forwardRef } from "react";
-// import { withRouter } from "react-router";
 import useSearchResult from "../Hooks/useSearchResult";
 import { debounce } from "lodash";
 
@@ -44,8 +43,10 @@ const SearchInputBtn = (
 
   return (
     <div className={searchClassName}>
+      <label htmlFor="searchInputBox"></label>
       <input
         type="text"
+        id="searchInputBox"
         name="search_input"
         placeholder={searchPlaceHolder ? searchPlaceHolder : "Search..."}
         className={SearchInputClassName}
@@ -66,5 +67,4 @@ const SearchInputBtn = (
   );
 };
 
-// export default withRouter(SearchInputBtn);
 export default forwardRef(SearchInputBtn);

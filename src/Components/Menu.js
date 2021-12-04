@@ -104,7 +104,7 @@ const MenuWrap = styled.aside`
   box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
 `;
 
-const MenuTitle = styled.p`
+const MenuTitle = styled.h2`
   height: 80px;
   line-height: 80px;
   padding: 30px 20px;

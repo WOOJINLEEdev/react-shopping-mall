@@ -11,7 +11,7 @@ const Footer = () => {
           </Link>
         </li>
         <li className="footer_menu_list">
-          <Link to={"/"} className="footer_link">
+          <Link to={"/aboutMe"} className="footer_link">
             이용안내
           </Link>
         </li>
