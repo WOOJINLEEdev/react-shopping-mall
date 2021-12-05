@@ -18,12 +18,12 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   function (response) {
-    if (response.status === 401 || response.status === 403) {
-      localStorage.removeItem("token");
-    }
     return response;
   },
   function (error) {
+    if (error.message === "Request failed with status code 401") {
+      localStorage.removeItem("token");
+    }
     return Promise.reject(error);
   }
 );
