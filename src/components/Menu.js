@@ -134,6 +134,6 @@ const MenuItem = styled.li`
 
   &:active {
     font-weight: bold;
-    color: #f8b739;
+    color: green;
   }
 `;

@@ -134,16 +134,12 @@ const Header = ({ location }) => {
             onClick={handleHeaderSignInClick}
             onKeyPress={handleHeaderSignInClick}
             tabIndex="0"
+            aria-label={!token ? "signIn" : "myPage"}
           >
             {!token ? (
-              <RiLoginBoxLine aria-label="signIn" />
+              <RiLoginBoxLine />
             ) : (
-              <img
-                src={signInImg}
-                className="signin_img"
-                alt="sign_in"
-                aria-label="myPage"
-              ></img>
+              <img src={signInImg} className="signin_img" alt="sign_in"></img>
             )}
             <span className="visually_hidden">로그인</span>
           </HeaderSignIn>
