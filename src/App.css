@@ -3216,9 +3216,13 @@ article {
   }
 
   .myPageCouponModal,
-  .myPageDeliveryModal,
   .myOrderCheckModal {
     min-width: 80%;
+  }
+
+  .myPageDeliveryModal {
+    min-width: 80%;
+    min-height: 85%;
   }
 
   .on {

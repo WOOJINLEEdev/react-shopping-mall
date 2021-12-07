@@ -29,13 +29,15 @@ const MyPageCouponModal = ({ isOpen2, onRequestClose2, myCoupon }) => {
         {!myCoupon || myCoupon === undefined ? 0 : myCoupon.length}장
       </CouponTitle>
       <ul>
-        {!myCoupon || myCoupon === undefined
-          ? ""
-          : myCoupon.map((coupon) => {
-              return (
-                <CouponItem key={coupon.id}>{coupon.coupon_name}</CouponItem>
-              );
-            })}
+        {!myCoupon || myCoupon === undefined ? (
+          <div>사용 가능한 쿠폰이 없습니다.</div>
+        ) : (
+          myCoupon.map((coupon) => {
+            return (
+              <CouponItem key={coupon.id}>{coupon.coupon_name}</CouponItem>
+            );
+          })
+        )}
       </ul>
       <CouponCloseBtn onClick={onRequestClose2}>닫기</CouponCloseBtn>
     </Modal>
