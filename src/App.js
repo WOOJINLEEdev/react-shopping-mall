@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import Header from "../src/Components/Header.js";
-import Footer from "../src/Components/Footer.js";
-import Main from "../src/Components/Main";
-import Menu from "../src/Components/Menu";
+import Header from "../src/components/Header.js";
+import Footer from "../src/components/Footer.js";
+import Main from "../src/components/Main";
+import Menu from "../src/components/Menu";
 import { ReactComponent as UpArrow } from "./images/up.svg";
 import styled from "styled-components";
-import useMenuCollapsed from "./Hooks/useMenuCollapsed";
+import useMenuCollapsed from "./hooks/useMenuCollapsed";
 
 const App = () => {
   const [scrollY, setScrollY] = useState(false);
