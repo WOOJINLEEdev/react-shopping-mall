@@ -57,35 +57,37 @@ const Menu = ({ show }) => {
 
   return (
     <MenuWrap className={show ? "" : "menu_hidden"}>
-      <MenuTitle>MENU</MenuTitle>
-      <MenuList>
-        <MenuItem
-          data-name="ABOUT ME"
-          onClick={handleItemClick}
-          onKeyPress={handleItemClick}
-          tabIndex="0"
-        >
-          ABOUT ME
-        </MenuItem>
-        <MenuItem
-          data-name="COMMUNITY"
-          onClick={handleItemClick}
-          onKeyPress={handleItemClick}
-          tabIndex="0"
-        >
-          COMMUNITY
-        </MenuItem>
-        <MenuItem>
-          <SearchInputBtn
-            show={show}
-            searchClassName={searchClassName}
-            SearchInputClassName={SearchInputClassName}
-            SearchBtnClassName={SearchBtnClassName}
-            handleSearchBtn={handleSearchBtn}
-            searchInputId={searchInputId}
-          />
-        </MenuItem>
-      </MenuList>
+      <nav aria-labelledby="aside_menu">
+        <MenuTitle id="aside_menu">MENU</MenuTitle>
+        <MenuList>
+          <MenuItem
+            data-name="ABOUT ME"
+            onClick={handleItemClick}
+            onKeyPress={handleItemClick}
+            tabIndex="0"
+          >
+            ABOUT ME
+          </MenuItem>
+          <MenuItem
+            data-name="COMMUNITY"
+            onClick={handleItemClick}
+            onKeyPress={handleItemClick}
+            tabIndex="0"
+          >
+            COMMUNITY
+          </MenuItem>
+          <MenuItem>
+            <SearchInputBtn
+              show={show}
+              searchClassName={searchClassName}
+              SearchInputClassName={SearchInputClassName}
+              SearchBtnClassName={SearchBtnClassName}
+              searchInputId={searchInputId}
+              handleSearchBtn={handleSearchBtn}
+            />
+          </MenuItem>
+        </MenuList>
+      </nav>
     </MenuWrap>
   );
 };

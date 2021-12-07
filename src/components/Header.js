@@ -76,33 +76,35 @@ const Header = ({ location }) => {
 
   return (
     <header className="header">
-      <MenuHomeWrap>
-        <MenuWrap
-          onClick={handleMenuClick}
-          tabIndex="0"
-          onKeyPress={handleMenuClick}
-        >
-          <MenuImg />
-        </MenuWrap>
+      <nav className="header_nav" aria-label="header_navigation">
+        <MenuHomeWrap>
+          <MenuWrap
+            onClick={handleMenuClick}
+            onKeyPress={handleMenuClick}
+            tabIndex="0"
+            aria-label="navigation_menu"
+          >
+            <MenuImg />
+          </MenuWrap>
 
-        <HeaderTitle
-          className="header_link"
-          onClick={handleHeaderTitleClick}
-          onKeyPress={handleHeaderTitleClick}
-          tabIndex="0"
-        >
-          <h1 className="header_title">WJ Shop</h1>
-        </HeaderTitle>
-      </MenuHomeWrap>
+          <HeaderTitle
+            className="header_link"
+            onClick={handleHeaderTitleClick}
+            onKeyPress={handleHeaderTitleClick}
+            tabIndex="0"
+          >
+            <h1 className="header_title">WJ Shop</h1>
+          </HeaderTitle>
+        </MenuHomeWrap>
 
-      <nav>
         <SignCartWrap>
           {isPc && (
             <HeaderSearch
               onClick={handleSearchClick}
               onKeyPress={handleSearchClick}
-              tabIndex="0"
               className={clickedData === "search" ? "headerClicked" : ""}
+              tabIndex="0"
+              aria-label="search"
             >
               <GoSearch />
               <span className="visually_hidden">검색</span>
@@ -114,8 +116,12 @@ const Header = ({ location }) => {
               onClick={handleHeaderAboutClick}
               onKeyPress={handleHeaderAboutClick}
               tabIndex="0"
+              aria-label="aboutMe"
             >
               <GrHomeRounded />
+              <span className="visually_hidden" id="aboutMe">
+                About Me
+              </span>
             </HeaderAbout>
           )}
 
@@ -130,9 +136,14 @@ const Header = ({ location }) => {
             tabIndex="0"
           >
             {!token ? (
-              <RiLoginBoxLine />
+              <RiLoginBoxLine aria-label="signIn" />
             ) : (
-              <img src={signInImg} className="signin_img" alt="sign_in"></img>
+              <img
+                src={signInImg}
+                className="signin_img"
+                alt="sign_in"
+                aria-label="myPage"
+              ></img>
             )}
             <span className="visually_hidden">로그인</span>
           </HeaderSignIn>
@@ -142,6 +153,7 @@ const Header = ({ location }) => {
             onClick={handleHeaderCartClick}
             onKeyPress={handleHeaderCartClick}
             tabIndex="0"
+            aria-label="cart"
           >
             <FiShoppingCart />
             <span className="visually_hidden">장바구니</span>
@@ -321,7 +333,7 @@ const CartAmount = styled.div`
   height: 22px;
   border-radius: 50%;
   color: #fff;
-  background-color: rgb(255, 0, 0, 0.7);
+  background-color: green;
   font-weight: bold;
   font-size: 15px;
   text-align: center;
@@ -330,7 +342,7 @@ const CartAmount = styled.div`
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 16px;
     height: 16px;
-    font-size: 11px;
+    font-size: 10px;
     line-height: 16px;
     top: 7px;
     right: 7px;
