@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cupImg from "../images/table_cup.jpg";
+import { ImGithub } from "react-icons/im";
 
 const AboutMe = () => {
   return (
@@ -11,7 +12,8 @@ const AboutMe = () => {
           <p>안녕하세요! WOOJINLEEdev 의 홈페이지입니다.</p>
         </MeContentItem>
         <MeContentItem>
-          <p>github :</p>
+          <ImGithub />
+          <p>Github :</p>
           <GitHubLink href="https://github.com/WOOJINLEEdev" target="_black">
             https://github.com/WOOJINLEEdev
           </GitHubLink>
@@ -46,7 +48,11 @@ const MeContentItem = styled.li`
   padding: 10px 0;
   font-size: 18px;
   color: #333;
-  // justify-content: ${(props) => (props.center ? "center" : "")};
+
+  & svg {
+    margin-right: 5px;
+    fill: green;
+  }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     font-size: 15px;
