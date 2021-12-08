@@ -52,11 +52,15 @@ const PageLi = styled.li`
   width: 30px;
   color: #333;
   color: ${(props) => (props.active ? "red" : "#333")};
-  &:hover {
-    cursor: pointer;
-    color: white;
-    background-color: #263a6c;
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+      color: white;
+      background-color: #263a6c;
+    }
   }
+
   &:focus::after {
     color: white;
     background-color: #263a6c;

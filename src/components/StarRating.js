@@ -84,12 +84,14 @@ const StarWrap = styled.div`
     cursor: pointer;
   }
 
-  & div:hover svg {
-    color: orange;
-  }
+  @media (hover: hover) {
+    & div:hover > svg {
+      color: orange;
+    }
 
-  & svg:hover ~ svg {
-    color: #c7c7c7;
+    & svg:hover ~ svg {
+      color: #c7c7c7;
+    }
   }
 
   .clickedstar {

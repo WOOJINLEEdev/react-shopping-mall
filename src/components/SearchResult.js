@@ -171,7 +171,9 @@ const ResultMoreBtn = styled.button`
   margin-bottom: 30px;
   cursor: pointer;
 
-  &:hover {
-    border: 2px solid #333;
+  @media (hover: hover) {
+    &:hover {
+      border: 2px solid #333;
+    }
   }
 `;

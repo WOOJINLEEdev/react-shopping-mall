@@ -270,10 +270,6 @@ const HeaderSignIn = styled.li`
       min-height: 20px;
       margin: 15px;
     }
-
-    &:hover {
-      border-bottom: 0;
-    }
   }
 `;
 
@@ -301,10 +297,6 @@ const HeaderCart = styled.li`
       width: 20px;
       height: 20px;
       margin: 15px;
-    }
-
-    &:hover {
-      border-bottom: 0;
     }
   }
 `;

@@ -21,12 +21,14 @@ const SelectBoardFirst = styled.div`
   line-height: 500px;
   background: linear-gradient(to right top, #fff, #d4d4d4);
 
-  &:hover {
-    border: 1px solid #efefef;
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-    transition: all 0.25s;
-    transform: translateY(-2px);
-    font-weight: bold;
+  @media (hover: hover) {
+    &:hover {
+      border: 1px solid #efefef;
+      box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
+      transition: all 0.25s;
+      transform: translateY(-2px);
+      font-weight: bold;
+    }
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
@@ -45,12 +47,14 @@ const SelectBoardSecond = styled.div`
   line-height: 500px;
   background: linear-gradient(to right bottom, #fff, #d4d4d4);
 
-  &:hover {
-    border: 1px solid #efefef;
-    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
-    transition: all 0.25s;
-    transform: translateY(-2px);
-    font-weight: bold;
+  @media (hover: hover) {
+    &:hover {
+      border: 1px solid #efefef;
+      box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 20%);
+      transition: all 0.25s;
+      transform: translateY(-2px);
+      font-weight: bold;
+    }
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {

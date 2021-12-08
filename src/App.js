@@ -63,7 +63,7 @@ const App = () => {
       <Menu show={data} />
       <Footer />
       <TopBtn
-        value="top"
+        type="button"
         className={scrollY ? "top_btn" : "hidden"}
         onClick={handleTopBtn}
       >
@@ -105,14 +105,14 @@ const TopBtn = styled.button`
     margin: 15px 0;
   }
 
-  &:hover,
-  &:focus {
-    background-color: #efefef;
-  }
+  @media (hover: hover) {
+    &:hover {
+      background-color: #efefef;
+    }
 
-  svg:hover,
-  svg:focus {
-    fill: #333;
+    &:hover > svg {
+      fill: #333;
+    }
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {

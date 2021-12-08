@@ -8,10 +8,12 @@ const BoardTableRow = ({ children, background }) => {
 export default BoardTableRow;
 
 const TableRow = styled.tr`
-  &:hover {
-    background: ${(props) =>
-      props.background ? "rgb(255, 239, 148)" : "#acacac"};
-    cursor: pointer;
+  @media (hover: hover) {
+    &:hover {
+      background: ${(props) =>
+        props.background ? "rgb(255, 239, 148)" : "#acacac"};
+      cursor: pointer;
+    }
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
