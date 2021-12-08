@@ -127,7 +127,7 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
     <>
       {showDaumPostModal ? (
         <>
-          <PostModalEscBtn onClick={postModalEsc}>
+          <PostModalEscBtn aria-label="close" onClick={postModalEsc}>
             <CgClose />
           </PostModalEscBtn>
           <DaumPostcode onComplete={handleComplete} style={postCodeStyle} />
@@ -315,7 +315,6 @@ const PostModalEscBtn = styled.button`
   background-color: rgba(255, 255, 255, 0.1);
   color: #333;
   cursor: pointer;
-  vertical-align: middle;
   font-size: 30px;
   line-height: 30px;
   text-align: right;

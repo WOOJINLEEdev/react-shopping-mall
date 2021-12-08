@@ -7,6 +7,7 @@ import Menu from "../src/components/Menu";
 import { ReactComponent as UpArrow } from "./images/up.svg";
 import styled from "styled-components";
 import useMenuCollapsed from "./hooks/useMenuCollapsed";
+import "focus-visible";
 
 const App = () => {
   const [scrollY, setScrollY] = useState(false);
@@ -57,9 +58,9 @@ const App = () => {
   return (
     <div className="App">
       <Header />
+      <Main />
       <DimmedLayer className={data ? "" : "hide"} onClick={handleDimClick} />
       <Menu show={data} />
-      <Main />
       <Footer />
       <TopBtn
         value="top"

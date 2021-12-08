@@ -49,7 +49,12 @@ function ListGroup() {
           <ListItem key={product.id} item={product} />
         ));
       })}
-      <button type="button" className="more_btn" onClick={handleClick}>
+      <button
+        type="button"
+        className="more_btn"
+        aria-label="list_more_view"
+        onClick={handleClick}
+      >
         더보기
         <img
           src={downArrow}

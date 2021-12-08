@@ -39,7 +39,7 @@ const MyPageDeliveryModal = ({
   if (myDataError) return <div>에러발생...</div>;
 
   const handleModifyBtn = () => {
-    setAddDeliveryClassName("");
+    setAddDeliveryClassName("delivery_register");
     setAddressDisplay("none");
     setBtnWrapDisplay("flex");
     setClosBtnDisplay("none");
@@ -143,6 +143,7 @@ const MyPageDeliveryModal = ({
     >
       <ModalContentContainer>
         <ModalTitle>배송지 등록 / 변경</ModalTitle>
+
         <ModalContent>
           <ContentText>* 배송지는 하나만 등록할 수 있습니다.</ContentText>
           {!myDeliveryAddress ? (
@@ -192,7 +193,15 @@ const MyPageDeliveryModal = ({
 
 export default MyPageDeliveryModal;
 
-const ModalContentContainer = styled.div``;
+const ModalContentContainer = styled.div`
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const ModalTitle = styled.p`
   font-weight: bold;
@@ -209,13 +218,6 @@ const ModalTitle = styled.p`
 const ModalContent = styled.div`
   min-height: 70%;
   max-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const ContentText = styled.p`
