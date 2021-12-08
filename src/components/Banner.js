@@ -146,7 +146,7 @@ const Container = styled.div`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 100%;
-    height: 350px;
+    height: 250px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -165,7 +165,7 @@ const SlideItem = styled.div`
   height: 500px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    height: 350px;
+    height: 250px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -181,7 +181,7 @@ const Image = styled.img`
   border-radius: 5px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    min-height: 350px;
+    min-height: 250px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
