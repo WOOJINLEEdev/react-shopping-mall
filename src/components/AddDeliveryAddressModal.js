@@ -127,7 +127,11 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
     <>
       {showDaumPostModal ? (
         <>
-          <PostModalEscBtn aria-label="close" onClick={postModalEsc}>
+          <PostModalEscBtn
+            type="button"
+            aria-label="close"
+            onClick={postModalEsc}
+          >
             <CgClose />
           </PostModalEscBtn>
           <DaumPostcode onComplete={handleComplete} style={postCodeStyle} />

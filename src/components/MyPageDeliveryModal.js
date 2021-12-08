@@ -160,7 +160,9 @@ const MyPageDeliveryModal = ({
                 </ItemContent>
                 <ItemContent>{myDeliveryAddress.phone1}</ItemContent>
               </ItemContentWrap>
-              <ModifyBtn onClick={handleModifyBtn}>수정</ModifyBtn>
+              <ModifyBtn type="button" onClick={handleModifyBtn}>
+                수정
+              </ModifyBtn>
             </DeliveryAddressItem>
           )}
           <AddDeliveryAddressModal
@@ -170,20 +172,26 @@ const MyPageDeliveryModal = ({
       </ModalContentContainer>
       <BtnContainer>
         {!myDeliveryAddress ? (
-          <AddBtn display={addBtnDisplay} onClick={handleAddBtn}>
+          <AddBtn type="button" display={addBtnDisplay} onClick={handleAddBtn}>
             배송지 등록하기
           </AddBtn>
         ) : (
           ""
         )}
         <CancelRegistrationBtnWrap display={btnWrapDisplay}>
-          <CancelBtn onClick={handleCancelBtn}>취소하기</CancelBtn>
-          <RegistrationBtn onClick={handleRegistrationBtn}>
+          <CancelBtn type="button" onClick={handleCancelBtn}>
+            취소하기
+          </CancelBtn>
+          <RegistrationBtn type="button" onClick={handleRegistrationBtn}>
             등록하기
           </RegistrationBtn>
         </CancelRegistrationBtnWrap>
 
-        <CloseBtn display={closBtnDisplay} onClick={onRequestClose3}>
+        <CloseBtn
+          type="button"
+          display={closBtnDisplay}
+          onClick={onRequestClose3}
+        >
           창닫기
         </CloseBtn>
       </BtnContainer>

@@ -111,8 +111,12 @@ const MyPage = () => {
             님, <span>안녕하세요!</span>
           </Greet>
           <ModifyLogoutWrap className="modify_logout_wrap">
-            <Btn onClick={handleModifyBtn}>회원정보 수정</Btn>
-            <Btn onClick={handleLogoutBtn}>로그아웃</Btn>
+            <Btn type="button" onClick={handleModifyBtn}>
+              회원정보 수정
+            </Btn>
+            <Btn type="button" onClick={handleLogoutBtn}>
+              로그아웃
+            </Btn>
           </ModifyLogoutWrap>
 
           <CouponMileageWrap>
