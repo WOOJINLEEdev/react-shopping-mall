@@ -488,12 +488,13 @@ button {
 }
 
 .list {
+  min-width: 300px;
+  max-width: 300px;
   font-size: 14px;
   color: #333;
   text-align: center;
+  text-decoration: none;
   margin-bottom: 20px;
-  min-width: 300px;
-  max-width: 300px;
 }
 
 .list + .list {
@@ -519,6 +520,23 @@ button {
   display: inline-block;
   margin: 0;
   text-align: center;
+}
+
+.list_element {
+  position: relative;
+}
+
+.image_dim {
+  display: none;
+  position: absolute;
+  content: "";
+  width: 300px;
+  height: 300px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .list_image {
@@ -3755,10 +3773,6 @@ article {
     color: #333;
   }
 
-  .test_img:hover {
-    box-shadow: 0 1px 15px 5px rgba(0, 0, 0, 0.2);
-  }
-
   .cart:hover {
     border: 3px solid green;
     color: green;
@@ -3829,5 +3843,13 @@ article {
 
   .more_btn:hover {
     border: 2px solid #333;
+  }
+
+  .list_element:hover > .image_dim {
+    display: block;
+  }
+
+  .list_element:hover > .item_name {
+    color: #333;
   }
 }
