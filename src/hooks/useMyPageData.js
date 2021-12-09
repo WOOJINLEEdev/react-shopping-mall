@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { instance } from "../utils/http-client";
+import { instance } from "utils/http-client";
 
 function useMyPageData() {
   const myPageUrl = "/v1/me";

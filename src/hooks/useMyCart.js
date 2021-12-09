@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { instance } from "../utils/http-client";
+import { instance } from "utils/http-client";
 
 export default function useMyCart() {
   const cartUrl = "/v1/me/cart";

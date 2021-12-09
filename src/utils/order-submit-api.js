@@ -1,4 +1,4 @@
-import { instance } from "../utils/http-client";
+import { instance } from "utils/http-client";
 
 export function orderExistedDeliverySubmit(
   checkoutTotalData,

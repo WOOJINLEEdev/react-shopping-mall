@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { instance } from "../utils/http-client";
+import { instance } from "utils/http-client";
 
 export default function useCheckout(checkoutId) {
   const cartUrl = `/v1/checkouts/${checkoutId}`;
