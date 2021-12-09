@@ -5,6 +5,7 @@ import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
 import { instance } from "utils/http-client";
+import useMyCart from "hooks/useMyCart";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
@@ -26,9 +27,13 @@ const ItemDetail = ({ match }) => {
   };
 
   const { data, error } = useSWR(url, fetcher);
+  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
   if (error) return "에러 발생";
   if (!data) return <Loading />;
+
+  if (loadingCart) return <Loading />;
+  if (cartError) return <div>에러 발생...</div>;
 
   const selectOptions = data.variants;
 
@@ -84,9 +89,11 @@ const ItemDetail = ({ match }) => {
   const yesOrNo = (e) => {
     if (e.target.name === "yes") {
       console.log("yes");
-      window.location.replace("/cart");
+      mutateCart(null, true);
+      history.push("/cart");
     } else {
       console.log("no");
+      mutateCart(null, true);
       setIsOpen(false);
     }
   };
@@ -120,8 +127,6 @@ const ItemDetail = ({ match }) => {
         ],
       })
       .then(function (response) {
-        console.log("리스폰스", response);
-        console.log("체크아웃 아이디", response.data.checkout_id);
         history.push(`/checkout/${response.data.checkout_id}`);
       })
       .catch(function (error) {

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
@@ -9,6 +10,7 @@ import { instance } from "utils/http-client";
 const Cart = () => {
   const [chkId, setChkId] = useState("");
   const [allChecked, setAllChecked] = useState(true);
+  const history = useHistory();
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
@@ -139,7 +141,7 @@ const Cart = () => {
       })
       .then(function (response) {
         setChkId(response.data.checkout_id);
-        window.location.replace(`/checkout/${response.data.checkout_id}`);
+        history.push(`/checkout/${response.data.checkout_id}`);
       })
       .catch(function (error) {
         console.log(error);
@@ -165,7 +167,7 @@ const Cart = () => {
         ],
       })
       .then(function (response) {
-        window.location.replace(`/checkout/${response.data.checkout_id}`);
+        history.push(`/checkout/${response.data.checkout_id}`);
       })
       .catch(function (error) {
         console.log(error);
