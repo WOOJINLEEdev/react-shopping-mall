@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 export function userId() {
   return Yup.string("")
-    .min(4, "4글자 이상 입력해주세요")
+    .min(4, "4글자 이상 입력해주세요.")
     .required("아이디를 입력해주세요.");
 }
 
