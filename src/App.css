@@ -1109,7 +1109,7 @@ main {
 
 .form_input {
   width: calc(100% - 22px);
-  border: 1px solid #e4e4e4;
+  border: 1px solid #747474;
   border-radius: 5px;
   background-color: #fbfbfb;
   font-size: 12px;
@@ -1119,6 +1119,8 @@ main {
 
 .birth {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   font-size: 0;
   margin-top: 20px;
 }
@@ -1193,16 +1195,16 @@ main {
 }
 
 .join_btn {
-  font-size: 16px;
   width: 100%;
-  cursor: pointer;
-  border: 1px solid rgb(146, 146, 146);
-  background-color: rgb(146, 146, 146);
-  border-radius: 5px;
-  color: #fff;
-  height: 35px;
-  outline: none;
+  height: 50px;
   margin-top: 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
 }
 
 .birth_select {
@@ -1243,9 +1245,9 @@ main {
 }
 
 .join_wrapper {
+  padding: 50px 150px;
+  background-color: rgb(243, 243, 243);
   text-align: left;
-  padding: 50px;
-  background-color: #efefee;
 }
 
 /* ------------- // 오더 */
@@ -1733,6 +1735,7 @@ main {
 .input_check {
   display: block;
   padding: 2px;
+  margin-top: 5px;
   margin-bottom: 10px;
   color: red;
   font-weight: 600;
@@ -3263,6 +3266,15 @@ article {
   .header_nav {
     height: 50px;
   }
+
+  .month,
+  .date {
+    width: 30%;
+  }
+
+  .join_wrapper {
+    padding: 50px;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -3766,6 +3778,11 @@ article {
   .header_nav {
     height: 80px;
   }
+
+  .month,
+  .date {
+    width: 30%;
+  }
 }
 
 @media (hover: hover) {
@@ -3851,5 +3868,9 @@ article {
 
   .list_element:hover > .item_name {
     color: #333;
+  }
+
+  .join_btn:hover {
+    font-weight: bold;
   }
 }
