@@ -228,7 +228,7 @@ input[type="number"] {
 }
 
 :focus-visible {
-  outline: 3px solid green;
+  outline: 1px solid green;
 }
 
 :focus:not(:focus-visible) {
@@ -1119,8 +1119,6 @@ main {
 
 .birth {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
   font-size: 0;
   margin-top: 20px;
 }
@@ -3267,6 +3265,10 @@ article {
     height: 50px;
   }
 
+  .birth {
+    flex-direction: row;
+  }
+
   .month,
   .date {
     width: 30%;
@@ -3777,6 +3779,10 @@ article {
 
   .header_nav {
     height: 80px;
+  }
+
+  .birth {
+    flex-direction: row;
   }
 
   .month,
