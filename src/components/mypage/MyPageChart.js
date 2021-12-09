@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import styled from "styled-components";
 import { instance } from "utils/http-client";
+import Loading from "components/common/Loading";
 
 const MyPageChart = () => {
   const [series, setSeries] = useState();
@@ -99,7 +100,7 @@ const MyPageChart = () => {
   }, []);
 
   if (!series || !options) {
-    return <div>로딩중...</div>;
+    return <Loading />;
   }
 
   return (

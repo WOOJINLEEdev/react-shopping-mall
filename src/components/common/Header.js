@@ -15,6 +15,7 @@ import { instance } from "utils/http-client";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "react-icons/ri";
+import Loading from "components/common/Loading";
 
 const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -41,7 +42,7 @@ const Header = ({ location }) => {
   const { clickedData, clickedMutate } = useActiveHeaderItem();
 
   if (cartError) return "에러 발생...";
-  if (loadingCart) return "로딩중...";
+  if (loadingCart) return <Loading />;
 
   const cartAmount = cart.items.length;
 

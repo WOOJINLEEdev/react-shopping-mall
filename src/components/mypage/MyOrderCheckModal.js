@@ -8,6 +8,7 @@ import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 import { FcCheckmark } from "react-icons/fc";
+import Loading from "components/common/Loading";
 
 Modal.setAppElement("#root");
 const MyOrderCheckModal = ({
@@ -43,7 +44,7 @@ const MyOrderCheckModal = ({
   }, [isOpen3]);
 
   if (!myOrderList) {
-    return <div>로딩 중.....</div>;
+    return <Loading />;
   }
 
   const selectedOrderData = myOrderList.filter(

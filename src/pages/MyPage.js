@@ -28,8 +28,8 @@ const MyPage = () => {
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
 
+  if (loadingCart) return <Loading />;
   if (cartError) return <div>에러 발생...</div>;
-  if (loadingCart) return <div>로딩 중...</div>;
 
   if (loadingMyData) return <Loading />;
   if (myDataError) return <div>에러발생...</div>;

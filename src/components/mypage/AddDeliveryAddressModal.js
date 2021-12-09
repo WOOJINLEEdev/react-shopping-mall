@@ -4,6 +4,7 @@ import styled from "styled-components";
 import useDeliveryData from "hooks/useDeliveryData";
 import useMyPageData from "hooks/useMyPageData";
 import { CgClose } from "react-icons/cg";
+import Loading from "components/common/Loading";
 
 const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
   const [address1, setAddress1] = useState("");
@@ -66,7 +67,7 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {
   ]);
 
   const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
-  if (loadingMyData) return <div>로딩중...</div>;
+  if (loadingMyData) return <Loading />;
   if (myDataError) return <div>에러발생...</div>;
 
   const handlePostalCode = () => {

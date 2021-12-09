@@ -5,6 +5,7 @@ import ListItem from "components/home/ListItem";
 import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
 import { IoIosArrowDown } from "react-icons/io";
+import Loading from "components/common/Loading";
 
 const SearchResult = () => {
   const [result, setResult] = useState([]);
@@ -69,7 +70,7 @@ const SearchResult = () => {
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
 
   if (error) return "에러 발생";
-  if (!data) return "로딩 중...";
+  if (!data) return <Loading />;
 
   if (!searchResultData)
     return <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>;
