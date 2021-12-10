@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import styled from "styled-components";
 import {
   userId,
   userPassword,
@@ -140,35 +141,37 @@ const Join = () => {
 
               <fieldset className="birth">
                 <legend className="form_label">생일 (Birthday)</legend>
-                <label htmlFor="month" className="month_label">
-                  월
-                </label>
-                <Field
-                  type="number"
-                  className="form_input month"
-                  id="month"
-                  name="month"
-                  placeholder="월"
-                  onChange={(e) =>
-                    setFieldValue("month", e.target.value.substring(0, 2))
-                  }
-                />
+                <BirthWrap>
+                  <label htmlFor="month" className="month_label">
+                    월
+                  </label>
+                  <Field
+                    type="number"
+                    className="form_input month"
+                    id="month"
+                    name="month"
+                    placeholder="월"
+                    onChange={(e) =>
+                      setFieldValue("month", e.target.value.substring(0, 2))
+                    }
+                  />
 
-                <span className="birth_text">-</span>
+                  <span className="birth_text">-</span>
 
-                <label htmlFor="date" className="date_label">
-                  일
-                </label>
-                <Field
-                  type="number"
-                  className="form_input date"
-                  id="date"
-                  name="date"
-                  placeholder="일"
-                  onChange={(e) =>
-                    setFieldValue("date", e.target.value.substring(0, 2))
-                  }
-                />
+                  <label htmlFor="date" className="date_label">
+                    일
+                  </label>
+                  <Field
+                    type="number"
+                    className="form_input date"
+                    id="date"
+                    name="date"
+                    placeholder="일"
+                    onChange={(e) =>
+                      setFieldValue("date", e.target.value.substring(0, 2))
+                    }
+                  />
+                </BirthWrap>
               </fieldset>
               {(errors.month && touched.month) || (errors.date && touched.date)
                 ? getMonthDateErrorMsg(errors)
@@ -205,3 +208,15 @@ const Join = () => {
 };
 
 export default Join;
+
+const BirthWrap = styled.div`
+  display: flex;
+  font-size: 0;
+
+  @media only screen and (min-width: 320px) and (max-width: 1023px) {
+    & input {
+      width: 30%;
+      max-width: 100px;
+    }
+  }
+`;

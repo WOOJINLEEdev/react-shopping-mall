@@ -1118,8 +1118,6 @@ main {
 }
 
 .birth {
-  display: flex;
-  font-size: 0;
   margin-top: 20px;
 }
 
@@ -3265,15 +3263,6 @@ article {
     height: 50px;
   }
 
-  .birth {
-    flex-direction: row;
-  }
-
-  .month,
-  .date {
-    width: 30%;
-  }
-
   .join_wrapper {
     padding: 50px;
   }
@@ -3779,15 +3768,6 @@ article {
 
   .header_nav {
     height: 80px;
-  }
-
-  .birth {
-    flex-direction: row;
-  }
-
-  .month,
-  .date {
-    width: 30%;
   }
 }
 
