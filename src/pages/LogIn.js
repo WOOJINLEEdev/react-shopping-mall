@@ -63,11 +63,6 @@ const LogIn = () => {
                 placeholder="아이디"
                 autoFocus
               />
-              <ErrorMessage
-                name="userId"
-                component="div"
-                className="input_check"
-              />
             </div>
             <div>
               <label htmlFor="userPassword" className="visually_hidden">
