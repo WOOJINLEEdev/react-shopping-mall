@@ -33,11 +33,7 @@ const BoardEditor = () => {
   };
 
   const moveBoard = () => {
-    if (boardLocalStorage === "first") {
-      history.push("/selectBoard1");
-    } else {
-      history.push("/selectBoard2");
-    }
+    history.goBack();
   };
 
   const handleEditorSave = () => {
