@@ -27,7 +27,19 @@ const Header = ({ location }) => {
       .put("/v1/me/visit", null)
       .then(function (response) {
         console.log(response);
-        console.log("visit", response.data);
+        console.log("user visit", response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    instance
+      .put("/v1/shop/visit", null)
+      .then(function (response) {
+        console.log(response);
+        console.log("web visit", response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -335,8 +347,5 @@ const CartAmount = styled.div`
     line-height: 16px;
     top: 7px;
     right: 7px;
-  }
-
-  @media only screen and (min-width: 768) and (max-width: 1023px) {
   }
 `;
