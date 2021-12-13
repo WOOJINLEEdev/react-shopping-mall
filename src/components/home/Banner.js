@@ -13,6 +13,8 @@ import BannerImage6 from "images/6.jpg";
 import BannerImage7 from "images/7.jpg";
 import BannerImage8 from "images/8.jpg";
 
+let firstLoaded = false;
+
 const Banner = () => {
   const imageData = [
     {
@@ -48,13 +50,14 @@ const Banner = () => {
       url: BannerImage8,
     },
   ];
-
-  const [data, setData] = useState();
+  const bannerImageData = firstLoaded ? imageData : [];
+  const [data, setData] = useState(bannerImageData);
 
   useEffect(() => {
-    if (!data || data === null) {
+    if (data.length === 0) {
       let ImageDataTimeout = setTimeout(() => {
-        return setData(imageData);
+        setData(imageData);
+        firstLoaded = true;
       }, 3000);
 
       return () => {
@@ -63,7 +66,7 @@ const Banner = () => {
     }
   }, []);
 
-  if (!data) {
+  if (data.length === 0) {
     return <Skeleton />;
   }
 

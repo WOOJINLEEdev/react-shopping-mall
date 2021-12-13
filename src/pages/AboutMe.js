@@ -83,35 +83,34 @@ const AboutMe = () => {
             https://github.com/WOOJINLEEdev
           </GitHubLink>
         </MeContentItem>
-
-        <VisitCountWrap>
-          <VisitCountTitle>방문자 수</VisitCountTitle>
-
-          <ListWrap>
-            <TotalVisitCount>
-              <ListTitle>총 방문자</ListTitle>
-              <ListItem>{total}</ListItem>
-            </TotalVisitCount>
-
-            <Ul>
-              <CountList>
-                <ListTitle>오늘</ListTitle>
-                <ListItem>
-                  {today > 0 ? <BsTriangleFill /> : ""}
-                  {today}
-                </ListItem>
-              </CountList>
-              <CountList>
-                <ListTitle>어제</ListTitle>
-                <ListItem>
-                  {yesterday > 0 ? <BsTriangleFill /> : ""}
-                  {yesterday}
-                </ListItem>
-              </CountList>
-            </Ul>
-          </ListWrap>
-        </VisitCountWrap>
       </MeContentWrap>
+      <VisitCountWrap>
+        <VisitCountTitle>방문자 수</VisitCountTitle>
+
+        <ListWrap>
+          <TotalVisitCount>
+            <ListTitle>총 방문자</ListTitle>
+            <ListItem>{total}</ListItem>
+          </TotalVisitCount>
+
+          <Ul>
+            <CountList>
+              <ListTitle>오늘</ListTitle>
+              <ListItem>
+                {today > 0 ? <BsTriangleFill /> : ""}
+                {today}
+              </ListItem>
+            </CountList>
+            <CountList>
+              <ListTitle>어제</ListTitle>
+              <ListItem>
+                {yesterday > 0 ? <BsTriangleFill /> : ""}
+                {yesterday}
+              </ListItem>
+            </CountList>
+          </Ul>
+        </ListWrap>
+      </VisitCountWrap>
     </MeWrap>
   );
 };
