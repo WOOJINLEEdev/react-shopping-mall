@@ -394,6 +394,10 @@ const MyInfoDetailList = styled.li`
       border: 2px solid green;
       color: green;
     }
+
+    & h3:hover {
+      color: green;
+    }
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
