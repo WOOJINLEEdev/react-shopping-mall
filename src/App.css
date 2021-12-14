@@ -1614,6 +1614,12 @@ main {
   margin-top: 10px;
 }
 
+.item_price_qty {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 41px;
+}
+
 .price_unit {
   line-height: 44px;
 }
@@ -2696,12 +2702,6 @@ article {
 
   .info_text {
     flex-direction: column;
-  }
-
-  .item_price_qty {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 41px;
   }
 
   .list_buy_btn {
