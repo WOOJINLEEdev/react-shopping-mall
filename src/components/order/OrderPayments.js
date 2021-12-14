@@ -5,18 +5,63 @@ const OrderPayments = () => {
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState("");
   const [paymentName, setPaymentName] = useState("");
   const payments = [
-    "신용/체크카드",
-    "현대카드",
-    "네이버 페이",
-    "토스",
-    "페이코",
-    "카카오 페이",
-    "삼성 페이",
-    "SSG 페이",
-    "무통장 입금",
-    "휴대폰 결제",
-    "계좌 이체",
+    {
+      id: "1",
+      payment: "신용/체크카드",
+    },
+    {
+      id: "2",
+      payment: "현대카드",
+    },
+    {
+      id: "3",
+      payment: "네이버 페이",
+    },
+    {
+      id: "4",
+      payment: "토스",
+    },
+    {
+      id: "5",
+      payment: "카카오 페이",
+    },
+    {
+      id: "6",
+      payment: "삼성 페이",
+    },
+    {
+      id: "7",
+      payment: "SSG 페이",
+    },
+    {
+      id: "8",
+      payment: "무통장 입금",
+    },
+    {
+      id: "9",
+      payment: "휴대폰 결제",
+    },
+    {
+      id: "10",
+      payment: "계좌 이체",
+    },
   ];
+  // const payments = [
+  //   {
+  //     id: "1",
+  //     payment: "신용/체크카드",
+  //   },
+  //   "현대카드",
+  //   "네이버 페이",
+  //   "토스",
+  //   "페이코",
+  //   "카카오 페이",
+  //   "삼성 페이",
+  //   "SSG 페이",
+  //   "무통장 입금",
+  //   "휴대폰 결제",
+  //   "계좌 이체",
+  // ];
   const basePaymentClass = "payment";
   const selectedPaymentClass = "on";
 
@@ -43,20 +88,20 @@ const OrderPayments = () => {
       </div>
       <div className="payment_info_wrap">
         <ol className="payment_method">
-          {payments.map((payment, i) => (
+          {payments.map((item, i) => (
             <li
               className={
                 i === selectedPaymentIndex
                   ? `${basePaymentClass} ${selectedPaymentClass}`
                   : basePaymentClass
               }
-              key={i}
+              key={item.id}
               data-pay={i}
               value={i}
               onClick={handlePaymentMethod}
               tabIndex="0"
             >
-              {payment}
+              {item.payment}
             </li>
           ))}
         </ol>

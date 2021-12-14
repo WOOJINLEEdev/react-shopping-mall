@@ -146,15 +146,15 @@ const MyPage = () => {
         </MyInfo>
 
         <MyInfoDetail>
-          <Link
-            to="/myOrderCheck"
-            style={{ textDecoration: "none", color: "black" }}
-            tabIndex="0"
-          >
-            <MyInfoDetailList>
-              <h3>주문내역 조회</h3>
-            </MyInfoDetailList>
-          </Link>
+          <MyInfoDetailList>
+            <Link
+              to="/myOrderCheck"
+              style={{ textDecoration: "none", color: "black" }}
+              tabIndex="0"
+            >
+              <h3 className="my_order_check">주문내역 조회</h3>
+            </Link>
+          </MyInfoDetailList>
           <MyInfoDetailList
             onClick={handleDeliveryAddress}
             onKeyPress={handleDeliveryAddress}
@@ -384,6 +384,10 @@ const MyInfoDetailList = styled.li`
   border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   cursor: pointer;
+
+  &:first-child {
+    padding: 0;
+  }
 
   @media (hover: hover) {
     &:hover {

@@ -228,13 +228,20 @@ const Cart = () => {
               return (
                 <li className="item" key={item.id}>
                   <div className="item_select">
-                    <input
-                      type="checkbox"
-                      name="item_checkbox"
-                      className="item_checkbox"
-                      checked={item.checked}
-                      onChange={() => handleCartItemCheck(idx)}
-                    />
+                    <>
+                      <input
+                        type="checkbox"
+                        name="item_checkbox"
+                        id={`itemCheckbox${item.product_id}`}
+                        className="item_checkbox"
+                        checked={item.checked}
+                        onChange={() => handleCartItemCheck(idx)}
+                      />
+                      <label
+                        htmlFor={`itemCheckbox${item.product_id}`}
+                        className="visually_hidden"
+                      >{`${item.product_name} 선택`}</label>
+                    </>
                     <input
                       type="button"
                       value="삭제"
@@ -249,10 +256,11 @@ const Cart = () => {
                     <Link
                       to={`/products/${item.product_id}`}
                       className="info_img_box"
+                      aria-label={`${item.product_name} 상품 페이지로 이동`}
                     >
                       <img
                         className="cart_item_img"
-                        alt=""
+                        alt={`${item.product_name}_이미지`}
                         src={item.product_image_src}
                       />
                     </Link>
@@ -285,6 +293,7 @@ const Cart = () => {
                         <QuantityCounter
                           flexEnd={false}
                           quantity={item.quantity}
+                          productId={item.product_id}
                           onIncrement={() =>
                             handleQuantity(item.id, item.quantity + 1)
                           }

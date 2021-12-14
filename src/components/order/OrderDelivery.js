@@ -526,6 +526,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
                   name="phoneFirst"
                   id="phoneFirst"
                   className="delivery_input tel"
+                  title="연락처1_전화번호1"
                   value={
                     checkoutData.user.shipping_address
                       ? checkoutData.user.shipping_address.phone1.substring(
@@ -542,6 +543,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
                   maxLength="4"
                   name="phoneSecond"
                   id="phoneSecond"
+                  title="연락처1_전화번호2"
                   className="delivery_input tel"
                   value={
                     checkoutData.user.shipping_address
@@ -560,6 +562,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
                   name="phoneThird"
                   id="phoneThird"
                   className="delivery_input tel"
+                  title="연락처1_전화번호3"
                   value={
                     checkoutData.user.shipping_address
                       ? checkoutData.user.shipping_address.phone1.substring(
@@ -581,8 +584,9 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
                 <input
                   type="tel"
                   maxLength="4"
-                  className="delivery_input tel"
                   id="subPhoneFirst"
+                  className="delivery_input tel"
+                  title="연락처2_전화번호1"
                   value={
                     checkoutData.user.shipping_address
                       ? checkoutData.user.shipping_address.phone2.substring(
@@ -597,7 +601,9 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
                 <input
                   type="tel"
                   maxLength="4"
+                  id="subPhoneSecond"
                   className="delivery_input tel"
+                  title="연락처2_전화번호2"
                   value={
                     checkoutData.user.shipping_address
                       ? checkoutData.user.shipping_address.phone2.substring(
@@ -612,7 +618,9 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
                 <input
                   type="tel"
                   maxLength="4"
+                  id="subPhoneThird"
                   className="delivery_input tel"
+                  title="연락처2_전화번호3"
                   value={
                     checkoutData.user.shipping_address
                       ? checkoutData.user.shipping_address.phone2.substring(
@@ -898,6 +906,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
               name="phoneOne"
               id="phone1First"
               className="delivery_input tel"
+              title="연락처1-전화번호1"
               onChange={(e) => handleDeliveryInputChange3(e, setTel1)}
               value={tel1}
             />
@@ -908,6 +917,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
               name="phoneTwo"
               id="phone1Second"
               className="delivery_input tel"
+              title="연락처1-전화번호2"
               onChange={(e) => handleDeliveryInputChange3(e, setTel2)}
               value={tel2}
             />
@@ -918,6 +928,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
               name="phoneThree"
               id="phone1Third"
               className="delivery_input tel"
+              title="연락처1-전화번호3"
               onChange={(e) => handleDeliveryInputChange3(e, setTel3)}
               value={tel3}
             />
@@ -934,6 +945,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
               maxLength="4"
               className="delivery_input tel"
               id="subPhone1First"
+              title="연락처2-전화번호1"
               onChange={(e) => handleDeliveryInputChange3(e, setTel4)}
               value={tel4}
             />
@@ -941,7 +953,9 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
             <input
               type="text"
               maxLength="4"
+              id="subPhone1Second"
               className="delivery_input tel"
+              title="연락처2-전화번호2"
               onChange={(e) => handleDeliveryInputChange3(e, setTel5)}
               value={tel5}
             />
@@ -949,7 +963,9 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
             <input
               type="text"
               maxLength="4"
+              id="subPhone1Third"
               className="delivery_input tel"
+              title="연락처2-전화번호3"
               onChange={(e) => handleDeliveryInputChange3(e, setTel6)}
               value={tel6}
             />

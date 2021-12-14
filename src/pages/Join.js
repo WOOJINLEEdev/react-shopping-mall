@@ -96,7 +96,7 @@ const Join = () => {
               <label htmlFor="userId" className="form_label">
                 아이디 (ID)
               </label>
-              <Field type="text" className="form_input" name="id" id="id" />
+              <Field type="text" className="form_input" name="id" id="userId" />
               <ErrorMessage name="id" component="div" className="input_check" />
 
               <label htmlFor="userPassword1" className="form_label">
@@ -104,8 +104,8 @@ const Join = () => {
               </label>
               <Field
                 type="password"
+                id="userPassword1"
                 className="form_input"
-                id="password1"
                 name="password1"
               />
               <ErrorMessage
@@ -119,8 +119,8 @@ const Join = () => {
               </label>
               <Field
                 type="password"
+                id="userPassword2"
                 className="form_input"
-                id="password2"
                 name="password2"
               />
               <ErrorMessage

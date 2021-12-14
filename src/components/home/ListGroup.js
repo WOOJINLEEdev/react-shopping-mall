@@ -43,12 +43,14 @@ function ListGroup() {
   }
 
   return (
-    <ul className="list_group">
-      {data.map((products) => {
-        return products.map((product) => (
-          <ListItem key={product.id} item={product} />
-        ));
-      })}
+    <>
+      <ul className="list_group">
+        {data.map((products) => {
+          return products.map((product) => (
+            <ListItem key={product.id} item={product} />
+          ));
+        })}
+      </ul>
       <button
         type="button"
         className="more_btn"
@@ -62,7 +64,7 @@ function ListGroup() {
           className="more_btn_arrow"
         />
       </button>
-    </ul>
+    </>
   );
 }
 

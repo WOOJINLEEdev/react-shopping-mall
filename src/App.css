@@ -484,7 +484,7 @@ button {
   padding: 5px 0;
   font-size: 17px;
   font-weight: bold;
-  color: rgb(119, 119, 119);
+  color: #333;
 }
 
 .list {
@@ -503,6 +503,11 @@ button {
 
 .list:nth-child(3n + 1) {
   margin-left: 0;
+}
+
+.list_link {
+  text-decoration: none;
+  color: #333;
 }
 
 .test_img {
@@ -1061,20 +1066,25 @@ main {
 .qty {
   width: 41px;
   height: 41px;
+  background-color: #fff;
   border: 3px solid #d4d4d4;
-  text-decoration: none;
-  color: #d4d4d4;
+  color: #8a8a8a;
   font-size: 30px;
+  text-decoration: none;
   text-align: center;
   cursor: pointer;
 }
 
 .minus {
   border-right: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .plus {
   border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .price_area {
@@ -1497,11 +1507,11 @@ main {
 }
 
 .payment {
-  width: 83px;
+  width: 81px;
   height: 50px;
   line-height: 50px;
   text-align: center;
-  border: 1px solid #e4e4e4;
+  border: 2px solid #efefef;
   border-radius: 3px;
   margin-top: 10px;
   margin-right: 24px;
@@ -1520,8 +1530,9 @@ main {
 }
 
 .on {
-  border: 1px solid green;
+  border: 2px solid green;
   color: green;
+  font-weight: bold;
 }
 
 .order_total_info {
@@ -1745,72 +1756,12 @@ main {
   font-weight: bold;
 }
 
-.myInfo_logout {
-  display: inline-block;
-  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
-  font-size: 15px;
-  width: 150px;
-  height: 80px;
-  line-height: 80px;
-  text-align: center;
-  margin: 10px;
-  color: #fff;
-  background-color: #333;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-}
-
-.myInfo {
-  display: flex;
-  justify-content: space-between;
-  height: 100px;
-  line-height: 100px;
-  padding: 10px;
-  margin: 30px 0;
-  background-color: #fff;
-  color: #686464;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-}
-
-.greet {
-  font-size: 18px;
-  font-weight: bold;
-  padding-left: 10px;
-}
-
 .greet_user {
   color: green;
 }
 
-.myInfo_modify {
-  display: inline-block;
-  font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
-  font-size: 15px;
-  width: 150px;
-  height: 80px;
-  line-height: 80px;
-  text-align: center;
-  margin: 10px;
-  background-color: #fff;
-  border: 3px solid #aaa;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-}
-
-.my_wrap {
-  display: flex;
-  justify-content: space-between;
-}
-
-.my {
-  width: 20%;
-  height: 150px;
-  line-height: 150px;
-  text-align: center;
-  background-color: #fff;
-  color: #686464;
-  border-radius: 5px;
+.my_order_check {
+  padding: 30px;
 }
 
 .info_li {
@@ -1823,31 +1774,6 @@ main {
   border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   cursor: pointer;
-}
-
-.info_coupon_in {
-  display: block;
-  line-height: 20px;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: normal;
-}
-
-.info_coupon_in:first-child {
-  padding-top: 15px;
-}
-
-.info_mileage_in {
-  display: block;
-  padding-top: 15px;
-  font-size: 25px;
-  font-weight: normal;
-}
-
-.item_price_qty {
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 41px;
 }
 
 /* ----------- 오더토탈 부분 css */
@@ -2964,9 +2890,8 @@ article {
   }
 
   .payment {
-    width: calc(30% - 22px);
+    width: calc(30% - 24px);
     margin: 0 0 15px;
-    min-width: 62px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2982,15 +2907,7 @@ article {
   }
 
   .payment:first-child {
-    width: calc(30% - 2px);
-    min-width: 82px;
-    font-size: 12px;
-    padding: 0;
-  }
-
-  .payment:last-child {
-    width: calc(30% - 2px);
-    min-width: 82px;
+    width: calc(30% - 4px);
     font-size: 12px;
     padding: 0;
   }
@@ -3256,7 +3173,7 @@ article {
   }
 
   .on {
-    border: 1px solid green;
+    border: 2px solid green;
   }
 
   .header_nav {
@@ -3501,7 +3418,7 @@ article {
   }
 
   .payment_method {
-    display: inline-flex;
+    display: flex;
     width: 100%;
   }
 
@@ -3853,7 +3770,7 @@ article {
   }
 
   .list_element:hover > .item_name {
-    color: #333;
+    color: #8a8a8a;
   }
 
   .join_btn:hover {

@@ -20,34 +20,42 @@ const Banner = () => {
     {
       id: "banner_1",
       url: BannerImage1,
+      name: "하늘과 구름",
     },
     {
       id: "banner_2",
       url: BannerImage2,
+      name: "구름바다",
     },
     {
       id: "banner_3",
       url: BannerImage3,
+      name: "노을진 하늘",
     },
     {
       id: "banner_4",
       url: BannerImage4,
+      name: "노을과 호수 배경",
     },
     {
       id: "banner_5",
       url: BannerImage5,
+      name: "맑은 하늘에 뜬 태양",
     },
     {
       id: "banner_6",
       url: BannerImage6,
+      name: "안개 낀 바다",
     },
     {
       id: "banner_7",
       url: BannerImage7,
+      name: "구름과 하늘",
     },
     {
       id: "banner_8",
       url: BannerImage8,
+      name: "민들레꽃이 핀 초원과 하늘",
     },
   ];
   const bannerImageData = firstLoaded ? imageData : [];
@@ -132,7 +140,7 @@ const Banner = () => {
           ? ""
           : data.map((item) => (
               <SlideItem key={item.id}>
-                <Image src={item.url} />
+                <Image src={item.url} alt={item.name} />
               </SlideItem>
             ))}
       </StyledSlider>

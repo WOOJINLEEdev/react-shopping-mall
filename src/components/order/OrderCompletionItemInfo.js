@@ -71,26 +71,38 @@ const OrderCompletionItemInfo = ({
                 >
                   <img
                     className="info_list_img"
-                    alt={item.product_name}
+                    alt={`${item.product_name} 상품 페이지로 이동`}
                     src={item.image_src}
                   />
                 </Link>
 
                 <div className="list_info">
                   <div className="list_info_text infoHead">
-                    <label className="list_info_name" htmlFor="itemName">
+                    <label
+                      className="list_info_name"
+                      htmlFor={`itemName${item.product_id}`}
+                    >
                       제품명
                     </label>
-                    <p className="list_goods name" id="itemName">
+                    <p
+                      className="list_goods name"
+                      id={`itemName${item.product_id}`}
+                    >
                       {item.product_name}
                     </p>
                   </div>
 
                   <div className="list_info_text">
-                    <label className="list_info_name opt" htmlFor="itemOption">
+                    <label
+                      className="list_info_name opt"
+                      htmlFor={`itemOption${item.product_id}`}
+                    >
                       옵션 :{" "}
                     </label>
-                    <p className="list_goods option" id="itemOption">
+                    <p
+                      className="list_goods option"
+                      id={`itemOption${item.product_id}`}
+                    >
                       {item.variant_name}
                     </p>
                   </div>
@@ -98,12 +110,12 @@ const OrderCompletionItemInfo = ({
                   <div className="list_info_text priceAndQuantity">
                     <label
                       className="list_info_name pAndq"
-                      htmlFor="priceAndQuantity"
+                      htmlFor={`priceAndQuantity${item.product_id}`}
                     >
                       가격 / 수량
                       <span
                         className="list_price_quantity"
-                        id="priceAndQuantity"
+                        id={`priceAndQuantity${item.product_id}`}
                       >
                         {" "}
                         {item.quantity}

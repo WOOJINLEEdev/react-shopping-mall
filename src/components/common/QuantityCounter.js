@@ -7,6 +7,7 @@ const QuantityCounter = ({
   onDecrement,
   margin,
   flexEnd,
+  productId,
 }) => {
   const handleQtyChange = () => {
     console.log(quantity);
@@ -22,13 +23,19 @@ const QuantityCounter = ({
         onClick={onDecrement}
         disabled={quantity === 1}
       />
-      <input
-        type="text"
-        name="itemQty"
-        className="item_quantity"
-        value={quantity}
-        onChange={handleQtyChange}
-      />
+      <>
+        <input
+          type="text"
+          name="itemQty"
+          id={`itemQty${productId}`}
+          className="item_quantity"
+          value={quantity}
+          onChange={handleQtyChange}
+        />
+        <label htmlFor={`itemQty${productId}`} className="visually_hidden">
+          수량
+        </label>
+      </>
       <input
         type="button"
         className="qty plus"

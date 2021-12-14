@@ -94,8 +94,9 @@ const Header = ({ location }) => {
           <MenuWrap
             onClick={handleMenuClick}
             onKeyPress={handleMenuClick}
-            tabIndex="0"
             aria-label="navigation_menu"
+            role="button"
+            tabIndex="0"
           >
             <MenuImg />
           </MenuWrap>

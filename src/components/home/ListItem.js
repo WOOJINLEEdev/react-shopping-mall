@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 
 const ListItem = ({ item }) => {
   return (
-    <Link to={`/products/${item.id}`} className="list">
-      <li>
+    <li className="list">
+      <Link to={`/products/${item.id}`} className="list_link">
         <div className="list_element">
           <div className="image_wrap">
-            <img className="test_img" alt="" src={item.images[0].src} />
+            <img
+              src={item.images[0].src}
+              className="test_img"
+              alt={`${item.name} 이름을 가진 상품 이미지`}
+            />
           </div>
           <div className="image_dim"></div>
           <p className="item_name">{item.name}</p>
@@ -18,8 +22,8 @@ const ListItem = ({ item }) => {
             {""}원
           </p>
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 };
 
