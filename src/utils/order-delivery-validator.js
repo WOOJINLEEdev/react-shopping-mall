@@ -16,35 +16,17 @@ export function validateDeliveryInputCheck(checkoutTotalData) {
     };
   }
 
-  if (
-    !checkoutTotalData.addressDetail1 ||
-    checkoutTotalData.addressDetail1 === undefined
-  ) {
+  if (!checkoutTotalData.addressDetail1) {
     return {
       valid: false,
       invalidMsg: "주소를 입력해주세요.",
     };
   }
 
-  if (
-    !checkoutTotalData.addressDetail2 ||
-    checkoutTotalData.addressDetail2 === undefined
-  ) {
+  if (!checkoutTotalData.addressDetail2) {
     return {
       valid: false,
       invalidMsg: "상세주소를 입력해주세요.",
-    };
-  }
-
-  if (
-    !checkoutTotalData.tel1 ||
-    checkoutTotalData.tel1 === undefined ||
-    checkoutTotalData.tel2 === undefined ||
-    checkoutTotalData.tel3 === undefined
-  ) {
-    return {
-      valid: false,
-      invalidMsg: "연락처1을 입력해주세요.",
     };
   }
 
@@ -87,3 +69,7 @@ export function validateDeliveryInputCheck(checkoutTotalData) {
     valid: true,
   };
 }
+
+export default {
+  validateDeliveryInputCheck,
+};
