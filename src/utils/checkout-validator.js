@@ -24,3 +24,7 @@ export function validateWhenExistOrderHistory(checkoutTotalData) {
     valid: true,
   };
 }
+
+export default {
+  validateWhenExistOrderHistory,
+};
