@@ -1,6 +1,6 @@
 import LoadingImg from "images/Fading circles.gif";
 
-const Loading = (hide) => {
+const Loading = () => {
   return (
     <div className="loading">
       <img className="loading-image" src={LoadingImg} alt="Loading..." />
