@@ -16,6 +16,7 @@ import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "react-icons/ri";
 import Loading from "components/common/Loading";
+import { isLogin } from "utils/auth";
 
 const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -23,6 +24,9 @@ const Header = ({ location }) => {
   const history = useHistory();
 
   useEffect(() => {
+    if (!isLogin()) {
+      return;
+    }
     instance
       .put("/v1/me/visit", null)
       .then(function (response) {
