@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -14,6 +14,8 @@ import {
 import { instance } from "utils/http-client";
 
 const Join = () => {
+  const ref = useRef(null);
+
   const [items, setItems] = useState({
     id: "",
     password1: "",
@@ -61,6 +63,9 @@ const Join = () => {
       })
       .catch(function (error) {
         console.log(error);
+        if (error.response) {
+          alert("이미 입력한 ID가 존재합니다.");
+        }
       });
   };
 
@@ -81,8 +86,27 @@ const Join = () => {
     }
   };
 
+  const handleIdCheckBtn = () => {
+    let userId = ref.current.values.id;
+
+    if (!userId) {
+      return;
+    }
+
+    instance.get(`v1/auth/check-user-id?user_id=${userId}`).then((res) => {
+      console.log("id check", res.data);
+
+      if (res.data) {
+        return alert("이미 존재하는 ID 입니다. 다른 ID를 입력해주세요.");
+      }
+
+      alert("사용 가능한 ID 입니다.");
+    });
+  };
+
   return (
     <Formik
+      innerRef={ref}
       enableReinitialize={true}
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -96,7 +120,17 @@ const Join = () => {
               <label htmlFor="userId" className="form_label">
                 아이디 (ID)
               </label>
-              <Field type="text" className="form_input" name="id" id="userId" />
+              <Div>
+                <Field
+                  type="text"
+                  className="form_input userId"
+                  name="id"
+                  id="userId"
+                />
+                <IdCheckBtn type="button" onClick={handleIdCheckBtn}>
+                  중복체크
+                </IdCheckBtn>
+              </Div>
               <ErrorMessage name="id" component="div" className="input_check" />
 
               <label htmlFor="userPassword1" className="form_label">
@@ -218,5 +252,32 @@ const BirthWrap = styled.div`
       width: 30%;
       max-width: 100px;
     }
+  }
+`;
+
+const Div = styled.div`
+  display: flex;
+  justify-content: space-between;
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    justify-content: flex-start;
+  }
+`;
+
+const IdCheckBtn = styled.button`
+  width: 20%;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #fff;
+  border: 2px solid rgb(95, 95, 95);
+  border-radius: 3px;
+  color: rgb(95, 95, 95);
+  cursor: pointer;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 35%;
+    min-width: 55px;
+    max-width: 140px;
+    font-size: 13px;
+    margin-left: 10px;
   }
 `;

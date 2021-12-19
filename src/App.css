@@ -1109,12 +1109,12 @@ main {
 }
 
 .form_label {
-  font-size: 14px;
-  color: rgb(95, 95, 95);
-  font-weight: bold;
+  display: block;
   margin-top: 20px;
   padding-bottom: 12px;
-  display: block;
+  color: rgb(95, 95, 95);
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .form_input {
@@ -1125,6 +1125,10 @@ main {
   font-size: 12px;
   color: #000;
   padding: 10px;
+}
+
+.userId {
+  width: 75%;
 }
 
 .birth {
@@ -3187,6 +3191,10 @@ article {
 
   .join_wrapper {
     padding: 50px;
+  }
+
+  .userId {
+    width: 60%;
   }
 }
 
