@@ -46,22 +46,7 @@ const OrderPayments = () => {
       payment: "계좌 이체",
     },
   ];
-  // const payments = [
-  //   {
-  //     id: "1",
-  //     payment: "신용/체크카드",
-  //   },
-  //   "현대카드",
-  //   "네이버 페이",
-  //   "토스",
-  //   "페이코",
-  //   "카카오 페이",
-  //   "삼성 페이",
-  //   "SSG 페이",
-  //   "무통장 입금",
-  //   "휴대폰 결제",
-  //   "계좌 이체",
-  // ];
+
   const basePaymentClass = "payment";
   const selectedPaymentClass = "on";
 
