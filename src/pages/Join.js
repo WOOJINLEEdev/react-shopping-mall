@@ -93,6 +93,10 @@ const Join = () => {
       return;
     }
 
+    if (userId.length < 4) {
+      return;
+    }
+
     instance.get(`v1/auth/check-user-id?user_id=${userId}`).then((res) => {
       console.log("id check", res.data);
 
@@ -141,6 +145,7 @@ const Join = () => {
                 id="userPassword1"
                 className="form_input"
                 name="password1"
+                autoComplete="off"
               />
               <ErrorMessage
                 name="password1"
@@ -156,6 +161,7 @@ const Join = () => {
                 id="userPassword2"
                 className="form_input"
                 name="password2"
+                autoComplete="off"
               />
               <ErrorMessage
                 name="password2"

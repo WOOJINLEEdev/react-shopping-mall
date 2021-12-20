@@ -74,6 +74,7 @@ const LogIn = () => {
                 id="userPassword"
                 className="login_input password"
                 placeholder="비밀번호"
+                autoComplete="off"
               />
               <ErrorMessage
                 name="userPassword"
