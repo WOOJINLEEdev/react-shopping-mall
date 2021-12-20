@@ -4,6 +4,13 @@ import { ImGithub } from "react-icons/im";
 import { instance } from "utils/http-client";
 import { BsTriangleFill } from "react-icons/bs";
 
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return [year, month, day].join("-");
+}
+
 const AboutMe = () => {
   const [total, setTotal] = useState();
   const [today, setToday] = useState();
@@ -45,28 +52,25 @@ const AboutMe = () => {
         `/v1/shop/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
       )
       .then(function (res) {
-        let visitCount =
-          dateGain()
-            .slice(-7)
-            .map((v) => {
-              const dailyVisit = res.data.find(
-                (t) => t.visit_date === `2021-${v}`
-              );
-              if (dailyVisit) {
-                return dailyVisit.visit_count;
-              }
+        const visitCount = res.data.map((item) => item.visit_count);
+        const sum = visitCount.reduce((a, b) => a + b);
 
-              return 0;
-            }) || [];
+        const now = new Date();
+        const formattedToday = formatDate(now);
+        const formattedYesterday = formatDate(
+          new Date(now.setDate(now.getDate() - 1))
+        );
 
-        console.log("visitCount ", visitCount);
-        console.log("type ", typeof visitCount.slice(5, 6)[0]);
+        const todayVisit = res.data.find(
+          (t) => t.visit_date === formattedToday
+        ) || { visit_count: 0 };
+        const yesterdayVisit = res.data.find(
+          (t) => t.visit_date === formattedYesterday
+        ) || { visit_count: 0 };
 
-        setToday(visitCount.slice(6, 7));
-        setYesterday(visitCount.slice(5, 6));
-
-        const totalVisitCount = visitCount.reduce((a, b) => a + b, 0);
-        setTotal(totalVisitCount);
+        setToday(todayVisit.visit_count);
+        setYesterday(yesterdayVisit.visit_count);
+        setTotal(sum);
       });
   }, []);
 
