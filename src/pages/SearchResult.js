@@ -72,13 +72,11 @@ const SearchResult = () => {
   if (error) return "에러 발생";
   if (!data) return <Loading />;
 
-  if (!searchResultData)
-    return <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>;
-  if (loading) return <NoSearchWord>검색 중입니다...</NoSearchWord>;
+  if (loading) return <Loading />;
+
   if (result.length === 0)
     return (
       <>
-        {" "}
         <SearchResultTitle>
           <SearchWord>{searchWord}</SearchWord>
           <span>검색결과 {resultCount}건</span>

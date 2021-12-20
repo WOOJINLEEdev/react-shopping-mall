@@ -24,6 +24,7 @@ import AboutMe from "pages/AboutMe.js";
 import useSearchLocation from "hooks/useSearchLocation.js";
 import useSearch from "hooks/useSearch.js";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem.js";
+import useSearchResult from "hooks/useSearchResult";
 
 const Main = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -33,24 +34,26 @@ const Main = ({ location }) => {
   );
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("header_search_btn");
-  const [mainPathName, setMainPathName] = useState();
 
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
   const { clickedData, clickedMutate } = useActiveHeaderItem();
+  const { searchResultData, searchResultMutate } = useSearchResult();
 
   useEffect(() => {
-    console.log("Main 테스트중:", mainPathName);
-    console.log("새로운 훅 useSearchLocation:", searchLocationData);
+    if (
+      location.pathname.split("/").length === 3 &&
+      location.pathname.split("/")[1] === "searchResult"
+    ) {
+      searchResultMutate(location.pathname.split("/")[2]);
+    }
 
-    setMainPathName(location.pathname);
+    searchLocationMutate(location.pathname);
     window.scrollTo(0, 0);
 
-    return () => {
-      if (location.pathname !== searchLocationData) {
-        searchMutate(false);
-      }
-    };
+    if (location.pathname !== searchLocationData) {
+      searchMutate(false);
+    }
   }, [location.pathname]);
 
   clickedMutate(location.pathname);
