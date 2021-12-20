@@ -29,7 +29,9 @@ export default function useMyCart() {
       throw error;
     }
   };
-  const { data, error, mutate } = useSWR(cartUrl, fetcher);
+  const { data, error, mutate } = useSWR(cartUrl, fetcher, {
+    shouldRetryOnError: false,
+  });
 
   return {
     cart: data,
