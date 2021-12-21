@@ -16,36 +16,15 @@ const AboutMe = () => {
   const [today, setToday] = useState();
   const [yesterday, setYesterday] = useState();
 
-  const date = new Date();
-  const year = date.getFullYear();
-  const month =
-    date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-  const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-  const yyyymm = [year + "-" + month];
-  const yyyymmdd = [year + "-" + month + "-" + day];
-
-  const dateGain = () => {
-    const arr = [];
-    for (let i = 1; i <= day; i++) {
-      if (i < 10) {
-        arr.push(month + "-" + 0 + i);
-      }
-      if (i >= 10) {
-        arr.push(month + "-" + i);
-      }
-    }
-
-    return arr;
-  };
+  const now = new Date();
+  const formattedToday = formatDate(now);
+  const formattedYesterday = formatDate(
+    new Date(now.setDate(now.getDate() - 1))
+  );
 
   useEffect(() => {
-    dateGain();
-
-    const visitStartDate = `${yyyymm}-01`;
-    const visitEndDate = `${yyyymmdd}`;
-
-    console.log("visitStart", visitStartDate);
-    console.log("visitsEnd", visitEndDate);
+    const visitStartDate = "2021-12-01";
+    const visitEndDate = formattedToday;
 
     instance
       .get(
@@ -54,12 +33,6 @@ const AboutMe = () => {
       .then(function (res) {
         const visitCount = res.data.map((item) => item.visit_count);
         const sum = visitCount.reduce((a, b) => a + b);
-
-        const now = new Date();
-        const formattedToday = formatDate(now);
-        const formattedYesterday = formatDate(
-          new Date(now.setDate(now.getDate() - 1))
-        );
 
         const todayVisit = res.data.find(
           (t) => t.visit_date === formattedToday
