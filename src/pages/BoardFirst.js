@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import { useMediaQuery } from "react-responsive";
@@ -8,13 +8,15 @@ import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
-import BoardFirstModal from "components/board/BoardFirstModal";
 import { postList, sortedPostList } from "components/board/BoardFirstData";
 import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import { GiSpeaker } from "react-icons/gi";
+import Loading from "components/common/Loading";
 
 Modal.setAppElement("#root");
+
+const BoardFirstModal = lazy(() => import("components/board/BoardFirstModal"));
 
 const BoardFirst = () => {
   const [dataList, setDataList] = useState([]);
@@ -163,13 +165,15 @@ const BoardFirst = () => {
           글쓰기
         </button>
       </div>
-      <BoardFirstModal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        postList={postList}
-        boardItemNo={selectedPreviewId}
-        ModalClose={ModalClose}
-      />
+      <Suspense fallback={<Loading />}>
+        <BoardFirstModal
+          isOpen={isOpen}
+          onRequestClose={onRequestClose}
+          postList={postList}
+          boardItemNo={selectedPreviewId}
+          ModalClose={ModalClose}
+        />
+      </Suspense>
 
       <BoardTable headersName={getHeadersName()} boardLocal="first">
         {notice.map((item, i) => (

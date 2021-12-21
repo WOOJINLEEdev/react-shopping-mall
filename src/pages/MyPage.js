@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import Modal from "react-modal";
 import styled from "styled-components";
-import CommonModal from "components/common/CommonModal";
 import StarRating from "components/mypage/StarRating";
-import MyPageCouponModal from "components/mypage/MyPageCouponModal";
-import MyPageDeliveryModal from "components/mypage/MyPageDeliveryModal";
 import MyPageChart from "components/mypage/MyPageChart";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useMyPageData from "hooks/useMyPageData";
 
 Modal.setAppElement("#root");
+
+const CommonModal = lazy(() => import("components/common/CommonModal"));
+const MyPageCouponModal = lazy(() =>
+  import("components/mypage/MyPageCouponModal")
+);
+const MyPageDeliveryModal = lazy(() =>
+  import("components/mypage/MyPageDeliveryModal")
+);
 
 const MyPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,25 +86,27 @@ const MyPage = () => {
   return (
     <MyPageWrap className="main_wrap">
       <h2 className="main_title">마이페이지</h2>
-      <CommonModal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        modalText={modalText}
-        btnText1={btnText1}
-        btnText2={btnText2}
-        btnClick1={logout}
-        btnClick2={onRequestClose}
-      />
-      <MyPageCouponModal
-        isOpen2={isOpen2}
-        onRequestClose2={onRequestClose2}
-        myCoupon={myData.coupons}
-      />
-      <MyPageDeliveryModal
-        isOpen3={isOpen3}
-        onRequestClose3={onRequestClose3}
-        myDeliveryAddress={myData.shipping_address}
-      />
+      <Suspense fallback={<Loading />}>
+        <CommonModal
+          isOpen={isOpen}
+          onRequestClose={onRequestClose}
+          modalText={modalText}
+          btnText1={btnText1}
+          btnText2={btnText2}
+          btnClick1={logout}
+          btnClick2={onRequestClose}
+        />
+        <MyPageCouponModal
+          isOpen2={isOpen2}
+          onRequestClose2={onRequestClose2}
+          myCoupon={myData.coupons}
+        />
+        <MyPageDeliveryModal
+          isOpen3={isOpen3}
+          onRequestClose3={onRequestClose3}
+          myDeliveryAddress={myData.shipping_address}
+        />
+      </Suspense>
 
       <MyInfoWrap>
         <MyInfo>

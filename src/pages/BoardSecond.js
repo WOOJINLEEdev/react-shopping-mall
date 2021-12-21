@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
@@ -8,12 +8,13 @@ import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
-import BoardItemModal from "components/board/BoardItemModal";
 import useBoard from "hooks/useBoard";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
 
 Modal.setAppElement("#root");
+
+const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
 const BoardSecond = () => {
   const history = useHistory();
@@ -139,11 +140,13 @@ const BoardSecond = () => {
           글쓰기
         </button>
       </div>
-      <BoardItemModal
-        boardItemId={selectedPreviewId}
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-      />
+      <Suspense fallback={<Loading />}>
+        <BoardItemModal
+          boardItemId={selectedPreviewId}
+          isOpen={isOpen}
+          onRequestClose={onRequestClose}
+        />
+      </Suspense>
 
       <BoardTable headersName={getHeadersName()} boardLocal="second">
         {currentPosts(board).map((item, i) => (

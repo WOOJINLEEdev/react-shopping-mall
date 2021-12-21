@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-import MyOrderCheckModal from "components/mypage/MyOrderCheckModal";
+// import MyOrderCheckModal from "components/mypage/MyOrderCheckModal";
 import Loading from "components/common/Loading";
 import { instance } from "utils/http-client";
 
 Modal.setAppElement("#root");
+
+const MyOrderCheckModal = lazy(() =>
+  import("components/mypage/MyOrderCheckModal")
+);
 
 const MyOrderCheck = () => {
   const [isOpen3, setIsOpen3] = useState(false);
@@ -40,12 +44,14 @@ const MyOrderCheck = () => {
   return (
     <OrderCheckWrap>
       <h2 className="main_title">주문내역 조회</h2>
-      <MyOrderCheckModal
-        isOpen3={isOpen3}
-        onRequestClose3={onRequestClose3}
-        myOrderList={myOrderList}
-        orderItemId={selectItemId}
-      />
+      <Suspense fallback={<Loading />}>
+        <MyOrderCheckModal
+          isOpen3={isOpen3}
+          onRequestClose3={onRequestClose3}
+          myOrderList={myOrderList}
+          orderItemId={selectItemId}
+        />
+      </Suspense>
 
       {myOrderList.length < 1 && (
         <NotOrderData>주문내역이 없습니다.</NotOrderData>
