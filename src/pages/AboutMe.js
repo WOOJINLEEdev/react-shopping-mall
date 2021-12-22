@@ -56,7 +56,11 @@ const AboutMe = () => {
         </MeContentItem>
         <MeContentItem>
           <ImGithub />
-          <GitHubLink href="https://github.com/WOOJINLEEdev" target="_blank">
+          <GitHubLink
+            href="https://github.com/WOOJINLEEdev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             https://github.com/WOOJINLEEdev
           </GitHubLink>
         </MeContentItem>
