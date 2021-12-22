@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import styled from "styled-components";
 import "focus-visible";
 import "App.css";
 import Header from "components/common/Header.js";
 import Main from "layout/Main";
-import Menu from "components/common/Menu";
 import Footer from "components/common/Footer.js";
 import { ReactComponent as UpArrow } from "images/up.svg";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
+import Loading from "components/common/Loading";
+
+const Menu = lazy(() => import("components/common/Menu"));
 
 const App = () => {
   const [scrollY, setScrollY] = useState(false);
@@ -60,7 +62,9 @@ const App = () => {
       <Header />
       <Main />
       <DimmedLayer className={data ? "" : "hide"} onClick={handleDimClick} />
-      <Menu show={data} />
+      <Suspense fallback={<Loading />}>
+        <Menu show={data} />
+      </Suspense>
       <Footer />
       <TopBtn
         type="button"
