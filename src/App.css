@@ -527,6 +527,7 @@ button {
   border-radius: 5px;
   background: rgb(236, 236, 236);
   border: 0;
+  vertical-align: middle;
 }
 
 .image_wrap {
@@ -575,6 +576,7 @@ button {
 main {
   position: relative;
   width: 1024px;
+  height: 100%;
   margin: 0 auto;
 }
 
@@ -3203,6 +3205,10 @@ article {
 
   .userId {
     width: 60%;
+  }
+
+  .info_li {
+    padding: 20px 10px;
   }
 }
 

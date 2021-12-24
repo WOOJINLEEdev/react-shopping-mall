@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ImGithub } from "react-icons/im";
 import { instance } from "utils/http-client";
 import { BsTriangleFill } from "react-icons/bs";
+import Loading from "components/common/Loading";
+import Chart from "components/common/Chart";
 
 function formatDate(date) {
   const year = date.getFullYear();
@@ -15,12 +17,27 @@ const AboutMe = () => {
   const [total, setTotal] = useState();
   const [today, setToday] = useState();
   const [yesterday, setYesterday] = useState();
+  const [series, setSeries] = useState();
+  const [options, setOptions] = useState();
 
   const now = new Date();
   const formattedToday = formatDate(now);
   const formattedYesterday = formatDate(
-    new Date(now.setDate(now.getDate() - 1))
+    new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
   );
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  const dateGain = () => {
+    const arr = [];
+    for (let i = 1; i <= day; i++) {
+      arr.push(month + "-" + String(i).padStart(2, "0"));
+    }
+
+    return arr;
+  };
 
   useEffect(() => {
     const visitStartDate = "2021-12-01";
@@ -44,8 +61,116 @@ const AboutMe = () => {
         setToday(todayVisit.visit_count);
         setYesterday(yesterdayVisit.visit_count);
         setTotal(sum);
+
+        setSeries([
+          {
+            name: "방문 수",
+            data: visitCount.slice(0, 7),
+          },
+        ]);
+
+        setOptions({
+          colors: ["#228B22", "#228B22"],
+          fill: {
+            type: "gradient",
+            gradient: {
+              shadeIntensity: 1,
+              type: "vertical",
+              opacityFrom: 0.7,
+              opacityTo: 0.9,
+              colorStops: [
+                { offset: 0, color: "#81c147", opacity: 1 },
+                { offset: 100, color: "#008000", opacity: 1 },
+              ],
+            },
+          },
+          chart: {
+            height: 350,
+            type: "bar",
+            toolbar: {
+              show: false,
+            },
+          },
+
+          plotOptions: {
+            bar: {
+              borderRadius: 10,
+              dataLabels: {
+                position: "top",
+              },
+            },
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val;
+            },
+            offsetY: -20,
+            style: {
+              colors: ["#304758"],
+            },
+          },
+
+          xaxis: {
+            categories: dateGain().slice(-7),
+            position: "bottom",
+            style: {
+              fontSize: "10px",
+            },
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+            crosshairs: {
+              fill: {
+                type: "gradient",
+                gradient: {
+                  colorFrom: "#D8E3F0",
+                  colorTo: "#BED1E6",
+                  stops: [0, 100],
+                  opacityFrom: 0.4,
+                  opacityTo: 0.5,
+                },
+              },
+            },
+            tooltip: {
+              enabled: true,
+            },
+          },
+          yaxis: {
+            tickAmount: 5,
+            max: 10,
+            axisBorder: {
+              show: false,
+            },
+            axisTicks: {
+              show: false,
+            },
+            labels: {
+              show: true,
+              formatter: function (val) {
+                return val;
+              },
+            },
+          },
+          title: {
+            text: `${year}년 ${month}월 방문자 현황`,
+            floating: true,
+            offsetY: 0,
+            align: "center",
+            style: {
+              color: "#444",
+            },
+          },
+        });
       });
   }, []);
+
+  if (!series || !options) {
+    return <Loading />;
+  }
 
   return (
     <MeWrap>
@@ -92,6 +217,15 @@ const AboutMe = () => {
           </Ul>
         </ListWrap>
       </VisitCountWrap>
+
+      <ChartWrap>
+        <Chart
+          type={"bar"}
+          series={series}
+          options={options}
+          chartHeight={350}
+        />
+      </ChartWrap>
     </MeWrap>
   );
 };
@@ -101,7 +235,6 @@ export default AboutMe;
 const MeWrap = styled.div`
   padding: 30px 20px;
   height: 100%;
-  min-height: 500px;
 `;
 
 const MeTitle = styled.h2`
@@ -243,4 +376,13 @@ const ListItem = styled.div`
     left: 0;
     fill: rgb(0, 94, 150);
   }
+`;
+
+const ChartWrap = styled.div`
+  padding: 20px 0;
+  margin-top: 30px;
+  border: 2px solid #d4d4d4;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+  vertical-align: middle;
 `;

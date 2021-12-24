@@ -1,40 +1,31 @@
 import React, { useState, useEffect } from "react";
-import Chart from "react-apexcharts";
 import styled from "styled-components";
 import { instance } from "utils/http-client";
 import Loading from "components/common/Loading";
+import Chart from "components/common/Chart";
 
-const MyPageChart = () => {
+const MyPageChart = ({ userName }) => {
   const [series, setSeries] = useState();
   const [options, setOptions] = useState();
 
   const date = new Date();
   const year = date.getFullYear();
-  const month =
-    date.getMonth() < 9 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-  const day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-  const yyyymm = [year + "-" + month];
-  const yyyymmdd = [year + "-" + month + "-" + day];
-  const firstDay = day - 6 < 10 ? "0" + (day - 6) : day - 6;
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
   const dateGain = () => {
     const arr = [];
     for (let i = 1; i <= day; i++) {
-      if (i < 10) {
-        arr.push(month + "-" + 0 + i);
-      }
-      if (i >= 10) {
-        arr.push(month + "-" + i);
-      }
+      arr.push(year + "-" + month + "-" + String(i).padStart(2, "0"));
     }
 
     return arr;
   };
 
+  console.log("dategain", dateGain().slice(-7));
   useEffect(() => {
-    dateGain();
-    const visitStartDate = `${yyyymm}-${firstDay}`;
-    const visitEndDate = `${yyyymmdd}`;
+    const visitStartDate = dateGain().slice(-7)[0];
+    const visitEndDate = dateGain().slice(-7)[6];
 
     instance
       .get(
@@ -45,9 +36,7 @@ const MyPageChart = () => {
           dateGain()
             .slice(-7)
             .map((v) => {
-              const dailyVisit = response.data.find(
-                (t) => t.visit_date === `2021-${v}`
-              );
+              const dailyVisit = response.data.find((t) => t.visit_date === v);
               if (dailyVisit) {
                 return dailyVisit.visit_count;
               }
@@ -72,6 +61,9 @@ const MyPageChart = () => {
             zoom: {
               enabled: false,
             },
+            toolbar: {
+              show: false,
+            },
           },
           dataLabels: {
             enabled: false,
@@ -80,7 +72,7 @@ const MyPageChart = () => {
             curve: "straight",
           },
           title: {
-            text: `${year}년 ${month}월 회원님의 방문 수`,
+            text: `${year}년 ${month}월 ${userName} 님의 방문 수`,
             align: "center",
           },
           grid: {
@@ -91,6 +83,28 @@ const MyPageChart = () => {
           },
           xaxis: {
             categories: dateGain().slice(-7),
+            labels: {
+              formatter: function (value) {
+                return value?.substring(5);
+              },
+            },
+          },
+          markers: {
+            size: 5,
+            strokeColors: "#fff",
+            strokeWidth: 2,
+            strokeOpacity: 0.9,
+            strokeDashArray: 0,
+            fillOpacity: 1,
+            shape: "circle",
+            radius: 2,
+            offsetX: 0,
+            offsetY: 0,
+            showNullDataPoints: true,
+            hover: {
+              size: 10,
+              sizeOffset: 3,
+            },
           },
         });
       })
@@ -106,11 +120,10 @@ const MyPageChart = () => {
   return (
     <ChartWrap>
       <Chart
+        type={"line"}
         options={options}
         series={series}
-        type="line"
-        height={350}
-        fill="green"
+        chartHeight={350}
       />
     </ChartWrap>
   );

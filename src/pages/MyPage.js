@@ -176,7 +176,7 @@ const MyPage = () => {
       </MyInfoWrap>
       <div className="info_li">
         <h3> Chart</h3>
-        <MyPageChart />
+        <MyPageChart userName={myData.name} />
       </div>
     </MyPageWrap>
   );
