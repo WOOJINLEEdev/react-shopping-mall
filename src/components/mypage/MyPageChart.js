@@ -22,7 +22,6 @@ const MyPageChart = ({ userName }) => {
     return arr;
   };
 
-  console.log("dategain", dateGain().slice(-7));
   useEffect(() => {
     const visitStartDate = dateGain().slice(-7)[0];
     const visitEndDate = dateGain().slice(-7)[6];
@@ -43,8 +42,6 @@ const MyPageChart = ({ userName }) => {
 
               return 0;
             }) || [];
-
-        console.log("visitCount ", visitCount);
 
         setSeries([
           {
