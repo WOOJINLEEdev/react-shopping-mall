@@ -267,9 +267,9 @@ export default BoardFirst;
 
 const BoardWrap = styled.div`
   width: 984px;
-  height: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 20px;
+  padding: 50px 20px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 40px);

@@ -24,7 +24,6 @@ const BoardEditor = () => {
 
   const eventHandler = {
     focus: () => {
-      console.log("포커스 훅 확인");
       if (!isFocusTitle) {
         inputRef.current.focus();
         isFocusTitle = true;
@@ -90,7 +89,7 @@ const BoardEditor = () => {
       </div>
       <Editor
         previewStyle="vertical"
-        height="400px"
+        height="80%"
         initialEditType="wysiwyg"
         initialValue=""
         placeholder="말은 우리 내면을 비추는 거울입니다."
@@ -106,5 +105,5 @@ export default BoardEditor;
 
 const EditorWrap = styled.div`
   padding: 50px;
-  height: 100%;
+  height: 100vh;
 `;
