@@ -113,9 +113,9 @@ const MyPage = () => {
           <Greet>
             <span className="greet_user">
               {!myData || myData === undefined ? "" : myData.name} (
-              {!myData || myData === undefined ? "" : myData.user_id}){" "}
+              {!myData || myData === undefined ? "" : myData.email}){" "}
             </span>{" "}
-            님, <span>안녕하세요!</span>
+            님, <p style={{ paddingTop: "10px" }}>안녕하세요!</p>
           </Greet>
           <ModifyLogoutWrap className="modify_logout_wrap">
             <Btn type="button" onClick={handleModifyBtn}>
@@ -236,7 +236,7 @@ const Greet = styled.strong`
   font-size: 18px;
   font-weight: bold;
   line-height: 20px;
-  margin: 30px 0;
+  margin: 20px 0;
   text-align: center;
 `;
 

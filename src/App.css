@@ -761,17 +761,15 @@ main {
 }
 
 .main_find_information {
-  display: table;
+  display: flex;
+  justify-content: space-between;
+  width: 260px;
   padding: 15px 0;
   margin: 0 auto;
 }
 
 .find_info_list {
-  float: left;
-}
-
-.find_info_list + .find_info_list {
-  padding-left: 20px;
+  cursor: pointer;
 }
 
 .find_link {
