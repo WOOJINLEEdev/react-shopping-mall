@@ -49,7 +49,6 @@ const AboutMe = () => {
       )
       .then(function (res) {
         const visitCount = res.data.map((item) => item.visit_count);
-        const visitCountClone = [...visitCount];
         const sum = visitCount.reduce((a, b) => a + b);
 
         const todayVisit = res.data.find(
@@ -62,11 +61,10 @@ const AboutMe = () => {
         setToday(todayVisit.visit_count);
         setYesterday(yesterdayVisit.visit_count);
         setTotal(sum);
-
         setSeries([
           {
             name: "방문 수",
-            data: visitCountClone.reverse().slice(-7),
+            data: [...visitCount].reverse().slice(-7),
           },
         ]);
 
