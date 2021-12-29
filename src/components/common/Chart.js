@@ -1,3 +1,4 @@
+import React from "react";
 import ApexChart from "react-apexcharts";
 
 const Chart = ({ type, series, options, chartHeight }) => {
@@ -11,4 +12,4 @@ const Chart = ({ type, series, options, chartHeight }) => {
   );
 };
 
-export default Chart;
+export default React.memo(Chart);
