@@ -1263,6 +1263,7 @@ main {
 }
 
 .join_wrapper {
+  height: calc(100vh - 271px);
   padding: 50px 150px;
   background-color: rgb(243, 243, 243);
   text-align: left;
