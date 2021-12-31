@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { Formik, Form, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
 import { userId, userPassword } from "utils/login-validation";
@@ -11,6 +11,8 @@ const LogIn = () => {
   const { naver } = window;
   const location = useLocation();
   const [naverIdToken, setNaverIdToken] = useState();
+
+  const history = useHistory();
 
   useEffect(() => {
     initializeNaverLogin();
@@ -88,10 +90,6 @@ const LogIn = () => {
     setNaverIdToken(naverToken);
   };
 
-  const handleFindIdPassword = () => {
-    alert("현재 서비스 준비 중입니다.");
-  };
-
   const onSuccess = (response) => {
     console.log(response);
 
@@ -117,13 +115,17 @@ const LogIn = () => {
     console.log(error);
   };
 
+  const handleJoinBtn = () => {
+    history.push("/join");
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      <Form>
+      <Form className="login_form">
         <div className="login_wrap">
           <fieldset className="login_fieldset">
             <legend className="visually_hidden">로그인</legend>
@@ -161,31 +163,28 @@ const LogIn = () => {
             <button type="submit" id="logInButton" className="login_btn">
               로그인
             </button>
+
             <BtnWrap>
-              <div id="naverIdLogin" onClick={initializeNaverLogin}></div>
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                buttonText="구글 아이디로 로그인"
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy={"single_host_origin"}
-              />
+              <SocialBtnWrap>
+                <div
+                  id="naverIdLogin"
+                  onClick={initializeNaverLogin}
+                  role="button"
+                ></div>
+                <GoogleLogin
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  buttonText="구글 아이디로 로그인"
+                  onSuccess={onSuccess}
+                  onFailure={onFailure}
+                  cookiePolicy={"single_host_origin"}
+                />
+              </SocialBtnWrap>
+
+              <JoinBtn type="button" onClick={handleJoinBtn}>
+                회원가입
+              </JoinBtn>
             </BtnWrap>
           </fieldset>
-
-          <ul className="main_find_information">
-            <li className="find_info_list" onClick={handleFindIdPassword}>
-              아이디 찾기
-            </li>
-            <li className="find_info_list" onClick={handleFindIdPassword}>
-              비밀번호 찾기
-            </li>
-            <li className="find_info_list">
-              <Link to="/join" className="find_link">
-                회원가입
-              </Link>
-            </li>
-          </ul>
         </div>
       </Form>
     </Formik>
@@ -195,18 +194,63 @@ const LogIn = () => {
 export default LogIn;
 
 const BtnWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  height: 100px;
   margin-top: 20px;
   text-align: center;
+  padding-top: 20px;
+  border-top: 3px solid #efefef;
+
+  @media only screen and (min-width: 320px) and (max-width: 600px) {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 160px;
+  }
+`;
+
+const SocialBtnWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 200px;
+  min-heigth: 120px;
+
+  & button {
+    min-width: 200px;
+    max-width: 200px;
+  }
 
   & img {
     min-width: 200px;
     max-width: 200px;
   }
 
-  & button {
-    min-width: 200px;
-    max-width: 200px;
-    margin-top: 10px;
+  @media only screen and (min-width: 320px) and (max-width: 600px) {
+    justify-content: space-evenly;
+    height: 120px;
+
+    & button {
+      margin: 0 auto;
+    }
+  }
+`;
+
+const JoinBtn = styled.button`
+  width: 45%;
+  height: 100%;
+  margin: 0;
+  border: 2px solid #d4d4d4;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 24%) 0px 2px 2px 0px, rgb(0 0 0 / 24%) 0px 0px 1px 0px;
+
+  @media only screen and (min-width: 320px) and (max-width: 600px) {
+    width: 200px;
+    height: 50px;
+    margin: 0 auto;
   }
 `;

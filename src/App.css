@@ -734,7 +734,7 @@ main {
 
 .login_fieldset {
   max-width: 400px;
-  margin: 30px auto 10px;
+  margin: 30px auto;
   background-color: #00ff0000;
 }
 
@@ -778,12 +778,12 @@ main {
 }
 
 .login_form {
-  padding-top: 100px;
+  min-height: 100%;
 }
 
 .login_fieldset {
   width: 500px;
-  margin: 0 auto 30px;
+  margin: 0 auto;
   border-radius: 10px;
   padding: 50px;
   background-color: #fff;
@@ -795,8 +795,8 @@ main {
 }
 
 .login_wrap {
-  padding: 100px 0;
-  height: calc(100vh - 371px);
+  padding: 50px 0;
+  min-height: calc(100vh - 271px);
 }
 
 /* --------------- // 카트 */
@@ -1263,7 +1263,7 @@ main {
 }
 
 .join_wrapper {
-  height: calc(100vh - 271px);
+  min-height: calc(100vh - 271px);
   padding: 50px 150px;
   background-color: rgb(243, 243, 243);
   text-align: left;
@@ -2631,13 +2631,18 @@ article {
 
   .login_wrap {
     width: calc(100% - 40px);
-    height: 100%;
     padding: 50px 20px;
   }
 
   .login_fieldset {
     width: 70%;
-    padding: 30px;
+    /* height: calc(100% - 60px); */
+    padding: 50px 30px;
+  }
+
+  .main_find_information {
+    justify-content: space-evenly;
+    font-size: 11px;
   }
 
   .list_element_detail {
