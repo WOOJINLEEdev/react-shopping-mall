@@ -796,7 +796,7 @@ main {
 
 .login_wrap {
   padding: 100px 0;
-  height: 600px;
+  height: calc(100vh - 371px);
 }
 
 /* --------------- // 카트 */
@@ -2631,6 +2631,7 @@ article {
 
   .login_wrap {
     width: calc(100% - 40px);
+    height: 100%;
     padding: 50px 20px;
   }
 
@@ -3199,6 +3200,7 @@ article {
   }
 
   .join_wrapper {
+    height: 100%;
     padding: 50px;
   }
 
