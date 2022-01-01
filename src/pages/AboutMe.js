@@ -237,6 +237,10 @@ const MeWrap = styled.div`
 const MeTitle = styled.h2`
   font-size: 25px;
   font-weight: bold;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 15px;
+  }
 `;
 
 const MeContentWrap = styled.ul`
@@ -255,7 +259,7 @@ const MeContentItem = styled.li`
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    font-size: 15px;
+    font-size: 13px;
   }
 `;
 
@@ -276,8 +280,9 @@ const VisitCountWrap = styled.div`
   margin-top: 30px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: calc(100% - 34px);
-    padding: 15px;
+    width: calc(100% - 64px);
+    padding: 20px 30px;
+    margin-top: 0;
   }
 `;
 
@@ -286,6 +291,10 @@ const VisitCountTitle = styled.div`
   border-bottom: 1px solid #d4d4d4;
   font-size: 20px;
   font-weight: bold;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const ListWrap = styled.div`
@@ -314,6 +323,8 @@ const TotalVisitCount = styled.div`
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 42px);
     max-width: calc(100% - 42px);
+    height: 80px;
+    box-shadow: 3px 5px 10px -2px rgb(0 0 0 / 13%);
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -346,7 +357,10 @@ const CountList = styled.li`
   text-align: center;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 40%;
+    width: 30%;
+    height: 80px;
+    max-width: 45%;
+    box-shadow: 3px 5px 10px -2px rgb(0 0 0 / 13%);
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -357,6 +371,7 @@ const CountList = styled.li`
 const ListTitle = styled.div`
   color: #333;
   font-weight: bold;
+  font-size: 13px;
 `;
 
 const ListItem = styled.div`
@@ -372,6 +387,10 @@ const ListItem = styled.div`
     top: 40%;
     left: 0;
     fill: rgb(0, 94, 150);
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 20px;
   }
 `;
 
