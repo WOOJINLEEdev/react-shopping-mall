@@ -4,6 +4,13 @@ import { instance } from "utils/http-client";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return [year, month, day].join("-");
+}
+
 const MyPageChart = ({ userName }) => {
   const [series, setSeries] = useState();
   const [options, setOptions] = useState();
@@ -13,40 +20,26 @@ const MyPageChart = ({ userName }) => {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
 
-  const dateGain = () => {
-    const arr = [];
-    for (let i = 1; i <= day; i++) {
-      arr.push(year + "-" + month + "-" + String(i).padStart(2, "0"));
-    }
-
-    return arr;
-  };
-
   useEffect(() => {
-    const visitStartDate = dateGain().slice(-7)[0];
-    const visitEndDate = dateGain().slice(-7)[6];
+    const now = new Date();
+
+    const visitStartDate = formatDate(
+      new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6)
+    );
+    const visitEndDate = formatDate(now);
 
     instance
       .get(
         `/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
       )
       .then(function (response) {
-        let visitCount =
-          dateGain()
-            .slice(-7)
-            .map((v) => {
-              const dailyVisit = response.data.find((t) => t.visit_date === v);
-              if (dailyVisit) {
-                return dailyVisit.visit_count;
-              }
-
-              return 0;
-            }) || [];
+        const visitDate = response.data.map((item) => item.visit_date);
+        const visitCount = response.data.map((item) => item.visit_count);
 
         setSeries([
           {
             name: "방문 수",
-            data: visitCount,
+            data: visitCount.reverse(),
           },
         ]);
 
@@ -79,7 +72,7 @@ const MyPageChart = ({ userName }) => {
             },
           },
           xaxis: {
-            categories: dateGain().slice(-7),
+            categories: visitDate.slice(0, 7).reverse(),
             labels: {
               formatter: function (value) {
                 return value?.substring(5);
