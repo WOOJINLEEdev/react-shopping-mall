@@ -8,6 +8,7 @@ import MyPageChart from "components/mypage/MyPageChart";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useMyPageData from "hooks/useMyPageData";
+import { CgChevronRight } from "react-icons/cg";
 
 Modal.setAppElement("#root");
 
@@ -156,11 +157,19 @@ const MyPage = () => {
           <MyInfoDetailList>
             <Link
               to="/myOrderCheck"
-              style={{ textDecoration: "none", color: "black" }}
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
               tabIndex="0"
+              className="order_check_link"
+              aria-labelledby="myOrderCheck"
             >
-              <h3 className="my_order_check">주문내역 조회</h3>
+              <h3 id="myOrderCheck" className="my_order_check">
+                주문내역 조회
+              </h3>
             </Link>
+            <CgChevronRight className="arrow_right" />
           </MyInfoDetailList>
           <MyInfoDetailList
             onClick={handleDeliveryAddress}
@@ -168,6 +177,7 @@ const MyPage = () => {
             tabIndex="0"
           >
             <h3>배송지 등록 / 변경</h3>
+            <CgChevronRight />
           </MyInfoDetailList>
           <MyInfoDetailList tabIndex="0">
             <StarRating myRating={myData.rating} />
@@ -404,6 +414,9 @@ const MyInfoDetail = styled.ul`
 `;
 
 const MyInfoDetailList = styled.li`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
   padding: 30px;
   background-color: #fff;
   border-radius: 5px;
@@ -415,6 +428,16 @@ const MyInfoDetailList = styled.li`
 
   &:first-child {
     padding: 0;
+  }
+
+  & .order_check_link {
+    width: 100%;
+  }
+
+  & .arrow_right {
+    position: absolute;
+    top: 30px;
+    right: 30px;
   }
 
   @media (hover: hover) {

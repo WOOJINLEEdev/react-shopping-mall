@@ -58,6 +58,10 @@ const CouponTitle = styled.p`
   line-height: 30px;
   padding-bottom: 10px;
   border-bottom: 3px solid #333;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 15px;
+  }
 `;
 
 const CouponItem = styled.li`
@@ -90,5 +94,6 @@ const CouponCloseBtn = styled.button`
   cursor: pointer;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
   }
 `;

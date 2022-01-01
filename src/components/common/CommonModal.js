@@ -34,10 +34,11 @@ const CommonModal = ({
     >
       <ModalText contentPadding={contentPadding}>{modalText}</ModalText>
       <ModalBtnWrap>
-        <ModalBtn width={btnWidth} onClick={btnClick2} name="no">
+        <ModalBtn type="button" width={btnWidth} onClick={btnClick2} name="no">
           {btnText2}
         </ModalBtn>
         <ModalBtn
+          type="button"
           width={btnWidth}
           backgroundColor={"green"}
           border={"3px solid green"}
@@ -66,7 +67,8 @@ const customModalStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    width: "300px",
+    width: "80%",
+    maxWidth: "300px",
     height: "200px",
     textAlign: "center",
     padding: "20px",
@@ -85,6 +87,10 @@ const ModalText = styled.p`
   font-size: 18px;
   font-weight: bold;
   color: #333;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 15px;
+  }
 `;
 
 const ModalBtnWrap = styled.div`
@@ -105,4 +111,8 @@ const ModalBtn = styled.button`
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   margin: 0 5px;
   cursor: pointer;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
