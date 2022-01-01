@@ -175,7 +175,7 @@ const MyPage = () => {
         </MyInfoDetail>
       </MyInfoWrap>
       <div className="info_li">
-        <h3> Chart</h3>
+        <h3 className="mypage_chart_title"> Chart</h3>
         <MyPageChart userName={myData.name} />
       </div>
     </MyPageWrap>
@@ -225,10 +225,11 @@ const MyInfo = styled.div`
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: calc(100% - 24px);
+    width: calc(100% - 64px);
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
+    padding: 0 30px;
   }
 `;
 
@@ -238,6 +239,10 @@ const Greet = styled.strong`
   line-height: 20px;
   margin: 20px 0;
   text-align: center;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const ModifyLogoutWrap = styled.div`
@@ -277,6 +282,12 @@ const Btn = styled.button`
       border: 2px solid #333;
       font-weight: bold;
     }
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 12px;
+    height: 60px;
+    line-height: 60px;
   }
 `;
 
@@ -324,11 +335,16 @@ const Coupon = styled.li`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     padding: 20px 10px;
+    height: 60px;
   }
 `;
 
 const CouponTitle = styled.h3`
   line-height: 16px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const CouponText = styled.span`
@@ -356,11 +372,16 @@ const Mileage = styled.li`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     padding: 20px 10px;
+    height: 60px;
   }
 `;
 
 const MileageTitle = styled.h3`
   line-height: 16px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const MileageText = styled.span`
@@ -409,5 +430,6 @@ const MyInfoDetailList = styled.li`
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     margin-top: 10px;
+    font-size: 13px;
   }
 `;

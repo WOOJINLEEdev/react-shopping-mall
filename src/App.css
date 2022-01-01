@@ -3190,6 +3190,10 @@ article {
     min-width: 80%;
   }
 
+  .myPageCouponModal {
+    height: 80%;
+  }
+
   .myPageDeliveryModal {
     min-width: 80%;
     min-height: 85%;
@@ -3215,6 +3219,19 @@ article {
 
   .info_li {
     padding: 20px 10px;
+  }
+
+  .main_title {
+    font-size: 15px;
+  }
+
+  .greet_user {
+    font-size: 15px;
+  }
+
+  .mypage_chart_title,
+  .apexcharts-title-text {
+    font-size: 13px;
   }
 }
 
