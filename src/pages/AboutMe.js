@@ -30,15 +30,6 @@ const AboutMe = () => {
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
 
-  const dateGain = () => {
-    const arr = [];
-    for (let i = 1; i <= day; i++) {
-      arr.push(month + "-" + String(i).padStart(2, "0"));
-    }
-
-    return arr;
-  };
-
   useEffect(() => {
     const visitStartDate = "2021-12-01";
     const visitEndDate = formattedToday;
@@ -48,6 +39,7 @@ const AboutMe = () => {
         `/v1/shop/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
       )
       .then(function (res) {
+        const visitDate = res.data.map((item) => item.visit_date);
         const visitCount = res.data.map((item) => item.visit_count);
         const sum = visitCount.reduce((a, b) => a + b);
 
@@ -111,10 +103,16 @@ const AboutMe = () => {
           },
 
           xaxis: {
-            categories: dateGain().slice(-7),
+            categories: visitDate.slice(0, 7).reverse(),
             position: "bottom",
             style: {
               fontSize: "10px",
+            },
+            labels: {
+              show: true,
+              formatter: function (val) {
+                return val?.slice(-5);
+              },
             },
             axisBorder: {
               show: false,
