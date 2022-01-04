@@ -92,10 +92,13 @@ const CurGroup = styled.div`
   width: 300px;
   line-height: 30px;
   margin: 0 auto;
+  font-size: 15px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
+    justify-content: space-evenly;
     margin: 0 auto;
     line-height: 35px;
+    font-size: 13px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -104,15 +107,8 @@ const CurGroup = styled.div`
   }
 `;
 
-const CurDate = styled.div`
-  font-size: 15px;
-`;
+const CurDate = styled.div``;
 
-const CurDay = styled.div`
-  font-style: italic;
-`;
+const CurDay = styled.div``;
 
-const CurTime = styled.div`
-  font-size: 15px;
-  font-weight: bold;
-`;
+const CurTime = styled.div``;

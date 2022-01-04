@@ -648,7 +648,7 @@ main {
 .thead_th:first-child {
   height: 30px;
   padding: 20px 0;
-  font-size: 30x;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -682,6 +682,7 @@ main {
 .td_select {
   width: 90%;
   border: 3px solid #d4d4d4;
+  border-radius: 5px;
   padding: 5px;
 }
 
@@ -3232,6 +3233,31 @@ article {
   .mypage_chart_title,
   .apexcharts-title-text {
     font-size: 13px;
+  }
+
+  .item_price {
+    font-size: 13px;
+  }
+
+  .item_name {
+    font-size: 13px;
+  }
+
+  .thead_th:first-child {
+    padding: 10px 0;
+    font-size: 18px;
+  }
+
+  .tbody_th {
+    font-size: 18px;
+  }
+
+  .tbody_td {
+    font-size: 18px;
+  }
+
+  .list_btn {
+    font-size: 18px;
   }
 }
 
