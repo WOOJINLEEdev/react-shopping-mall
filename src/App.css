@@ -1830,10 +1830,11 @@ main {
 .info_list_img {
   min-width: 120px;
   max-width: 120px;
-  min-height: 140px;
-  max-height: 150px;
+  min-height: 120px;
+  max-height: 140px;
   border-radius: 5px;
   background: rgb(194, 194, 194);
+  vertical-align: middle;
 }
 
 .list_brand_box {
@@ -1912,7 +1913,7 @@ main {
 }
 
 .infoHead {
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .list_price_text {
@@ -2333,6 +2334,7 @@ article {
   border: none;
   background-color: #fff;
   padding: 0 5px 0 20px;
+  cursor: pointer;
 }
 
 .order_delivery_info_btn {
@@ -2973,11 +2975,14 @@ article {
   .info_list_box {
     width: 30%;
     margin-right: 10%;
+    line-height: 120px;
   }
 
   .info_list_img {
     width: 100%;
     min-width: 100%;
+    min-height: 96px;
+    vertical-align: middle;
   }
 
   .info_list_wrap {

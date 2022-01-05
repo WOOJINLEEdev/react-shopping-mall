@@ -119,22 +119,10 @@ const TopBtn = styled.button`
     }
   }
 
-  @media only screen and (min-width: 320px) and (max-width: 767px) {
+  @media only screen and (min-width: 320px) and (max-width: 1023px) {
     width: 36px;
     height: 36px;
     bottom: 100px;
-
-    svg {
-      width: 16px;
-      height: 16px;
-      margin: 10px 0;
-    }
-  }
-
-  @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    width: 36px;
-    height: 36px;
-    bottom: 40px;
 
     svg {
       width: 16px;

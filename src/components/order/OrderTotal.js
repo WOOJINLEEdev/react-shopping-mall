@@ -1,33 +1,28 @@
-import { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import OrderTotalDetail from "./OrderTotalDetail";
-import useCheckout from "hooks/useCheckout";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 
 const OrderTotal = ({
   usedMileage,
   selectOption,
-  handleChangeDelivery,
-  itemCheckOut,
+  checkoutData,
   checkoutNumber,
   isPc,
   isTablet,
   isMobile,
-  handleOrderSubmit,
 }) => {
   const [checkoutNum, setCheckoutNum] = useState(checkoutNumber);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [arrowImg, setArrowImg] = useState(downArrow);
   const [closeText, setCloseText] = useState("");
 
-  const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
-    useCheckout(checkoutNumber);
+  const items = useMemo(
+    () => checkoutData.line_items,
+    [checkoutData.line_items]
+  );
 
-  if (checkoutError) return <div>failed to load</div>;
-  if (loadingCheckout) return <div>loading...</div>;
-
-  const items = checkoutData.line_items;
   const totalPrice = items
     .map((item) => item.variant_price * item.quantity)
     .reduce((sum, itemPrice) => sum + itemPrice, 0);
@@ -383,9 +378,10 @@ const OrderTotal = ({
         <OrderTotalDetail
           totalPrice={totalPrice}
           deliveryCharge={deliveryCharge}
-          usedMileage={usedMileage}
           selectOption={selectOption}
-          handleOrderSubmit={handleOrderSubmit}
+          usedMileage={usedMileage}
+          checkoutData={checkoutData}
+          checkoutNumber={checkoutNumber}
           isPc={isPc}
           isTablet={isTablet}
           isMobile={isMobile}
@@ -395,4 +391,4 @@ const OrderTotal = ({
   );
 };
 
-export default OrderTotal;
+export default React.memo(OrderTotal);

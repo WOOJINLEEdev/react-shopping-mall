@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
-import useCheckoutData from "hooks/useCheckoutData";
+import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
+import useCheckoutCouponData from "hooks/useCheckoutCouponData";
+import OrderCheckoutButton from "./OrderCheckoutButton";
+import OrderAgreeCheck from "./OrderAgreeCheck";
 
 const OrderTotalDetail = ({
   totalPrice,
   deliveryCharge,
-  usedMileage,
-  selectOption,
-  handleOrderSubmit,
-  selectCouponId,
+  // usedMileage,
+  // selectOption,
+  checkoutData,
+  checkoutNumber,
   isPc,
   isTablet,
   isMobile,
 }) => {
   const [agreeChecked, setAgreeChecked] = useState(false);
-  const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
+
+  const { checkoutCouponData } = useCheckoutCouponData();
+  const { checkoutTotalDetailData, MutateCheckoutTotalDetailData } =
+    useCheckoutTotalDetailData();
+
+  const { usedMileage, selectOption } = checkoutCouponData;
 
   const finalPrice =
     totalPrice +
@@ -31,8 +39,7 @@ const OrderTotalDetail = ({
       : selectOption.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   useEffect(() => {
-    return MutateCheckoutTotalData({
-      ...checkoutTotalData,
+    return MutateCheckoutTotalDetailData({
       usedCoupon,
       usedMileage,
       finalPrice,
@@ -133,7 +140,7 @@ const OrderTotalDetail = ({
         </div>
       </div>
 
-      <div className="order_check">
+      {/* <div className="order_check">
         <input
           type="checkbox"
           className="order_agree"
@@ -144,46 +151,24 @@ const OrderTotalDetail = ({
         <label htmlFor="agreeCheck" className="agree_label">
           주문하실 상품 및 결제, 주문정보를 확인하였으며, 이에 동의합니다.
         </label>
-      </div>
+      </div> */}
 
-      {isPc && (
-        <button
-          type="submit"
-          className="checkout_btn"
-          onClick={handleOrderSubmit}
-        >
-          CHECK OUT
-        </button>
-      )}
-      {isTablet && (
-        <button
-          type="submit"
-          className="checkout_btn"
-          onClick={handleOrderSubmit}
-        >
-          CHECK OUT
-        </button>
-      )}
-      {isMobile && (
-        <button
-          type="submit"
-          className="checkout_btn"
-          onClick={handleOrderSubmit}
-          tabIndex="0"
-        >
-          {(
-            totalPrice +
-            Number(deliveryCharge) -
-            Number(usedMileage) -
-            (Number.isInteger(selectOption) === false
-              ? totalPrice * selectOption
-              : selectOption)
-          )
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          원 결제하기
-        </button>
-      )}
+      <OrderAgreeCheck
+        agreeChecked={agreeChecked}
+        handleAgreeCheck={handleAgreeCheck}
+      />
+
+      <OrderCheckoutButton
+        checkoutData={checkoutData}
+        checkoutNumber={checkoutNumber}
+        totalPrice={totalPrice}
+        deliveryCharge={deliveryCharge}
+        usedMileage={usedMileage}
+        selectOption={selectOption}
+        isPc={isPc}
+        isTablet={isTablet}
+        isMobile={isMobile}
+      />
     </div>
   );
 };

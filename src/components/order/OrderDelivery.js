@@ -4,7 +4,7 @@ import { FcCheckmark } from "react-icons/fc";
 import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
-import useCheckoutData from "hooks/useCheckoutData";
+import useCheckoutDeliveryData from "hooks/useCheckoutDeliveryData";
 
 const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   const optionData = [
@@ -79,11 +79,11 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   const [requirement, setRequirement] = useState("");
   const [requirement1, setRequirement1] = useState("");
 
-  const { checkoutTotalData, MutateCheckoutTotalData } = useCheckoutData();
+  const { checkoutDeliveryData, MutateCheckoutDeliveryData } =
+    useCheckoutDeliveryData();
 
   useEffect(() => {
-    MutateCheckoutTotalData({
-      ...checkoutTotalData,
+    MutateCheckoutDeliveryData({
       designation,
       recipient,
       address1,
@@ -119,21 +119,21 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   ]);
 
   useEffect(() => {
-    if (checkoutTotalData.checkoutData === undefined) {
-      return console.log("체크아웃 데이터 undefined");
+    if (checkoutDeliveryData.checkoutData === undefined) {
+      return false;
     }
 
     if (
       !checkoutData.user.shipping_address ||
-      (!checkoutTotalData.checkoutData.user.shipping_address &&
-        !checkoutTotalData.deliveryClassName)
+      (!checkoutDeliveryData.checkoutData.user.shipping_address &&
+        !checkoutDeliveryData.deliveryClassName)
     ) {
       setDeliveryClassName("delivery_write disabled");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
       return setDeliveryClassName1("delivery_write old");
     }
-  }, [checkoutTotalData]);
+  }, [checkoutDeliveryData]);
 
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
@@ -158,10 +158,6 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   };
 
   const handleComplete = (data) => {
-    console.log("data ", data);
-    console.log("우편번호: ", data.zonecode);
-    console.log("주소: ", data.address);
-
     let fullAddress = getFullAddress(data);
 
     if (deliveryClassName === "delivery_write old") {
@@ -179,7 +175,6 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   };
 
   const handleDeliveryWrite = (e) => {
-    console.log(e.target.dataset.name);
     setDeliveryWrite(e.target.dataset.name);
 
     if (!checkoutData.user.shipping_address) {
@@ -243,12 +238,10 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   };
 
   const handleDeliveryInputChange1 = (e) => {
-    console.log("배송지명:", e.target.value);
     setDesignation(e.target.value);
   };
 
   const handleDeliveryInputChange2 = (e) => {
-    console.log("수령인:", e.target.value);
     setRecipient(e.target.value);
   };
 
