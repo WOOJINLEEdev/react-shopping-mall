@@ -38,3 +38,4 @@
   - 더미 데이터 기반 게시판
   - JSONPlaceholder API 기반 게시판
 - 소셜 로그인 연동 (네이버, 구글)
+- PWA(Progressive Web App) 적용
