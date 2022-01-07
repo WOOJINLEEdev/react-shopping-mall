@@ -222,7 +222,7 @@ const Cart = () => {
 
         <ul className="item_group">
           {items.length < 1 ? (
-            <li style={cartEmpty}>장바구니가 비었습니다.</li>
+            <CartEmpty>장바구니가 비었습니다.</CartEmpty>
           ) : (
             items.map((item, idx) => {
               return (
@@ -403,15 +403,24 @@ const Cart = () => {
 
 export default Cart;
 
-const cartEmpty = {
-  height: "200px",
-  border: "none",
-  fontSize: "25px",
-  fontWeight: "bold",
-  textAlign: "center",
-  lineHeight: "200px",
-  color: "rgb(97, 95, 95)",
-};
+const CartEmpty = styled.li`
+  height: 200px;
+  line-height: 200px;
+  border: 0;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  color: rgb(97, 95, 95);
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 18px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    min-height: calc(100vh - 808px);
+    line-height: calc(100vh - 808px);
+  }
+`;
 
 const CartErrorMessage = styled.div`
   display: flex;

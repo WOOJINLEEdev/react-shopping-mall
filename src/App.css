@@ -808,6 +808,7 @@ main {
 
 .order_info {
   width: calc(100% - 100px);
+  min-height: calc(100vh - 271px);
   padding: 50px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
@@ -957,12 +958,6 @@ main {
 
 .final_price_zone {
   font-size: 24px;
-}
-
-.order_check {
-  display: flex;
-  padding: 30px 0 40px;
-  border-top: 1px solid #d4d4d4;
 }
 
 .order_quantity {
@@ -3263,6 +3258,41 @@ article {
 
   .list_btn {
     font-size: 18px;
+  }
+
+  .info_title {
+    padding: 10px 0;
+  }
+
+  .info_head {
+    font-size: 15px;
+  }
+
+  .check_all {
+    height: 20px;
+    margin: 10px 0;
+  }
+
+  .allCheck_text,
+  .choice_item_remove_btn {
+    font-size: 13px;
+  }
+
+  .label_box,
+  .price_unit {
+    font-size: 14px;
+  }
+
+  .final_price {
+    font-size: 18px;
+  }
+
+  .final_price_zone {
+    font-size: 20px;
+  }
+
+  .order_check {
+    padding: 20px 0;
   }
 }
 
