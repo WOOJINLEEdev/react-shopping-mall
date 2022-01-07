@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 
-const OrderCoupon = ({
-  checkoutData,
-  // mileage,
-  // usedMileage,
-  // selectOption,
-  isMobile,
-  isTablet,
-  // onChangeMileageInput,
-  // handleSelectOption,
-  // allMileage,
-  // value,
-}) => {
+const OrderCoupon = ({ checkoutData, isMobile, isTablet }) => {
   const { checkoutCouponData, MutateCheckoutCouponData } =
     useCheckoutCouponData();
   const [coupons, setCoupons] = useState(checkoutData.user.coupons);

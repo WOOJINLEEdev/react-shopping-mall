@@ -1,7 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-// import MyOrderCheckModal from "components/mypage/MyOrderCheckModal";
 import Loading from "components/common/Loading";
 import { instance } from "utils/http-client";
 
@@ -99,13 +98,13 @@ export default MyOrderCheck;
 
 const OrderCheckWrap = styled.div`
   width: 824px;
-  height: 100%;
-
+  min-height: calc(100vh - 271px);
   margin: 0 auto;
   padding: 50px 100px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 40px);
+    min-height: calc(100vh - 90px);
     padding: 30px 20px 60px;
   }
 

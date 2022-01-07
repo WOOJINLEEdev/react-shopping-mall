@@ -19,7 +19,6 @@ const OrderCompletionItemInfo = ({
   isTablet,
   isMobile,
 }) => {
-  console.log("오더컴플리션아이템인포::", items);
   return (
     <OrderItemInfoWrap>
       <div className="order_item_info">
