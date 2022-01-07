@@ -603,9 +603,8 @@ main {
 
 .list_element_detail {
   display: flex;
-  height: 300px;
-  padding-top: 20px;
-  padding-bottom: 500px;
+  min-height: calc(100vh - 211px);
+  padding: 20px 0;
 }
 
 .image_wrapper {
@@ -2646,7 +2645,7 @@ article {
   .list_element_detail {
     display: block;
     height: 700px;
-    padding: 20px 20px 100px;
+    padding: 20px 20px;
   }
 
   .image_wrapper {
