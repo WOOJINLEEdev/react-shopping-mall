@@ -4,7 +4,7 @@ import { useSWRInfinite } from "swr";
 import ListItem from "components/home/ListItem";
 import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
 import Loading from "components/common/Loading";
 
 const SearchResult = () => {
@@ -76,13 +76,13 @@ const SearchResult = () => {
 
   if (result.length === 0)
     return (
-      <>
+      <ResultWrap>
         <SearchResultTitle>
           <SearchWord>{searchWord}</SearchWord>
           <span>검색결과 {resultCount}건</span>
         </SearchResultTitle>
         <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>
-      </>
+      </ResultWrap>
     );
 
   function handleClick() {
@@ -118,7 +118,7 @@ export default SearchResult;
 
 const ResultWrap = styled.div`
   padding: 20px 0;
-  min-height: 500px;
+  min-height: calc(100vh - 211px);
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     padding: 10px;
@@ -148,12 +148,11 @@ const SearchWord = styled.span`
 `;
 
 const NoSearchWord = styled.div`
-  min-height: 500px;
-  height: 100%;
+  min-height: calc(100% - 40px);
+  line-height: calc(100vh - 259px);
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  line-height: 500px;
 `;
 
 const ResultMoreBtn = styled.button`

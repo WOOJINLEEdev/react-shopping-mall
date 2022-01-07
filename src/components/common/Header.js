@@ -9,12 +9,12 @@ import useSearch from "hooks/useSearch";
 import useSearchLocation from "hooks/useSearchLocation";
 import useSearchResult from "hooks/useSearchResult";
 import { ReactComponent as MenuImg } from "images/menu.svg";
-import { GoSearch } from "react-icons/go";
-import { FiShoppingCart } from "react-icons/fi";
+import { GoSearch } from "@react-icons/all-files/go/GoSearch";
+import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
 import { instance } from "utils/http-client";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { GrHomeRounded } from "react-icons/gr";
-import { RiLoginBoxLine } from "react-icons/ri";
+import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import Loading from "components/common/Loading";
 import { isLogin } from "utils/auth";
 

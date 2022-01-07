@@ -7,7 +7,7 @@ import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
-import { FcCheckmark } from "react-icons/fc";
+import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import Loading from "components/common/Loading";
 
 Modal.setAppElement("#root");
@@ -64,8 +64,6 @@ const MyOrderCheckModal = ({
   const remainder = items.filter((item) => item !== firstItem);
   const itemQuantity = items.map((item) => item.quantity);
   const sum = itemQuantity.reduce((a, b) => a + b);
-
-  console.log("checking", items);
 
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {

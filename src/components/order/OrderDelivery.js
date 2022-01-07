@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
-import { FcCheckmark } from "react-icons/fc";
+import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";

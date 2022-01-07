@@ -3,7 +3,7 @@ import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
 import useDeliveryData from "hooks/useDeliveryData";
 import useMyPageData from "hooks/useMyPageData";
-import { CgClose } from "react-icons/cg";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import Loading from "components/common/Loading";
 
 const AddDeliveryAddressModal = ({ addDeliveryClassName }) => {

@@ -11,7 +11,7 @@ import BoardPagination from "components/board/BoardPagination";
 import { postList, sortedPostList } from "components/board/BoardFirstData";
 import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import { GiSpeaker } from "react-icons/gi";
+import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 import Loading from "components/common/Loading";
 
 Modal.setAppElement("#root");

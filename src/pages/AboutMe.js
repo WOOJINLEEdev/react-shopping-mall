@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ImGithub } from "react-icons/im";
+import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { instance } from "utils/http-client";
-import { BsTriangleFill } from "react-icons/bs";
+import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 

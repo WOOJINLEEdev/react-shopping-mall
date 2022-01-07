@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { FcCheckmark } from "react-icons/fc";
+import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import { ReactComponent as ShoppingBag } from "images/shopping-bag.svg";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";

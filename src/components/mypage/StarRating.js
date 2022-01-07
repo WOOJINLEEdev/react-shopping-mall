@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AiTwotoneStar } from "react-icons/ai";
+import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 import styled from "styled-components";
 import { instance } from "utils/http-client";
 

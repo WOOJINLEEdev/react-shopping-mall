@@ -8,7 +8,7 @@ import MyPageChart from "components/mypage/MyPageChart";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useMyPageData from "hooks/useMyPageData";
-import { CgChevronRight } from "react-icons/cg";
+import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
 
 Modal.setAppElement("#root");
 
