@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
-import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 import OrderCheckoutButton from "./OrderCheckoutButton";
 import OrderAgreeCheck from "./OrderAgreeCheck";
+import useCheckoutCouponData from "hooks/useCheckoutCouponData";
+import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
 
 const OrderTotalDetail = ({
   totalPrice,
   deliveryCharge,
-  // usedMileage,
-  // selectOption,
   checkoutData,
   checkoutNumber,
   isPc,
@@ -17,11 +15,12 @@ const OrderTotalDetail = ({
 }) => {
   const [agreeChecked, setAgreeChecked] = useState(false);
 
-  const { checkoutCouponData } = useCheckoutCouponData();
   const { checkoutTotalDetailData, MutateCheckoutTotalDetailData } =
     useCheckoutTotalDetailData();
 
-  const { usedMileage, selectOption } = checkoutCouponData;
+  const { checkoutCouponData } = useCheckoutCouponData();
+
+  const { usedMileage, selectCouponId, selectOption } = checkoutCouponData;
 
   const finalPrice =
     totalPrice +
@@ -40,12 +39,12 @@ const OrderTotalDetail = ({
 
   useEffect(() => {
     return MutateCheckoutTotalDetailData({
-      usedCoupon,
+      selectCouponId,
       usedMileage,
       finalPrice,
       agreeChecked,
     });
-  }, [usedCoupon, usedMileage, finalPrice, agreeChecked]);
+  }, [selectCouponId, usedMileage, finalPrice, agreeChecked]);
 
   const handleAgreeCheck = (e) => {
     const checked = e.target.checked;
@@ -139,19 +138,6 @@ const OrderTotalDetail = ({
           </p>
         </div>
       </div>
-
-      {/* <div className="order_check">
-        <input
-          type="checkbox"
-          className="order_agree"
-          id="agreeCheck"
-          checked={agreeChecked}
-          onChange={handleAgreeCheck}
-        />
-        <label htmlFor="agreeCheck" className="agree_label">
-          주문하실 상품 및 결제, 주문정보를 확인하였으며, 이에 동의합니다.
-        </label>
-      </div> */}
 
       <OrderAgreeCheck
         agreeChecked={agreeChecked}
