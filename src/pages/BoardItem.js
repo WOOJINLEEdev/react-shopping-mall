@@ -69,6 +69,7 @@ export default BoardItem;
 
 const ListItemWrap = styled.div`
   padding: 50px;
+  min-height: calc(100vh - 271px);
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     padding: 20px;
