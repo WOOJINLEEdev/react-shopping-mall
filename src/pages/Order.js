@@ -1,19 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMediaQuery } from "react-responsive";
 import OrderDelivery from "components/order/OrderDelivery";
 import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
-import {
-  deliveryAddress,
-  deliveryName,
-  phoneNumber,
-} from "utils/delivery-validation";
 import useCheckout from "hooks/useCheckout";
 
 const Order = ({ match }) => {
-  const [checkout, setCheckout] = useState({});
   const checkoutNumber = Number(match.params.checkoutId);
 
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -45,17 +39,6 @@ const Order = ({ match }) => {
     }
   }
 
-  const handleChangeDelivery = (delivery) => {
-    console.log("handleChangeDelivery delivery ", delivery);
-    setCheckout({
-      ...checkout,
-      delivery: deliveryName,
-      deliveryAddress,
-      phoneNumber,
-    });
-    console.log("handleChangeDelivery checkout ", checkout);
-  };
-
   return (
     <div className="order_wrapper">
       {isPc && (
@@ -76,7 +59,6 @@ const Order = ({ match }) => {
       )}
       {isPc && (
         <OrderTotal
-          handleChangeDelivery={handleChangeDelivery}
           checkoutData={checkoutData}
           checkoutNumber={checkoutNumber}
           isPc={isPc}
@@ -94,7 +76,6 @@ const Order = ({ match }) => {
             isMobile={isMobile}
           />
           <OrderTotal
-            handleChangeDelivery={handleChangeDelivery}
             checkoutData={checkoutData}
             checkoutNumber={checkoutNumber}
             isPc={isPc}
@@ -127,7 +108,6 @@ const Order = ({ match }) => {
             isMobile={isMobile}
           />
           <OrderTotal
-            handleChangeDelivery={handleChangeDelivery}
             checkoutData={checkoutData}
             checkoutNumber={checkoutNumber}
             isPc={isPc}

@@ -5,8 +5,6 @@ import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 
 const OrderTotal = ({
-  usedMileage,
-  selectOption,
   checkoutData,
   checkoutNumber,
   isPc,
@@ -378,8 +376,6 @@ const OrderTotal = ({
         <OrderTotalDetail
           totalPrice={totalPrice}
           deliveryCharge={deliveryCharge}
-          selectOption={selectOption}
-          usedMileage={usedMileage}
           checkoutData={checkoutData}
           checkoutNumber={checkoutNumber}
           isPc={isPc}
