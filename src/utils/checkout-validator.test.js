@@ -146,7 +146,7 @@ describe("CheckoutValidator", () => {
         expect(valid).toBeFalsy();
         expect(invalidMsg).toBe("상세주소를 입력해주세요.");
       });
-      it("만약 연락처 첫번째 칸을 입력하지 않았거나 2자리 이하로 입력했을 경우, invalid하고 '연락처 첫번째 칸은 2자리 이상 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
+      it("만약 연락처 첫번째 칸을 입력하지 않았다면, invalid하고 '연락처 첫번째 칸은 2자리 이상 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
           deliveryClassName: "delivery_write new",
@@ -169,7 +169,30 @@ describe("CheckoutValidator", () => {
         expect(valid).toBeFalsy();
         expect(invalidMsg).toBe("연락처 첫번째 칸은 2자리 이상 입력해주세요.");
       });
-      it("만약 연락처 두번째 칸을 입력하지 않았거나 4자리 이하로 입력했을 경우, invalid하고 '연락처 두번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
+      it("만약 연락처 첫번째 칸을 숫자 하나만 입력했다면, invalid하고 '연락처 첫번째 칸은 2자리 이상 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
+        // given
+        const checkoutDeliveryData = {
+          deliveryClassName: "delivery_write new",
+          recipient: "이이",
+          addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
+          addressDetail2: "ㅇㅇㅇ",
+          tel1: "1",
+        };
+        const checkoutPaymentData = {};
+        const checkoutTotalDetailData = {};
+
+        // when
+        const { valid, invalidMsg } = validateCheckout(
+          checkoutDeliveryData,
+          checkoutPaymentData,
+          checkoutTotalDetailData
+        );
+
+        // then
+        expect(valid).toBeFalsy();
+        expect(invalidMsg).toBe("연락처 첫번째 칸은 2자리 이상 입력해주세요.");
+      });
+      it("만약 연락처 두번째 칸을 입력하지 않았다면, invalid하고 '연락처 두번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
           deliveryClassName: "delivery_write new",
@@ -193,7 +216,31 @@ describe("CheckoutValidator", () => {
         expect(valid).toBeFalsy();
         expect(invalidMsg).toBe("연락처 두번째 칸은 4자리를 입력해주세요.");
       });
-      it("만약 연락처 세번째 칸을 입력하지 않았거나 4자리 이하로 입력했을 경우, invalid하고 '연락처 세번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
+      it("만약 연락처 두번째 칸을 3자리로 입력했을 경우, invalid하고 '연락처 두번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
+        // given
+        const checkoutDeliveryData = {
+          deliveryClassName: "delivery_write new",
+          recipient: "이이",
+          addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
+          addressDetail2: "ㅇㅇㅇ",
+          tel1: "02",
+          tel2: "111",
+        };
+        const checkoutPaymentData = {};
+        const checkoutTotalDetailData = {};
+
+        // when
+        const { valid, invalidMsg } = validateCheckout(
+          checkoutDeliveryData,
+          checkoutPaymentData,
+          checkoutTotalDetailData
+        );
+
+        // then
+        expect(valid).toBeFalsy();
+        expect(invalidMsg).toBe("연락처 두번째 칸은 4자리를 입력해주세요.");
+      });
+      it("만약 연락처 세번째 칸을 입력하지 않았다면, invalid하고 '연락처 세번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
           deliveryClassName: "delivery_write new",
@@ -203,6 +250,31 @@ describe("CheckoutValidator", () => {
           tel1: "02",
           tel2: "1111",
           tel3: "",
+        };
+        const checkoutPaymentData = {};
+        const checkoutTotalDetailData = {};
+
+        // when
+        const { valid, invalidMsg } = validateCheckout(
+          checkoutDeliveryData,
+          checkoutPaymentData,
+          checkoutTotalDetailData
+        );
+
+        // then
+        expect(valid).toBeFalsy();
+        expect(invalidMsg).toBe("연락처 세번째 칸은 4자리를 입력해주세요.");
+      });
+      it("만약 연락처 세번째 칸을 3자리로 입력했을 경우, invalid하고 '연락처 세번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
+        // given
+        const checkoutDeliveryData = {
+          deliveryClassName: "delivery_write new",
+          recipient: "이이",
+          addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
+          addressDetail2: "ㅇㅇㅇ",
+          tel1: "02",
+          tel2: "1111",
+          tel3: "111",
         };
         const checkoutPaymentData = {};
         const checkoutTotalDetailData = {};
