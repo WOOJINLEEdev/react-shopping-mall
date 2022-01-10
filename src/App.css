@@ -2707,7 +2707,33 @@ article {
 
   .cart_item_img {
     width: 100%;
-    min-height: 100%;
+    max-width: 150px;
+  }
+
+  .itemName {
+    font-size: 13px;
+    padding: 5px 0;
+  }
+
+  .option {
+    font-size: 13px;
+  }
+
+  .qty {
+    width: 31px;
+    height: 31px;
+    font-size: 15px;
+  }
+
+  .item_quantity {
+    width: 25px;
+    height: 25px;
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .item_price_qty {
+    font-size: 16px;
   }
 
   .info_box {
@@ -2718,7 +2744,7 @@ article {
   }
 
   .price_area {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .info_text {
@@ -3267,13 +3293,22 @@ article {
     font-size: 15px;
   }
 
-  .check_all {
-    height: 20px;
-    margin: 10px 0;
+  .info_allCheck {
+    height: 30px;
   }
 
-  .allCheck_text,
-  .choice_item_remove_btn {
+  .check_all {
+    height: 20px;
+    margin: 5px 0;
+  }
+
+  .allCheck_text {
+    font-size: 13px;
+    line-height: 30px;
+  }
+
+  .choice_item_remove_btn,
+  .item_remove {
     font-size: 13px;
   }
 
