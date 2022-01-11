@@ -147,6 +147,10 @@ const ModalTitle = styled.p`
   & svg {
     margin-right: 10px;
   }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 15px;
+  }
 `;
 
 const ModalContent = styled.div`

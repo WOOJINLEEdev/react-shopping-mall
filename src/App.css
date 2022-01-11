@@ -2308,10 +2308,6 @@ article {
   display: block;
 }
 
-.order_pay_info_wrap {
-  display: block;
-}
-
 .order_pay_info {
   display: flex;
   justify-content: space-between;
@@ -2984,7 +2980,9 @@ article {
   }
 
   .list_price_text {
+    display: flex;
     font-size: 13px;
+    padding: 0;
   }
 
   .list_info {
@@ -3101,7 +3099,7 @@ article {
   }
 
   .name {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .info_list_box {
@@ -3112,11 +3110,12 @@ article {
 
   .list_price_quantity {
     margin-left: 5px;
-    font-size: 15px;
+    font-size: 13px;
+    line-height: 35px;
   }
 
   .info_header {
-    font-size: 20px;
+    font-size: 15px;
     border: none;
   }
 
@@ -3327,6 +3326,26 @@ article {
 
   .order_check {
     padding: 20px 0;
+  }
+
+  .order_info_header {
+    font-size: 15px;
+  }
+
+  .order_pay_info_wrap,
+  .order_check_head_address,
+  .order_check_head_payment {
+    font-size: 13px;
+  }
+
+  .info_list_wrap {
+    padding: 10px;
+  }
+
+  .price {
+    padding: 0;
+    font-size: 13px;
+    line-height: 35px;
   }
 }
 

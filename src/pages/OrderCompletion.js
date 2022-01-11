@@ -202,6 +202,11 @@ const HeadContent = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 0;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 12px;
+    margin: 10px 0;
+  }
 `;
 
 const HeadTitle = styled.h2`
@@ -243,7 +248,11 @@ const HeadTitle = styled.h2`
 const HeadContentText = styled.div``;
 
 const Text = styled.p`
-  width: 210px;
+  width: 280px;
   margin: 0 auto;
   line-height: 30px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 210px;
+  }
 `;

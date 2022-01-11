@@ -59,7 +59,7 @@ const OrderCompletionDeliveryInfo = ({ orderData }) => {
             </div>
           </DeliveryInfo>
           <DeliveryInfo>
-            <div style={{ minWidth: "44.16px" }}>배송지</div>
+            <div style={{ minWidth: "44.16px", textAlign: "left" }}>배송지</div>
             <div style={{ width: "75%", textAlign: "right" }}>
               {orderData[0].shipping_address.address1}{" "}
               {orderData[0].shipping_address.address2}
