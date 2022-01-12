@@ -152,7 +152,7 @@ const MyPageDeliveryModal = ({
             </NotDeliveryAddress>
           ) : (
             <DeliveryAddressItem display={addressDisplay}>
-              <strong>기본 배송지</strong>
+              <ItemContentTitle>기본 배송지</ItemContentTitle>
               <ItemContentWrap>
                 <ItemContent>{myDeliveryAddress.recipient_name}</ItemContent>
                 <ItemContent>
@@ -221,6 +221,10 @@ const ModalTitle = styled.p`
   & svg {
     margin-right: 10px;
   }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 15px;
+  }
 `;
 
 const ModalContent = styled.div`
@@ -229,8 +233,13 @@ const ModalContent = styled.div`
 `;
 
 const ContentText = styled.p`
+  font-size: 15px;
   padding: 10px 0;
   color: red;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const NotDeliveryAddress = styled.p`
@@ -250,6 +259,17 @@ const DeliveryAddressItem = styled.div`
   border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   cursor: pointer;
+  overflow: hidden;
+`;
+
+const ItemContentTitle = styled.strong`
+  display: block;
+  margin-bottom: 10px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
 `;
 
 const ItemContentWrap = styled.div`
@@ -259,6 +279,10 @@ const ItemContentWrap = styled.div`
 const ItemContent = styled.p`
   font-weight: normal;
   padding: 5px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
 `;
 
 const ModifyBtn = styled.button`
@@ -272,6 +296,12 @@ const ModifyBtn = styled.button`
   border-radius: 3px;
   outline: none;
   cursor: pointer;
+  float: right;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+    min-height: 40px;
+  }
 `;
 
 const BtnContainer = styled.div``;
