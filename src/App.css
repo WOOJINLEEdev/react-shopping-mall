@@ -483,7 +483,7 @@ button {
 }
 
 .item_price {
-  padding: 5px 0;
+  padding: 2px 0;
   font-weight: bold;
   font-size: 15px;
 }
@@ -2918,13 +2918,18 @@ article {
   }
 
   .preexistence_name {
-    font-size: 20px;
+    font-size: 15px;
     line-height: 20px;
   }
 
   .preexistence_address {
-    margin: 20px 0 10px;
+    margin: 10px 0;
+    font-size: 13px;
     line-height: 20px;
+  }
+
+  .preexistence_phone {
+    font-size: 13px;
   }
 
   .payment_method {
