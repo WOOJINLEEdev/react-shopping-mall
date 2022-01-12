@@ -1,5 +1,5 @@
-export function isLogin() {
-  const token = localStorage.getItem("token");
+import { getToken } from "utils/token";
 
-  return Boolean(token);
+export function isLogin() {
+  return Boolean(getToken());
 }

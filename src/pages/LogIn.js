@@ -6,6 +6,7 @@ import { userId, userPassword } from "utils/login-validation";
 import { instance } from "utils/http-client";
 import styled from "styled-components";
 import GoogleLogin from "react-google-login";
+import useTokenStatus from "hooks/useTokenStatus";
 
 const LogIn = () => {
   const { naver } = window;
@@ -20,10 +21,16 @@ const LogIn = () => {
 
     if (naverIdToken) {
       instance
-        .post("/v1/auth/social-login", {
-          social_type: "naver",
-          access_token: naverIdToken,
-        })
+        .post(
+          "/v1/auth/social-login",
+          {
+            social_type: "naver",
+            access_token: naverIdToken,
+          },
+          {
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           console.log(res);
           loginCheck(res);
@@ -33,6 +40,8 @@ const LogIn = () => {
         });
     }
   }, [naverIdToken]);
+
+  const { mutateToken } = useTokenStatus();
 
   const initialValues = {
     userId: "",
@@ -45,15 +54,19 @@ const LogIn = () => {
   });
 
   const onSubmit = (values) => {
-    console.log("Form data", values);
-    console.log("아이디", values.userId);
-
     instance
-      .post("/v1/auth/login", {
-        user_id: values.userId,
-        user_password: values.userPassword,
-      })
+      .post(
+        "/v1/auth/login",
+        {
+          user_id: values.userId,
+          user_password: values.userPassword,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then(function (response) {
+        mutateToken(response.data);
         loginCheck(response);
       })
       .catch(function (error) {
@@ -63,10 +76,9 @@ const LogIn = () => {
   };
 
   function loginCheck(response) {
-    localStorage.setItem("token", response.data);
+    console.log("response ", response);
 
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!response.data) {
       return false;
     } else {
       window.location.replace("/mypage");
@@ -82,6 +94,7 @@ const LogIn = () => {
       callbackHandle: true,
     });
     naverLogin.init();
+    naverLogin.logout();
   };
 
   const getNaverToken = () => {
@@ -94,14 +107,20 @@ const LogIn = () => {
     console.log(response);
 
     instance
-      .post("/v1/auth/social-login", {
-        social_type: "google",
-        profile: {
-          id: response.profileObj.googleId,
-          name: response.profileObj.name,
-          email: response.profileObj.email,
+      .post(
+        "/v1/auth/social-login",
+        {
+          social_type: "google",
+          profile: {
+            id: response.profileObj.googleId,
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+          },
         },
-      })
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         console.log(res);
         loginCheck(res);
@@ -217,12 +236,8 @@ const SocialBtnWrap = styled.div`
   min-width: 200px;
   min-heigth: 120px;
 
-  & button {
-    min-width: 200px;
-    max-width: 200px;
-  }
-
-  & img {
+  & button,
+  img {
     min-width: 200px;
     max-width: 200px;
   }

@@ -13,6 +13,7 @@ import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 import Loading from "components/common/Loading";
+import { getToken } from "utils/token";
 
 Modal.setAppElement("#root");
 
@@ -32,7 +33,7 @@ const BoardFirst = () => {
     useState("board_search_btn");
   const [selectedOption, setSelectedOption] = useState("");
 
-  const token = localStorage.getItem("token");
+  const token = getToken();
   const headersName = [
     "번호",
     "구분",

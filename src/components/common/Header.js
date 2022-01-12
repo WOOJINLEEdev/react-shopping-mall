@@ -7,7 +7,6 @@ import useMyCart from "hooks/useMyCart";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
 import useSearch from "hooks/useSearch";
 import useSearchLocation from "hooks/useSearchLocation";
-import useSearchResult from "hooks/useSearchResult";
 import { ReactComponent as MenuImg } from "images/menu.svg";
 import { GoSearch } from "@react-icons/all-files/go/GoSearch";
 import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
@@ -16,25 +15,35 @@ import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import Loading from "components/common/Loading";
-import { isLogin } from "utils/auth";
+import useTokenStatus from "hooks/useTokenStatus";
 
 const Header = ({ location }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const token = localStorage.getItem("token");
   const history = useHistory();
+  const { token, mutateToken } = useTokenStatus();
 
   useEffect(() => {
-    if (!isLogin()) {
-      return;
+    if (token) {
+      instance
+        .put("/v1/me/visit", null)
+        .then(function (response) {
+          console.log("user visit", response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
+  }, [token]);
+
+  useEffect(() => {
     instance
-      .put("/v1/me/visit", null)
+      .post("/v1/auth/access-token", null)
       .then(function (response) {
-        console.log(response);
-        console.log("user visit", response.data);
+        mutateToken(response.data);
       })
       .catch(function (error) {
         console.log(error);
+        history.push("/login");
       });
   }, []);
 
@@ -50,11 +59,10 @@ const Header = ({ location }) => {
       });
   }, []);
 
-  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { cart, loadingCart, cartError } = useMyCart();
   const { data, mutate } = useMenuCollapsed();
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
-  const { searchResultData, searchResultMutate } = useSearchResult();
   const { clickedData, clickedMutate } = useActiveHeaderItem();
 
   if (cartError) return "에러 발생...";
@@ -157,7 +165,7 @@ const Header = ({ location }) => {
             {!token ? (
               <RiLoginBoxLine />
             ) : (
-              <img src={signInImg} className="signin_img" alt="sign_in"></img>
+              <img src={signInImg} className="signin_img" alt="sign_in" />
             )}
             <span className="visually_hidden">로그인</span>
           </HeaderSignIn>

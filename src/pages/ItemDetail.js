@@ -6,6 +6,7 @@ import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
 import { instance } from "utils/http-client";
 import useMyCart from "hooks/useMyCart";
+import useTokenStatus from "hooks/useTokenStatus";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
@@ -19,8 +20,6 @@ const ItemDetail = ({ match }) => {
   const [btnWidth, setBtnWidth] = useState("40%");
   const [contentPadding, setContentPadding] = useState("50px 0");
 
-  const token = localStorage.getItem("token");
-
   const url = `/v1/products/${match.params.productId}`;
   const fetcher = (url) => {
     return instance.get(url).then((res) => res.data);
@@ -28,6 +27,7 @@ const ItemDetail = ({ match }) => {
 
   const { data, error } = useSWR(url, fetcher);
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { token, mutateToken } = useTokenStatus();
 
   if (error) return "에러 발생";
   if (!data) return <Loading />;

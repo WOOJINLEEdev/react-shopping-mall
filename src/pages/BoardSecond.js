@@ -11,6 +11,7 @@ import BoardPagination from "components/board/BoardPagination";
 import useBoard from "hooks/useBoard";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
+import { getToken } from "utils/token";
 
 Modal.setAppElement("#root");
 
@@ -28,7 +29,7 @@ const BoardSecond = () => {
   const [SearchBtnClassName, setSearchBtnClassName] =
     useState("board_search_btn");
 
-  const token = localStorage.getItem("token");
+  const token = getToken();
   const date = new Date();
   let searchInput = "";
 

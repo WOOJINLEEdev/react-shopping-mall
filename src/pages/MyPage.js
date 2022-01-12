@@ -9,6 +9,7 @@ import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useMyPageData from "hooks/useMyPageData";
 import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
+import useTokenStatus from "hooks/useTokenStatus";
 
 Modal.setAppElement("#root");
 
@@ -33,6 +34,7 @@ const MyPage = () => {
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
+  const { token, mutateToken, removeToken } = useTokenStatus();
 
   if (loadingCart) return <Loading />;
   if (cartError) return <div>에러 발생...</div>;
@@ -41,7 +43,7 @@ const MyPage = () => {
   if (myDataError) return <div>에러발생...</div>;
 
   const logout = () => {
-    localStorage.removeItem("token");
+    removeToken();
     localStorage.removeItem("delivery");
     localStorage.removeItem("board");
 
@@ -56,7 +58,6 @@ const MyPage = () => {
   };
 
   const handleLogoutBtn = () => {
-    console.log("로그아웃 버튼 클릭");
     setIsOpen(true);
   };
 

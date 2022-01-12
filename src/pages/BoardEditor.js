@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import { getToken } from "utils/token";
 
 const BoardEditor = () => {
   const inputRef = useRef();
@@ -12,7 +13,7 @@ const BoardEditor = () => {
   const [inputTitle, setInputTitle] = useState("");
   const history = useHistory();
 
-  const token = localStorage.getItem("token");
+  const token = getToken();
   const boardLocalStorage = localStorage.getItem("board");
   const decoded = jwt_decode(token);
   const userId = decoded.user.user_id;
