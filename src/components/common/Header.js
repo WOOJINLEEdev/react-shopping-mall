@@ -43,7 +43,6 @@ const Header = ({ location }) => {
       })
       .catch(function (error) {
         console.log(error);
-        history.push("/login");
       });
   }, []);
 
@@ -62,7 +61,7 @@ const Header = ({ location }) => {
   const { cart, loadingCart, cartError } = useMyCart();
   const { data, mutate } = useMenuCollapsed();
   const { searchData, searchMutate } = useSearch();
-  const { searchLocationData, searchLocationMutate } = useSearchLocation();
+  const { searchLocationMutate } = useSearchLocation();
   const { clickedData, clickedMutate } = useActiveHeaderItem();
 
   if (cartError) return "에러 발생...";
