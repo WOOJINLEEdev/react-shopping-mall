@@ -404,8 +404,8 @@ const Cart = () => {
 export default Cart;
 
 const CartEmpty = styled.li`
-  height: 200px;
-  line-height: 200px;
+  min-height: 300px;
+  line-height: 300px;
   border: 0;
   font-size: 25px;
   font-weight: bold;
@@ -413,12 +413,15 @@ const CartEmpty = styled.li`
   color: rgb(97, 95, 95);
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
+    min-height: 200px;
+    line-height: 200px;
     font-size: 18px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    min-height: calc(100vh - 808px);
-    line-height: calc(100vh - 808px);
+    min-height: 250px;
+    line-height: 250px;
+    max-height: calc(100vh - 808px);
   }
 `;
 

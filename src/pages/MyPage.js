@@ -197,7 +197,7 @@ export default MyPage;
 
 const MyPageWrap = styled.div`
   width: calc(100% - 60px);
-  height: 100%;
+  min-height: calc(100vh - 271px);
   padding: 50px 30px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {

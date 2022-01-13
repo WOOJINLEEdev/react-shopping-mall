@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { instance } from "utils/http-client";
-import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
+import { ImGithub } from "@react-icons/all-files/im/ImGithub";
+import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
 
 function formatDate(date) {
   const year = date.getFullYear();
@@ -231,7 +231,7 @@ export default AboutMe;
 
 const MeWrap = styled.div`
   padding: 30px 20px;
-  height: 100%;
+  min-height: calc(100vh - 231px);
 `;
 
 const MeTitle = styled.h2`
