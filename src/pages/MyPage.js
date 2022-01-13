@@ -8,8 +8,8 @@ import MyPageChart from "components/mypage/MyPageChart";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useMyPageData from "hooks/useMyPageData";
-import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
 import useTokenStatus from "hooks/useTokenStatus";
+import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
 
 Modal.setAppElement("#root");
 
@@ -33,8 +33,8 @@ const MyPage = () => {
   const history = useHistory();
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-  const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
-  const { token, mutateToken, removeToken } = useTokenStatus();
+  const { myData, loadingMyData, myDataError } = useMyPageData();
+  const { removeToken } = useTokenStatus();
 
   if (loadingCart) return <Loading />;
   if (cartError) return <div>에러 발생...</div>;
@@ -114,8 +114,8 @@ const MyPage = () => {
         <MyInfo>
           <Greet>
             <span className="greet_user">
-              {!myData || myData === undefined ? "" : myData.name} (
-              {!myData || myData === undefined ? "" : myData.email}){" "}
+              {myData.name} (
+              {myData.social_user_id === 0 ? myData.user_id : myData.email}){" "}
             </span>{" "}
             님, <p style={{ paddingTop: "10px" }}>안녕하세요!</p>
           </Greet>
