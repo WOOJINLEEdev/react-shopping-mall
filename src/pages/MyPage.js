@@ -10,6 +10,8 @@ import useMyCart from "hooks/useMyCart";
 import useMyPageData from "hooks/useMyPageData";
 import useTokenStatus from "hooks/useTokenStatus";
 import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
+import { instance } from "utils/http-client";
+import { getToken } from "utils/token";
 
 Modal.setAppElement("#root");
 
@@ -43,7 +45,16 @@ const MyPage = () => {
   if (myDataError) return <div>에러발생...</div>;
 
   const logout = () => {
-    removeToken();
+    instance
+      .post("/v1/auth/logout")
+      .then((res) => {
+        console.log("logout res:", res);
+        removeToken();
+      })
+      .then((err) => {
+        console.log("logout err:", err);
+      });
+
     localStorage.removeItem("delivery");
     localStorage.removeItem("board");
 
