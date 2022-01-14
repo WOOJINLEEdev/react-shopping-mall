@@ -40,6 +40,7 @@ const Header = ({ location }) => {
       .post("/v1/auth/access-token", null)
       .then(function (response) {
         mutateToken(response.data);
+        mutateCart(null, true);
       })
       .catch(function (error) {
         console.log(error);
@@ -50,7 +51,6 @@ const Header = ({ location }) => {
     instance
       .put("/v1/shop/visit", null)
       .then(function (response) {
-        console.log(response);
         console.log("web visit", response.data);
       })
       .catch(function (error) {
@@ -58,7 +58,7 @@ const Header = ({ location }) => {
       });
   }, []);
 
-  const { cart, loadingCart, cartError } = useMyCart();
+  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { data, mutate } = useMenuCollapsed();
   const { searchData, searchMutate } = useSearch();
   const { searchLocationMutate } = useSearchLocation();
