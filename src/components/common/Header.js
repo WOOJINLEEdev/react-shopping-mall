@@ -81,22 +81,26 @@ const Header = ({ location }) => {
   };
 
   const handleHeaderTitleClick = () => {
-    history.push("/");
+    routeIfNotCurrentPath("/");
     clickedMutate("");
   };
 
   const handleHeaderAboutClick = () => {
-    history.push("/aboutMe");
+    routeIfNotCurrentPath("/aboutMe");
   };
 
   const handleHeaderSignInClick = () => {
     const path = !token ? "/login" : "/mypage";
-    history.push(path);
+    routeIfNotCurrentPath(path);
   };
 
   const handleHeaderCartClick = () => {
-    history.push("/cart");
+    routeIfNotCurrentPath("/cart");
   };
+
+  function routeIfNotCurrentPath(path) {
+    location.pathname !== path && history.push(path);
+  }
 
   return (
     <header className="header">
