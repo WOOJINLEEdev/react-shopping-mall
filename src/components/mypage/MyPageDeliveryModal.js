@@ -9,11 +9,7 @@ import Loading from "components/common/Loading";
 
 Modal.setAppElement("#root");
 
-const MyPageDeliveryModal = ({
-  isOpen3,
-  onRequestClose3,
-  myDeliveryAddress,
-}) => {
+const MyPageDeliveryModal = ({ isOpen, onRequestClose, myDeliveryAddress }) => {
   const [addDeliveryClassName, setAddDeliveryClassName] = useState("hide");
   const [addressDisplay, setAddressDisplay] = useState("block");
   const [addBtnDisplay, setAddBtnDisplay] = useState("block");
@@ -24,7 +20,7 @@ const MyPageDeliveryModal = ({
   const { myDeliveryData, MutateMyDeliveryData } = useDeliveryData();
 
   useEffect(() => {
-    if (isOpen3) {
+    if (isOpen) {
       document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
       return () => {
         const scrollY = document.body.style.top;
@@ -32,7 +28,7 @@ const MyPageDeliveryModal = ({
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
       };
     }
-  }, [isOpen3]);
+  }, [isOpen]);
 
   const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
   if (loadingMyData) return <Loading />;
@@ -135,8 +131,8 @@ const MyPageDeliveryModal = ({
 
   return (
     <Modal
-      isOpen={isOpen3}
-      onRequestClose={onRequestClose3}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
       shouldCloseOnOverlayClick={false}
       className="myPageDeliveryModal"
       overlayClassName="modalOverlay"
@@ -190,7 +186,7 @@ const MyPageDeliveryModal = ({
         <CloseBtn
           type="button"
           display={closBtnDisplay}
-          onClick={onRequestClose3}
+          onClick={onRequestClose}
         >
           창닫기
         </CloseBtn>

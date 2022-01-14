@@ -1783,20 +1783,6 @@ main {
   padding: 30px;
 }
 
-.info_li {
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 30px;
-  border: 2px solid #d4d4d4;
-  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-  cursor: pointer;
-}
-
-/* ----------- 오더토탈 부분 css */
-
 .info_list_wrap {
   display: flex;
   justify-content: space-between;
@@ -3247,10 +3233,6 @@ article {
     width: 60%;
   }
 
-  .info_li {
-    padding: 20px 10px;
-  }
-
   .main_title {
     font-size: 15px;
   }
@@ -3259,7 +3241,6 @@ article {
     font-size: 15px;
   }
 
-  .mypage_chart_title,
   .apexcharts-title-text {
     font-size: 13px;
   }
