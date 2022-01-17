@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import DOMPurify from "dompurify";
 import { getToken } from "utils/token";
 
 const BoardEditor = () => {
@@ -37,12 +38,18 @@ const BoardEditor = () => {
   };
 
   const handleEditorSave = () => {
+    const inputBody = DOMPurify.sanitize(
+      editorRef.current.getInstance().getEditorElements().wwEditor.innerText
+    );
+
+    console.log("inputBody", inputBody);
+
     axios
       .post("https://jsonplaceholder.typicode.com/posts", {
         userId: userId,
         id: "101",
         title: inputTitle,
-        body: "",
+        body: inputBody,
       })
       .then(function (response) {
         console.log(response);
