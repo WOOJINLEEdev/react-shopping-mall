@@ -3,6 +3,8 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import Loading from "components/common/Loading";
 import { instance } from "utils/http-client";
+import { useSWRInfinite } from "swr";
+import { IoIosArrowDown } from "react-icons/io";
 
 Modal.setAppElement("#root");
 
@@ -12,24 +14,45 @@ const MyOrderCheckModal = lazy(() =>
 
 const MyOrderCheck = () => {
   const [isOpen3, setIsOpen3] = useState(false);
-  const [myOrderList, setMyOrderList] = useState();
+  const [totalCount, setTotalCount] = useState();
   const [selectItemId, setSelectItemId] = useState();
+  const [pageOffset, setPageOffset] = useState(0);
 
   useEffect(() => {
     instance
       .get("/v1/orders")
       .then(function (response) {
-        console.log("주문조회:", response.data);
-        setMyOrderList(response.data);
+        setTotalCount(response.data.length);
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
 
-  if (!myOrderList) {
+  const PAGE_LIMIT = 5;
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) {
+      return null;
+    }
+    return `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageIndex * PAGE_LIMIT}`;
+  };
+
+  const url = `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageOffset}`;
+  const fetcher = async (url) => {
+    const res = await instance.get(url);
+    return res.data;
+  };
+
+  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
+
+  if (!totalCount) {
     return <Loading />;
   }
+
+  if (error) return "에러 발생";
+  if (!data) return <Loading />;
+
+  const myOrderList = data.flat(Infinity);
 
   const handleOrderListItem = (itemId) => {
     setSelectItemId(itemId);
@@ -40,9 +63,17 @@ const MyOrderCheck = () => {
     setIsOpen3(false);
   };
 
+  function handleClick() {
+    console.log("더보기 클릭");
+    setSize(size + 1);
+  }
+
   return (
     <OrderCheckWrap>
       <h2 className="main_title">주문내역 조회</h2>
+      <TotalOrderCount>
+        - 총 주문 수 : <span>{totalCount}</span>건
+      </TotalOrderCount>
       <Suspense fallback={<Loading />}>
         <MyOrderCheckModal
           isOpen3={isOpen3}
@@ -56,7 +87,7 @@ const MyOrderCheck = () => {
         <NotOrderData>주문내역이 없습니다.</NotOrderData>
       )}
       <ul>
-        {myOrderList.map((item) => {
+        {myOrderList.map((item, index) => {
           return (
             <OrderListItem
               key={item.checkout_id}
@@ -80,16 +111,24 @@ const MyOrderCheck = () => {
                 {item.line_items.length === 1 ? "" : item.line_items.length - 1}
                 {item.line_items.length === 1 ? "" : "건"}
               </ListItemContent>
-              <ListItemContent>
+              <ListItemContent className="list_item_price">
                 결제금액:{" "}
                 {item.total_price
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </ListItemContent>
+              <ListItemNumber>{index + 1}</ListItemNumber>
             </OrderListItem>
           );
         })}
       </ul>
+      {totalCount > 5 && size * PAGE_LIMIT < totalCount ? (
+        <ListMoreBtn onClick={handleClick}>
+          더보기 <IoIosArrowDown />
+        </ListMoreBtn>
+      ) : (
+        ""
+      )}
     </OrderCheckWrap>
   );
 };
@@ -115,27 +154,28 @@ const OrderCheckWrap = styled.div`
 `;
 
 const OrderListItem = styled.li`
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 30px;
   background-color: #fff;
   border-radius: 5px;
   font-size: 15px;
-  margin-top: 30px;
+  margin-top: 20px;
   border: 2px solid #d4d4d4;
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   cursor: pointer;
+
+  & .list_item_price {
+    padding-bottom: 0;
+  }
 `;
 
 const ListItemContent = styled.p`
   padding-bottom: 20px;
 
-  &: first-child {
+  &:first-child {
     font-weight: bold;
-  }
-
-  &: last-child {
-    padding-bottom: 0;
   }
 `;
 
@@ -144,4 +184,51 @@ const NotOrderData = styled.div`
   padding: 10px;
   margin-top: 30px;
   min-height: 500px;
+`;
+
+const ListMoreBtn = styled.button`
+  width: 100%;
+  height: 50px;
+  color: #333;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #fff;
+  border: 2px solid #d4d4d4;
+  border-radius: 3px;
+  outline: none;
+  box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
+  margin: 30px 0;
+  cursor: pointer;
+
+  @media (hover: hover) {
+    &:hover {
+      border: 2px solid #333;
+    }
+  }
+`;
+
+const TotalOrderCount = styled.p`
+  padding: 20px 0 10px;
+  font-size: 18px;
+
+  & span {
+    font-weight: bold;
+    color: green;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    font-size: 13px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    font-size: 16px;
+  }
+`;
+
+const ListItemNumber = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  color: green;
+  font-weight: bold;
 `;
