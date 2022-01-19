@@ -20,9 +20,9 @@ const MyOrderCheck = () => {
 
   useEffect(() => {
     instance
-      .get("/v1/orders")
+      .get("/v1/orders?count=true")
       .then(function (response) {
-        setTotalCount(response.data.length);
+        setTotalCount(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -94,14 +94,10 @@ const MyOrderCheck = () => {
               onClick={() => handleOrderListItem(item.checkout_id)}
             >
               <ListItemContent>
-                {item.created_at.substring(0, 4)}.
-                {item.created_at.substring(5, 7)}.
-                {item.created_at.substring(8, 10)}
+                {item.created_at.substring(0, 10).split("-").join(".")}
               </ListItemContent>
               <ListItemContent>
-                주문번호: {item.created_at.substring(0, 4)}
-                {item.created_at.substring(5, 7)}
-                {item.created_at.substring(8, 10)}
+                주문번호: {item.created_at.substring(0, 10).split("-").join("")}
                 -000
                 {item.checkout_id}
               </ListItemContent>
@@ -179,6 +175,14 @@ const ListItemContent = styled.p`
   }
 `;
 
+const ListItemNumber = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  color: green;
+  font-weight: bold;
+`;
+
 const NotOrderData = styled.div`
   font-size: 18px;
   padding: 10px;
@@ -197,7 +201,7 @@ const ListMoreBtn = styled.button`
   border-radius: 3px;
   outline: none;
   box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
-  margin: 30px 0;
+  margin: 30px 0 0;
   cursor: pointer;
 
   @media (hover: hover) {
@@ -223,12 +227,4 @@ const TotalOrderCount = styled.p`
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     font-size: 16px;
   }
-`;
-
-const ListItemNumber = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 30px;
-  color: green;
-  font-weight: bold;
 `;
