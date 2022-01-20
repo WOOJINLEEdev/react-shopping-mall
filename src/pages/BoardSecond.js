@@ -226,17 +226,18 @@ export default BoardSecond;
 
 const BoardWrap = styled.div`
   width: 984px;
-  height: 100vh;
+  min-height: calc(100vh - 271px);
+  height: 100%;
   margin: 0 auto;
   padding: 50px 20px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 40px);
+    min-height: calc(100vh - 251px);
     height: 100%;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    width: calc(100% - 40px);
-    height: 100%;
+    width: calc(100% - 100px);
   }
 `;

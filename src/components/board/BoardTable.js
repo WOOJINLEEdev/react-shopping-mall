@@ -28,7 +28,6 @@ const BoardTable = ({ headersName, children, loading, boardLocal }) => {
           <col className="board_col th_date" />
           {isTablet && <col className="board_col th_count" />}
           {isPc && <col className="board_col th_count" />}
-          {isTablet && <col className="board_col th_preview" />}
           {isPc && <col className="board_col th_preview" />}
         </colgroup>
         <thead>

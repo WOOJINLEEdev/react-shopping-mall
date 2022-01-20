@@ -136,7 +136,7 @@ const BoardFirst = () => {
 
   const getHeadersName = () => {
     if (isTablet) {
-      return ["번호", "구분", "제목", "작성자", "등록일"];
+      return ["번호", "구분", "제목", "작성자", "등록일", "조회수"];
     }
     if (isMobile) {
       return ["구분", "제목", "작성자", "등록일"];
@@ -210,6 +210,7 @@ const BoardFirst = () => {
               </BoardTableColumn>
             )}
             {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && (
@@ -242,6 +243,7 @@ const BoardFirst = () => {
               </BoardTableColumn>
             )}
             {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
             {isPc && (
@@ -272,17 +274,18 @@ export default BoardFirst;
 
 const BoardWrap = styled.div`
   width: 984px;
-  height: 100vh;
+  min-height: calc(100vh - 271px);
+  height: 100%;
   margin: 0 auto;
   padding: 50px 20px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 40px);
+    min-height: calc(100vh - 251px);
     height: 100%;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    width: calc(100% - 40px);
-    height: 100%;
+    width: calc(100% - 100px);
   }
 `;
