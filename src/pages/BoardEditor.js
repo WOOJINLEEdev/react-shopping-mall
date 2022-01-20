@@ -63,6 +63,12 @@ const BoardEditor = () => {
     setInputTitle(e.target.value);
   };
 
+  const handleAlert = () => {
+    alert(
+      "현재 서비스 준비 중입니다. Board Second에서는 저장하기 버튼 클릭 시 console 창에서 확인 가능합니다. "
+    );
+  };
+
   return (
     <EditorWrap>
       <div className="board_editor_top">
@@ -81,7 +87,9 @@ const BoardEditor = () => {
             <button
               type="button"
               className="editor_save_btn"
-              onClick={boardLocalStorage === "second" ? handleEditorSave : null}
+              onClick={
+                boardLocalStorage === "second" ? handleEditorSave : handleAlert
+              }
             >
               저장하기
             </button>
