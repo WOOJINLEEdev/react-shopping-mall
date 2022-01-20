@@ -8,10 +8,11 @@ import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
-import useBoard from "hooks/useBoard";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import { getToken } from "utils/token";
+import axios from "axios";
+import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 
 Modal.setAppElement("#root");
 
@@ -19,10 +20,19 @@ const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
 const BoardSecond = () => {
   const history = useHistory();
+
+  const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
+    useCurrentBoardPage();
+
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+  const initialPage = getCurrentBoardPage("second");
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
+  const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [mobileLimit, setMobileLimit] = useState(20);
+  const [page, setPage] = useState(initialPage);
+  const offset = (page - 1) * limit;
+
   const [searchClassName, setSearchClassName] = useState("search_wrap");
   const [SearchInputClassName, setSearchInputClassName] =
     useState("board_search_input");
@@ -32,6 +42,10 @@ const BoardSecond = () => {
   const token = getToken();
   const date = new Date();
   let searchInput = "";
+
+  const detectMobile = detectMobileDevice();
+  const offsetLimit =
+    detectMobile === true ? offset + mobileLimit : offset + limit;
 
   const headersName = [
     "번호",
@@ -50,34 +64,31 @@ const BoardSecond = () => {
   });
 
   useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => {
+        const reverseData = res.data.reverse();
+        setPosts(reverseData);
+      })
+      .then((err) => console.log(err));
+
     localStorage.setItem("board", "second");
   }, []);
 
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
-  function currentPosts(item) {
-    let currentPosts = 0;
-    currentPosts = item.slice(indexOfFirst, indexOfLast);
-    return currentPosts;
+  useEffect(() => {
+    mutateCurrentBoardPage("second", page);
+  }, [page]);
+
+  useEffect(() => {
+    detectMobileDevice();
+    console.log("detectMobile", detectMobile);
+  }, []);
+
+  function detectMobileDevice() {
+    const minWidth = 500;
+
+    return window.innerWidth <= minWidth;
   }
-
-  const { board, boardError } = useBoard();
-  if (boardError) return <div>failed to load</div>;
-  if (!board) return <Loading />;
-
-  const testing = () => {
-    board.sort(function (a, b) {
-      if (a.id < b.id) {
-        return 1;
-      }
-      if (a.id > b.id) {
-        return -1;
-      }
-      return 0;
-    });
-  };
-
-  testing();
 
   const handleWriteBtn = () => {
     if (token) {
@@ -103,7 +114,7 @@ const BoardSecond = () => {
   };
 
   const handleSearchBtn = () => {
-    const searchFilter = board.filter((item) =>
+    const searchFilter = posts.filter((item) =>
       item.title.includes(searchInput)
     );
     console.log(searchFilter);
@@ -150,10 +161,10 @@ const BoardSecond = () => {
       </Suspense>
 
       <BoardTable headersName={getHeadersName()} boardLocal="second">
-        {currentPosts(board).map((item, i) => (
+        {posts.slice(offset, offsetLimit).map((item, i) => (
           <BoardTableRow key={i}>
             <BoardTableColumn>{item.id}</BoardTableColumn>
-            <BoardTableColumn>
+            <BoardTableColumn title={item.title}>
               <Link to={`/postView/${item.id}`} className="board_link">
                 <span className="board_item_title">{item.title}</span>
               </Link>
@@ -202,11 +213,11 @@ const BoardSecond = () => {
         ))}
       </BoardTable>
       <BoardPagination
-        postsPerPage={postsPerPage}
-        totalPosts={board.length}
-        currentPage={currentPage}
-        paginate={setCurrentPage}
-      ></BoardPagination>
+        total={posts.length}
+        limit={detectMobile === true ? mobileLimit : limit}
+        page={page}
+        setPage={setPage}
+      />
     </BoardWrap>
   );
 };

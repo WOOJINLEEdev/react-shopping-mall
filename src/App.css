@@ -1963,6 +1963,7 @@ main {
 .board_list {
   width: 924px;
   margin: 20px 30px;
+  table-layout: fixed;
   text-align: center;
   border-top: 2px solid #acacac;
   border-bottom: 2px solid #acacac;
@@ -2001,6 +2002,9 @@ main {
   padding: 10px;
   font-size: 13px;
   line-height: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .board_col {

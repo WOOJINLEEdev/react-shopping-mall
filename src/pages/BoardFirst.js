@@ -14,18 +14,26 @@ import SearchInputBtn from "components/search/SearchInputBtn";
 import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 import Loading from "components/common/Loading";
 import { getToken } from "utils/token";
+import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 
 Modal.setAppElement("#root");
 
 const BoardFirstModal = lazy(() => import("components/board/BoardFirstModal"));
 
 const BoardFirst = () => {
-  const [dataList, setDataList] = useState([]);
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(10);
+
+  const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
+    useCurrentBoardPage();
+
+  const initialPage = getCurrentBoardPage("first");
+  const [dataList, setDataList] = useState([]);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(initialPage);
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
+  const offset = (page - 1) * limit;
+
   const [searchClassName, setSearchClassName] = useState("search_wrap");
   const [SearchInputClassName, setSearchInputClassName] =
     useState("board_search_input");
@@ -59,13 +67,9 @@ const BoardFirst = () => {
     localStorage.setItem("board", "first");
   }, []);
 
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage;
-  function currentPosts(item) {
-    let currentPosts = 0;
-    currentPosts = item.slice(indexOfFirst, indexOfLast);
-    return currentPosts;
-  }
+  useEffect(() => {
+    mutateCurrentBoardPage("first", page);
+  }, [page]);
 
   const handleWriteBtn = () => {
     if (token) {
@@ -221,7 +225,7 @@ const BoardFirst = () => {
             )}
           </BoardTableRow>
         ))}
-        {currentPosts(dataList).map((item, i) => (
+        {dataList.slice(offset, offset + limit).map((item, i) => (
           <BoardTableRow key={i}>
             {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}
@@ -255,10 +259,10 @@ const BoardFirst = () => {
         ))}
       </BoardTable>
       <BoardPagination
-        postsPerPage={postsPerPage}
-        totalPosts={dataList.length}
-        paginate={setCurrentPage}
-        currentPage={currentPage}
+        total={dataList.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
       />
     </BoardWrap>
   );
