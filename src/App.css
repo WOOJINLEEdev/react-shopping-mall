@@ -2216,6 +2216,7 @@ main {
 }
 
 .modal_close_btn {
+  display: block;
   width: 80px;
   height: 40px;
   padding: 10px;
@@ -2227,6 +2228,7 @@ main {
   cursor: pointer;
   color: #757575;
   font-weight: bold;
+  margin: 20px auto 0;
 }
 
 .board_filter {
@@ -2503,6 +2505,29 @@ article {
   border-color: #7b7b7b;
 }
 
+.boardItemModal,
+.boardFirstItemModal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 600px;
+  max-width: 650px;
+  height: 80%;
+  max-height: 650px;
+  padding: 20px;
+  box-shadow: 10px 10px 35px 20px rgb(0 0 0 / 36%);
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  overflow: auto;
+}
+
 /* --------------------------------------------- */
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {
@@ -2610,12 +2635,12 @@ article {
 
   .login_wrap {
     width: calc(100% - 40px);
+    min-height: calc(100vh - 241px);
     padding: 50px 20px;
   }
 
   .login_fieldset {
     width: 70%;
-    /* height: calc(100% - 60px); */
     padding: 50px 30px;
   }
 

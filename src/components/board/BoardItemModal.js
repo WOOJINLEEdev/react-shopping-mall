@@ -12,34 +12,13 @@ const BoardItemModal = ({ isOpen, onRequestClose, boardItemId }) => {
   if (boardItemError) return <div>failed to load</div>;
   if (!boardItem) return <Loading />;
 
-  const customModalStyle = {
-    overlay: {
-      backgroundColor: "rgba(0,0,0, 0.5)",
-    },
-    content: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      width: "70%",
-      height: "500px",
-      textAlign: "center",
-      padding: "20px",
-      boxShadow: "10px 10px 35px 20px rgb(0 0 0 / 36%)",
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
-
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      style={customModalStyle}
       shouldCloseOnOverlayClick={true}
+      className="boardItemModal"
+      overlayClassName="modalOverlay"
     >
       <div>
         <table className="board_item_table">
