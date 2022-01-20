@@ -24,6 +24,7 @@ const BoardSecond = () => {
   const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
     useCurrentBoardPage();
 
+  const detectMobile = detectMobileDevice();
   const [isOpen, setIsOpen] = useState(false);
   const initialPage = getCurrentBoardPage("second");
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
@@ -31,7 +32,10 @@ const BoardSecond = () => {
   const [limit, setLimit] = useState(10);
   const [mobileLimit, setMobileLimit] = useState(20);
   const [page, setPage] = useState(initialPage);
-  const offset = (page - 1) * limit;
+  const offset =
+    detectMobile === true ? (page - 1) * mobileLimit : (page - 1) * limit;
+  const offsetLimit =
+    detectMobile === true ? offset + mobileLimit : offset + limit;
 
   const [searchClassName, setSearchClassName] = useState("search_wrap");
   const [SearchInputClassName, setSearchInputClassName] =
@@ -42,10 +46,6 @@ const BoardSecond = () => {
   const token = getToken();
   const date = new Date();
   let searchInput = "";
-
-  const detectMobile = detectMobileDevice();
-  const offsetLimit =
-    detectMobile === true ? offset + mobileLimit : offset + limit;
 
   const headersName = [
     "번호",
