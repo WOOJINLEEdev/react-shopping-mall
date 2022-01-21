@@ -45,10 +45,6 @@ const MyOrderCheck = () => {
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
 
-  if (!totalCount) {
-    return <Loading />;
-  }
-
   if (error) return "에러 발생";
   if (!data) return <Loading />;
 
@@ -71,9 +67,13 @@ const MyOrderCheck = () => {
   return (
     <OrderCheckWrap>
       <h2 className="main_title">주문내역 조회</h2>
-      <TotalOrderCount>
-        - 총 주문 수 : <span>{totalCount}</span>건
-      </TotalOrderCount>
+      {totalCount === 0 ? (
+        ""
+      ) : (
+        <TotalOrderCount>
+          - 총 주문 수 : <span>{totalCount}</span>건
+        </TotalOrderCount>
+      )}
       <Suspense fallback={<Loading />}>
         <MyOrderCheckModal
           isOpen3={isOpen3}
@@ -134,17 +134,19 @@ export default MyOrderCheck;
 const OrderCheckWrap = styled.div`
   width: 824px;
   min-height: calc(100vh - 271px);
+  height: 100%;
   margin: 0 auto;
   padding: 50px 100px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 40px);
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 231px);
     padding: 30px 20px 60px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     width: calc(100% - 80px);
+    min-height: calc(100vh - 251px);
     padding: 40px;
   }
 `;
@@ -188,6 +190,8 @@ const NotOrderData = styled.div`
   padding: 10px;
   margin-top: 30px;
   min-height: 500px;
+  line-height: 500px;
+  text-align: center;
 `;
 
 const ListMoreBtn = styled.button`
