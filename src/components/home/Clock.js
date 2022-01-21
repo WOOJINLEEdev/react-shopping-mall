@@ -1,21 +1,9 @@
-// import React, { Component } from "react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import CurTime from "components/common/CurTime";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
-
-  useEffect(() => {
-    const getDate = () => {
-      setDate(new Date());
-    };
-
-    const refreshInterval = setInterval(() => getDate(), 1000);
-
-    return () => {
-      clearInterval(refreshInterval);
-    };
-  }, []);
 
   const getDayOfWeek = (day) => {
     switch (day) {
@@ -50,13 +38,7 @@ const Clock = () => {
           {date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
         </CurDate>
         <CurDay>{getDayOfWeek(date.getDay())}</CurDay>
-        <CurTime>
-          {date.getHours() < 10 ? "0" + date.getHours() : date.getHours()}
-          &nbsp;:&nbsp;
-          {date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()}
-          &nbsp;:&nbsp;
-          {date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()}
-        </CurTime>
+        <CurTime />
       </CurGroup>
     </Container>
   );
@@ -110,5 +92,3 @@ const CurGroup = styled.div`
 const CurDate = styled.div``;
 
 const CurDay = styled.div``;
-
-const CurTime = styled.div``;
