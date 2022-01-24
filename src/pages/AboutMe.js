@@ -5,13 +5,7 @@ import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
-
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return [year, month, day].join("-");
-}
+import { formatDate } from "utils/formatDate";
 
 const AboutMe = () => {
   const [total, setTotal] = useState();
@@ -26,9 +20,8 @@ const AboutMe = () => {
     new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
   );
 
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
+  const year = formatDate(now, "YYYY");
+  const month = formatDate(now, "MM");
 
   useEffect(() => {
     const visitStartDate = "2021-12-01";

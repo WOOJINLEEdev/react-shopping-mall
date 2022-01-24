@@ -9,6 +9,8 @@ import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import { instance } from "utils/http-client";
+import { formatDate } from "utils/formatDate";
+import { getOrderNumber } from "utils/order";
 
 const OrderCompletion = ({ match }) => {
   const [orderData, setOrderData] = useState([]);
@@ -95,17 +97,8 @@ const OrderCompletion = ({ match }) => {
         <HeadContent>
           <HeadContentText>
             <Text>
-              {date.getFullYear()}.
-              {date.getMonth() < 9
-                ? "0" + (date.getMonth() + 1)
-                : date.getMonth() + 1}
-              .{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}{" "}
-              주문하신 상품의 주문번호는 {date.getFullYear()}
-              {date.getMonth() < 9
-                ? "0" + (date.getMonth() + 1)
-                : date.getMonth() + 1}
-              {date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}-000
-              {checkoutNumber} 입니다.
+              {formatDate(date).replaceAll("-", ".")} 주문하신 상품의 주문번호는{" "}
+              {getOrderNumber(orderData[0].created_at, checkoutNumber)} 입니다.
             </Text>
           </HeadContentText>
         </HeadContent>

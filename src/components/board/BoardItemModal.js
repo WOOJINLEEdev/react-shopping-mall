@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
+import { formatDate } from "utils/formatDate";
 
 Modal.setAppElement("#root");
 
@@ -35,13 +36,7 @@ const BoardItemModal = ({ isOpen, onRequestClose, boardItemId }) => {
             </tr>
             <tr>
               <th className="item_table_th">작성일</th>
-              <td className="item_table_td">
-                {date.getFullYear()}-
-                {date.getMonth() < 9
-                  ? "0" + (date.getMonth() + 1)
-                  : date.getMonth() + 1}
-                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
-              </td>
+              <td className="item_table_td">{formatDate(date)}</td>
             </tr>
             <tr>
               <th className="item_table_th">조회수</th>

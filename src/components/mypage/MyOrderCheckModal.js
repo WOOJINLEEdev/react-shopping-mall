@@ -9,6 +9,7 @@ import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import Loading from "components/common/Loading";
+import { getOrderNumber } from "utils/order";
 
 Modal.setAppElement("#root");
 const MyOrderCheckModal = ({
@@ -104,11 +105,11 @@ const MyOrderCheckModal = ({
       <ModalContent>
         <ModalTitle>
           <FcCheckmark />
-          주문번호 : {selectedOrderData[0].created_at.substring(0, 4)}
-          {selectedOrderData[0].created_at.substring(5, 7)}
-          {selectedOrderData[0].created_at.substring(8, 10)}
-          -000
-          {selectedOrderData[0].checkout_id}
+          주문번호 :{" "}
+          {getOrderNumber(
+            selectedOrderData[0].created_at,
+            selectedOrderData[0].checkout_id
+          )}
         </ModalTitle>
         <OrderCompletionItemInfo
           items={items}

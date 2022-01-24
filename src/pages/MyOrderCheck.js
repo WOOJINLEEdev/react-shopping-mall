@@ -5,6 +5,7 @@ import Loading from "components/common/Loading";
 import { instance } from "utils/http-client";
 import { useSWRInfinite } from "swr";
 import { IoIosArrowDown } from "react-icons/io";
+import { getOrderNumber } from "utils/order";
 
 Modal.setAppElement("#root");
 
@@ -97,9 +98,7 @@ const MyOrderCheck = () => {
                 {item.created_at.substring(0, 10).split("-").join(".")}
               </ListItemContent>
               <ListItemContent>
-                주문번호: {item.created_at.substring(0, 10).split("-").join("")}
-                -000
-                {item.checkout_id}
+                주문번호: {getOrderNumber(item.created_at, item.checkout_id)}
               </ListItemContent>
               <ListItemContent>
                 주문상품: {item.line_items[0].product_name}{" "}

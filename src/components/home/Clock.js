@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CurTime from "components/common/CurTime";
+import { formatDate } from "utils/formatDate";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
+  const curDate = formatDate(date).replaceAll("-", ". ");
+  const curDay = getDayOfWeek(date.getDay());
 
-  const getDayOfWeek = (day) => {
+  function getDayOfWeek(day) {
     switch (day) {
       case 0:
         return "일요일";
@@ -24,20 +27,13 @@ const Clock = () => {
       default:
         throw new Error(`not supported day: ${day}`);
     }
-  };
+  }
 
   return (
     <Container className="main_clock">
       <CurGroup className="clock_group">
-        <CurDate>
-          {date.getFullYear()}&nbsp;/&nbsp;
-          {date.getMonth() < 9
-            ? "0" + (date.getMonth() + 1)
-            : date.getMonth() + 1}
-          &nbsp;/&nbsp;
-          {date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
-        </CurDate>
-        <CurDay>{getDayOfWeek(date.getDay())}</CurDay>
+        <CurDate>{curDate}</CurDate>
+        <CurDay>{curDay}</CurDay>
         <CurTime />
       </CurGroup>
     </Container>

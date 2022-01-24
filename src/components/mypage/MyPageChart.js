@@ -3,30 +3,21 @@ import styled from "styled-components";
 import { instance } from "utils/http-client";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
-
-function formatDate(date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return [year, month, day].join("-");
-}
+import { formatDate } from "utils/formatDate";
 
 const MyPageChart = ({ userName }) => {
   const [series, setSeries] = useState();
   const [options, setOptions] = useState();
 
   const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const year = formatDate(date, "YYYY");
+  const month = formatDate(date, "MM");
 
   useEffect(() => {
-    const now = new Date();
-
     const visitStartDate = formatDate(
-      new Date(now.getFullYear(), now.getMonth(), now.getDate() - 6)
+      new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6)
     );
-    const visitEndDate = formatDate(now);
+    const visitEndDate = formatDate(date);
 
     instance
       .get(

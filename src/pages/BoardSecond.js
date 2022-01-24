@@ -13,6 +13,7 @@ import SearchInputBtn from "components/search/SearchInputBtn";
 import { getToken } from "utils/token";
 import axios from "axios";
 import useCurrentBoardPage from "hooks/useCurrentBoardPage";
+import { formatDate } from "utils/formatDate";
 
 Modal.setAppElement("#root");
 
@@ -81,7 +82,6 @@ const BoardSecond = () => {
 
   useEffect(() => {
     detectMobileDevice();
-    console.log("detectMobile", detectMobile);
   }, []);
 
   function detectMobileDevice() {
@@ -171,31 +171,12 @@ const BoardSecond = () => {
             </BoardTableColumn>
             <BoardTableColumn>{item.userId}</BoardTableColumn>
             {isMobile && (
-              <BoardTableColumn>
-                {date.getMonth() < 9
-                  ? "0" + (date.getMonth() + 1)
-                  : date.getMonth() + 1}
-                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
-              </BoardTableColumn>
+              <BoardTableColumn>{formatDate(date, "MM-DD")}</BoardTableColumn>
             )}
             {isTablet && (
-              <BoardTableColumn>
-                {date.getFullYear()}-
-                {date.getMonth() < 9
-                  ? "0" + (date.getMonth() + 1)
-                  : date.getMonth() + 1}
-                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
-              </BoardTableColumn>
+              <BoardTableColumn>{formatDate(date)}</BoardTableColumn>
             )}
-            {isPc && (
-              <BoardTableColumn>
-                {date.getFullYear()}-
-                {date.getMonth() < 9
-                  ? "0" + (date.getMonth() + 1)
-                  : date.getMonth() + 1}
-                -{date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
-              </BoardTableColumn>
-            )}
+            {isPc && <BoardTableColumn>{formatDate(date)}</BoardTableColumn>}
             {isTablet && <BoardTableColumn>{item.id}</BoardTableColumn>}
             {isPc && <BoardTableColumn>{item.id}</BoardTableColumn>}
             {isPc && (
