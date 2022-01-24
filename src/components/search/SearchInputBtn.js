@@ -1,5 +1,4 @@
 import React, { useState, useMemo, forwardRef } from "react";
-// import useSearchResult from "hooks/useSearchResult";
 import useSearchResult from "hooks/useSearchResult";
 import { debounce } from "lodash";
 
