@@ -19,7 +19,10 @@ export function validateCheckout(
     }
   }
 
-  if (checkoutDeliveryData.deliveryClassName === "delivery_write new") {
+  if (
+    checkoutDeliveryData.deliveryClassName === "delivery_write new" ||
+    checkoutDeliveryData.deliveryClassName === "delivery_write disabled"
+  ) {
     if (
       !checkoutDeliveryData.recipient ||
       checkoutDeliveryData.recipient === undefined

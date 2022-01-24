@@ -119,15 +119,7 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
   ]);
 
   useEffect(() => {
-    if (checkoutDeliveryData.checkoutData === undefined) {
-      return false;
-    }
-
-    if (
-      !checkoutData.user.shipping_address ||
-      (!checkoutDeliveryData.checkoutData.user.shipping_address &&
-        !checkoutDeliveryData.deliveryClassName)
-    ) {
+    if (!checkoutData.user.shipping_address) {
       setDeliveryClassName("delivery_write disabled");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
@@ -176,10 +168,6 @@ const OrderDelivery = ({ checkoutData, isPc, isTablet, isMobile }) => {
 
   const handleDeliveryWrite = (e) => {
     setDeliveryWrite(e.target.dataset.name);
-
-    if (!checkoutData.user.shipping_address) {
-      return false;
-    }
 
     if (e.target.dataset.name === "신규 입력") {
       setDeliveryClassName("delivery_write new");
