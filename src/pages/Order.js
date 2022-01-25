@@ -6,6 +6,7 @@ import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
 import useCheckout from "hooks/useCheckout";
+import Loading from "components/common/Loading";
 
 const Order = ({ match }) => {
   const checkoutNumber = Number(match.params.checkoutId);
@@ -22,7 +23,7 @@ const Order = ({ match }) => {
     useCheckout(checkoutNumber);
 
   if (checkoutError) return <div>failed to load...</div>;
-  if (loadingCheckout) return <div>loading...</div>;
+  if (loadingCheckout) return <Loading />;
 
   const items = checkoutData.line_items;
   const totalPrice = items

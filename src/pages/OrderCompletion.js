@@ -11,6 +11,7 @@ import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliver
 import { instance } from "utils/http-client";
 import { formatDate } from "utils/formatDate";
 import { getOrderNumber } from "utils/order";
+import Loading from "components/common/Loading";
 
 const OrderCompletion = ({ match }) => {
   const [orderData, setOrderData] = useState([]);
@@ -45,7 +46,7 @@ const OrderCompletion = ({ match }) => {
   }, []);
 
   if (orderData.length === 0) {
-    return <div>loading...</div>;
+    return <Loading />;
   }
 
   const items = orderData[0].line_items;

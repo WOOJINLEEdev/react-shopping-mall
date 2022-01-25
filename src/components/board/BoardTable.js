@@ -1,5 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
+import Loading from "components/common/Loading";
 
 const BoardTable = ({ headersName, children, loading, boardLocal }) => {
   const isPc = useMediaQuery({ query: "(min-width:1024px)" });
@@ -12,7 +13,7 @@ const BoardTable = ({ headersName, children, loading, boardLocal }) => {
 
   return (
     <>
-      {loading && <div> loading... </div>}
+      {loading && <Loading />}
       <table className="board_list">
         <colgroup>
           {boardLocal === "second"
