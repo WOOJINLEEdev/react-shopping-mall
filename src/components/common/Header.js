@@ -82,7 +82,6 @@ const Header = ({ location }) => {
 
   const handleHeaderTitleClick = () => {
     routeIfNotCurrentPath("/");
-    clickedMutate("");
   };
 
   const handleHeaderAboutClick = () => {
