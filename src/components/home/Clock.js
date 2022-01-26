@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import CurTime from "components/common/CurTime";
+import CurTime from "components/home/CurTime";
 import { formatDate } from "utils/formatDate";
 
 const Clock = () => {
