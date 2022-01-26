@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
@@ -10,6 +9,7 @@ import upArrow from "images/up-arrow-icon.png";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import Loading from "components/common/Loading";
 import { getOrderNumber } from "utils/order";
+import { useDevice } from "hooks/useDevice";
 
 Modal.setAppElement("#root");
 const MyOrderCheckModal = ({
@@ -25,13 +25,7 @@ const MyOrderCheckModal = ({
   const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [itemInfoHeadClass, setItemInfoHeadClass] = useState("hide");
 
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  const { isPc, isTablet, isMobile } = useDevice();
 
   useEffect(() => {
     if (isOpen3) {

@@ -1,7 +1,6 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import { useMediaQuery } from "react-responsive";
 import Modal from "react-modal";
 import styled from "styled-components";
 import BoardTable from "components/board/BoardTable";
@@ -15,6 +14,7 @@ import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 import Loading from "components/common/Loading";
 import { getToken } from "utils/token";
 import useCurrentBoardPage from "hooks/useCurrentBoardPage";
+import { useDevice } from "hooks/useDevice";
 
 Modal.setAppElement("#root");
 
@@ -51,13 +51,7 @@ const BoardFirst = () => {
     "조회수",
     "미리보기",
   ];
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  const { isPc, isTablet, isMobile } = useDevice();
 
   const notice = postList.filter((data) => data.type === "공지사항");
   let searchInput = "";

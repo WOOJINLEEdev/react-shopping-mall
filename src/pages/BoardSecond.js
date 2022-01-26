@@ -1,8 +1,7 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
-import { useMediaQuery } from "react-responsive";
 import Modal from "react-modal";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
@@ -13,6 +12,7 @@ import SearchInputBtn from "components/search/SearchInputBtn";
 import { getToken } from "utils/token";
 import axios from "axios";
 import useCurrentBoardPage from "hooks/useCurrentBoardPage";
+import { useDevice } from "hooks/useDevice";
 import { formatDate } from "utils/formatDate";
 
 Modal.setAppElement("#root");
@@ -56,13 +56,7 @@ const BoardSecond = () => {
     "조회수",
     "미리보기",
   ];
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  const { isPc, isTablet, isMobile } = useDevice();
 
   useEffect(() => {
     axios

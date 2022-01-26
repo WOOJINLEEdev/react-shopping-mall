@@ -1,15 +1,8 @@
-import React from "react";
-import { useMediaQuery } from "react-responsive";
 import Loading from "components/common/Loading";
+import { useDevice } from "hooks/useDevice";
 
 const BoardTable = ({ headersName, children, loading, boardLocal }) => {
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  const { isPc, isTablet, isMobile } = useDevice();
 
   return (
     <>

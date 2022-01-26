@@ -1,5 +1,3 @@
-import React from "react";
-import { useMediaQuery } from "react-responsive";
 import OrderDelivery from "components/order/OrderDelivery";
 import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
@@ -7,17 +5,12 @@ import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
 import useCheckout from "hooks/useCheckout";
 import Loading from "components/common/Loading";
+import { useDevice } from "hooks/useDevice";
 
 const Order = ({ match }) => {
   const checkoutNumber = Number(match.params.checkoutId);
 
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  const { isPc, isTablet, isMobile } = useDevice();
 
   const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
     useCheckout(checkoutNumber);

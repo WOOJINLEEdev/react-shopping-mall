@@ -1,11 +1,11 @@
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Route, withRouter } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 import SearchWrap from "components/search/SearchWrap.js";
 import useSearchLocation from "hooks/useSearchLocation.js";
 import useSearch from "hooks/useSearch.js";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem.js";
 import useSearchResult from "hooks/useSearchResult";
+import { useDevice } from "hooks/useDevice";
 import Loading from "components/common/Loading";
 
 const ListGroup = lazy(() => import("components/home/ListGroup.js"));
@@ -29,7 +29,7 @@ const AboutMe = lazy(() => import("pages/AboutMe.js"));
 const SearchResult = lazy(() => import("pages/SearchResult.js"));
 
 const Main = ({ location }) => {
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
+  const { isPc } = useDevice();
   const [searchClassName, setSearchClassName] = useState("header_search_style");
   const [SearchInputClassName, setSearchInputClassName] = useState(
     "header_search_input"

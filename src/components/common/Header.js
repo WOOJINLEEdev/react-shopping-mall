@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
 import styled from "styled-components";
 import signInImg from "images/user.png";
 import useMyCart from "hooks/useMyCart";
@@ -16,11 +15,12 @@ import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import Loading from "components/common/Loading";
 import useTokenStatus from "hooks/useTokenStatus";
+import { useDevice } from "hooks/useDevice";
 
 const Header = ({ location }) => {
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
   const history = useHistory();
   const { token, mutateToken } = useTokenStatus();
+  const { isPc } = useDevice();
 
   useEffect(() => {
     if (token) {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useMediaQuery } from "react-responsive";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import { ReactComponent as ShoppingBag } from "images/shopping-bag.svg";
 import downArrow from "images/down-arrow.png";
@@ -8,10 +7,11 @@ import upArrow from "images/up-arrow-icon.png";
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
+import Loading from "components/common/Loading";
 import { instance } from "utils/http-client";
 import { formatDate } from "utils/formatDate";
 import { getOrderNumber } from "utils/order";
-import Loading from "components/common/Loading";
+import { useDevice } from "hooks/useDevice";
 
 const OrderCompletion = ({ match }) => {
   const [orderData, setOrderData] = useState([]);
@@ -22,13 +22,7 @@ const OrderCompletion = ({ match }) => {
   const [itemInfoClass, setItemInfoClass] = useState("info_group");
   const [itemInfoHeadClass, setItemInfoHeadClass] = useState("hide");
 
-  const isPc = useMediaQuery({ query: "(min-width:1024px)" });
-  const isTablet = useMediaQuery({
-    query: "(min-width:768px) and (max-width:1023px)",
-  });
-  const isMobile = useMediaQuery({
-    query: "(min-width: 320px) and (max-width:767px)",
-  });
+  const { isPc, isTablet, isMobile } = useDevice();
 
   const checkoutNumber = Number(match.params.checkoutId);
   const date = new Date();
