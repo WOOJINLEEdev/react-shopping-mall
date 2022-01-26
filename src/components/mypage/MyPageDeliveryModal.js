@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import AddDeliveryAddressModal from "./AddDeliveryAddressModal";
 import useDeliveryData from "hooks/useDeliveryData";
-import useMyPageData from "hooks/useMyPageData";
 import { instance } from "utils/http-client";
-import Loading from "components/common/Loading";
 
 Modal.setAppElement("#root");
 
@@ -29,10 +27,6 @@ const MyPageDeliveryModal = ({ isOpen, onRequestClose, myDeliveryAddress }) => {
       };
     }
   }, [isOpen]);
-
-  const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
-  if (loadingMyData) return <Loading />;
-  if (myDataError) return <div>에러발생...</div>;
 
   const handleModifyBtn = () => {
     setAddDeliveryClassName("delivery_register");
@@ -122,7 +116,6 @@ const MyPageDeliveryModal = ({ isOpen, onRequestClose, myDeliveryAddress }) => {
         console.log(response);
         alert("배송지 등록이 완료되었습니다.");
         handleCancelBtn();
-        mutateMyData(null, true);
       })
       .catch(function (error) {
         console.log(error);
