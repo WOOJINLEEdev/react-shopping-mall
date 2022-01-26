@@ -1,8 +1,8 @@
-import React from "react";
 import Modal from "react-modal";
 import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
 import { formatDate } from "utils/formatDate";
+import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 
 Modal.setAppElement("#root");
 
@@ -21,6 +21,7 @@ const BoardItemModal = ({ isOpen, onRequestClose, boardItemId }) => {
       className="boardItemModal"
       overlayClassName="modalOverlay"
     >
+      <BoardModalCloseBtn handleModalClose={onRequestClose} />
       <div>
         <table className="board_item_table">
           <thead>

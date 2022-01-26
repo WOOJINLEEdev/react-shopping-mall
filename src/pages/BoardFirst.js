@@ -89,10 +89,6 @@ const BoardFirst = () => {
     setIsOpen(false);
   };
 
-  const ModalClose = () => {
-    setIsOpen(false);
-  };
-
   const handleSelectOption = (e) => {
     if (e.target.value === "공지사항") {
       setSelectedOption("공지사항");
@@ -176,7 +172,7 @@ const BoardFirst = () => {
           onRequestClose={onRequestClose}
           postList={postList}
           boardItemNo={selectedPreviewId}
-          ModalClose={ModalClose}
+          handleModalClose={onRequestClose}
         />
       </Suspense>
 

@@ -1,16 +1,10 @@
-import React from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 
 Modal.setAppElement("#root");
 
-const BoardItemModal = ({
-  isOpen,
-  onRequestClose,
-  postList,
-  boardItemNo,
-  ModalClose,
-}) => {
+const BoardItemModal = ({ isOpen, onRequestClose, postList, boardItemNo }) => {
   const boardItemNumber = boardItemNo;
   const boardItem = postList.find((post) => post.no === boardItemNumber);
 
@@ -22,6 +16,8 @@ const BoardItemModal = ({
       className="boardFirstItemModal"
       overlayClassName="modalOverlay"
     >
+      <BoardModalCloseBtn handleModalClose={onRequestClose} />
+
       <div>
         <table className="board_item_table">
           <thead>
@@ -56,9 +52,6 @@ const BoardItemModal = ({
       </div>
       <div>
         <BoardContent>{boardItem.content}</BoardContent>
-        <button type="button" className="modal_close_btn" onClick={ModalClose}>
-          창닫기
-        </button>
       </div>
     </Modal>
   );
