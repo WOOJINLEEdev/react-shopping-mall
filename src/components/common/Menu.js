@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
 import useSearchResult from "hooks/useSearchResult";
-import { instance } from "utils/http-client";
 
 const Menu = ({ show }) => {
   const [searchClassName, setSearchClassName] = useState("menu_search");
@@ -18,27 +17,16 @@ const Menu = ({ show }) => {
   const { data, mutate } = useMenuCollapsed();
   const { searchResultData, searchResultMutate } = useSearchResult();
 
-  const handleSearchBtn = async (searchInput) => {
+  const handleSearchBtn = (searchInput) => {
     console.log(".....", searchInput);
     if (searchInput === "") {
       alert("검색어를 입력해주세요.");
       return false;
     }
 
-    await instance
-      .get(`/v1/products?limit=8&offset=10&name=${searchInput}`)
-      .then(function (response) {
-        console.log(response);
-        console.log("ddddd", searchInput);
-        history.push(`/searchResult/${searchInput}`);
-
-        searchResultMutate(searchInput);
-
-        mutate(!data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    history.push(`/searchResult/${searchInput}`);
+    searchResultMutate(searchInput);
+    mutate(!data);
   };
 
   const handleItemClick = (e) => {

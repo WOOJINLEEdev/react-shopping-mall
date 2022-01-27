@@ -4,6 +4,7 @@ import SearchInputBtn from "./SearchInputBtn";
 import { withRouter, useHistory } from "react-router";
 import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
+import { getProductsApi } from "api/";
 
 const SearchWrap = ({
   searchData,
@@ -35,17 +36,15 @@ const SearchWrap = ({
       return false;
     }
 
-    await instance
-      .get(`/v1/products?limit=8&offset=10&name=${searchInput}`)
-      .then(function (response) {
-        console.log(response);
-        history.push(`/searchResult/${searchInput}`);
-        console.log("ref.current", ref.current.value);
-        ref.current.focus();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      const res = await getProductsApi({ searchInput, limit: 8, offset: 0 });
+      console.log(res);
+      history.push(`/searchResult/${searchInput}`);
+      console.log("ref.current", ref.current.value);
+      ref.current.focus();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

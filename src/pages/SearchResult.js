@@ -6,6 +6,7 @@ import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
 import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
 import Loading from "components/common/Loading";
+import { getProductsApi } from "api/";
 
 const SearchResult = () => {
   const [result, setResult] = useState([]);
@@ -17,35 +18,39 @@ const SearchResult = () => {
   const { searchResultData, searchResultMutate } = useSearchResult();
 
   useEffect(() => {
+    async function searchProduct() {
+      try {
+        const res = await getProductsApi({
+          searchInput: searchResultData,
+          count: true,
+        });
+        console.log("result count", res);
+        setResultCount(res.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+
+      try {
+        const res = await getProductsApi({
+          searchInput: searchResultData,
+          limit: 9,
+          offset: 0,
+        });
+        console.log("result", res.data);
+        setResult(res.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     console.log("검색 결과:::", searchResultData);
     setSearchWord(searchResultData);
     setLoading(true);
-
-    instance
-      .get(`/v1/products?count=true&name=${searchResultData}`)
-      .then(function (response) {
-        console.log("result count", response);
-        setResultCount(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    instance
-      .get(`/v1/products?limit=9&offset=0&name=${searchResultData}`)
-      .then(function (response) {
-        console.log("result", response.data);
-        setResult(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    searchProduct();
   }, [searchResultData]);
 
   const PAGE_LIMIT = 8;

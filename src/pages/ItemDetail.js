@@ -7,6 +7,7 @@ import CommonModal from "components/common/CommonModal";
 import { instance } from "utils/http-client";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
+import { addToCartApi } from "api/";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
@@ -52,7 +53,7 @@ const ItemDetail = ({ match }) => {
     });
   };
 
-  function putItem() {
+  async function putItem() {
     console.log("장바구니 버튼 클릭");
 
     if (!token) {
@@ -63,8 +64,8 @@ const ItemDetail = ({ match }) => {
       return alert("옵션을 선택해주세요.");
     }
 
-    instance
-      .put("/v1/me/cart", {
+    try {
+      const res = await addToCartApi({
         items: [
           {
             product_id: data.id,
@@ -72,14 +73,12 @@ const ItemDetail = ({ match }) => {
             quantity: quantity,
           },
         ],
-      })
-      .then(function (response) {
-        console.log(response);
-        setIsOpen(true);
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+      console.log(res);
+      setIsOpen(true);
+    } catch (err) {
+      console.log(error);
+    }
   }
 
   const onRequestClose = () => {

@@ -6,6 +6,7 @@ import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import { instance } from "utils/http-client";
+import { deleteCartItemApi, updateCartItemQuantityApi } from "api/";
 
 const Cart = () => {
   const [chkId, setChkId] = useState("");
@@ -30,18 +31,18 @@ const Cart = () => {
   const onRemove = async (e) => {
     const targetName = e.target.name;
 
-    await instance
-      .delete(`/v1/me/cart/items/${targetName}`)
-      .then(function (response) {
-        console.log(response);
-
-        mutateCart(null, true);
-      });
+    try {
+      const res = await deleteCartItemApi({ targetName });
+      console.log(res);
+      mutateCart(null, true);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleQuantity = async (itemId, quantity) => {
     try {
-      await updateQuantityApi(itemId, quantity);
+      await updateCartItemQuantityApi(itemId, quantity);
       mutateCart(
         {
           ...cart,
@@ -56,12 +57,6 @@ const Cart = () => {
       console.log(error);
     }
   };
-
-  function updateQuantityApi(itemId, quantity) {
-    return instance.patch(`/v1/me/cart/items/${itemId}/quantity`, {
-      quantity: quantity,
-    });
-  }
 
   const checkedItems = cart.items.filter((item) => item.checked);
   const numCheckedTotalItem = checkedItems.length;
@@ -174,19 +169,20 @@ const Cart = () => {
       });
   };
 
-  const handleChoiceItemRemove = () => {
+  const handleChoiceItemRemove = async () => {
     const chkItems = cart.items.filter((item) => item.checked);
     console.log(chkItems);
 
     for (let i = 0; i < chkItems.length; i++) {
       let cartItemId = chkItems[i].id;
 
-      instance
-        .delete(`/v1/me/cart/items/${cartItemId}`)
-        .then(function (response) {
-          console.log(response);
-          mutateCart(null, true);
-        });
+      try {
+        const res = await deleteCartItemApi({ cartItemId });
+        console.log(res);
+        mutateCart(null, true);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
