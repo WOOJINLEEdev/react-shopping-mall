@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
-import { instance } from "utils/http-client";
+import { createLogoutApi } from "api";
 
 Modal.setAppElement("#root");
 
@@ -24,16 +24,17 @@ const MyPageInfo = ({ myData }) => {
   const history = useHistory();
 
   const logout = useCallback(() => {
-    instance
-      .post("/v1/auth/logout")
-      .then((res) => {
+    async function createLogout() {
+      try {
+        const res = await createLogoutApi();
         console.log("logout res:", res);
         removeToken();
-      })
-      .then((err) => {
+      } catch (err) {
         console.log("logout err:", err);
-      });
+      }
+    }
 
+    createLogout();
     localStorage.removeItem("delivery");
     localStorage.removeItem("board");
 

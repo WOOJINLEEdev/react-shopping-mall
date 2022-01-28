@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import AddDeliveryAddressModal from "./AddDeliveryAddressModal";
 import useDeliveryData from "hooks/useDeliveryData";
-import { instance } from "utils/http-client";
+import { updateShippingAddressApi } from "api";
 
 Modal.setAppElement("#root");
 
@@ -57,7 +57,7 @@ const MyPageDeliveryModal = ({ isOpen, onRequestClose, myDeliveryAddress }) => {
     }
   };
 
-  const handleRegistrationBtn = () => {
+  const handleRegistrationBtn = async () => {
     if (!myDeliveryData.recipient || myDeliveryData.recipient === undefined) {
       return alert("수령인을 입력해주세요.");
     }
@@ -101,25 +101,23 @@ const MyPageDeliveryModal = ({ isOpen, onRequestClose, myDeliveryAddress }) => {
       return alert("연락처 세번째 칸은 4자리를 입력해주세요.");
     }
 
-    instance
-      .put("/v1/me/shipping-address", {
+    try {
+      const res = await updateShippingAddressApi({
         name: myDeliveryData.recipient,
-        recipient_name: myDeliveryData.recipient,
-        postal_code: myDeliveryData.address1,
+        recipientName: myDeliveryData.recipient,
+        postalCode: myDeliveryData.address1,
         address1: myDeliveryData.addressDetail1,
         address2: myDeliveryData.addressDetail2,
         note: "없음",
         phone1: myDeliveryData.tel1 + myDeliveryData.tel2 + myDeliveryData.tel3,
         phone2: myDeliveryData.tel4 + myDeliveryData.tel5 + myDeliveryData.tel6,
-      })
-      .then(function (response) {
-        console.log(response);
-        alert("배송지 등록이 완료되었습니다.");
-        handleCancelBtn();
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+      console.log(res);
+      alert("배송지 등록이 완료되었습니다.");
+      handleCancelBtn();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

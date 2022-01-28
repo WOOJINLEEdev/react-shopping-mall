@@ -7,6 +7,7 @@ import { instance } from "utils/http-client";
 import styled from "styled-components";
 import GoogleLogin from "react-google-login";
 import useTokenStatus from "hooks/useTokenStatus";
+import { createSocialLoginApi, createLoginApi } from "api";
 
 const LogIn = () => {
   const { naver } = window;
@@ -19,25 +20,21 @@ const LogIn = () => {
     initializeNaverLogin();
     getNaverToken();
 
-    if (naverIdToken) {
-      instance
-        .post(
-          "/v1/auth/social-login",
-          {
-            social_type: "naver",
-            access_token: naverIdToken,
-          },
-          {
-            withCredentials: true,
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          loginCheck(res);
-        })
-        .catch((err) => {
-          console.log(err);
+    async function createSocialLogin() {
+      try {
+        const res = await createSocialLoginApi({
+          socialType: "naver",
+          accessToken: naverIdToken,
         });
+        console.log(res);
+        loginCheck(res);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    if (naverIdToken) {
+      createSocialLogin();
     }
   }, [naverIdToken]);
 
@@ -53,26 +50,18 @@ const LogIn = () => {
     userPassword: userPassword(),
   });
 
-  const onSubmit = (values) => {
-    instance
-      .post(
-        "/v1/auth/login",
-        {
-          user_id: values.userId,
-          user_password: values.userPassword,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then(function (response) {
-        mutateToken(response.data);
-        loginCheck(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("일치하는 회원이 없습니다.");
+  const onSubmit = async (values) => {
+    try {
+      const res = await createLoginApi({
+        userId: values.userId,
+        userPassword: values.userPassword,
       });
+      mutateToken(res.data);
+      loginCheck(res);
+    } catch (err) {
+      console.log(err);
+      alert("일치하는 회원이 없습니다.");
+    }
   };
 
   function loginCheck(response) {
@@ -103,31 +92,23 @@ const LogIn = () => {
     setNaverIdToken(naverToken);
   };
 
-  const onSuccess = (response) => {
+  const onSuccess = async (response) => {
     console.log(response);
 
-    instance
-      .post(
-        "/v1/auth/social-login",
-        {
-          social_type: "google",
-          profile: {
-            id: response.profileObj.googleId,
-            name: response.profileObj.name,
-            email: response.profileObj.email,
-          },
+    try {
+      const res = await createSocialLoginApi({
+        socialType: "google",
+        profile: {
+          id: response.profileObj.googleId,
+          name: response.profileObj.name,
+          email: response.profileObj.email,
         },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        loginCheck(res);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+      console.log(res);
+      loginCheck(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onFailure = (error) => {

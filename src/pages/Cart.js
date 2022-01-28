@@ -6,7 +6,11 @@ import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import { instance } from "utils/http-client";
-import { deleteCartItemApi, updateCartItemQuantityApi } from "api/";
+import {
+  deleteCartItemApi,
+  updateCartItemQuantityApi,
+  createCheckoutsApi,
+} from "api";
 
 const Cart = () => {
   const [chkId, setChkId] = useState("");
@@ -121,7 +125,7 @@ const Cart = () => {
     }
   };
 
-  const handleBuyBtnClick = (item, quantity) => {
+  const handleBuyBtnClick = async (item, quantity) => {
     const checkedLineItems = cart.items
       .filter((item) => item.checked)
       .map((item) => ({
@@ -130,20 +134,18 @@ const Cart = () => {
       }));
     console.log("큰 구매버튼 클릭 ", checkedLineItems);
 
-    instance
-      .post("/v1/checkouts", {
-        line_items: checkedLineItems,
-      })
-      .then(function (response) {
-        setChkId(response.data.checkout_id);
-        history.push(`/checkout/${response.data.checkout_id}`);
-      })
-      .catch(function (error) {
-        console.log(error);
+    try {
+      const res = await createCheckoutsApi({
+        lineItems: checkedLineItems,
       });
+      setChkId(res.data.checkout_id);
+      history.push(`/checkout/${res.data.checkout_id}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleListBuyBtnClick = (item, quantity) => {
+  const handleListBuyBtnClick = async (item, quantity) => {
     console.log("작은 구매버튼 클릭");
 
     if (item.variant_price * item.quantity < 70000) {
@@ -152,21 +154,19 @@ const Cart = () => {
       localStorage.setItem("delivery", 0);
     }
 
-    instance
-      .post("/v1/checkouts", {
-        line_items: [
+    try {
+      const res = await createCheckoutsApi({
+        lineItems: [
           {
             variant_id: item.variant_id,
             quantity: quantity,
           },
         ],
-      })
-      .then(function (response) {
-        history.push(`/checkout/${response.data.checkout_id}`);
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+      history.push(`/checkout/${res.data.checkout_id}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleChoiceItemRemove = async () => {

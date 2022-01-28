@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import SearchInputBtn from "./SearchInputBtn";
 import { withRouter, useHistory } from "react-router";
-import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
-import { getProductsApi } from "api/";
+import { getProductsApi } from "api";
 
 const SearchWrap = ({
   searchData,

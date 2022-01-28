@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { instance } from "utils/http-client";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
 import { formatDate } from "utils/formatDate";
+import { getShopVisitCountApi } from "api";
 
 const AboutMe = () => {
   const [total, setTotal] = useState();
@@ -27,11 +27,13 @@ const AboutMe = () => {
     const visitStartDate = "2021-12-01";
     const visitEndDate = formattedToday;
 
-    instance
-      .get(
-        `/v1/shop/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
-      )
-      .then(function (res) {
+    async function getShopVisitCount() {
+      try {
+        const res = await getShopVisitCountApi({
+          visitStartDate,
+          visitEndDate,
+        });
+
         const visitDate = res.data.map((item) => item.visit_date);
         const visitCount = res.data.map((item) => item.visit_count);
         const sum = visitCount.reduce((a, b) => a + b);
@@ -155,7 +157,12 @@ const AboutMe = () => {
             },
           },
         });
-      });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getShopVisitCount();
   }, []);
 
   if (!series || !options) {

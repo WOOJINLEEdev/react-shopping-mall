@@ -9,13 +9,17 @@ import useSearchLocation from "hooks/useSearchLocation";
 import { ReactComponent as MenuImg } from "images/menu.svg";
 import { GoSearch } from "@react-icons/all-files/go/GoSearch";
 import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
-import { instance } from "utils/http-client";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import Loading from "components/common/Loading";
 import useTokenStatus from "hooks/useTokenStatus";
 import { useDevice } from "hooks/useDevice";
+import {
+  updateMyVisitCountsApi,
+  updateShopVisitCountsApi,
+  createAccessTokenApi,
+} from "api";
 
 const Header = ({ location }) => {
   const history = useHistory();
@@ -23,39 +27,45 @@ const Header = ({ location }) => {
   const { isPc } = useDevice();
 
   useEffect(() => {
+    async function updateMyVisitCount() {
+      try {
+        const res = await updateMyVisitCountsApi();
+        console.log("user visit", res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     if (token) {
-      instance
-        .put("/v1/me/visit", null)
-        .then(function (response) {
-          console.log("user visit", response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      updateMyVisitCount();
     }
   }, [token]);
 
   useEffect(() => {
-    instance
-      .post("/v1/auth/access-token", null)
-      .then(function (response) {
-        mutateToken(response.data);
+    async function createAccessToken() {
+      try {
+        const res = await createAccessTokenApi();
+        mutateToken(res.data);
         mutateCart(null, true);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    createAccessToken();
   }, []);
 
   useEffect(() => {
-    instance
-      .put("/v1/shop/visit", null)
-      .then(function (response) {
-        console.log("web visit", response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    async function updateShopVisitCount() {
+      try {
+        const res = await updateShopVisitCountsApi();
+        console.log("shop visit", res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    updateShopVisitCount();
   }, []);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();

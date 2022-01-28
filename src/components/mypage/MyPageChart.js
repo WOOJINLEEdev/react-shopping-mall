@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { instance } from "utils/http-client";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 import { formatDate } from "utils/formatDate";
+import { getMyVisitCountApi } from "api";
 
 const MyPageChart = ({ userName }) => {
   const [series, setSeries] = useState();
@@ -19,13 +19,14 @@ const MyPageChart = ({ userName }) => {
     );
     const visitEndDate = formatDate(date);
 
-    instance
-      .get(
-        `/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
-      )
-      .then(function (response) {
-        const visitDate = response.data.map((item) => item.visit_date);
-        const visitCount = response.data.map((item) => item.visit_count);
+    async function getMyVisitCount() {
+      try {
+        const res = await getMyVisitCountApi({
+          visitStartDate,
+          visitEndDate,
+        });
+        const visitDate = res.data.map((item) => item.visit_date);
+        const visitCount = res.data.map((item) => item.visit_count);
 
         setSeries([
           {
@@ -88,10 +89,12 @@ const MyPageChart = ({ userName }) => {
             },
           },
         });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getMyVisitCount();
   }, []);
 
   if (!series || !options) {

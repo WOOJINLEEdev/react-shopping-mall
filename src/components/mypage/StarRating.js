@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 import styled from "styled-components";
-import { instance } from "utils/http-client";
+import { updateStarRatingApi } from "api";
 
 const StarRating = ({ myRating }) => {
   const stars = [1, 2, 3, 4, 5];
@@ -20,7 +20,7 @@ const StarRating = ({ myRating }) => {
     }
   }, [myRating]);
 
-  const handleStarClick = (e, index) => {
+  const handleStarClick = async (e, index) => {
     e.preventDefault();
     let clickStates = [...clicked];
     for (let i = 0; i < stars.length; i++) {
@@ -35,16 +35,12 @@ const StarRating = ({ myRating }) => {
     setClicked(clickStates);
     setPoint(point);
 
-    instance
-      .put("/v1/me/rating", {
-        rating: point,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      const res = await updateStarRatingApi(point);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

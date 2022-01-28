@@ -8,10 +8,10 @@ import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import Loading from "components/common/Loading";
-import { instance } from "utils/http-client";
 import { formatDate } from "utils/formatDate";
 import { getOrderNumber } from "utils/order";
 import { useDevice } from "hooks/useDevice";
+import { getOrdersApi } from "api";
 
 const OrderCompletion = ({ match }) => {
   const [orderData, setOrderData] = useState([]);
@@ -28,15 +28,17 @@ const OrderCompletion = ({ match }) => {
   const date = new Date();
 
   useEffect(() => {
-    instance
-      .get(`/v1/orders?checkout_id=${checkoutNumber}`)
-      .then(function (response) {
-        console.log(response);
-        setOrderData(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    async function getCompletedOrder() {
+      try {
+        const res = await getOrdersApi({ checkout_id: checkoutNumber });
+        console.log(res);
+        setOrderData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getCompletedOrder();
   }, []);
 
   if (orderData.length === 0) {

@@ -6,7 +6,7 @@ import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
 import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
 import Loading from "components/common/Loading";
-import { getProductsApi } from "api/";
+import { getProductsApi } from "api";
 
 const SearchResult = () => {
   const [result, setResult] = useState([]);

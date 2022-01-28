@@ -6,6 +6,7 @@ import { instance } from "utils/http-client";
 import { useSWRInfinite } from "swr";
 import { IoIosArrowDown } from "react-icons/io";
 import { getOrderNumber } from "utils/order";
+import { getOrdersApi } from "api";
 
 Modal.setAppElement("#root");
 
@@ -20,14 +21,16 @@ const MyOrderCheck = () => {
   const [pageOffset, setPageOffset] = useState(0);
 
   useEffect(() => {
-    instance
-      .get("/v1/orders?count=true")
-      .then(function (response) {
-        setTotalCount(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    async function getMyOrderCount() {
+      try {
+        const res = await getOrdersApi({ count: true });
+        setTotalCount(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getMyOrderCount();
   }, []);
 
   const PAGE_LIMIT = 5;

@@ -11,7 +11,7 @@ import {
   userMonth,
   userDate,
 } from "utils/login-validation";
-import { instance } from "utils/http-client";
+import { createJoinApi, checkUserIdExistenceApi } from "api";
 
 const Join = () => {
   const ref = useRef(null);
@@ -45,28 +45,25 @@ const Join = () => {
     email: userEmail(),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     console.log("Form data", values);
     console.log("이메일, 이름", values.email, values.name);
 
-    instance
-      .post("/v1/auth/join", {
-        user_id: values.id,
-        user_password: values.password2,
+    try {
+      const res = await createJoinApi({
+        userId: values.id,
+        userPassword: values.password2,
         name: values.name,
         email: values.email,
-      })
-      .then(function (response) {
-        console.log(response);
-        alert("회원가입이 완료되었습니다.");
-        window.location.replace("/login");
-      })
-      .catch(function (error) {
-        console.log(error);
-        if (error.response) {
-          alert("이미 입력한 ID가 존재합니다.");
-        }
       });
+      alert("회원가입이 완료되었습니다.");
+      window.location.replace("/login");
+    } catch (err) {
+      console.log(err);
+      if (err.response) {
+        alert("이미 입력한 ID가 존재합니다.");
+      }
+    }
   };
 
   const getMonthDateErrorMsg = ({ month, date }) => {
@@ -86,7 +83,7 @@ const Join = () => {
     }
   };
 
-  const handleIdCheckBtn = () => {
+  const handleIdCheckBtn = async () => {
     let userId = ref.current.values.id;
 
     if (!userId) {
@@ -97,15 +94,16 @@ const Join = () => {
       return;
     }
 
-    instance.get(`v1/auth/check-user-id?user_id=${userId}`).then((res) => {
+    try {
+      const res = await checkUserIdExistenceApi({ userId });
       console.log("id check", res.data);
-
       if (res.data) {
         return alert("이미 존재하는 ID 입니다. 다른 ID를 입력해주세요.");
       }
-
       alert("사용 가능한 ID 입니다.");
-    });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

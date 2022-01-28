@@ -7,7 +7,7 @@ import CommonModal from "components/common/CommonModal";
 import { instance } from "utils/http-client";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
-import { addToCartApi } from "api/";
+import { addToCartApi, createCheckoutsApi } from "api";
 
 const ItemDetail = ({ match }) => {
   const history = useHistory();
@@ -97,7 +97,7 @@ const ItemDetail = ({ match }) => {
     }
   };
 
-  const itemCheckout = () => {
+  const itemCheckout = async () => {
     console.log("구매하기 버튼 클릭");
 
     if (!token) {
@@ -116,21 +116,19 @@ const ItemDetail = ({ match }) => {
       localStorage.setItem("delivery", 3000);
     }
 
-    instance
-      .post("/v1/checkouts", {
-        line_items: [
+    try {
+      const res = await createCheckoutsApi({
+        lineItems: [
           {
             variant_id: itemOption,
             quantity: quantity,
           },
         ],
-      })
-      .then(function (response) {
-        history.push(`/checkout/${response.data.checkout_id}`);
-      })
-      .catch(function (error) {
-        console.log(error);
       });
+      history.push(`/checkout/${res.data.checkout_id}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

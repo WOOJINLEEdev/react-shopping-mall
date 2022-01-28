@@ -1,6 +1,6 @@
-import { instance } from "utils/http-client";
+import { updateCheckoutsApi } from "api";
 
-export function submitCheckout(
+export async function submitCheckout(
   checkoutDeliveryData,
   checkoutPaymentData,
   checkoutTotalDetailData,
@@ -8,9 +8,10 @@ export function submitCheckout(
   checkoutNumber
 ) {
   if (checkoutDeliveryData.deliveryClassName === "delivery_write old") {
-    instance
-      .put(`/v1/checkouts/${checkoutNumber}`, {
-        shipping_address: {
+    try {
+      const res = await updateCheckoutsApi({
+        checkoutNumber,
+        shippingAddress: {
           name: checkoutDeliveryData.designation,
           recipient_name: checkoutData.user.shipping_address.recipient_name,
           postal_code: checkoutData.user.shipping_address.postal_code,
@@ -20,25 +21,23 @@ export function submitCheckout(
           phone1: checkoutData.user.shipping_address.phone1,
           request_note: checkoutDeliveryData.requirement,
         },
-        user_coupon_id_to_be_used: checkoutTotalDetailData.selectCouponId,
-        mileage_to_be_used: Number(checkoutTotalDetailData.usedMileage),
-        payment_method: checkoutPaymentData.paymentName,
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log("주문성공");
-
-        window.location.replace(`/orderCheck/${checkoutNumber}`);
-      })
-      .catch(function (error) {
-        console.log(error);
+        usercCouponIdToBeUsed: checkoutTotalDetailData.selectCouponId,
+        mileageToBeUsed: Number(checkoutTotalDetailData.usedMileage),
+        paymentMethod: checkoutPaymentData.paymentName,
       });
+      console.log("주문성공", res);
+
+      window.location.replace(`/orderCheck/${checkoutNumber}`);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   if (checkoutDeliveryData.deliveryClassName === "delivery_write new") {
-    instance
-      .put(`/v1/checkouts/${checkoutNumber}`, {
-        shipping_address: {
+    try {
+      const res = await updateCheckoutsApi({
+        checkoutNumber,
+        shippingAddress: {
           name: checkoutDeliveryData.designation,
           recipient_name: checkoutDeliveryData.recipient,
           postal_code: checkoutDeliveryData.address1,
@@ -55,18 +54,14 @@ export function submitCheckout(
             checkoutDeliveryData.tel6,
           request_note: checkoutDeliveryData.requirement1,
         },
-        user_coupon_id_to_be_used: checkoutTotalDetailData.selectCouponId,
-        mileage_to_be_used: Number(checkoutTotalDetailData.usedMileage),
-        payment_method: checkoutPaymentData.paymentName,
-      })
-      .then(function (response) {
-        console.log(response);
-        console.log("주문성공");
-
-        window.location.replace(`/orderCheck/${checkoutNumber}`);
-      })
-      .catch(function (error) {
-        console.log(error);
+        usercCouponIdToBeUsed: checkoutTotalDetailData.selectCouponId,
+        mileageToBeUsed: Number(checkoutTotalDetailData.usedMileage),
+        paymentMethod: checkoutPaymentData.paymentName,
       });
+      console.log("주문성공", res);
+      window.location.replace(`/orderCheck/${checkoutNumber}`);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
