@@ -125,8 +125,8 @@ const MyPageDeliveryModal = ({ isOpen, onRequestClose, myDeliveryAddress }) => {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       shouldCloseOnOverlayClick={false}
-      className="myPageDeliveryModal"
-      overlayClassName="modalOverlay"
+      className="mypage_delivery_modal"
+      overlayClassName="modal_overlay"
     >
       <ModalContentContainer>
         <ModalTitle>배송지 등록 / 변경</ModalTitle>

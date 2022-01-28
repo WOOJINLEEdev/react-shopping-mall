@@ -93,8 +93,8 @@ const MyOrderCheckModal = ({
       isOpen={isOpen3}
       onRequestClose={onRequestClose3}
       shouldCloseOnOverlayClick={true}
-      className="myOrderCheckModal"
-      overlayClassName="modalOverlay"
+      className="my_order_check_modal"
+      overlayClassName="modal_overlay"
     >
       <ModalContent>
         <ModalTitle>

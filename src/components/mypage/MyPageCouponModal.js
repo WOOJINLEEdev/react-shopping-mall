@@ -21,8 +21,8 @@ const MyPageCouponModal = ({ isOpen2, onRequestClose2, myCoupon }) => {
       isOpen={isOpen2}
       onRequestClose={onRequestClose2}
       shouldCloseOnOverlayClick={true}
-      className="myPageCouponModal"
-      overlayClassName="modalOverlay"
+      className="mypage_coupon_modal"
+      overlayClassName="modal_overlay"
     >
       <CouponTitle>
         사용 가능한 쿠폰{" "}

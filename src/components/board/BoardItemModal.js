@@ -18,8 +18,8 @@ const BoardItemModal = ({ isOpen, onRequestClose, boardItemId }) => {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       shouldCloseOnOverlayClick={true}
-      className="boardItemModal"
-      overlayClassName="modalOverlay"
+      className="board_item_modal"
+      overlayClassName="modal_overlay"
     >
       <BoardModalCloseBtn handleModalClose={onRequestClose} />
       <div>

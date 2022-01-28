@@ -2370,7 +2370,7 @@ article {
   white-space: nowrap;
 }
 
-.modalOverlay {
+.modal_overlay {
   position: fixed;
   overflow: hidden;
   width: 100%;
@@ -2385,7 +2385,7 @@ article {
   z-index: 99;
 }
 
-.myPageCouponModal {
+.mypage_coupon_modal {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -2407,7 +2407,7 @@ article {
   border-radius: 5px;
 }
 
-.myPageDeliveryModal {
+.mypage_delivery_modal {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -2428,7 +2428,7 @@ article {
   border-radius: 5px;
 }
 
-.myOrderCheckModal {
+.my_order_check_modal {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -2493,8 +2493,8 @@ article {
   border-color: #7b7b7b;
 }
 
-.boardItemModal,
-.boardFirstItemModal {
+.board_item_modal,
+.board_first_item_modal {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -2518,8 +2518,8 @@ article {
   scrollbar-width: none;
 }
 
-.boardItemModal::-webkit-scrollbar,
-.boardFirstItemModal::-webkit-scrollbar {
+.board_item_modal::-webkit-scrollbar,
+.board_first_item_modal::-webkit-scrollbar {
   display: none;
 }
 
@@ -3221,16 +3221,16 @@ article {
     border-bottom: 3px solid #333;
   }
 
-  .myPageCouponModal,
-  .myOrderCheckModal {
+  .mypage_coupon_modal,
+  .my_order_check_modal {
     min-width: 80%;
   }
 
-  .myPageCouponModal {
+  .mypage_coupon_modal {
     height: 80%;
   }
 
-  .myPageDeliveryModal {
+  .mypage_delivery_modal {
     min-width: 80%;
     min-height: 85%;
     height: 85%;
@@ -3832,16 +3832,16 @@ article {
     border-bottom: 3px solid #333;
   }
 
-  .myPageCouponModal {
+  .mypage_coupon_modal {
     min-width: 40%;
   }
 
-  .myPageDeliveryModal {
+  .mypage_delivery_modal {
     min-width: 60%;
     max-height: 700px;
   }
 
-  .myOrderCheckModal {
+  .my_order_check_modal {
     min-width: 60%;
   }
 
