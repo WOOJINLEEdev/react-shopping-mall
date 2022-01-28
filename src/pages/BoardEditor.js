@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
@@ -37,26 +37,27 @@ const BoardEditor = () => {
     history.goBack();
   };
 
-  const handleEditorSave = () => {
+  const handleEditorSave = async () => {
     const inputBody = DOMPurify.sanitize(
       editorRef.current.getInstance().getEditorElements().wwEditor.innerText
     );
 
     console.log("inputBody", inputBody);
 
-    axios
-      .post("https://jsonplaceholder.typicode.com/posts", {
-        userId: userId,
-        id: "101",
-        title: inputTitle,
-        body: inputBody,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    try {
+      const res = await axios.post(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          userId: userId,
+          id: "101",
+          title: inputTitle,
+          body: inputBody,
+        }
+      );
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleEditorTitle = (e) => {
@@ -74,7 +75,7 @@ const BoardEditor = () => {
       <div className="board_editor_top">
         <div className="editor_user_btn_wrapper">
           <div className="editor_user">
-            작성자: <span style={{ color: "#333" }}>{userId}</span>
+            작성자: <span className="editor_user_id">{userId}</span>
           </div>
           <div className="editor_top_btn_group">
             <button
@@ -105,7 +106,8 @@ const BoardEditor = () => {
       </div>
       <Editor
         previewStyle="vertical"
-        height="80%"
+        height="calc(100% - 191px)"
+        className="board_editor_write"
         initialEditType="wysiwyg"
         initialValue=""
         placeholder="말은 우리 내면을 비추는 거울입니다."
@@ -122,4 +124,9 @@ export default BoardEditor;
 const EditorWrap = styled.div`
   padding: 50px;
   height: 100vh;
+
+  & .editor_user_id {
+    color: #333;
+    font-weight: bold;
+  }
 `;
