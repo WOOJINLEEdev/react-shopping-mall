@@ -3947,3 +3947,13 @@ article {
     font-weight: bold;
   }
 }
+
+@supports (position: sticky) or (position: -webkit-sticky) {
+  .header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 50;
+  }
+}
