@@ -1,6 +1,6 @@
 import { formatDate } from "utils/formatDate";
 
-export function getOrderNumber(orderCreatedAt, checkoutId) {
+export function getOrderNumber(orderCreatedAt, orderId) {
   return `${formatDate(new Date(orderCreatedAt)).replaceAll("-", "")} -
-    ${String(checkoutId).padStart(6, "0")}`;
+    ${String(orderId).padStart(6, "0")}`;
 }

@@ -94,14 +94,14 @@ const MyOrderCheck = () => {
         {myOrderList.map((item, index) => {
           return (
             <OrderListItem
-              key={item.checkout_id}
+              key={item.id}
               onClick={() => handleOrderListItem(item.checkout_id)}
             >
               <ListItemContent>
                 {item.created_at.substring(0, 10).split("-").join(".")}
               </ListItemContent>
               <ListItemContent>
-                주문번호: {getOrderNumber(item.created_at, item.checkout_id)}
+                주문번호: {getOrderNumber(item.created_at, item.id)}
               </ListItemContent>
               <ListItemContent>
                 주문상품: {item.line_items[0].product_name}{" "}

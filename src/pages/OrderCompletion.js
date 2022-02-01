@@ -95,7 +95,7 @@ const OrderCompletion = ({ match }) => {
           <HeadContentText>
             <Text>
               {formatDate(date).replaceAll("-", ".")} 주문하신 상품의 주문번호는{" "}
-              {getOrderNumber(orderData[0].created_at, checkoutNumber)} 입니다.
+              {getOrderNumber(orderData[0].created_at, orderData[0].id)} 입니다.
             </Text>
           </HeadContentText>
         </HeadContent>

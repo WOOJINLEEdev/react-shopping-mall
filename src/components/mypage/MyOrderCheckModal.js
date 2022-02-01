@@ -102,7 +102,7 @@ const MyOrderCheckModal = ({
           주문번호 :{" "}
           {getOrderNumber(
             selectedOrderData[0].created_at,
-            selectedOrderData[0].checkout_id
+            selectedOrderData[0].id
           )}
         </ModalTitle>
         <OrderCompletionItemInfo
