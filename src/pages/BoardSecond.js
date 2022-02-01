@@ -19,6 +19,22 @@ Modal.setAppElement("#root");
 
 const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
+const BOARD_SECOND_POSTS_CACHE = [];
+
+const initPostsCache = (posts) => {
+  posts.forEach((post) => {
+    BOARD_SECOND_POSTS_CACHE.push(post);
+  });
+};
+
+const existPostsCache = () => {
+  return BOARD_SECOND_POSTS_CACHE.length > 0;
+};
+
+const getPostsCache = () => {
+  return BOARD_SECOND_POSTS_CACHE;
+};
+
 const BoardSecond = () => {
   const history = useHistory();
 
@@ -29,7 +45,7 @@ const BoardSecond = () => {
   const [isOpen, setIsOpen] = useState(false);
   const initialPage = getCurrentBoardPage("second");
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(getPostsCache());
   const [limit, setLimit] = useState(10);
   const [mobileLimit, setMobileLimit] = useState(20);
   const [page, setPage] = useState(initialPage);
@@ -59,11 +75,16 @@ const BoardSecond = () => {
   const { isPc, isTablet, isMobile } = useDevice();
 
   useEffect(() => {
+    if (existPostsCache()) {
+      return;
+    }
+
     axios
       .get("https://jsonplaceholder.typicode.com/posts")
       .then((res) => {
         const reverseData = res.data.reverse();
         setPosts(reverseData);
+        initPostsCache(reverseData);
       })
       .then((err) => console.log(err));
 

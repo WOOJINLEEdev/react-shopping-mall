@@ -7,6 +7,7 @@ import useActiveHeaderItem from "hooks/useActiveHeaderItem.js";
 import useSearchResult from "hooks/useSearchResult";
 import { useDevice } from "hooks/useDevice";
 import Loading from "components/common/Loading";
+import useScrollMove from "hooks/useScrollMove";
 
 const ListGroup = lazy(() => import("components/home/ListGroup.js"));
 const ItemDetail = lazy(() => import("pages/ItemDetail.js"));
@@ -28,7 +29,7 @@ const MyOrderCheck = lazy(() => import("pages/MyOrderCheck.js"));
 const AboutMe = lazy(() => import("pages/AboutMe.js"));
 const SearchResult = lazy(() => import("pages/SearchResult.js"));
 
-const Main = ({ location }) => {
+const Main = ({ location, match }) => {
   const { isPc } = useDevice();
   const [searchClassName, setSearchClassName] = useState("header_search_style");
   const [SearchInputClassName, setSearchInputClassName] = useState(
@@ -59,6 +60,24 @@ const Main = ({ location }) => {
   }, [location.pathname]);
 
   clickedMutate(location.pathname);
+
+  const { scrollInfos, scrollRemove } = useScrollMove({
+    path: location.pathname,
+  });
+
+  useEffect(() => {
+    if (scrollInfos && match?.isExact) {
+      window.scrollTo(0, scrollInfos);
+      const scrollTop = Math.max(
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      );
+
+      if (scrollTop === scrollInfos) {
+        scrollRemove();
+      }
+    }
+  }, [scrollInfos, match]);
 
   return (
     <main>
