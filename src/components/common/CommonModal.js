@@ -29,8 +29,9 @@ const CommonModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      style={customModalStyle}
       shouldCloseOnOverlayClick={true}
+      className="common_modal"
+      overlayClassName="modal_overlay"
     >
       <ModalText contentPadding={contentPadding}>{modalText}</ModalText>
       <ModalBtnWrap>
