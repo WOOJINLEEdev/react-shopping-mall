@@ -35,8 +35,7 @@ const MyPageInfo = ({ myData }) => {
     }
 
     createLogout();
-    localStorage.removeItem("delivery");
-    localStorage.removeItem("board");
+    localStorage.clear();
 
     mutateCart(
       {
