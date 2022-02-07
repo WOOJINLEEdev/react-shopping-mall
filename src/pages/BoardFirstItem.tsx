@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useHistory } from "react-router";
-import { postList } from "components/board/BoardFirstData";
+import { postList } from "components/board/board-first-data";
 
 const BoardFirstItem = ({ match }: any) => {
   const history = useHistory();

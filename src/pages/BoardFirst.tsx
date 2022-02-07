@@ -7,7 +7,7 @@ import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
-import { postList, sortedPostList } from "components/board/BoardFirstData";
+import { postList, sortedPostList } from "components/board/board-first-data";
 import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
