@@ -1,10 +1,24 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 Modal.setAppElement("#root");
-const MyPageCouponModal = ({ isOpen2, onRequestClose2, myCoupon }) => {
+
+interface CouponInfo {
+  id: string | number;
+  coupon_name: string;
+}
+interface MyPageCouponModalProps {
+  isOpen2: boolean;
+  onRequestClose2: any;
+  myCoupon: any;
+}
+const MyPageCouponModal = ({
+  isOpen2,
+  onRequestClose2,
+  myCoupon,
+}: MyPageCouponModalProps) => {
   useEffect(() => {
     if (isOpen2) {
       document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
@@ -32,7 +46,7 @@ const MyPageCouponModal = ({ isOpen2, onRequestClose2, myCoupon }) => {
         {!myCoupon || myCoupon === undefined ? (
           <div>사용 가능한 쿠폰이 없습니다.</div>
         ) : (
-          myCoupon.map((coupon) => {
+          myCoupon.map((coupon: CouponInfo) => {
             return (
               <CouponItem key={coupon.id}>{coupon.coupon_name}</CouponItem>
             );

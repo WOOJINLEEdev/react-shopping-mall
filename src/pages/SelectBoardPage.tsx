@@ -5,7 +5,7 @@ import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 
 const SelectBoardPage = () => {
   const { resetBoardData } = useCurrentBoardPage();
-  const onClickBoardSelect = (boardType) => {
+  const onClickBoardSelect = (boardType: string) => {
     resetBoardData(boardType);
   };
 

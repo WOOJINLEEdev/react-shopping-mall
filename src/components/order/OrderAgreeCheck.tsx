@@ -1,6 +1,12 @@
-import React from "react";
+interface OrderAgreeCheckProps {
+  agreeChecked: boolean;
+  handleAgreeCheck: React.ChangeEventHandler<HTMLInputElement>;
+}
 
-const OrderAgreeCheck = ({ agreeChecked, handleAgreeCheck }) => {
+const OrderAgreeCheck = ({
+  agreeChecked,
+  handleAgreeCheck,
+}: OrderAgreeCheckProps) => {
   return (
     <div className="order_check">
       <input

@@ -4,13 +4,38 @@ import OrderTotalDetail from "./OrderTotalDetail";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 
+interface OrderTotalProps {
+  checkoutData: CheckoutData;
+  checkoutNumber: number;
+  isPc: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
+}
+
+interface CheckoutData {
+  created_at: string;
+  id: number;
+  line_items: LineItem[];
+  user: string[];
+}
+
+interface LineItem {
+  image_src: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+  variant_price: string;
+}
+
 const OrderTotal = ({
   checkoutData,
   checkoutNumber,
   isPc,
   isTablet,
   isMobile,
-}) => {
+}: OrderTotalProps) => {
   const [checkoutNum, setCheckoutNum] = useState(checkoutNumber);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [arrowImg, setArrowImg] = useState(downArrow);
@@ -22,10 +47,10 @@ const OrderTotal = ({
   );
 
   const totalPrice = items
-    .map((item) => item.variant_price * item.quantity)
-    .reduce((sum, itemPrice) => sum + itemPrice, 0);
+    .map((item: LineItem) => Number(item.variant_price) * item.quantity)
+    .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
 
-  const deliveryCharge = localStorage.getItem("delivery");
+  const deliveryCharge: string = localStorage.getItem("delivery")!;
   const firstItem = items[0];
   const remainder = items.filter((item) => item !== firstItem);
   const itemQuantity = items.map((item) => item.quantity);

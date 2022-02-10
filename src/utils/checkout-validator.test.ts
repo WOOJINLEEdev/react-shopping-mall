@@ -12,11 +12,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -31,11 +31,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = { agreeChecked: false };
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -51,11 +51,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = { agreeChecked: true };
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeTruthy();
@@ -73,11 +73,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -93,11 +93,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -114,11 +114,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -136,11 +136,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -159,11 +159,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -182,11 +182,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -206,11 +206,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -230,11 +230,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -255,11 +255,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -280,11 +280,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -306,11 +306,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = {};
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -331,11 +331,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = { agreeChecked: false };
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeFalsy();
@@ -357,11 +357,11 @@ describe("CheckoutValidator", () => {
         const checkoutTotalDetailData = { agreeChecked: true };
 
         // when
-        const { valid, invalidMsg } = validateCheckout(
+        const { valid, invalidMsg } = validateCheckout({
           checkoutDeliveryData,
           checkoutPaymentData,
-          checkoutTotalDetailData
-        );
+          checkoutTotalDetailData,
+        });
 
         // then
         expect(valid).toBeTruthy();

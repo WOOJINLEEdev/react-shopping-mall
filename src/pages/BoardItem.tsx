@@ -1,11 +1,14 @@
-import React from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
 import { formatDate } from "utils/formatDate";
 
-const BoardItem = ({ match, item }) => {
+interface MatchParams {
+  id: string;
+}
+
+const BoardItem = ({ match }: RouteComponentProps<MatchParams>) => {
   const history = useHistory();
   const date = new Date();
   const curDate = formatDate(date);

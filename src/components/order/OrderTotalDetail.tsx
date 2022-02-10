@@ -5,13 +5,30 @@ import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
 
 interface OrderTotalDetailProps {
-  totalPrice: any;
-  deliveryCharge: any;
-  checkoutData: any;
-  checkoutNumber: any;
-  isPc: any;
-  isTablet: any;
-  isMobile: any;
+  totalPrice: number;
+  deliveryCharge: string;
+  checkoutData: CheckoutData;
+  checkoutNumber: number;
+  isPc: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
+}
+
+interface CheckoutData {
+  created_at: string;
+  id: number;
+  line_items: LineItem[];
+  user: string[];
+}
+
+interface LineItem {
+  image_src: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+  variant_price: string;
 }
 
 const OrderTotalDetail = ({
@@ -35,7 +52,8 @@ const OrderTotalDetail = ({
   const finalPrice =
     totalPrice +
     Number(deliveryCharge) -
-    Number(usedMileage) -
+    // Number(usedMileage) -
+    Number(!usedMileage ? 0 : usedMileage) -
     (Number.isInteger(selectOption) === false
       ? totalPrice * selectOption
       : selectOption);
@@ -87,7 +105,7 @@ const OrderTotalDetail = ({
           <p className="price_unit">
             {deliveryCharge === "0" ? "" : "+"}
             <span className="delivery_charge_zone" id="deliveryChargeDetail">
-              {deliveryCharge.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {deliveryCharge?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </span>
             원
           </p>
@@ -136,7 +154,7 @@ const OrderTotalDetail = ({
               {(
                 totalPrice +
                 Number(deliveryCharge) -
-                Number(usedMileage) -
+                Number(!usedMileage ? 0 : usedMileage) -
                 (Number.isInteger(selectOption) === false
                   ? totalPrice * selectOption
                   : selectOption)

@@ -1,9 +1,41 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 
-const OrderCompletionDeliveryInfo = ({ orderData }) => {
+interface DeliveryInfoProps {
+  orderData: OrderDataType[];
+}
+interface OrderDataType {
+  // checkout_id: number;
+  // created_at: string;
+  // financial_status: string;
+  // id: number;
+  // line_items: string[];
+  // payment_method: string;
+  // product_price: string;
+  shipping_address: ShippingAddress;
+  // shipping_price: string;
+  // shipping_status: string;
+  // status: string;
+  // total_discount: string;
+  // total_price: string;
+  // updated_at: string;
+  // user: string[];
+}
+
+type ShippingAddress = {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
+};
+
+const OrderCompletionDeliveryInfo = ({ orderData }: DeliveryInfoProps) => {
   const [arrowImg, setArrowImg] = useState(downArrow);
   const [deliveryInfoClass, setDeliveryInfoClass] = useState("hide");
   const [infoHeadAddress, setInfoHeadAddress] = useState(
@@ -59,8 +91,8 @@ const OrderCompletionDeliveryInfo = ({ orderData }) => {
             </div>
           </DeliveryInfo>
           <DeliveryInfo>
-            <div style={{ minWidth: "44.16px", textAlign: "left" }}>배송지</div>
-            <div style={{ width: "75%", textAlign: "right" }}>
+            <div className="delivery_info_address_title">배송지</div>
+            <div className="delivery_info_address_content">
               {orderData[0].shipping_address.address1}{" "}
               {orderData[0].shipping_address.address2}
             </div>
@@ -77,6 +109,16 @@ const DeliveryInfo = styled.li`
   display: flex;
   justify-content: space-between;
   padding: 20px;
+
+  & .delivery_info_address_title {
+    min-width: 44.16px;
+    text-align: left;
+  }
+
+  & .delivery_info_address_content {
+    width: 75%;
+    text-align: right;
+  }
 `;
 
 const AddressBtnWrap = styled.div`

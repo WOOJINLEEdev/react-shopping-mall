@@ -3,7 +3,7 @@ import { instance } from "utils/http-client";
 
 function useMyPageData() {
   const myPageUrl = "/v1/me";
-  const fetcher = (url) => {
+  const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);
   };
 

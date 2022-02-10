@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import axios from "axios";
 
-function useBoardItem(boardItemId) {
+function useBoardItem(boardItemId: string) {
   const boardUrl = `https://jsonplaceholder.typicode.com/posts/${boardItemId}`;
-  const fetcher = (url) => {
+  const fetcher = (url: string) => {
     return axios.get(url).then((res) => res.data);
   };
 

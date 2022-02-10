@@ -109,7 +109,17 @@ export const postList = [
   },
 ];
 
-const sortPostList = (postList) => {
+interface PostListType {
+  no: number;
+  type: string;
+  title: string;
+  content: string | string[];
+  user: string;
+  createDate: string | Date;
+  readCount: number;
+}
+
+const sortPostList = (postList: Array<PostListType>) => {
   return [...postList].sort(function (a, b) {
     if (a.no < b.no) {
       return 1;

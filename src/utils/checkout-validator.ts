@@ -1,8 +1,43 @@
-export function validateCheckout(
+interface ValidateCheckoutProps {
+  checkoutDeliveryData: DeliveryData;
+  checkoutPaymentData: PaymentData;
+  checkoutTotalDetailData: TotalDetailData;
+}
+
+interface DeliveryData {
+  address1?: string;
+  addressDetail1?: string;
+  addressDetail2?: string;
+  deliveryClassName?: string;
+  deliveryClassName1?: string;
+  designation?: string;
+  recipient?: string;
+  requirement?: string;
+  requirement1?: string;
+  tel1?: string;
+  tel2?: string;
+  tel3?: string;
+  tel4?: string;
+  tel5?: string;
+  tel6?: string;
+}
+
+interface PaymentData {
+  paymentName?: string;
+}
+
+interface TotalDetailData {
+  agreeChecked?: boolean;
+  finalPrice?: string | number;
+  selectCouponId?: number;
+  usedMileage?: string | number;
+}
+
+export function validateCheckout({
   checkoutDeliveryData,
   checkoutPaymentData,
-  checkoutTotalDetailData
-) {
+  checkoutTotalDetailData,
+}: ValidateCheckoutProps) {
   if (checkoutDeliveryData.deliveryClassName === "delivery_write old") {
     if (!checkoutPaymentData.paymentName) {
       return {
@@ -57,6 +92,13 @@ export function validateCheckout(
       };
     }
 
+    if (!checkoutDeliveryData.tel1) {
+      return {
+        valid: false,
+        invalidMsg: "연락처 첫번째 칸을 입력해주세요.",
+      };
+    }
+
     if (checkoutDeliveryData.tel1.length < 2) {
       return {
         valid: false,
@@ -64,10 +106,24 @@ export function validateCheckout(
       };
     }
 
+    if (!checkoutDeliveryData.tel2) {
+      return {
+        valid: false,
+        invalidMsg: "연락처 두번째 칸을 입력해주세요.",
+      };
+    }
+
     if (checkoutDeliveryData.tel2.length < 4) {
       return {
         valid: false,
         invalidMsg: "연락처 두번째 칸은 4자리를 입력해주세요.",
+      };
+    }
+
+    if (!checkoutDeliveryData.tel3) {
+      return {
+        valid: false,
+        invalidMsg: "연락처 세번째 칸을 입력해주세요.",
       };
     }
 

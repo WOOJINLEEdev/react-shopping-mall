@@ -1,6 +1,33 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+
+interface ItemInfoProps {
+  items: ItemType[];
+  firstItem: ItemType;
+  remainder: ItemType[];
+  remainderClass: string;
+  handleOpenCloseBtn: any;
+  handleInfoOpenBtn: any;
+  itemInfoHeadClass: string;
+  itemInfoClass: string;
+  arrowImg: string;
+  arrowImg1: string;
+  closeText: string;
+  sum: number;
+  isPc: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
+}
+
+interface ItemType {
+  image_src: string;
+  price: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+}
 
 const OrderCompletionItemInfo = ({
   items,
@@ -18,7 +45,7 @@ const OrderCompletionItemInfo = ({
   isPc,
   isTablet,
   isMobile,
-}) => {
+}: ItemInfoProps) => {
   return (
     <OrderItemInfoWrap>
       <div className="order_item_info">

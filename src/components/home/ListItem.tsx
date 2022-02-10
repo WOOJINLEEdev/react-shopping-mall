@@ -1,7 +1,18 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-const ListItem = ({ item }) => {
+interface ListItemProps {
+  item: itemType;
+}
+
+type itemType = {
+  id: number;
+  images: any[];
+  name: string;
+  options: any[];
+  variants: any[];
+};
+
+const ListItem = ({ item }: ListItemProps) => {
   return (
     <li className="list">
       <Link to={`/products/${item.id}`} className="list_link">

@@ -1,3 +1,4 @@
+import { RouteComponentProps } from "react-router-dom";
 import OrderDelivery from "components/order/OrderDelivery";
 import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
@@ -7,7 +8,11 @@ import useCheckout from "hooks/useCheckout";
 import Loading from "components/common/Loading";
 import { useDevice } from "hooks/useDevice";
 
-const Order = ({ match }) => {
+interface MatchParams {
+  checkoutId: string;
+}
+
+const Order = ({ match }: RouteComponentProps<MatchParams>) => {
   const checkoutNumber = Number(match.params.checkoutId);
 
   const { isPc, isTablet, isMobile } = useDevice();
@@ -18,11 +23,21 @@ const Order = ({ match }) => {
   if (checkoutError) return <div>failed to load...</div>;
   if (loadingCheckout) return <Loading />;
 
+  interface LineItem {
+    image_src: string;
+    product_id: number;
+    product_name: string;
+    quantity: number;
+    variant_id: number;
+    variant_name: string;
+    variant_price: string;
+  }
+
   const items = checkoutData.line_items;
   const totalPrice = items
-    .map((item) => item.variant_price * item.quantity)
-    .reduce((sum, itemPrice) => sum + itemPrice, 0);
-  const deliveryCharge = localStorage.getItem("delivery");
+    .map((item: LineItem) => Number(item.variant_price) * item.quantity)
+    .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
+  const deliveryCharge: string = localStorage.getItem("delivery")!;
 
   if (checkoutData.line_items.length > 1) {
     if (totalPrice > 70000) {

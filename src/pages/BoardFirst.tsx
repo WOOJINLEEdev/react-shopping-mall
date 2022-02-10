@@ -83,7 +83,7 @@ const BoardFirst = () => {
     setIsOpen(false);
   };
 
-  const handleSelectOption = (e: any) => {
+  const handleSelectOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "공지사항") {
       setSelectedOption("공지사항");
       console.log(selectedOption);
@@ -119,7 +119,7 @@ const BoardFirst = () => {
     setDataList(searchFilter);
   };
 
-  const handleSearchInput = (e: any) => {
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     searchInput = targetValue;
   };

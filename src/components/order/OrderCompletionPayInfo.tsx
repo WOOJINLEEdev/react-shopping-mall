@@ -1,9 +1,31 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 
-const OrderCompletionPayInfo = ({ orderData }) => {
+interface PayInfoProps {
+  orderData: Order[];
+}
+
+interface Order {
+  payment_method: string;
+  shipping_price: string;
+  product_price: string;
+  total_discount: string | number;
+  total_price: string;
+  used_coupon?: Coupon;
+  used_point?: number;
+}
+
+type Coupon = {
+  applied_amount: string;
+  id: number;
+  name: string;
+  type: string;
+  user_coupon_id: number;
+};
+
+const OrderCompletionPayInfo = ({ orderData }: PayInfoProps) => {
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [payInfoClass, setPayInfoClass] = useState("order_pay_info_wrap");
   const [infoHeadPayment, setInfoHeadPayment] = useState("hide");
@@ -23,7 +45,7 @@ const OrderCompletionPayInfo = ({ orderData }) => {
   };
 
   return (
-    <div style={{ borderBottom: "3px solid #333" }}>
+    <PayInfoWrap>
       <div className="order_info_head_wrap">
         <h2 className="order_info_header">결제 정보</h2>
 
@@ -46,18 +68,6 @@ const OrderCompletionPayInfo = ({ orderData }) => {
             />
           </button>
         </PaymentBtnWrap>
-
-        {/* <button
-          type="button"
-          className="order_pay_info_btn"
-          onClick={handleOpenCloseBtn}
-        >
-          <img
-            src={arrowImg}
-            alt="buttonArrow"
-            className="order_pay_info_btn_img"
-          />
-        </button> */}
       </div>
       <ul className={payInfoClass}>
         <li className="order_pay_info">
@@ -83,21 +93,14 @@ const OrderCompletionPayInfo = ({ orderData }) => {
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">할인금액</div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "50%",
-              textAlign: "right",
-            }}
-          >
-            <span style={{ paddingBottom: "10px" }}>
+          <div className="pay_info_discount_wrap">
+            <span className="pay_info_total_discount">
               {orderData[0].total_discount > 0 ? "-" : ""}
               {orderData[0].total_discount
                 .toString()
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </span>
-            <ul style={{ width: "100%" }}>
+            <ul className="coupon_mileage_wrap">
               <UsedCouponMileage>
                 <CouponTitle>쿠폰</CouponTitle>
                 <div>
@@ -132,11 +135,30 @@ const OrderCompletionPayInfo = ({ orderData }) => {
           </div>
         </li>
       </ul>
-    </div>
+    </PayInfoWrap>
   );
 };
 
 export default OrderCompletionPayInfo;
+
+const PayInfoWrap = styled.div`
+  border-bottom: 3px solid #333;
+
+  & .pay_info_discount_wrap {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    text-align: right;
+  }
+
+  & .pay_info_total_discount {
+    padding-bottom: 10px;
+  }
+
+  & .coupon_mileage_wrap {
+    width: 100%;
+  }
+`;
 
 const UsedCouponMileage = styled.li`
   display: flex;

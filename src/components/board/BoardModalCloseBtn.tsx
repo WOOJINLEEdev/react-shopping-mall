@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-const BoardModalCloseBtn = ({ handleModalClose }) => {
+interface BoardModalCloseBtnProps {
+  handleModalClose: any;
+}
+
+const BoardModalCloseBtn = ({ handleModalClose }: BoardModalCloseBtnProps) => {
   return (
     <BtnWrap>
       <ModalCloseBtn type="button" onClick={handleModalClose}>

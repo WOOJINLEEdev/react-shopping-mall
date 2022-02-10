@@ -1,7 +1,7 @@
 import { instance } from "utils/http-client";
 
 interface GetProductsPayload {
-  searchInput: any;
+  searchInput: string;
   limit?: number;
   offset?: number;
   count?: boolean;

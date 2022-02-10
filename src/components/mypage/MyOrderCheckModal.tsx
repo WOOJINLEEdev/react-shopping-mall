@@ -12,12 +12,19 @@ import { getOrderNumber } from "utils/order";
 import { useDevice } from "hooks/useDevice";
 
 Modal.setAppElement("#root");
+
+interface MyOrderCheckModalProps {
+  isOpen3: boolean;
+  onRequestClose3: any;
+  myOrderList: any[];
+  orderItemId?: number;
+}
 const MyOrderCheckModal = ({
   isOpen3,
   onRequestClose3,
   myOrderList,
   orderItemId,
-}) => {
+}: MyOrderCheckModalProps) => {
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [arrowImg1, setArrowImg1] = useState(downArrow);
   const [closeText, setCloseText] = useState("");
@@ -55,10 +62,20 @@ const MyOrderCheckModal = ({
   }
   const items = selectedOrderData[0].line_items;
 
-  const firstItem = selectedOrderData[0].line_items[0];
-  const remainder = items.filter((item) => item !== firstItem);
-  const itemQuantity = items.map((item) => item.quantity);
-  const sum = itemQuantity.reduce((a, b) => a + b);
+  interface OrderCheckItems {
+    image_src: string;
+    price: string;
+    product_id: number;
+    product_name: string;
+    quantity: number;
+    variant_id: number;
+    variant_name: string;
+  }
+
+  const firstItem: OrderCheckItems = selectedOrderData[0].line_items[0];
+  const remainder = items.filter((item: OrderCheckItems) => item !== firstItem);
+  const itemQuantity = items.map((item: OrderCheckItems) => item.quantity);
+  const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {

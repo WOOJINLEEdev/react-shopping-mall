@@ -1,8 +1,15 @@
-import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const BoardFilter = ({ handleSelectOption, selectedOption }) => {
+interface BoardFilterProps {
+  handleSelectOption: any;
+  selectedOption: string;
+}
+
+const BoardFilter = ({
+  handleSelectOption,
+  selectedOption,
+}: BoardFilterProps) => {
   const boardType = ["공지사항", "일반"];
   return (
     <FilterWrap>

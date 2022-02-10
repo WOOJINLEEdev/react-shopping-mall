@@ -1,4 +1,3 @@
-import React from "react";
 import useCheckoutDeliveryData from "hooks/useCheckoutDeliveryData";
 import useCheckoutPaymentData from "hooks/useCheckoutPaymentData";
 import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
@@ -6,15 +5,32 @@ import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
 
 interface OrderCheckoutButtonProps {
-  checkoutData: any;
-  checkoutNumber: any;
-  totalPrice: any;
-  deliveryCharge: any;
-  usedMileage: any;
-  selectOption: any;
-  isPc: any;
-  isTablet: any;
-  isMobile: any;
+  checkoutData: CheckoutData;
+  checkoutNumber: number;
+  totalPrice: number;
+  deliveryCharge: string;
+  usedMileage: string | number;
+  selectOption: number;
+  isPc: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
+}
+
+interface CheckoutData {
+  created_at: string;
+  id: number;
+  line_items: LineItem[];
+  user: string[];
+}
+
+interface LineItem {
+  image_src: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+  variant_price: string;
 }
 
 const OrderCheckoutButton = ({
@@ -36,13 +52,11 @@ const OrderCheckoutButton = ({
     useCheckoutTotalDetailData();
 
   const handleOrderSubmit = () => {
-    console.log("오더 Checkout 버튼 테스트");
-
-    const { valid, invalidMsg } = validateCheckout(
+    const { valid, invalidMsg } = validateCheckout({
       checkoutDeliveryData,
       checkoutPaymentData,
-      checkoutTotalDetailData
-    );
+      checkoutTotalDetailData,
+    });
 
     if (!valid) {
       return alert(invalidMsg);
@@ -87,7 +101,7 @@ const OrderCheckoutButton = ({
           {(
             totalPrice +
             Number(deliveryCharge) -
-            Number(usedMileage) -
+            Number(!usedMileage ? 0 : usedMileage) -
             (Number.isInteger(selectOption) === false
               ? totalPrice * selectOption
               : selectOption)

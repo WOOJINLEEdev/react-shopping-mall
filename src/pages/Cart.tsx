@@ -173,8 +173,8 @@ const Cart = () => {
     const chkItems = cart.items.filter((item: any) => item.checked);
     console.log(chkItems);
 
-    for (let i = 0; i < chkItems.length; i++) {
-      let cartItemId: number = chkItems[i].id;
+    for (const chkItem of chkItems) {
+      let cartItemId: number = chkItem.id;
 
       try {
         const res = await deleteCartItemApi({ cartItemId });
