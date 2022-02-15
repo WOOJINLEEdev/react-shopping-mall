@@ -107,7 +107,7 @@ const Header = ({ location }: RouteComponentProps) => {
     routeIfNotCurrentPath("/cart");
   };
 
-  function routeIfNotCurrentPath(path: any) {
+  function routeIfNotCurrentPath(path: string) {
     location.pathname !== path && history.push(path);
   }
 

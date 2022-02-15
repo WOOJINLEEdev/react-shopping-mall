@@ -1,16 +1,28 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
-import { instance } from "utils/http-client";
 import {
   deleteCartItemApi,
   updateCartItemQuantityApi,
   createCheckoutsApi,
 } from "api";
+
+interface Item {
+  cart_id: number;
+  checked: boolean;
+  id: number;
+  product_id: number;
+  product_image_src: string;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+  variant_price: string;
+}
 
 const Cart = () => {
   const [chkId, setChkId] = useState("");
@@ -32,8 +44,8 @@ const Cart = () => {
 
   const items = cart.items;
 
-  const onRemove = async (e: any) => {
-    const cartItemId = e.target.name;
+  const onRemove = async (e: React.MouseEvent<HTMLInputElement>) => {
+    const cartItemId = Number((e.target as HTMLInputElement).name);
 
     try {
       const res = await deleteCartItemApi({ cartItemId });
@@ -50,7 +62,7 @@ const Cart = () => {
       mutateCart(
         {
           ...cart,
-          items: items.map((cartItem: any, index: number) => ({
+          items: items.map((cartItem: Item, index: number) => ({
             ...cartItem,
             quantity: cartItem.id === itemId ? quantity : cartItem.quantity,
           })),
@@ -62,11 +74,11 @@ const Cart = () => {
     }
   };
 
-  const checkedItems = cart.items.filter((item: any) => item.checked);
+  const checkedItems = cart.items.filter((item: Item) => item.checked);
   const numCheckedTotalItem = checkedItems.length;
   const totalPrice = checkedItems
-    .map((item: any) => item.variant_price * item.quantity)
-    .reduce((sum: any, itemPrice: any) => sum + itemPrice, 0);
+    .map((item: Item) => Number(item.variant_price) * item.quantity)
+    .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
 
   if (totalPrice < 70000) {
     localStorage.setItem("delivery", "3000");
@@ -78,14 +90,15 @@ const Cart = () => {
     localStorage.setItem("delivery", "0");
   }
 
-  const deliveryCharge: any = localStorage.getItem("delivery");
+  const deliveryCharge = localStorage.getItem("delivery") || "";
+
   const finalPrice = totalPrice + Number(deliveryCharge);
 
   const handleCartItemAllCheck = (allChecked: boolean) => {
     mutateCart(
       {
         ...cart,
-        items: items.map((item: any) => {
+        items: items.map((item: Item) => {
           const newItem = { ...item };
           newItem.checked = !allChecked;
 
@@ -101,10 +114,10 @@ const Cart = () => {
     setAllChecked((value) => !value);
   };
 
-  const handleCartItemCheck = (cartItemIndex: any) => {
+  const handleCartItemCheck = (cartItemIndex: number) => {
     const newCart = {
       ...cart,
-      items: items.map((cartItem: any, index: number) => ({
+      items: items.map((cartItem: Item, index: number) => ({
         ...cartItem,
         checked: cartItemIndex === index ? !cartItem.checked : cartItem.checked,
       })),
@@ -112,13 +125,13 @@ const Cart = () => {
 
     mutateCart(newCart, false);
     const isSomeUnchecked =
-      newCart.items.filter((item: any) => !item.checked).length > 0;
+      newCart.items.filter((item: Item) => !item.checked).length > 0;
     if (isSomeUnchecked) {
       setAllChecked(false);
     }
 
     const isAllChecked =
-      newCart.items.filter((item: any) => item.checked).length ===
+      newCart.items.filter((item: Item) => item.checked).length ===
       newCart.items.length;
     if (isAllChecked) {
       setAllChecked(true);
@@ -127,8 +140,8 @@ const Cart = () => {
 
   const handleBuyBtnClick = async () => {
     const checkedLineItems = cart.items
-      .filter((item: any) => item.checked)
-      .map((item: any) => ({
+      .filter((item: Item) => item.checked)
+      .map((item: Item) => ({
         variant_id: item.variant_id,
         quantity: item.quantity,
       }));
@@ -145,10 +158,10 @@ const Cart = () => {
     }
   };
 
-  const handleListBuyBtnClick = async (item: any, quantity: any) => {
+  const handleListBuyBtnClick = async (item: Item, quantity: number) => {
     console.log("작은 구매버튼 클릭");
 
-    if (item.variant_price * item.quantity < 70000) {
+    if (Number(item.variant_price) * item.quantity < 70000) {
       localStorage.setItem("delivery", "3000");
     } else {
       localStorage.setItem("delivery", "0");
@@ -170,7 +183,7 @@ const Cart = () => {
   };
 
   const handleChoiceItemRemove = async () => {
-    const chkItems = cart.items.filter((item: any) => item.checked);
+    const chkItems = cart.items.filter((item: Item) => item.checked);
     console.log(chkItems);
 
     for (const chkItem of chkItems) {
@@ -220,7 +233,7 @@ const Cart = () => {
           {items.length < 1 ? (
             <CartEmpty>장바구니가 비었습니다.</CartEmpty>
           ) : (
-            items.map((item: any, idx: number) => {
+            items.map((item: Item, idx: number) => {
               return (
                 <li className="item" key={item.id}>
                   <div className="item_select">
@@ -243,7 +256,7 @@ const Cart = () => {
                       value="삭제"
                       className="item_remove"
                       key={item.id}
-                      name={item.id}
+                      name={item.id.toString()}
                       onClick={onRemove}
                     />
                   </div>
@@ -300,7 +313,7 @@ const Cart = () => {
 
                         <div>
                           <span className="item_price_qty">
-                            {(item.variant_price * item.quantity)
+                            {(Number(item.variant_price) * item.quantity)
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                             원
@@ -332,7 +345,7 @@ const Cart = () => {
           </div>
           <p className="price_unit">
             <span className="total_qty" id="totalQty">
-              {items.filter((item: any) => item.checked).length}
+              {items.filter((item: Item) => item.checked).length}
             </span>
             개
           </p>
@@ -356,7 +369,7 @@ const Cart = () => {
           </div>
           <p className="price_unit">
             <span className="delivery_charge_zone" id="deliveryCharge">
-              {deliveryCharge.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {deliveryCharge.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </span>
             원
           </p>

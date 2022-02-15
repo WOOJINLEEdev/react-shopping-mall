@@ -5,15 +5,17 @@ import PropTypes from "prop-types";
 
 Modal.setAppElement("#root");
 
+interface MyPageCouponModalProps {
+  isOpen2: boolean;
+  onRequestClose2: () => void;
+  myCoupon?: CouponInfo[];
+}
+
 interface CouponInfo {
   id: string | number;
   coupon_name: string;
 }
-interface MyPageCouponModalProps {
-  isOpen2: boolean;
-  onRequestClose2: any;
-  myCoupon: any;
-}
+
 const MyPageCouponModal = ({
   isOpen2,
   onRequestClose2,

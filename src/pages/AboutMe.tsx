@@ -6,112 +6,14 @@ import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
 import { formatDate } from "utils/formatDate";
 import { getShopVisitCountApi } from "api";
-
-interface Series {
-  name: string;
-  data: any;
-}
-
-interface Options {
-  colors: string[];
-  fill?: {
-    type: string;
-    gradient: {
-      shadeIntensity: number;
-      type: string;
-      opacityFrom: number;
-      opacityTo: number;
-      colorStops: any[];
-    };
-  };
-  chart: {
-    height: number;
-    type: string;
-    toolbar: {
-      show: boolean;
-    };
-  };
-  plotOptions?: {
-    bar: {
-      borderRadius: any;
-      dataLabels: {
-        position: string;
-      };
-    };
-  };
-  dataLabels?: {
-    enabled: any;
-    formatter: Function;
-    offsetY?: number;
-    style?: {
-      colors: string[];
-    };
-  };
-
-  xaxis?: {
-    categories: any;
-    position: string;
-    style: {
-      fontSize: string;
-    };
-    labels: {
-      show: boolean;
-      formatter: Function;
-    };
-    axisBorder: {
-      show: boolean;
-    };
-    axisTicks: {
-      show: false;
-    };
-    crosshairs?: {
-      fill: {
-        type: string;
-        gradient: {
-          colorFrom: string;
-          colorTo: string;
-          stops: number[];
-          opacityFrom: number;
-          opacityTo: number;
-        };
-      };
-    };
-    tooltip: {
-      enabled: boolean;
-    };
-  };
-  yaxis: {
-    tickAmount: number;
-    max: number;
-    axisBorder: {
-      show: boolean;
-    };
-    axisTicks: {
-      show: boolean;
-    };
-    labels: {
-      show: boolean;
-      formatter: Function;
-    };
-  };
-
-  title?: {
-    text: string;
-    floating: boolean;
-    offsetY: number;
-    align: string;
-    style: {
-      color: string;
-    };
-  };
-}
+import { ApexOptions } from "apexcharts";
 
 const AboutMe = () => {
   const [total, setTotal] = useState();
-  const [today, setToday] = useState<any>();
-  const [yesterday, setYesterday] = useState<any>();
-  const [series, setSeries] = useState<Series[]>();
-  const [options, setOptions] = useState<Options>();
+  const [today, setToday] = useState<number>(0);
+  const [yesterday, setYesterday] = useState<number>(0);
+  const [series, setSeries] = useState<ApexOptions["series"]>();
+  const [options, setOptions] = useState<ApexOptions>();
 
   const now = new Date();
   const formattedToday = formatDate(now);
@@ -132,16 +34,19 @@ const AboutMe = () => {
           visitStartDate,
           visitEndDate,
         });
-
-        const visitDate = res.data.map((item: any) => item.visit_date);
-        const visitCount = res.data.map((item: any) => item.visit_count);
-        const sum = visitCount.reduce((a: any, b: any) => a + b);
+        interface VisitDate {
+          visit_count: number;
+          visit_date: string;
+        }
+        const visitDate = res.data.map((item: VisitDate) => item.visit_date);
+        const visitCount = res.data.map((item: VisitDate) => item.visit_count);
+        const sum = visitCount.reduce((a: number, b: number) => a + b);
 
         const todayVisit = res.data.find(
-          (t: any) => t.visit_date === formattedToday
+          (t: VisitDate) => t.visit_date === formattedToday
         ) || { visit_count: 0 };
         const yesterdayVisit = res.data.find(
-          (t: any) => t.visit_date === formattedYesterday
+          (t: VisitDate) => t.visit_date === formattedYesterday
         ) || { visit_count: 0 };
 
         setToday(todayVisit.visit_count);
@@ -187,7 +92,7 @@ const AboutMe = () => {
           },
           dataLabels: {
             enabled: true,
-            formatter: function (val: any) {
+            formatter: function (val: string | number) {
               return val;
             },
             offsetY: -20,
@@ -199,9 +104,6 @@ const AboutMe = () => {
           xaxis: {
             categories: visitDate.slice(0, 7).reverse(),
             position: "bottom",
-            style: {
-              fontSize: "10px",
-            },
             labels: {
               show: true,
               formatter: function (val: any) {

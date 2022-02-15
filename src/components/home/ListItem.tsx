@@ -1,16 +1,25 @@
 import { Link } from "react-router-dom";
 
 interface ListItemProps {
-  item: itemType;
+  item: ItemType;
 }
 
-type itemType = {
+interface ItemType {
   id: number;
-  images: any[];
+  images: Images[];
   name: string;
-  options: any[];
-  variants: any[];
-};
+  variants: Variants[];
+}
+
+interface Images {
+  id: number;
+  product_id: number;
+  src: string;
+}
+
+interface Variants {
+  price: string;
+}
 
 const ListItem = ({ item }: ListItemProps) => {
   return (
@@ -27,10 +36,8 @@ const ListItem = ({ item }: ListItemProps) => {
           <div className="image_dim"></div>
           <p className="item_name">{item.name}</p>
           <p className="item_price">
-            {item.variants[0].price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-            {""}원
+            {item.variants[0].price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {""}
+            원
           </p>
         </div>
       </Link>

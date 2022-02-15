@@ -6,6 +6,8 @@ import {
   ErrorMessage,
   FormikProps,
   FormikValues,
+  FieldAttributes,
+  FormikErrors,
 } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -53,9 +55,6 @@ const Join = () => {
   });
 
   const onSubmit = async (values: any) => {
-    console.log("Form data", values);
-    console.log("이메일, 이름", values.email, values.name);
-
     try {
       const res = await createJoinApi({
         userId: values.id,
@@ -73,7 +72,10 @@ const Join = () => {
     }
   };
 
-  const getMonthDateErrorMsg = ({ month, date }: any) => {
+  const getMonthDateErrorMsg = ({
+    month,
+    date,
+  }: FormikErrors<FormikValues>) => {
     const monthRequiredMsg = "월을 입력해주세요.";
     const dateRequiredMsg = "일을 입력해주세요.";
 
@@ -196,7 +198,7 @@ const Join = () => {
                     id="month"
                     name="month"
                     placeholder="월"
-                    onChange={(e: any) =>
+                    onChange={(e: FieldAttributes<any>) =>
                       setFieldValue("month", e.target.value.substring(0, 2))
                     }
                   />
@@ -212,7 +214,7 @@ const Join = () => {
                     id="date"
                     name="date"
                     placeholder="일"
-                    onChange={(e: any) =>
+                    onChange={(e: FieldAttributes<any>) =>
                       setFieldValue("date", e.target.value.substring(0, 2))
                     }
                   />

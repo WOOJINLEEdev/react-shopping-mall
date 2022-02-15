@@ -1,19 +1,49 @@
 import styled from "styled-components";
 
 interface OrderDeliveryFormPcProps {
-  deliveryWrapClass: any;
-  handleDeliveryWrite: any;
-  deliveryClassName: any;
-  deliveryClassName1: any;
-  checkoutData: any;
-  deliveryForm: any;
-  designation: any;
-  address: any;
-  handlePostalCode: any;
-  handleDeliveryRequirement: any;
-  deliveryRequirementOption1: any;
-  deliveryRequirementWrite: any;
-  handleDeliveryInputChange4: any;
+  deliveryWrapClass: string;
+  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
+  deliveryClassName: string;
+  deliveryClassName1: string;
+  checkoutData: CheckoutData;
+  deliveryForm: string;
+  designation: string;
+  address: string;
+  handlePostalCode: () => void;
+  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  deliveryRequirementOption1: DeliveryRequirementOption1[];
+  deliveryRequirementWrite: string;
+  handleDeliveryInputChange4: (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+}
+
+interface CheckoutData {
+  user: User;
+}
+
+interface User {
+  shipping_address?: ShippingAddress;
+  name?: string;
+}
+
+interface ShippingAddress {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  phone2?: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
+}
+
+interface DeliveryRequirementOption1 {
+  no: string;
+  label: string;
+  value: string;
+  selected?: string;
 }
 
 const OrderDeliveryFormPc = ({
@@ -206,7 +236,8 @@ const OrderDeliveryFormPc = ({
               className="delivery_input tel"
               title="연락처2_전화번호1"
               value={
-                checkoutData.user.shipping_address
+                checkoutData.user.shipping_address &&
+                checkoutData.user.shipping_address.phone2
                   ? checkoutData.user.shipping_address.phone2.substring(0, 3)
                   : ""
               }
@@ -220,7 +251,8 @@ const OrderDeliveryFormPc = ({
               className="delivery_input tel"
               title="연락처2_전화번호2"
               value={
-                checkoutData.user.shipping_address
+                checkoutData.user.shipping_address &&
+                checkoutData.user.shipping_address.phone2
                   ? checkoutData.user.shipping_address.phone2.substring(3, 7)
                   : ""
               }
@@ -234,7 +266,8 @@ const OrderDeliveryFormPc = ({
               className="delivery_input tel"
               title="연락처2_전화번호3"
               value={
-                checkoutData.user.shipping_address
+                checkoutData.user.shipping_address &&
+                checkoutData.user.shipping_address.phone2
                   ? checkoutData.user.shipping_address.phone2.substring(7, 11)
                   : ""
               }
@@ -250,15 +283,17 @@ const OrderDeliveryFormPc = ({
               color={"#333"}
               onChange={handleDeliveryRequirement}
             >
-              {deliveryRequirementOption1.map((item: any) => (
-                <option
-                  key={item.no}
-                  value={item.label}
-                  className="option_test"
-                >
-                  {item.value}
-                </option>
-              ))}
+              {deliveryRequirementOption1.map(
+                (item: DeliveryRequirementOption1) => (
+                  <option
+                    key={item.no}
+                    value={item.label}
+                    className="option_test"
+                  >
+                    {item.value}
+                  </option>
+                )
+              )}
             </PreexistenceSelect>
             <SelectRequirementWrite
               className={deliveryRequirementWrite}
@@ -281,7 +316,7 @@ const OrderDeliveryFormPc = ({
 export default OrderDeliveryFormPc;
 
 interface LiProps {
-  disabled?: any;
+  disabled?: string | boolean;
 }
 
 const Li = styled.li<LiProps>``;

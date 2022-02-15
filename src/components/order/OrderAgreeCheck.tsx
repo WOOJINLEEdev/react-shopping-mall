@@ -1,6 +1,6 @@
 interface OrderAgreeCheckProps {
   agreeChecked: boolean;
-  handleAgreeCheck: React.ChangeEventHandler<HTMLInputElement>;
+  handleAgreeCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const OrderAgreeCheck = ({

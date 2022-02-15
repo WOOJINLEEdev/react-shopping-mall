@@ -5,10 +5,20 @@ import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 Modal.setAppElement("#root");
 
 interface BoardItemModalProps {
-  isOpen: any;
-  onRequestClose: any;
-  postList: any;
-  boardItemNo: any;
+  isOpen: boolean;
+  onRequestClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
+  postList: Post[];
+  boardItemNo: number;
+}
+
+interface Post {
+  content: string;
+  createDate: string;
+  no: number;
+  readCount: number;
+  title: string;
+  type: string;
+  user: string;
 }
 
 const BoardItemModal = ({
@@ -18,7 +28,7 @@ const BoardItemModal = ({
   boardItemNo,
 }: BoardItemModalProps) => {
   const boardItemNumber = boardItemNo;
-  const boardItem = postList.find((post: any) => post.no === boardItemNumber);
+  const boardItem = postList.find((post: Post) => post.no === boardItemNumber);
 
   return (
     <Modal
@@ -30,46 +40,51 @@ const BoardItemModal = ({
     >
       <BoardModalCloseBtn handleModalClose={onRequestClose} />
 
-      <div>
+      <Div>
         <table className="board_item_table">
           <thead>
             <tr>
               <th className="item_table_th">구분</th>
               <td className="item_table_td">
-                <span style={{ color: "blue", fontWeight: "bold" }}>
-                  {boardItem.type}
-                </span>
+                <span className="item_table_text">{boardItem?.type}</span>
               </td>
             </tr>
             <tr>
               <th className="item_table_th">제목</th>
-              <td className="item_table_td">{boardItem.title}</td>
+              <td className="item_table_td">{boardItem?.title}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th className="item_table_th">작성자</th>
-              <td className="item_table_td">{boardItem.user}</td>
+              <td className="item_table_td">{boardItem?.user}</td>
             </tr>
             <tr>
               <th className="item_table_th">작성일</th>
-              <td className="item_table_td">{boardItem.createDate}</td>
+              <td className="item_table_td">{boardItem?.createDate}</td>
             </tr>
             <tr>
               <th className="item_table_th">조회수</th>
-              <td className="item_table_td">{boardItem.readCount}</td>
+              <td className="item_table_td">{boardItem?.readCount}</td>
             </tr>
           </tbody>
         </table>
-      </div>
+      </Div>
       <div>
-        <BoardContent>{boardItem.content}</BoardContent>
+        <BoardContent>{boardItem?.content}</BoardContent>
       </div>
     </Modal>
   );
 };
 
 export default BoardItemModal;
+
+const Div = styled.div`
+  & .item_table_text {
+    color: blue;
+    font-weight: bold;
+  }
+`;
 
 const BoardContent = styled.div`
   height: 300px;

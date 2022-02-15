@@ -7,21 +7,7 @@ interface DeliveryInfoProps {
   orderData: OrderDataType[];
 }
 interface OrderDataType {
-  // checkout_id: number;
-  // created_at: string;
-  // financial_status: string;
-  // id: number;
-  // line_items: string[];
-  // payment_method: string;
-  // product_price: string;
   shipping_address: ShippingAddress;
-  // shipping_price: string;
-  // shipping_status: string;
-  // status: string;
-  // total_discount: string;
-  // total_price: string;
-  // updated_at: string;
-  // user: string[];
 }
 
 type ShippingAddress = {

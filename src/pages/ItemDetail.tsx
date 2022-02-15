@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { useHistory } from "react-router-dom";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
@@ -9,10 +9,24 @@ import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { addToCartApi, createCheckoutsApi } from "api";
 
-const ItemDetail = ({ match }: any) => {
+interface MatchParams {
+  productId: string;
+}
+
+interface Option {
+  id: number;
+  name: string;
+  option1?: string;
+  option2?: string;
+  option3?: string;
+  price: string;
+  product_id: number;
+}
+
+const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const history = useHistory();
   const [quantity, setQuantity] = useState(1);
-  const [itemOption, setItemOption] = useState("");
+  const [itemOption, setItemOption] = useState<number | string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] =
     useState("장바구니에 상품이 추가되었습니다.");
@@ -22,7 +36,7 @@ const ItemDetail = ({ match }: any) => {
   const [contentPadding, setContentPadding] = useState("50px 0");
 
   const productUrl = `/v1/products/${match.params.productId}`;
-  const fetcher = (url: any) => {
+  const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);
   };
 
@@ -38,15 +52,13 @@ const ItemDetail = ({ match }: any) => {
 
   const selectOptions = data.variants;
 
-  const handleSelectChange = (e: any) => {
-    console.log(e.target.value);
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "") {
       setItemOption("");
     }
 
-    selectOptions.map((variant: any) => {
+    selectOptions.map((variant: Option) => {
       if (e.target.value === variant.name) {
-        console.log(variant.id);
         setItemOption(variant.id);
         return variant.id;
       }
@@ -85,8 +97,8 @@ const ItemDetail = ({ match }: any) => {
     setIsOpen(false);
   };
 
-  const yesOrNo = (e: any) => {
-    if (e.target.name === "yes") {
+  const yesOrNo = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if ((e.target as HTMLButtonElement).name === "yes") {
       console.log("yes");
       mutateCart(null, true);
       history.push("/cart");
@@ -178,7 +190,7 @@ const ItemDetail = ({ match }: any) => {
               <td className="tbody_td">
                 <select className="td_select" onChange={handleSelectChange}>
                   <option value="">- [필수] 옵션을 선택해주세요 -</option>
-                  {selectOptions.map((option: any, i: number) => (
+                  {selectOptions.map((option: Option, i: number) => (
                     <option key={option.option1}>{option.option1}</option>
                   ))}
                 </select>

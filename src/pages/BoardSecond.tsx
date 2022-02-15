@@ -18,10 +18,16 @@ Modal.setAppElement("#root");
 
 const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
-const BOARD_SECOND_POSTS_CACHE: any[] = [];
+interface PostType {
+  body: string;
+  id: number;
+  title: string;
+  userId: number;
+}
 
-const initPostsCache = (posts: any) => {
-  posts.forEach((post: any) => {
+const BOARD_SECOND_POSTS_CACHE: PostType[] = [];
+const initPostsCache = (posts: PostType[]) => {
+  posts.forEach((post: PostType) => {
     BOARD_SECOND_POSTS_CACHE.push(post);
   });
 };
@@ -113,7 +119,7 @@ const BoardSecond = () => {
     }
   };
 
-  const handlePreviewBtn = (itemId: any) => {
+  const handlePreviewBtn = (itemId: number) => {
     setSelectedPreviewId(itemId);
     setIsOpen(true);
   };
@@ -122,7 +128,7 @@ const BoardSecond = () => {
     setIsOpen(false);
   };
 
-  const handleSearchInput = (e: any) => {
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     searchInput = targetValue;
   };

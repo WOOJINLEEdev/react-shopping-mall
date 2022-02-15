@@ -8,9 +8,16 @@ import { updateShippingAddressApi } from "api";
 Modal.setAppElement("#root");
 
 interface MyPageDeliveryModalProps {
-  isOpen: any;
-  onRequestClose: any;
-  myDeliveryAddress: any;
+  isOpen: boolean;
+  onRequestClose: () => void;
+  myDeliveryAddress: MyDeliveryAddress;
+}
+
+interface MyDeliveryAddress {
+  address1: string;
+  address2: string;
+  phone1: string;
+  recipient_name: string;
 }
 
 const MyPageDeliveryModal = ({

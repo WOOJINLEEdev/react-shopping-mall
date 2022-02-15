@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
@@ -13,10 +13,29 @@ import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
 import OrderDeliveryForm1 from "components/order/OrderDeliveryForm1";
 
 interface OrderDeliveryProps {
-  checkoutData: any;
-  isPc: any;
-  isTablet: any;
-  isMobile: any;
+  checkoutData: CheckoutData;
+  isPc: boolean;
+  isTablet: boolean;
+  isMobile: boolean;
+}
+
+interface CheckoutData {
+  user: User;
+}
+
+interface User {
+  shipping_address?: ShippingAddress;
+}
+
+interface ShippingAddress {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
 }
 
 const OrderDelivery = ({
@@ -44,15 +63,23 @@ const OrderDelivery = ({
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [infoHeadAddress, setInfoHeadAddress] = useState("hide");
   const [deliveryWrapClass, setDeliveryWrapClass] = useState("delivery_wrap");
-  const [deliveryWrite, setDeliveryWrite] = useState();
+  const [deliveryWrite, setDeliveryWrite] = useState<string | undefined>("");
   const [deliveryRequirementWrite, setDeliveryRequirementWrite] =
     useState("hide");
   const [deliveryRequirementWrite1, setDeliveryRequirementWrite1] =
     useState("hide");
+
+  interface DeliveryRequirementOption {
+    no: string;
+    label: string;
+    value: string;
+    selected?: string;
+  }
+
   const [deliveryRequirementOption, setDeliveryRequirementOption] =
-    useState(optionData);
+    useState<DeliveryRequirementOption[]>(optionData);
   const [deliveryRequirementOption1, setDeliveryRequirementOption1] =
-    useState(optionData);
+    useState<DeliveryRequirementOption[]>(optionData);
 
   const [requirementTest, setRequirementTest] = useState<string>("");
   const [selectedOptionNo, setSelectedOptionNo] = useState();
@@ -120,7 +147,15 @@ const OrderDelivery = ({
     setShowDaumPostModal(true);
   };
 
-  const getFullAddress = (data: any) => {
+  interface Address {
+    zonecode: string;
+    address: string;
+    addressType: string;
+    bname: string;
+    buildingName: string;
+  }
+
+  const getFullAddress = (data: Address) => {
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -138,7 +173,7 @@ const OrderDelivery = ({
     return fullAddress;
   };
 
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: Address) => {
     let fullAddress = getFullAddress(data);
 
     if (deliveryClassName === "delivery_write old") {
@@ -155,16 +190,18 @@ const OrderDelivery = ({
     setShowDaumPostModal(false);
   };
 
-  const handleDeliveryWrite = (e: any) => {
-    setDeliveryWrite(e.target.dataset.name);
+  const handleDeliveryWrite = (e: React.MouseEvent<HTMLUListElement>) => {
+    const deliveryTabName = (e.target as HTMLUListElement).dataset.name;
 
-    if (e.target.dataset.name === "신규 입력") {
+    setDeliveryWrite(deliveryTabName);
+
+    if (deliveryTabName === "신규 입력") {
       setDeliveryClassName("delivery_write new");
       setDeliveryClassName1("delivery_write old");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
       setRequirementTest("신규 입력");
-    } else if (e.target.dataset.name === "기존 배송지") {
+    } else if (deliveryTabName === "기존 배송지") {
       setDeliveryClassName("delivery_write old");
       setDeliveryClassName1("delivery_write new");
       setDeliveryForm("delivery_box_wrap");
@@ -209,34 +246,47 @@ const OrderDelivery = ({
     }
   };
 
-  const handleAddressDetail2 = (e: any) => {
+  const handleAddressDetail2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value);
     setAddressDetail2(e.target.value);
   };
 
-  const handleDeliveryInputChange1 = (e: any) => {
+  const handleDeliveryInputChange1 = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setDesignation(e.target.value);
   };
 
-  const handleDeliveryInputChange2 = (e: any) => {
+  const handleDeliveryInputChange2 = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRecipient(e.target.value);
   };
 
-  const handleDeliveryInputChange3 = (e: any, setState: any) => {
+  const handleDeliveryInputChange3 = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
     let curValue = e.target.value;
     let phoneValue = curValue.replace(/[^0-9]/g, "");
 
     setState(phoneValue);
   };
 
-  const handleDeliveryInputChange4 = (e: any) => {
+  const handleDeliveryInputChange4 = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setRequirement(e.target.value);
   };
-  const handleDeliveryInputChange5 = (e: any) => {
+  const handleDeliveryInputChange5 = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setRequirement1(e.target.value);
   };
 
-  const handleDeliveryRequirement = (e: any) => {
+  const handleDeliveryRequirement = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const targetValue = e.target.value;
 
     if (
@@ -297,10 +347,7 @@ const OrderDelivery = ({
           >
             <CgClose />
           </PostModalEscBtn>
-          <DaumPostCodeStyle
-            onComplete={handleComplete}
-            // className="daum_post_code"
-          />
+          <DaumPostCodeStyle onComplete={handleComplete} />
         </PostWrap>
       ) : null}
 

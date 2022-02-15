@@ -4,72 +4,15 @@ import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 import { formatDate } from "utils/formatDate";
 import { getMyVisitCountApi } from "api";
+import { ApexOptions } from "apexcharts";
 
 interface MyPageChartProps {
   userName: string;
 }
 
-interface Series {
-  name: string;
-  data: any;
-}
-
-interface Options {
-  colors: string[];
-  chart: {
-    height: number;
-    type: string;
-    zoom: {
-      enabled: boolean;
-    };
-    toolbar: {
-      show: boolean;
-    };
-  };
-  dataLabels: {
-    enabled: false;
-  };
-  stroke: {
-    curve: string;
-  };
-  title: {
-    text: string;
-    align: string;
-  };
-  grid: {
-    row: {
-      colors: string[];
-      opacity: number;
-    };
-  };
-  xaxis: {
-    categories: any;
-    labels: {
-      formatter: Function;
-    };
-  };
-  markers: {
-    size: number;
-    strokeColors: string;
-    strokeWidth: number;
-    strokeOpacity: number;
-    strokeDashArray: number;
-    fillOpacity: number;
-    shape: string;
-    radius: number;
-    offsetX: number;
-    offsetY: number;
-    showNullDataPoints: boolean;
-    hover: {
-      size: number;
-      sizeOffset: number;
-    };
-  };
-}
-
 const MyPageChart = ({ userName }: MyPageChartProps) => {
-  const [series, setSeries] = useState<Series[]>();
-  const [options, setOptions] = useState<Options>();
+  const [series, setSeries] = useState<ApexOptions["series"]>();
+  const [options, setOptions] = useState<ApexOptions>();
 
   const date = new Date();
   const year = formatDate(date, "YYYY");
@@ -87,8 +30,13 @@ const MyPageChart = ({ userName }: MyPageChartProps) => {
           visitStartDate,
           visitEndDate,
         });
-        const visitDate = res.data.map((item: any) => item.visit_date);
-        const visitCount = res.data.map((item: any) => item.visit_count);
+
+        interface VisitData {
+          visit_count: number;
+          visit_date: string;
+        }
+        const visitDate = res.data.map((item: VisitData) => item.visit_date);
+        const visitCount = res.data.map((item: VisitData) => item.visit_count);
 
         setSeries([
           {

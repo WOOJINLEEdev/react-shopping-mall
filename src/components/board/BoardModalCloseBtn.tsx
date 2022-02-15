@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface BoardModalCloseBtnProps {
-  handleModalClose: any;
+  handleModalClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
 }
 
 const BoardModalCloseBtn = ({ handleModalClose }: BoardModalCloseBtnProps) => {

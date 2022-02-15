@@ -115,7 +115,7 @@ interface PostListType {
   title: string;
   content: string | string[];
   user: string;
-  createDate: string | Date;
+  createDate: string;
   readCount: number;
 }
 

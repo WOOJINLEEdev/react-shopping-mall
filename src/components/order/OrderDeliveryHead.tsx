@@ -7,7 +7,7 @@ interface DeliveryHeadProps {
   addressDetail1: string;
   addressDetail2: string;
   checkoutData: CheckoutData;
-  handleAddressBtn: any;
+  handleAddressBtn: () => void;
   arrowImg: string;
 }
 
@@ -42,10 +42,6 @@ const OrderDeliveryHead = ({
   handleAddressBtn,
   arrowImg,
 }: DeliveryHeadProps) => {
-  console.log("addressDetail1", typeof addressDetail1);
-  console.log("handleAddressBtn", typeof handleAddressBtn);
-  console.log("checkoutData", checkoutData);
-  console.log("arrowImg", arrowImg);
   return (
     <div className="info_head_wrap">
       <h2 className="info_head delivery">배송정보</h2>

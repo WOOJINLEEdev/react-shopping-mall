@@ -1,14 +1,31 @@
 import { useState } from "react";
-import { useSWRInfinite } from "swr";
+import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import ListItem from "./ListItem";
 import ListGroupSkeleton from "./ListGroupSkeleton";
 import downArrow from "images/down-arrow.png";
 import { instance } from "utils/http-client";
 
+interface Product {
+  id: number;
+  images: Images[];
+  name: string;
+  variants: Variants[];
+}
+
+interface Images {
+  id: number;
+  product_id: number;
+  src: string;
+}
+
+interface Variants {
+  price: string;
+}
+
 const PAGE_LIMIT = 8;
 let firstLoaded = false;
 
-const getKey = (pageIndex: any, previousPageData: any) => {
+const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
   if (previousPageData && !previousPageData.length) {
     return null;
   }
@@ -22,11 +39,11 @@ function ListGroup() {
   const [pageOffset, setPageOffset] = useState(0);
 
   const url = `/v1/products?limit=${pageLimit}&offset=${pageOffset}`;
-  const fetcher = (url: any) => {
+  const fetcher = (Url: string) => {
     return new Promise((resolve, reject) => {
       const timeout = !firstLoaded ? 3000 : 0;
       setTimeout(async () => {
-        const res = await instance.get(url).then((res) => res.data);
+        const res = await instance.get(Url).then((response) => response.data);
         firstLoaded = true;
         resolve(res);
       }, timeout);
@@ -37,6 +54,8 @@ function ListGroup() {
   if (error) return <div>에러 발생...</div>;
   if (!data) return <ListGroupSkeleton />;
 
+  const products = data.flat(Infinity) as Product[];
+
   function handleClick() {
     console.log("더보기 클릭");
     setSize(size + 1);
@@ -45,10 +64,8 @@ function ListGroup() {
   return (
     <>
       <ul className="list_group">
-        {data.map((products: any) => {
-          return products.map((product: any) => (
-            <ListItem key={product.id} item={product} />
-          ));
+        {products.map((product: Product) => {
+          return <ListItem key={product.id} item={product} />;
         })}
       </ul>
       <button

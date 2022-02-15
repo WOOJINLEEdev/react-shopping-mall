@@ -5,12 +5,12 @@ import { debounce } from "lodash";
 interface SearchInputBtnProps {
   show?: any;
   searchClassName?: string;
-  handleSearchBtn?: any;
-  handleSearchInput?: any;
+  handleSearchBtn: Function;
+  handleSearchInput?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   searchInputClassName?: string;
   searchBtnClassName?: string;
   searchPlaceHolder?: string;
-  searchInputId?: any;
+  searchInputId?: string;
 }
 
 const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(

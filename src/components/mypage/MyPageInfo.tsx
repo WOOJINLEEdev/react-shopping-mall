@@ -14,7 +14,26 @@ const MyPageCouponModal = lazy(
   () => import("components/mypage/MyPageCouponModal")
 );
 
-const MyPageInfo = ({ myData }: any) => {
+interface MyPageInfoProps {
+  myData: MyData;
+}
+
+interface MyData {
+  coupons?: CouponInfo[];
+  email: string;
+  id: number;
+  mileage: number;
+  name: string;
+  social_user_id: 0 | string;
+  user_id: string;
+}
+
+interface CouponInfo {
+  id: string | number;
+  coupon_name: string;
+}
+
+const MyPageInfo = ({ myData }: MyPageInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [modalText, setModalText] = useState("정말 로그아웃 하시겠습니까?");
@@ -115,11 +134,7 @@ const MyPageInfo = ({ myData }: any) => {
           tabIndex={0}
         >
           <CouponTitle>쿠폰</CouponTitle>
-          <CouponText>
-            {myData.coupons === 0 || myData.coupons === undefined
-              ? 0
-              : myData.coupons.length}
-          </CouponText>
+          <CouponText>{!myData.coupons ? 0 : myData.coupons.length}</CouponText>
         </Coupon>
         <Mileage tabIndex={0}>
           <MileageTitle>마일리지</MileageTitle>{" "}

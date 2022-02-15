@@ -6,7 +6,13 @@ import useMyPageData from "hooks/useMyPageData";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import Loading from "components/common/Loading";
 
-const AddDeliveryAddressModal = ({ addDeliveryClassName }: any) => {
+interface AddDeliveryAddressModalProps {
+  addDeliveryClassName: string;
+}
+
+const AddDeliveryAddressModal = ({
+  addDeliveryClassName,
+}: AddDeliveryAddressModalProps) => {
   const [address1, setAddress1] = useState("");
   const [addressDetail1, setAddressDetail1] = useState("");
   const [addressDetail2, setAddressDetail2] = useState("");
@@ -74,7 +80,15 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }: any) => {
     setShowDaumPostModal(true);
   };
 
-  const getFullAddress = (data: any) => {
+  interface Address {
+    zonecode: string;
+    address: string;
+    addressType: string;
+    bname: string;
+    buildingName: string;
+  }
+
+  const getFullAddress = (data: Address) => {
     let fullAddress = data.address;
     let extraAddress = "";
 
@@ -92,7 +106,7 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }: any) => {
     return fullAddress;
   };
 
-  const handleComplete = (data: any) => {
+  const handleComplete = (data: Address) => {
     let fullAddress = getFullAddress(data);
 
     setAddress1(data.zonecode);
@@ -105,19 +119,26 @@ const AddDeliveryAddressModal = ({ addDeliveryClassName }: any) => {
     setShowDaumPostModal(false);
   };
 
-  const handleAddressDetail2 = (e: any) => {
+  const handleAddressDetail2 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddressDetail2(e.target.value);
   };
 
-  const handleDeliveryInputChange1 = (e: any) => {
+  const handleDeliveryInputChange1 = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setDesignation(e.target.value);
   };
 
-  const handleDeliveryInputChange2 = (e: any) => {
+  const handleDeliveryInputChange2 = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRecipient(e.target.value);
   };
 
-  const handleDeliveryInputChange3 = (e: any, setState: any) => {
+  const handleDeliveryInputChange3 = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
     let curValue = e.target.value;
     let phoneValue = curValue.replace(/[^0-9]/g, "");
 

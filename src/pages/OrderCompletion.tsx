@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import { ReactComponent as ShoppingBag } from "images/shopping-bag.svg";
@@ -13,8 +14,55 @@ import { getOrderNumber } from "utils/order";
 import { useDevice } from "hooks/useDevice";
 import { getOrdersApi } from "api";
 
-const OrderCompletion = ({ match }: any) => {
-  const [orderData, setOrderData] = useState<any[]>([]);
+interface MatchParams {
+  checkoutId: string;
+}
+
+interface OrderData {
+  created_at: string;
+  line_items: Item[];
+  id: number;
+  shipping_address: ShippingAddress;
+  payment_method: string;
+  shipping_price: string;
+  product_price: string;
+  total_discount: string | number;
+  total_price: string;
+  used_coupon?: Coupon;
+  used_point?: number;
+}
+
+interface Item {
+  image_src: string;
+  price: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+}
+
+type ShippingAddress = {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
+};
+
+type Coupon = {
+  applied_amount: string;
+  id: number;
+  name: string;
+  type: string;
+  user_coupon_id: number;
+};
+
+const OrderCompletion = ({ match }: RouteComponentProps<MatchParams>) => {
+  const [orderData, setOrderData] = useState<OrderData[]>([]);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [arrowImg1, setArrowImg1] = useState(downArrow);
@@ -47,9 +95,9 @@ const OrderCompletion = ({ match }: any) => {
 
   const items = orderData[0].line_items;
   const firstItem = items[0];
-  const remainder = items.filter((item: any) => item !== firstItem);
-  const itemQuantity = items.map((item: any) => item.quantity);
-  const sum = itemQuantity.reduce((a: any, b: any) => a + b);
+  const remainder = items.filter((item: Item) => item !== firstItem);
+  const itemQuantity = items.map((item: Item) => item.quantity);
+  const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtn = () => {
     if (remainderClass === "info_remainder") {

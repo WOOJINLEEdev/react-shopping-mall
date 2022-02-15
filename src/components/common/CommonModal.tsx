@@ -5,13 +5,13 @@ import styled from "styled-components";
 Modal.setAppElement("#root");
 
 interface CommonModalProps {
-  isOpen: any;
-  onRequestClose: any;
+  isOpen: boolean;
+  onRequestClose: () => void;
   modalText: string;
   btnText1: string;
   btnText2: string;
-  btnClick1: any;
-  btnClick2: any;
+  btnClick1: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  btnClick2: (e: React.MouseEvent<HTMLButtonElement>) => void;
   btnWidth?: string;
   contentPadding?: string;
 }
@@ -91,13 +91,10 @@ const ModalBtnWrap = styled.div`
 `;
 
 interface ModalBtnProps {
-  type: any;
-  width: any;
-  color?: any;
-  border?: any;
-  backgroundColor?: any;
-  onClick: any;
-  name: any;
+  width?: string;
+  color?: string;
+  border?: string;
+  backgroundColor?: string;
 }
 
 const ModalBtn = styled.button<ModalBtnProps>`

@@ -1,6 +1,6 @@
 interface BoardTableColumnProp {
-  children?: any;
-  title?: any;
+  children?: Object;
+  title?: string;
 }
 
 const BoardTableColumn = ({ children, title }: BoardTableColumnProp) => {

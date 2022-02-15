@@ -15,10 +15,45 @@ Modal.setAppElement("#root");
 
 interface MyOrderCheckModalProps {
   isOpen3: boolean;
-  onRequestClose3: any;
-  myOrderList: any[];
+  onRequestClose3: () => void;
+  myOrderList: MyOrderList[];
   orderItemId?: number;
 }
+
+interface MyOrderList {
+  checkout_id: number;
+  created_at: string;
+  line_items: LineItems[];
+  id: number;
+  payment_method: string;
+  shipping_address: ShippingAddress;
+  shipping_price: string;
+  product_price: string;
+  total_discount: string | number;
+  total_price: string;
+}
+
+interface LineItems {
+  image_src: string;
+  price: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+}
+
+type ShippingAddress = {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
+};
+
 const MyOrderCheckModal = ({
   isOpen3,
   onRequestClose3,
@@ -50,7 +85,7 @@ const MyOrderCheckModal = ({
   }
 
   const selectedOrderData = myOrderList.filter(
-    (item) => item.checkout_id === orderItemId
+    (item: MyOrderList) => item.checkout_id === orderItemId
   );
 
   if (
@@ -62,19 +97,9 @@ const MyOrderCheckModal = ({
   }
   const items = selectedOrderData[0].line_items;
 
-  interface OrderCheckItems {
-    image_src: string;
-    price: string;
-    product_id: number;
-    product_name: string;
-    quantity: number;
-    variant_id: number;
-    variant_name: string;
-  }
-
-  const firstItem: OrderCheckItems = selectedOrderData[0].line_items[0];
-  const remainder = items.filter((item: OrderCheckItems) => item !== firstItem);
-  const itemQuantity = items.map((item: OrderCheckItems) => item.quantity);
+  const firstItem: LineItems = selectedOrderData[0].line_items[0];
+  const remainder = items.filter((item: LineItems) => item !== firstItem);
+  const itemQuantity = items.map((item: LineItems) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtn = () => {

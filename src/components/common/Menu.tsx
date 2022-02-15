@@ -29,9 +29,10 @@ const Menu = ({ show }: any) => {
     mutate(!data);
   };
 
-  const handleItemClick = (e: any) => {
-    console.log("itemclick", e.target.dataset.name);
-    const itemName = e.target.dataset.name;
+  const handleItemClick = (
+    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
+  ) => {
+    const itemName = (e.target as HTMLLIElement).dataset.name;
 
     if (itemName === "ABOUT ME") {
       history.push("/aboutMe");

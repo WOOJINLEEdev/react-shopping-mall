@@ -7,9 +7,9 @@ import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 Modal.setAppElement("#root");
 
 interface BoardItemModalProps {
-  isOpen: any;
-  onRequestClose: any;
-  boardItemId: any;
+  isOpen: boolean;
+  onRequestClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
+  boardItemId: number;
 }
 
 const BoardItemModal = ({

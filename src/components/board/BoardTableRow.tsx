@@ -1,9 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 
 interface BoardTableRowProps {
-  children?: any;
-  background?: any;
+  children?: Object;
+  background?: string;
 }
 
 const BoardTableRow = ({ children, background }: BoardTableRowProps) => {

@@ -13,7 +13,7 @@ const BoardItem = ({ match }: RouteComponentProps<MatchParams>) => {
   const date = new Date();
   const curDate = formatDate(date);
 
-  const boardItemId = match.params.id;
+  const boardItemId = Number(match.params.id);
   const { boardItem, boardItemError } = useBoardItem(boardItemId);
 
   if (boardItemError) return <div>failed to load</div>;

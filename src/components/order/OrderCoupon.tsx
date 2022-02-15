@@ -2,9 +2,23 @@ import React, { useEffect, useState } from "react";
 import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 
 interface OrderCouponProps {
-  checkoutData: any;
-  isMobile: any;
-  isTablet: any;
+  checkoutData: CheckoutData;
+  isMobile: boolean;
+  isTablet: boolean;
+}
+
+interface CheckoutData {
+  user: User;
+}
+
+interface User {
+  coupons?: Coupon[];
+  mileage: number;
+}
+
+interface Coupon {
+  id: number;
+  coupon_name: string;
 }
 
 const OrderCoupon = ({
@@ -16,12 +30,12 @@ const OrderCoupon = ({
     useCheckoutCouponData();
   const [coupons, setCoupons] = useState(checkoutData.user.coupons);
   const [mileage, setMileage] = useState(checkoutData.user.mileage);
-  const [availableMileage, setAvailableMileage] = useState(
+  const [availableMileage, setAvailableMileage] = useState<number>(
     checkoutData.user.mileage
   );
   const [selectCouponId, setSelectCouponId] = useState(0);
   const [selectOption, setSelectOption] = useState(0);
-  const [usedMileage, setUsedMileage] = useState<any>();
+  const [usedMileage, setUsedMileage] = useState<number>();
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -33,40 +47,40 @@ const OrderCoupon = ({
   }, [usedMileage, selectCouponId, selectOption]);
 
   const handleSelectOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === "가입축하 20% 할인") {
-      console.log("20퍼센트 할인");
+    if (coupons) {
+      if (e.target.value === "가입축하 20% 할인") {
+        console.log("20퍼센트 할인");
 
-      setSelectOption(0.2);
-      return setSelectCouponId(coupons[0].id);
-    } else if (e.target.value === "가입축하 5,000원 할인") {
-      console.log("5천원 할인");
+        setSelectOption(0.2);
+        return setSelectCouponId(coupons[0].id);
+      } else if (e.target.value === "가입축하 5,000원 할인") {
+        console.log("5천원 할인");
 
-      if (coupons.length < 2) {
-        setSelectCouponId(coupons[0].id);
+        if (coupons.length < 2) {
+          setSelectCouponId(coupons[0].id);
+          return setSelectOption(5000);
+        }
+
+        setSelectCouponId(coupons[1].id);
         return setSelectOption(5000);
+      } else {
+        setSelectCouponId(0);
+        return setSelectOption(0);
       }
-
-      setSelectCouponId(coupons[1].id);
-      return setSelectOption(5000);
-    } else {
-      setSelectCouponId(0);
-      return setSelectOption(0);
     }
   };
 
   const handleMileage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let targetValue: any = e.target.value
-      .replace(/[^0-9.]/g, "")
-      .replace(/(\.*)\./g, "")
-      .replace(/(^0+)/, "");
+    let targetValue = Number(
+      e.target.value
+        .replace(/[^0-9.]/g, "")
+        .replace(/(\.*)\./g, "")
+        .replace(/(^0+)/, "")
+    );
 
     if (
-      (targetValue > 0 && availableMileage === "0") ||
       (targetValue > 0 && availableMileage === 0) ||
-      (targetValue > 0 && availableMileage === "") ||
-      (targetValue > 0 && availableMileage === undefined) ||
-      availableMileage === "0" ||
-      availableMileage === ""
+      (targetValue > 0 && availableMileage === undefined)
     ) {
       alert("보유 마일리지보다 많이 입력할 수 없습니다.");
       setMileage(0);
@@ -84,12 +98,15 @@ const OrderCoupon = ({
     return setUsedMileage(targetValue);
   };
 
-  const allMileage = (e: React.MouseEvent<HTMLButtonElement> | any) => {
-    if (e.target.name === "allMileage") {
+  const allMileage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    let allMileageTarget = (e.target as HTMLButtonElement).name;
+
+    if (allMileageTarget === "allMileage") {
       if (usedMileage === availableMileage && mileage === 0) {
+        allMileageTarget = "mile";
         setMileage(availableMileage);
         setUsedMileage(0);
-        return (e.target.name = "mile");
+        return;
       }
 
       if (!checkoutData.user.mileage) {
@@ -101,16 +118,18 @@ const OrderCoupon = ({
         setUsedMileage(0);
       }
       console.log("모두사용 버튼 클릭");
+      allMileageTarget = "mile";
       setMileage(0);
       setUsedMileage(availableMileage);
-      return (e.target.name = "mile");
+      return;
     }
 
-    if (e.target.name === "mile") {
+    if (allMileageTarget === "mile") {
       if (usedMileage === availableMileage && mileage === 0) {
+        allMileageTarget = "allMileage";
         setMileage(availableMileage);
         setUsedMileage(0);
-        return (e.target.name = "allMileage");
+        return;
       }
 
       if (!checkoutData.user.mileage) {
@@ -122,9 +141,10 @@ const OrderCoupon = ({
         setUsedMileage(0);
       }
 
+      allMileageTarget = "allMileage";
       setMileage(0);
       setUsedMileage(availableMileage);
-      return (e.target.name = "allMileage");
+      return;
     }
   };
 
@@ -137,8 +157,10 @@ const OrderCoupon = ({
           <div className="info_head_coupon">
             <span>
               쿠폰 {selectOption > 0 ? "1" : "0"}장 /{" "}
-              {usedMileage === 0 || usedMileage === "" ? "0" : usedMileage}p
-              사용
+              {usedMileage === 0 || usedMileage === undefined
+                ? "0"
+                : usedMileage}
+              p 사용
             </span>
           </div>
         )}
@@ -146,8 +168,10 @@ const OrderCoupon = ({
           <div className="info_head_coupon">
             <span>
               쿠폰 {selectOption > 0 ? "1" : "0"}장 /{" "}
-              {usedMileage === 0 || usedMileage === "" ? "0" : usedMileage}p
-              사용
+              {usedMileage === 0 || usedMileage === undefined
+                ? "0"
+                : usedMileage}
+              p 사용
             </span>
           </div>
         )}
@@ -168,7 +192,7 @@ const OrderCoupon = ({
               사용가능 쿠폰 {coupons ? coupons.length : "0"}장
             </option>
             {coupons
-              ? coupons.map((coupon: any) => (
+              ? coupons.map((coupon: Coupon) => (
                   <option key={coupon.id} value={coupon.coupon_name}>
                     {coupon.coupon_name}
                   </option>

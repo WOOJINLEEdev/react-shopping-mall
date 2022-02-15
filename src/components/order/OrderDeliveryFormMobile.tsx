@@ -2,16 +2,45 @@ import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
 interface OrderDeliveryFormMobileProps {
-  deliveryWrapClass: any;
-  handleDeliveryWrite: any;
-  deliveryClassName: any;
-  deliveryClassName1: any;
-  checkoutData: any;
-  deliveryForm: any;
-  handleDeliveryRequirement: any;
-  deliveryRequirementWrite: any;
-  handleDeliveryInputChange4: any;
-  deliveryRequirementOption: any;
+  deliveryWrapClass: string;
+  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
+  deliveryClassName: string;
+  deliveryClassName1: string;
+  checkoutData: CheckoutData;
+  deliveryForm: string;
+  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  deliveryRequirementWrite: string;
+  handleDeliveryInputChange4: (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  deliveryRequirementOption: DeliveryRequirementOption[];
+}
+
+interface CheckoutData {
+  user: User;
+}
+
+interface User {
+  shipping_address?: ShippingAddress;
+  name?: string;
+}
+
+interface ShippingAddress {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
+}
+
+interface DeliveryRequirementOption {
+  no: string;
+  label: string;
+  value: string;
+  selected?: string;
 }
 
 const OrderDeliveryFormMobile = ({
@@ -72,11 +101,13 @@ const OrderDeliveryFormMobile = ({
                 onChange={handleDeliveryRequirement}
                 tabIndex={0}
               >
-                {deliveryRequirementOption.map((item: any) => (
-                  <option key={item.no} value={item.label}>
-                    {item.value}
-                  </option>
-                ))}
+                {deliveryRequirementOption.map(
+                  (item: DeliveryRequirementOption) => (
+                    <option key={item.no} value={item.label}>
+                      {item.value}
+                    </option>
+                  )
+                )}
               </PreexistenceSelect>
               <SelectRequirementWrite
                 className={deliveryRequirementWrite}

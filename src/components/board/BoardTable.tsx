@@ -2,10 +2,10 @@ import Loading from "components/common/Loading";
 import { useDevice } from "hooks/useDevice";
 
 interface BoardTableProps {
-  headersName: any;
-  children?: any;
+  headersName: string[];
+  children?: Object;
   loading?: any;
-  boardLocal?: any;
+  boardLocal?: "first" | "second";
 }
 
 const BoardTable = ({
@@ -38,7 +38,7 @@ const BoardTable = ({
         </colgroup>
         <thead>
           <tr className="board_thead_tr">
-            {headersName.map((item: any, i: any) => (
+            {headersName.map((item: string, i: number) => (
               <th className="board_table_head" key={i}>
                 {item}
               </th>

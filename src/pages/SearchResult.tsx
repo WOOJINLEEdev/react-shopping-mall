@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useSWRInfinite } from "swr";
+import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import ListItem from "components/home/ListItem";
 import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
@@ -47,7 +47,6 @@ const SearchResult = () => {
       }
     }
 
-    console.log("검색 결과:::", searchResultData);
     setSearchWord(searchResultData);
     setLoading(true);
     searchProduct();
@@ -56,7 +55,7 @@ const SearchResult = () => {
   const PAGE_LIMIT = 8;
   const pageLimit = 8;
 
-  const getKey = (pageIndex: any, previousPageData: any) => {
+  const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) {
       return null;
     }
@@ -67,7 +66,7 @@ const SearchResult = () => {
   };
 
   const searchResultUrl = `/v1/products?limit=${pageLimit}&offset=${pageOffset}&name=${searchResultData}`;
-  const fetcher = async (url: any) => {
+  const fetcher = async (url: string) => {
     const res = await instance.get(url);
     return res.data;
   };
@@ -90,9 +89,28 @@ const SearchResult = () => {
       </ResultWrap>
     );
 
+  const products = data.flat(Infinity);
+
   function handleClick() {
     console.log("더보기 클릭");
     setSize(size + 1);
+  }
+
+  interface Product {
+    id: number;
+    images: Images[];
+    name: string;
+    variants: Variants[];
+  }
+
+  interface Images {
+    id: number;
+    product_id: number;
+    src: string;
+  }
+
+  interface Variants {
+    price: string;
   }
 
   return (
@@ -102,10 +120,8 @@ const SearchResult = () => {
         <span>검색결과 {resultCount}건</span>
       </SearchResultTitle>
       <ul className="list_group">
-        {data.map((products) => {
-          return products.map((product: any) => (
-            <ListItem key={product.id} item={product} />
-          ));
+        {products.map((product: Product) => {
+          return <ListItem key={product.id} item={product} />;
         })}
       </ul>
       {resultCount > 9 && size * pageLimit < resultCount ? (

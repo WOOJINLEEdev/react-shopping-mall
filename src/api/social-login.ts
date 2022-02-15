@@ -2,14 +2,14 @@ import { instance } from "utils/http-client";
 
 interface CreateSocialLoginPayload {
   socialType: string;
-  accessToken?: any;
+  accessToken?: string;
   profile?: SocialProfile;
 }
 
 interface SocialProfile {
-  id: any;
-  name: any;
-  email: any;
+  id: string;
+  name: string;
+  email: string;
 }
 
 export function createSocialLoginApi({

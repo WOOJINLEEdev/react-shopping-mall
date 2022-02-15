@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import Loading from "components/common/Loading";
 import { instance } from "utils/http-client";
-import { useSWRInfinite } from "swr";
+import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import { IoIosArrowDown } from "react-icons/io";
 import { getOrderNumber } from "utils/order";
 import { getOrdersApi } from "api";
@@ -17,7 +17,7 @@ const MyOrderCheckModal = lazy(
 const MyOrderCheck = () => {
   const [isOpen3, setIsOpen3] = useState(false);
   const [totalCount, setTotalCount] = useState<number>(0);
-  const [selectItemId, setSelectItemId] = useState();
+  const [selectItemId, setSelectItemId] = useState<number>();
   const [pageOffset, setPageOffset] = useState(0);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const MyOrderCheck = () => {
   }, []);
 
   const PAGE_LIMIT = 5;
-  const getKey = (pageIndex: any, previousPageData: any) => {
+  const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) {
       return null;
     }
@@ -42,7 +42,7 @@ const MyOrderCheck = () => {
   };
 
   const myOrderCheckUrl = `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageOffset}`;
-  const fetcher = async (url: any) => {
+  const fetcher = async (url: string) => {
     const res = await instance.get(url);
     return res.data;
   };
@@ -54,7 +54,7 @@ const MyOrderCheck = () => {
 
   const myOrderList = data.flat(Infinity);
 
-  const handleOrderListItem = (itemId: any) => {
+  const handleOrderListItem = (itemId: number) => {
     setSelectItemId(itemId);
     setIsOpen3(true);
   };
@@ -111,9 +111,7 @@ const MyOrderCheck = () => {
               </ListItemContent>
               <ListItemContent className="list_item_price">
                 결제금액:{" "}
-                {item.total_price
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                {item.total_price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </ListItemContent>
               <ListItemNumber>{index + 1}</ListItemNumber>
             </OrderListItem>

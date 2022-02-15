@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-interface ItemInfoProps {
+interface OrderCompletionItemInfoProps {
   items: ItemType[];
   firstItem: ItemType;
   remainder: ItemType[];
   remainderClass: string;
-  handleOpenCloseBtn: any;
-  handleInfoOpenBtn: any;
+  handleOpenCloseBtn: () => void;
+  handleInfoOpenBtn: () => void;
   itemInfoHeadClass: string;
   itemInfoClass: string;
   arrowImg: string;
@@ -45,7 +45,7 @@ const OrderCompletionItemInfo = ({
   isPc,
   isTablet,
   isMobile,
-}: ItemInfoProps) => {
+}: OrderCompletionItemInfoProps) => {
   return (
     <OrderItemInfoWrap>
       <div className="order_item_info">

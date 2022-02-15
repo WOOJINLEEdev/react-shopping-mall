@@ -27,8 +27,18 @@ const BoardFirst = () => {
   const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
     useCurrentBoardPage();
 
+  interface PostListType {
+    no: number;
+    type: string;
+    title: string;
+    content: string | string[];
+    user: string;
+    createDate: string;
+    readCount: number;
+  }
+
   const initialPage = getCurrentBoardPage("first");
-  const [dataList, setDataList] = useState<any[]>([]);
+  const [dataList, setDataList] = useState<PostListType[]>([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(initialPage);
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
@@ -74,7 +84,7 @@ const BoardFirst = () => {
     }
   };
 
-  const handlePreviewBtn = (itemId: any) => {
+  const handlePreviewBtn = (itemId: number) => {
     setSelectedPreviewId(itemId);
     setIsOpen(true);
   };
@@ -113,7 +123,7 @@ const BoardFirst = () => {
   };
 
   const handleSearchBtn = () => {
-    const searchFilter = dataList.filter((item: any) =>
+    const searchFilter = dataList.filter((item: PostListType) =>
       item.title.includes(searchInput)
     );
     setDataList(searchFilter);
@@ -171,7 +181,7 @@ const BoardFirst = () => {
 
       <BoardTable headersName={getHeadersName()} boardLocal="first">
         {notice.map((item, i) => (
-          <BoardTableRow key={item.no} background>
+          <BoardTableRow key={item.no}>
             {isTablet && (
               <BoardTableColumn>
                 <GiSpeaker />
@@ -215,39 +225,45 @@ const BoardFirst = () => {
             )}
           </BoardTableRow>
         ))}
-        {dataList.slice(offset, offset + limit).map((item: any, i: number) => (
-          <BoardTableRow key={i}>
-            {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
-            {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}
-            <BoardTableColumn>{item.type}</BoardTableColumn>
-            <BoardTableColumn>
-              <Link to={`/post/${item.no}`} className="board_link">
-                {item.title}
-              </Link>
-            </BoardTableColumn>
-            <BoardTableColumn>{item.user}</BoardTableColumn>
-            {isMobile && (
+        {dataList
+          .slice(offset, offset + limit)
+          .map((item: PostListType, i: number) => (
+            <BoardTableRow key={i}>
+              {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
+              {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}
+              <BoardTableColumn>{item.type}</BoardTableColumn>
               <BoardTableColumn>
-                {item.createDate.substring(5)}
+                <Link to={`/post/${item.no}`} className="board_link">
+                  {item.title}
+                </Link>
               </BoardTableColumn>
-            )}
-            {isTablet && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
-            {isTablet && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
-            {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
-            {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
-            {isPc && (
-              <BoardTableColumn>
-                <button
-                  type="button"
-                  className="board_preview_btn"
-                  onClick={() => handlePreviewBtn(item.no)}
-                >
-                  <span className="visually_hidden">미리보기</span>
-                </button>
-              </BoardTableColumn>
-            )}
-          </BoardTableRow>
-        ))}
+              <BoardTableColumn>{item.user}</BoardTableColumn>
+              {isMobile && (
+                <BoardTableColumn>
+                  {item.createDate.substring(5)}
+                </BoardTableColumn>
+              )}
+              {isTablet && (
+                <BoardTableColumn>{item.createDate}</BoardTableColumn>
+              )}
+              {isTablet && (
+                <BoardTableColumn>{item.readCount}</BoardTableColumn>
+              )}
+              {isPc && <BoardTableColumn>{item.createDate}</BoardTableColumn>}
+              {isPc && <BoardTableColumn>{item.readCount}</BoardTableColumn>}
+              {isPc && (
+                <BoardTableColumn>
+                  <button
+                    type="button"
+                    className="board_preview_btn"
+                    onClick={() => handlePreviewBtn(item.no)}
+                  >
+                    <span className="visually_hidden">미리보기</span>
+                  </button>
+                </BoardTableColumn>
+              )}
+            </BoardTableRow>
+          ))}
       </BoardTable>
       <BoardPagination
         total={dataList.length}

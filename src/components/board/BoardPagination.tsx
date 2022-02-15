@@ -5,7 +5,7 @@ interface PaginationProps {
   total: number;
   limit: number;
   page: number;
-  setPage: any;
+  setPage: Function;
 }
 
 function BoardPagination({ total, limit, page, setPage }: PaginationProps) {
@@ -47,7 +47,7 @@ const Nav = styled.nav`
 `;
 
 interface ButtonProps {
-  disabled?: any;
+  disabled?: boolean;
   ["aria-current"]?: any;
 }
 

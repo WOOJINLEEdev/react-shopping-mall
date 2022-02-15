@@ -1,36 +1,12 @@
 import React from "react";
-import ApexChart from "react-apexcharts";
-
-interface ChartProps {
-  type:
-    | "area"
-    | "line"
-    | "bar"
-    | "histogram"
-    | "pie"
-    | "donut"
-    | "radialBar"
-    | "scatter"
-    | "bubble"
-    | "heatmap"
-    | "treemap"
-    | "boxPlot"
-    | "candlestick"
-    | "radar"
-    | "polarArea"
-    | "rangeBar"
-    | undefined;
-  series: any;
-  options: any;
-  chartHeight: number;
-}
+import ApexChart, { Props } from "react-apexcharts";
 
 const Chart = ({
   type,
   series,
   options,
   chartHeight,
-}: ChartProps | Readonly<ChartProps>) => {
+}: Props | Readonly<Props>) => {
   return (
     <ApexChart
       type={type}

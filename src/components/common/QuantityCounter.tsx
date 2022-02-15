@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 interface QuantityCounterProps {
   quantity: number;
-  onIncrement: any;
-  onDecrement: any;
+  onIncrement: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onDecrement: (event: React.MouseEvent<HTMLInputElement>) => void;
   margin?: boolean;
   flexEnd?: boolean;
   productId?: number;

@@ -2,12 +2,17 @@ import React, { useState, useEffect, useCallback } from "react";
 import useCheckoutPaymentData from "hooks/useCheckoutPaymentData";
 
 interface OrderPaymentItemProps {
-  i: any;
-  selected: any;
-  item: any;
-  handlePaymentMethod: any;
-  basePaymentClass: any;
-  selectedPaymentClass: any;
+  i: number;
+  selected: boolean;
+  item: Payment;
+  handlePaymentMethod: (e: React.MouseEvent<HTMLLIElement>) => void;
+  basePaymentClass: string;
+  selectedPaymentClass: string;
+}
+
+interface Payment {
+  id: string;
+  payment: string;
 }
 
 const OrderPaymentItem = React.memo(
@@ -82,7 +87,7 @@ const OrderPaymentList = React.memo(() => {
     },
   ];
 
-  const [selectedPaymentIndex, setSelectedPaymentIndex] = useState("");
+  const [selectedPaymentIndex, setSelectedPaymentIndex] = useState<number>();
   const [paymentName, setPaymentName] = useState("");
 
   const basePaymentClass = "payment";
@@ -96,16 +101,19 @@ const OrderPaymentList = React.memo(() => {
     });
   }, [paymentName]);
 
-  const handlePaymentMethod = useCallback((e) => {
-    const clickedPaymentMethodIndex = e.target.value;
-    setPaymentName(e.target.innerText);
+  const handlePaymentMethod = useCallback(
+    (e: React.MouseEvent<HTMLLIElement>) => {
+      const clickedPaymentMethodIndex = (e.target as HTMLLIElement).value;
+      setPaymentName((e.target as HTMLLIElement).innerText);
 
-    return setSelectedPaymentIndex(clickedPaymentMethodIndex);
-  }, []);
+      return setSelectedPaymentIndex(clickedPaymentMethodIndex);
+    },
+    []
+  );
 
   return (
     <ol className="payment_method">
-      {payments.map((item: any, i: any) => (
+      {payments.map((item: Payment, i: number) => (
         <OrderPaymentItem
           key={item.id}
           item={item}

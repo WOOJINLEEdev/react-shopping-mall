@@ -67,7 +67,7 @@ const BoardEditor = () => {
     }
   };
 
-  const handleEditorTitle = (e: any) => {
+  const handleEditorTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputTitle(e.target.value);
   };
 

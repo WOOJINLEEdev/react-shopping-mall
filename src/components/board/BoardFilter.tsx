@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 interface BoardFilterProps {
-  handleSelectOption: any;
+  handleSelectOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   selectedOption: string;
 }
 
@@ -11,6 +10,7 @@ const BoardFilter = ({
   selectedOption,
 }: BoardFilterProps) => {
   const boardType = ["공지사항", "일반"];
+
   return (
     <FilterWrap>
       <select
@@ -30,11 +30,6 @@ const BoardFilter = ({
 };
 
 export default BoardFilter;
-
-BoardFilter.propTypes = {
-  handleSelectOption: PropTypes.func,
-  selectedOption: PropTypes.string,
-};
 
 const FilterWrap = styled.div`
   width: 100px;

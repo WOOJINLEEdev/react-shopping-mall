@@ -1,12 +1,32 @@
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 import { postList } from "components/board/board-first-data";
 
-const BoardFirstItem = ({ match }: any) => {
+interface MatchParams {
+  no: string;
+}
+
+interface PostListType {
+  no: number;
+  type: string;
+  title: string;
+  content: string | string[];
+  user: string;
+  createDate: string;
+  readCount: number;
+}
+
+const BoardFirstItem = ({ match }: RouteComponentProps<MatchParams>) => {
   const history = useHistory();
 
   const boardItemNo = Number(match.params.no);
-  const boardItem: any = postList.find((post) => post.no === boardItemNo);
+  const boardItem: PostListType | undefined = postList.find(
+    (post) => post.no === boardItemNo
+  );
+
+  if (!boardItem) {
+    return <div>해당 데이터를 찾지 못하였습니다.</div>;
+  }
 
   const moveBoard = () => {
     history.goBack();

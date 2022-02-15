@@ -16,7 +16,7 @@ interface CheckoutData {
   created_at: string;
   id: number;
   line_items: LineItem[];
-  user: string[];
+  user: User;
 }
 
 interface LineItem {
@@ -27,6 +27,21 @@ interface LineItem {
   variant_id: number;
   variant_name: string;
   variant_price: string;
+}
+
+interface User {
+  shipping_address: ShippingAddress;
+}
+
+interface ShippingAddress {
+  address1: string;
+  address2: string;
+  name?: string;
+  note?: string;
+  phone1: string;
+  postal_code: string;
+  recipient_name: string;
+  request_note?: string;
 }
 
 const OrderTotal = ({

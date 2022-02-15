@@ -6,10 +6,10 @@ import useSearchResult from "hooks/useSearchResult";
 import { getProductsApi } from "api";
 
 interface SearchWrapProps extends RouteComponentProps {
-  searchData: any;
-  searchClassName: any;
-  searchInputClassName: any;
-  searchBtnClassName: any;
+  searchData: boolean;
+  searchClassName: string;
+  searchInputClassName: string;
+  searchBtnClassName: string;
 }
 
 const SearchWrap = ({
@@ -35,7 +35,7 @@ const SearchWrap = ({
     }
   }, [searchData]);
 
-  const handleSearchBtn = async (searchInput: any) => {
+  const handleSearchBtn = async (searchInput: string) => {
     if (searchInput === "" || searchInput === null) {
       alert("검색어를 입력해주세요.");
       ref?.current?.focus();

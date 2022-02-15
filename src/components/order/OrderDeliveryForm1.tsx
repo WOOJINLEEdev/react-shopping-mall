@@ -1,33 +1,45 @@
 import styled from "styled-components";
 
 interface OrderDeliveryForm1Props {
-  deliveryForm1: any;
-  designation: any;
-  handleDeliveryInputChange1: any;
-  recipient: any;
-  handleDeliveryInputChange2: any;
-  address1: any;
-  handlePostalCode: any;
-  addressDetail1: any;
-  addressDetail2: any;
-  handleAddressDetail2: any;
-  handleDeliveryInputChange3: any;
-  tel1: any;
-  setTel1: any;
-  tel2: any;
-  setTel2: any;
-  tel3: any;
-  setTel3: any;
-  tel4: any;
-  setTel4: any;
-  tel5: any;
-  setTel5: any;
-  tel6: any;
-  setTel6: any;
-  handleDeliveryRequirement: any;
-  deliveryRequirementOption1: any;
-  deliveryRequirementWrite1: any;
-  handleDeliveryInputChange5: any;
+  deliveryForm1: string;
+  designation: string;
+  handleDeliveryInputChange1: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  recipient: string;
+  handleDeliveryInputChange2: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  address1: string;
+  handlePostalCode: () => void;
+  addressDetail1: string;
+  addressDetail2: string;
+  handleAddressDetail2: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleDeliveryInputChange3: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => void;
+  tel1: string;
+  setTel1: React.Dispatch<React.SetStateAction<string>>;
+  tel2: string;
+  setTel2: React.Dispatch<React.SetStateAction<string>>;
+  tel3: string;
+  setTel3: React.Dispatch<React.SetStateAction<string>>;
+  tel4: string;
+  setTel4: React.Dispatch<React.SetStateAction<string>>;
+  tel5: string;
+  setTel5: React.Dispatch<React.SetStateAction<string>>;
+  tel6: string;
+  setTel6: React.Dispatch<React.SetStateAction<string>>;
+  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  deliveryRequirementOption1: DeliveryRequirementOption1[];
+  deliveryRequirementWrite1: string;
+  handleDeliveryInputChange5: (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+}
+
+interface DeliveryRequirementOption1 {
+  no: string;
+  label: string;
+  value: string;
+  selected?: string;
 }
 
 const OrderDeliveryForm1 = ({
@@ -220,11 +232,13 @@ const OrderDeliveryForm1 = ({
             color={"#333"}
             onChange={handleDeliveryRequirement}
           >
-            {deliveryRequirementOption1.map((item: any) => (
-              <option key={item.no} value={item.label}>
-                {item.value}
-              </option>
-            ))}
+            {deliveryRequirementOption1.map(
+              (item: DeliveryRequirementOption1) => (
+                <option key={item.no} value={item.label}>
+                  {item.value}
+                </option>
+              )
+            )}
           </PreexistenceSelect>
           <SelectRequirementWrite
             className={deliveryRequirementWrite1}
