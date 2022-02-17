@@ -3,46 +3,7 @@ import { Link } from "react-router-dom";
 import OrderTotalDetail from "./OrderTotalDetail";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
-
-interface OrderTotalProps {
-  checkoutData: CheckoutData;
-  checkoutNumber: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
-}
-
-interface CheckoutData {
-  created_at: string;
-  id: number;
-  line_items: LineItem[];
-  user: User;
-}
-
-interface LineItem {
-  image_src: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-  variant_price: string;
-}
-
-interface User {
-  shipping_address: ShippingAddress;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
+import { OrderTotalProps, LineItem } from "types";
 
 const OrderTotal = ({
   checkoutData,

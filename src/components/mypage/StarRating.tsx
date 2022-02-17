@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 import styled from "styled-components";
 import { updateStarRatingApi } from "api";
-
-interface StarRatingProps {
-  myRating: number;
-}
+import { StarRatingProps } from "types";
 
 const StarRating = ({ myRating }: StarRatingProps) => {
   const stars = [1, 2, 3, 4, 5];

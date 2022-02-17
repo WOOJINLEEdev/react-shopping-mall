@@ -1,33 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-interface OrderCompletionItemInfoProps {
-  items: ItemType[];
-  firstItem: ItemType;
-  remainder: ItemType[];
-  remainderClass: string;
-  handleOpenCloseBtn: () => void;
-  handleInfoOpenBtn: () => void;
-  itemInfoHeadClass: string;
-  itemInfoClass: string;
-  arrowImg: string;
-  arrowImg1: string;
-  closeText: string;
-  sum: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
-}
-
-interface ItemType {
-  image_src: string;
-  price: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-}
+import { OrderCompletionItemInfoProps } from "types";
 
 const OrderCompletionItemInfo = ({
   items,

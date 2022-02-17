@@ -4,21 +4,15 @@ import styled from "styled-components";
 import AddDeliveryAddressModal from "./AddDeliveryAddressModal";
 import useDeliveryData from "hooks/useDeliveryData";
 import { updateShippingAddressApi } from "api";
+import {
+  MyPageDeliveryModalProps,
+  CloseBtnProps,
+  CancelRegistrationBtnProps,
+  AddBtnProps,
+  DeliveryAddressItemProps,
+} from "types";
 
 Modal.setAppElement("#root");
-
-interface MyPageDeliveryModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-  myDeliveryAddress: MyDeliveryAddress;
-}
-
-interface MyDeliveryAddress {
-  address1: string;
-  address2: string;
-  phone1: string;
-  recipient_name: string;
-}
 
 const MyPageDeliveryModal = ({
   isOpen,
@@ -253,10 +247,6 @@ const NotDeliveryAddress = styled.p`
   text-align: center;
 `;
 
-interface DeliveryAddressItemProps {
-  display: string;
-}
-
 const DeliveryAddressItem = styled.div<DeliveryAddressItemProps>`
   display: ${(props) => props.display || "block"};
   padding: 20px;
@@ -314,10 +304,6 @@ const ModifyBtn = styled.button`
 
 const BtnContainer = styled.div``;
 
-interface AddBtnProps {
-  display: string;
-}
-
 const AddBtn = styled.button<AddBtnProps>`
   display: ${(props) => props.display || "block"};
   width: 100%;
@@ -332,10 +318,6 @@ const AddBtn = styled.button<AddBtnProps>`
   outline: none;
   cursor: pointer;
 `;
-
-interface CancelRegistrationBtnProps {
-  display: string;
-}
 
 const CancelRegistrationBtnWrap = styled.div<CancelRegistrationBtnProps>`
   display: ${(props) => props.display || "flex"};
@@ -369,10 +351,6 @@ const RegistrationBtn = styled.button`
   outline: none;
   cursor: pointer;
 `;
-
-interface CloseBtnProps {
-  display: string;
-}
 
 const CloseBtn = styled.button<CloseBtnProps>`
   display: ${(props) => props.display || "block"};

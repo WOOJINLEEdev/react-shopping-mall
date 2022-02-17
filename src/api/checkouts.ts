@@ -9,6 +9,10 @@ interface LineItem {
   quantity: number;
 }
 
+export function createCheckoutsApi({ lineItems }: CreateCheckoutsPayload) {
+  return instance.post("/v1/checkouts", { line_items: lineItems });
+}
+
 interface UpdateCheckoutsPayload {
   checkoutNumber: number;
   shippingAddress: CheckoutShippingAddress;
@@ -27,10 +31,6 @@ interface CheckoutShippingAddress {
   phone1: string;
   phone2?: string;
   request_note?: string;
-}
-
-export function createCheckoutsApi({ lineItems }: CreateCheckoutsPayload) {
-  return instance.post("/v1/checkouts", { line_items: lineItems });
 }
 
 export function updateCheckoutsApi({

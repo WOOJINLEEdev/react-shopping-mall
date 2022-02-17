@@ -1,25 +1,5 @@
 import { Link } from "react-router-dom";
-
-interface ListItemProps {
-  item: ItemType;
-}
-
-interface ItemType {
-  id: number;
-  images: Images[];
-  name: string;
-  variants: Variants[];
-}
-
-interface Images {
-  id: number;
-  product_id: number;
-  src: string;
-}
-
-interface Variants {
-  price: string;
-}
+import { ListItemProps } from "types";
 
 const ListItem = ({ item }: ListItemProps) => {
   return (

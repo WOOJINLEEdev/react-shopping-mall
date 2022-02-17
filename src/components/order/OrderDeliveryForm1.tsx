@@ -1,46 +1,9 @@
 import styled from "styled-components";
-
-interface OrderDeliveryForm1Props {
-  deliveryForm1: string;
-  designation: string;
-  handleDeliveryInputChange1: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  recipient: string;
-  handleDeliveryInputChange2: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  address1: string;
-  handlePostalCode: () => void;
-  addressDetail1: string;
-  addressDetail2: string;
-  handleAddressDetail2: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDeliveryInputChange3: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => void;
-  tel1: string;
-  setTel1: React.Dispatch<React.SetStateAction<string>>;
-  tel2: string;
-  setTel2: React.Dispatch<React.SetStateAction<string>>;
-  tel3: string;
-  setTel3: React.Dispatch<React.SetStateAction<string>>;
-  tel4: string;
-  setTel4: React.Dispatch<React.SetStateAction<string>>;
-  tel5: string;
-  setTel5: React.Dispatch<React.SetStateAction<string>>;
-  tel6: string;
-  setTel6: React.Dispatch<React.SetStateAction<string>>;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementOption1: DeliveryRequirementOption1[];
-  deliveryRequirementWrite1: string;
-  handleDeliveryInputChange5: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-}
-
-interface DeliveryRequirementOption1 {
-  no: string;
-  label: string;
-  value: string;
-  selected?: string;
-}
+import {
+  OrderDeliveryForm1Props,
+  DeliveryRequirementOption1,
+  PreexistenceSelectProps,
+} from "types";
 
 const OrderDeliveryForm1 = ({
   deliveryForm1,
@@ -263,11 +226,6 @@ const DeliveryRequirementWrap = styled.div`
   flex-direction: column;
   width: 100%;
 `;
-
-interface PreexistenceSelectProps {
-  margin?: string;
-  color?: string;
-}
 
 const PreexistenceSelect = styled.select<PreexistenceSelectProps>`
   width: 100%;

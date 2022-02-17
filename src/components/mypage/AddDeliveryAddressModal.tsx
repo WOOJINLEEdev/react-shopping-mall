@@ -5,10 +5,7 @@ import useDeliveryData from "hooks/useDeliveryData";
 import useMyPageData from "hooks/useMyPageData";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import Loading from "components/common/Loading";
-
-interface AddDeliveryAddressModalProps {
-  addDeliveryClassName: string;
-}
+import { AddDeliveryAddressModalProps, Address } from "types";
 
 const AddDeliveryAddressModal = ({
   addDeliveryClassName,
@@ -79,14 +76,6 @@ const AddDeliveryAddressModal = ({
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
   };
-
-  interface Address {
-    zonecode: string;
-    address: string;
-    addressType: string;
-    bname: string;
-    buildingName: string;
-  }
 
   const getFullAddress = (data: Address) => {
     let fullAddress = data.address;

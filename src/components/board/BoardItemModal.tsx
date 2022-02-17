@@ -3,14 +3,9 @@ import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
 import { formatDate } from "utils/formatDate";
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
+import { BoardItemModalProps } from "types";
 
 Modal.setAppElement("#root");
-
-interface BoardItemModalProps {
-  isOpen: boolean;
-  onRequestClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
-  boardItemId: number;
-}
 
 const BoardItemModal = ({
   isOpen,

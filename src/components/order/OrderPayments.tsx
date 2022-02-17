@@ -1,19 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useCheckoutPaymentData from "hooks/useCheckoutPaymentData";
-
-interface OrderPaymentItemProps {
-  i: number;
-  selected: boolean;
-  item: Payment;
-  handlePaymentMethod: (e: React.MouseEvent<HTMLLIElement>) => void;
-  basePaymentClass: string;
-  selectedPaymentClass: string;
-}
-
-interface Payment {
-  id: string;
-  payment: string;
-}
+import { OrderPaymentItemProps, Payment } from "types";
 
 const OrderPaymentItem = React.memo(
   ({

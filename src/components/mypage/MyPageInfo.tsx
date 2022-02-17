@@ -6,6 +6,7 @@ import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { createLogoutApi } from "api";
+import { MyPageInfoProps } from "types";
 
 Modal.setAppElement("#root");
 
@@ -13,25 +14,6 @@ const CommonModal = lazy(() => import("components/common/CommonModal"));
 const MyPageCouponModal = lazy(
   () => import("components/mypage/MyPageCouponModal")
 );
-
-interface MyPageInfoProps {
-  myData: MyData;
-}
-
-interface MyData {
-  coupons?: CouponInfo[];
-  email: string;
-  id: number;
-  mileage: number;
-  name: string;
-  social_user_id: 0 | string;
-  user_id: string;
-}
-
-interface CouponInfo {
-  id: string | number;
-  coupon_name: string;
-}
 
 const MyPageInfo = ({ myData }: MyPageInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);

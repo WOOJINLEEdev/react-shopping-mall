@@ -5,11 +5,6 @@ interface GetMyVisitCountPayload {
   visitEndDate: string;
 }
 
-interface GetShopVisitCountPayload {
-  visitStartDate: string;
-  visitEndDate: string;
-}
-
 export function getMyVisitCountApi({
   visitStartDate,
   visitEndDate,
@@ -17,6 +12,11 @@ export function getMyVisitCountApi({
   return instance.get(
     `/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
   );
+}
+
+interface GetShopVisitCountPayload {
+  visitStartDate: string;
+  visitEndDate: string;
 }
 
 export function getShopVisitCountApi({

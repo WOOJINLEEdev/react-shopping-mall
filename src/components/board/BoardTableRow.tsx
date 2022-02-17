@@ -1,19 +1,11 @@
 import styled from "styled-components";
-
-interface BoardTableRowProps {
-  children?: Object;
-  background?: string;
-}
+import { BoardTableRowProps, TableRowProps } from "types";
 
 const BoardTableRow = ({ children, background }: BoardTableRowProps) => {
   return <TableRow background={background}>{children}</TableRow>;
 };
 
 export default BoardTableRow;
-
-interface TableRowProps {
-  background?: string;
-}
 
 const TableRow = styled.tr<TableRowProps>`
   @media (hover: hover) {

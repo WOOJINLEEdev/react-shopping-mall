@@ -1,12 +1,6 @@
 import Loading from "components/common/Loading";
 import { useDevice } from "hooks/useDevice";
-
-interface BoardTableProps {
-  headersName: string[];
-  children?: Object;
-  loading?: any;
-  boardLocal?: "first" | "second";
-}
+import { BoardTableProps } from "types";
 
 const BoardTable = ({
   headersName,

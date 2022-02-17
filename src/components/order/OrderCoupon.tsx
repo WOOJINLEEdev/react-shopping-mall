@@ -1,25 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useCheckoutCouponData from "hooks/useCheckoutCouponData";
-
-interface OrderCouponProps {
-  checkoutData: CheckoutData;
-  isMobile: boolean;
-  isTablet: boolean;
-}
-
-interface CheckoutData {
-  user: User;
-}
-
-interface User {
-  coupons?: Coupon[];
-  mileage: number;
-}
-
-interface Coupon {
-  id: number;
-  coupon_name: string;
-}
+import { OrderCouponProps, Coupon } from "types";
 
 const OrderCoupon = ({
   checkoutData,

@@ -10,49 +10,9 @@ import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import Loading from "components/common/Loading";
 import { getOrderNumber } from "utils/order";
 import { useDevice } from "hooks/useDevice";
+import { MyOrderCheckModalProps, MyOrderList, LineItems } from "types";
 
 Modal.setAppElement("#root");
-
-interface MyOrderCheckModalProps {
-  isOpen3: boolean;
-  onRequestClose3: () => void;
-  myOrderList: MyOrderList[];
-  orderItemId?: number;
-}
-
-interface MyOrderList {
-  checkout_id: number;
-  created_at: string;
-  line_items: LineItems[];
-  id: number;
-  payment_method: string;
-  shipping_address: ShippingAddress;
-  shipping_price: string;
-  product_price: string;
-  total_discount: string | number;
-  total_price: string;
-}
-
-interface LineItems {
-  image_src: string;
-  price: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-}
-
-type ShippingAddress = {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-};
 
 const MyOrderCheckModal = ({
   isOpen3,

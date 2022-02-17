@@ -1,34 +1,4 @@
-interface DeliveryHeadProps {
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
-  deliveryWrite: string | undefined;
-  infoHeadAddress: string;
-  addressDetail1: string;
-  addressDetail2: string;
-  checkoutData: CheckoutData;
-  handleAddressBtn: () => void;
-  arrowImg: string;
-}
-
-interface CheckoutData {
-  user?: User;
-}
-
-interface User {
-  shipping_address?: ShippingAddress;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
+import { OrderDeliveryHeadProps } from "types";
 
 const OrderDeliveryHead = ({
   isPc,
@@ -41,7 +11,7 @@ const OrderDeliveryHead = ({
   checkoutData,
   handleAddressBtn,
   arrowImg,
-}: DeliveryHeadProps) => {
+}: OrderDeliveryHeadProps) => {
   return (
     <div className="info_head_wrap">
       <h2 className="info_head delivery">배송정보</h2>

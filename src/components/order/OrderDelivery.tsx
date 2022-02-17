@@ -4,39 +4,14 @@ import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
-import { optionData } from "components/order/OrderDeliveryOptionData";
+import { optionData } from "components/order/order-delivery-option-data";
 import useCheckoutDeliveryData from "hooks/useCheckoutDeliveryData";
 import OrderDeliveryHead from "./OrderDeliveryHead";
 import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
 import OrderDeliveryForm1 from "components/order/OrderDeliveryForm1";
-
-interface OrderDeliveryProps {
-  checkoutData: CheckoutData;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
-}
-
-interface CheckoutData {
-  user: User;
-}
-
-interface User {
-  shipping_address?: ShippingAddress;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
+import { OrderDeliveryProps, DeliveryRequirementOption, Address } from "types";
 
 const OrderDelivery = ({
   checkoutData,
@@ -68,13 +43,6 @@ const OrderDelivery = ({
     useState("hide");
   const [deliveryRequirementWrite1, setDeliveryRequirementWrite1] =
     useState("hide");
-
-  interface DeliveryRequirementOption {
-    no: string;
-    label: string;
-    value: string;
-    selected?: string;
-  }
 
   const [deliveryRequirementOption, setDeliveryRequirementOption] =
     useState<DeliveryRequirementOption[]>(optionData);
@@ -146,14 +114,6 @@ const OrderDelivery = ({
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
   };
-
-  interface Address {
-    zonecode: string;
-    address: string;
-    addressType: string;
-    bname: string;
-    buildingName: string;
-  }
 
   const getFullAddress = (data: Address) => {
     let fullAddress = data.address;
@@ -448,24 +408,12 @@ const PostWrap = styled.div`
   transform: translate(-50%, -50%);
   z-index: 100;
 
-  /* & .daum_post_code {
-    display: block;
-    width: 100%;
-    min-height: 500px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-  } */
-
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: 85%;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     width: 80%;
-
-    /* & .daum_post_code {
-      min-height: 700px;
-    } */
   }
 `;
 

@@ -1,16 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import SearchInputBtn from "./SearchInputBtn";
-import { withRouter, useHistory, RouteComponentProps } from "react-router";
+import SearchInputBtn from "components/search/SearchInputBtn";
+import { withRouter, useHistory } from "react-router";
 import useSearchResult from "hooks/useSearchResult";
 import { getProductsApi } from "api";
-
-interface SearchWrapProps extends RouteComponentProps {
-  searchData: boolean;
-  searchClassName: string;
-  searchInputClassName: string;
-  searchBtnClassName: string;
-}
+import { SearchWrapProps } from "types";
 
 const SearchWrap = ({
   searchData,

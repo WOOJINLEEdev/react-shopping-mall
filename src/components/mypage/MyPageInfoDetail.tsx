@@ -1,44 +1,17 @@
-import React, { useState, lazy, Suspense, useCallback } from "react";
+import { useState, lazy, Suspense, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 import StarRating from "components/mypage/StarRating";
 import Loading from "components/common/Loading";
 import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
+import { MyPageInfoDetailProps } from "types";
 
 Modal.setAppElement("#root");
 
 const MyPageDeliveryModal = lazy(
   () => import("components/mypage/MyPageDeliveryModal")
 );
-
-interface MyPageInfoDetailProps {
-  myData: MyData;
-}
-
-interface MyData {
-  coupons?: CouponInfo[];
-  email: string;
-  id: number;
-  mileage: number;
-  name: string;
-  social_user_id: 0 | string;
-  shipping_address: ShippingAddress;
-  user_id: string;
-  rating: number;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  phone1: string;
-  recipient_name: string;
-}
-
-interface CouponInfo {
-  id: string | number;
-  coupon_name: string;
-}
 
 const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
   const [isOpen, setIsOpen] = useState(false);

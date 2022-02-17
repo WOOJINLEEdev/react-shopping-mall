@@ -1,4 +1,3 @@
-import React from "react";
 import "components/home/ListGroupSkeleton.css";
 
 const ListGroupSkeleton = () => {

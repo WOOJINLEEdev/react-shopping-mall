@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { withRouter, useHistory, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import signInImg from "images/user.png";

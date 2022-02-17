@@ -1,9 +1,5 @@
 import styled from "styled-components";
-
-interface BoardFilterProps {
-  handleSelectOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  selectedOption: string;
-}
+import { BoardFilterProps } from "types";
 
 const BoardFilter = ({
   handleSelectOption,

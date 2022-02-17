@@ -8,6 +8,11 @@ import { formatDate } from "utils/formatDate";
 import { getShopVisitCountApi } from "api";
 import { ApexOptions } from "apexcharts";
 
+interface VisitDate {
+  visit_count: number;
+  visit_date: string;
+}
+
 const AboutMe = () => {
   const [total, setTotal] = useState();
   const [today, setToday] = useState<number>(0);
@@ -34,10 +39,7 @@ const AboutMe = () => {
           visitStartDate,
           visitEndDate,
         });
-        interface VisitDate {
-          visit_count: number;
-          visit_date: string;
-        }
+
         const visitDate = res.data.map((item: VisitDate) => item.visit_date);
         const visitCount = res.data.map((item: VisitDate) => item.visit_count);
         const sum = visitCount.reduce((a: number, b: number) => a + b);

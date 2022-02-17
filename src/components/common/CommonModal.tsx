@@ -1,20 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { CommonModalProps, ModalTextProps, ModalBtnProps } from "types";
 
 Modal.setAppElement("#root");
-
-interface CommonModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-  modalText: string;
-  btnText1: string;
-  btnText2: string;
-  btnClick1: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  btnClick2: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  btnWidth?: string;
-  contentPadding?: string;
-}
 
 const CommonModal = ({
   isOpen,
@@ -69,10 +58,6 @@ const CommonModal = ({
 
 export default CommonModal;
 
-interface ModalTextProps {
-  contentPadding?: string;
-}
-
 const ModalText = styled.p<ModalTextProps>`
   padding: ${(props) => props.contentPadding || "50px 20px"};
   font-size: 18px;
@@ -89,13 +74,6 @@ const ModalBtnWrap = styled.div`
   justify-content: flex-end;
   width: 100%;
 `;
-
-interface ModalBtnProps {
-  width?: string;
-  color?: string;
-  border?: string;
-  backgroundColor?: string;
-}
 
 const ModalBtn = styled.button<ModalBtnProps>`
   width: ${(props) => props.width || "30%"};

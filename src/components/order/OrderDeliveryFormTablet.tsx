@@ -1,47 +1,10 @@
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
-
-interface OrderDeliveryFormTabletProps {
-  deliveryWrapClass: string;
-  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
-  deliveryClassName: string;
-  deliveryClassName1: string;
-  checkoutData: CheckoutData;
-  deliveryForm: string;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementWrite: string;
-  handleDeliveryInputChange4: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-  deliveryRequirementOption: DeliveryRequirementOption[];
-}
-
-interface CheckoutData {
-  user: User;
-}
-
-interface User {
-  shipping_address?: ShippingAddress;
-  name?: string;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
-
-interface DeliveryRequirementOption {
-  no: string;
-  label: string;
-  value: string;
-  selected?: string;
-}
+import {
+  OrderDeliveryFormTabletProps,
+  DeliveryRequirementOption,
+  PreexistenceSelectProps,
+} from "types";
 
 const OrderDeliveryFormTablet = ({
   deliveryWrapClass,
@@ -149,11 +112,6 @@ const PreexistenceItem = styled.li`
     }
   }
 `;
-
-interface PreexistenceSelectProps {
-  margin?: string;
-  color?: string;
-}
 
 const PreexistenceSelect = styled.select<PreexistenceSelectProps>`
   width: 100%;

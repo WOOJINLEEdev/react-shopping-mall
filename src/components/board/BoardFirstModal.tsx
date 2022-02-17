@@ -1,32 +1,16 @@
 import Modal from "react-modal";
 import styled from "styled-components";
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
+import { BoardFirstModalProps, Post } from "types";
 
 Modal.setAppElement("#root");
-
-interface BoardItemModalProps {
-  isOpen: boolean;
-  onRequestClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
-  postList: Post[];
-  boardItemNo: number;
-}
-
-interface Post {
-  content: string;
-  createDate: string;
-  no: number;
-  readCount: number;
-  title: string;
-  type: string;
-  user: string;
-}
 
 const BoardItemModal = ({
   isOpen,
   onRequestClose,
   postList,
   boardItemNo,
-}: BoardItemModalProps) => {
+}: BoardFirstModalProps) => {
   const boardItemNumber = boardItemNo;
   const boardItem = postList.find((post: Post) => post.no === boardItemNumber);
 

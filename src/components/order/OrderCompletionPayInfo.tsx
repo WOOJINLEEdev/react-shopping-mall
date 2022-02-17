@@ -2,30 +2,9 @@ import { useState } from "react";
 import styled from "styled-components";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
+import { OrderCompletionPayInfoProps } from "types";
 
-interface PayInfoProps {
-  orderData: Order[];
-}
-
-interface Order {
-  payment_method: string;
-  shipping_price: string;
-  product_price: string;
-  total_discount: string | number;
-  total_price: string;
-  used_coupon?: Coupon;
-  used_point?: number;
-}
-
-type Coupon = {
-  applied_amount: string;
-  id: number;
-  name: string;
-  type: string;
-  user_coupon_id: number;
-};
-
-const OrderCompletionPayInfo = ({ orderData }: PayInfoProps) => {
+const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [payInfoClass, setPayInfoClass] = useState("order_pay_info_wrap");
   const [infoHeadPayment, setInfoHeadPayment] = useState("hide");

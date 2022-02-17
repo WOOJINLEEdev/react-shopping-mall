@@ -3,48 +3,7 @@ import OrderCheckoutButton from "./OrderCheckoutButton";
 import OrderAgreeCheck from "./OrderAgreeCheck";
 import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
-
-interface OrderTotalDetailProps {
-  totalPrice: number;
-  deliveryCharge: string;
-  checkoutData: CheckoutData;
-  checkoutNumber: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
-}
-
-interface CheckoutData {
-  created_at: string;
-  id: number;
-  line_items: LineItem[];
-  user: User;
-}
-
-interface LineItem {
-  image_src: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-  variant_price: string;
-}
-
-interface User {
-  shipping_address: ShippingAddress;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
+import { OrderTotalDetailProps } from "types";
 
 const OrderTotalDetail = ({
   totalPrice,
@@ -67,7 +26,6 @@ const OrderTotalDetail = ({
   const finalPrice =
     totalPrice +
     Number(deliveryCharge) -
-    // Number(usedMileage) -
     Number(!usedMileage ? 0 : usedMileage) -
     (Number.isInteger(selectOption) === false
       ? totalPrice * selectOption

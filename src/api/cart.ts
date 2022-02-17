@@ -10,21 +10,21 @@ interface CartItem {
   quantity: number;
 }
 
+export function addToCartApi({ items }: AddToCartPayload) {
+  return instance.put("/v1/me/cart", { items });
+}
+
 interface DeleteCartItemPayload {
   cartItemId: number;
+}
+
+export function deleteCartItemApi({ cartItemId }: DeleteCartItemPayload) {
+  return instance.delete(`/v1/me/cart/items/${cartItemId}`);
 }
 
 interface UpdateCartItemQuantityPayload {
   itemId: number;
   quantity: number;
-}
-
-export function addToCartApi({ items }: AddToCartPayload) {
-  return instance.put("/v1/me/cart", { items });
-}
-
-export function deleteCartItemApi({ cartItemId }: DeleteCartItemPayload) {
-  return instance.delete(`/v1/me/cart/items/${cartItemId}`);
 }
 
 export function updateCartItemQuantityApi({

@@ -1,8 +1,5 @@
 import styled from "styled-components";
-
-interface BoardModalCloseBtnProps {
-  handleModalClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
-}
+import { BoardModalCloseBtnProps } from "types";
 
 const BoardModalCloseBtn = ({ handleModalClose }: BoardModalCloseBtnProps) => {
   return (

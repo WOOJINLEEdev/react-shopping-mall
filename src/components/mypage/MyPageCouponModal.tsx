@@ -1,20 +1,9 @@
 import { useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import { MyPageCouponModalProps, CouponInfo } from "types";
 
 Modal.setAppElement("#root");
-
-interface MyPageCouponModalProps {
-  isOpen2: boolean;
-  onRequestClose2: () => void;
-  myCoupon?: CouponInfo[];
-}
-
-interface CouponInfo {
-  id: string | number;
-  coupon_name: string;
-}
 
 const MyPageCouponModal = ({
   isOpen2,
@@ -61,12 +50,6 @@ const MyPageCouponModal = ({
 };
 
 export default MyPageCouponModal;
-
-MyPageCouponModal.propTypes = {
-  isOpen2: PropTypes.bool,
-  onRequestClose2: PropTypes.func,
-  myCoupon: PropTypes.array,
-};
 
 const CouponTitle = styled.p`
   font-weight: bold;

@@ -1,26 +1,10 @@
 import { useState } from "react";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
-import ListItem from "./ListItem";
-import ListGroupSkeleton from "./ListGroupSkeleton";
+import ListItem from "components/home/ListItem";
+import ListGroupSkeleton from "components/home/ListGroupSkeleton";
 import downArrow from "images/down-arrow.png";
 import { instance } from "utils/http-client";
-
-interface Product {
-  id: number;
-  images: Images[];
-  name: string;
-  variants: Variants[];
-}
-
-interface Images {
-  id: number;
-  product_id: number;
-  src: string;
-}
-
-interface Variants {
-  price: string;
-}
+import { Product } from "types";
 
 const PAGE_LIMIT = 8;
 let firstLoaded = false;
@@ -38,12 +22,12 @@ function ListGroup() {
 
   const [pageOffset, setPageOffset] = useState(0);
 
-  const url = `/v1/products?limit=${pageLimit}&offset=${pageOffset}`;
-  const fetcher = (Url: string) => {
+  const listUrl = `/v1/products?limit=${pageLimit}&offset=${pageOffset}`;
+  const fetcher = (url: string) => {
     return new Promise((resolve, reject) => {
       const timeout = !firstLoaded ? 3000 : 0;
       setTimeout(async () => {
-        const res = await instance.get(Url).then((response) => response.data);
+        const res = await instance.get(url).then((response) => response.data);
         firstLoaded = true;
         resolve(res);
       }, timeout);

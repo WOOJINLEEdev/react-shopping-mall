@@ -1,7 +1,4 @@
-interface BoardTableColumnProp {
-  children?: Object;
-  title?: string;
-}
+import { BoardTableColumnProp } from "types";
 
 const BoardTableColumn = ({ children, title }: BoardTableColumnProp) => {
   return (

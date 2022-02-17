@@ -1,50 +1,10 @@
 import styled from "styled-components";
-
-interface OrderDeliveryFormPcProps {
-  deliveryWrapClass: string;
-  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
-  deliveryClassName: string;
-  deliveryClassName1: string;
-  checkoutData: CheckoutData;
-  deliveryForm: string;
-  designation: string;
-  address: string;
-  handlePostalCode: () => void;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementOption1: DeliveryRequirementOption1[];
-  deliveryRequirementWrite: string;
-  handleDeliveryInputChange4: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
-}
-
-interface CheckoutData {
-  user: User;
-}
-
-interface User {
-  shipping_address?: ShippingAddress;
-  name?: string;
-}
-
-interface ShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  phone2?: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
-
-interface DeliveryRequirementOption1 {
-  no: string;
-  label: string;
-  value: string;
-  selected?: string;
-}
+import {
+  OrderDeliveryFormPcProps,
+  DeliveryRequirementOption1,
+  PreexistenceSelectProps,
+  LiProps,
+} from "types";
 
 const OrderDeliveryFormPc = ({
   deliveryWrapClass,
@@ -315,10 +275,6 @@ const OrderDeliveryFormPc = ({
 
 export default OrderDeliveryFormPc;
 
-interface LiProps {
-  disabled?: string | boolean;
-}
-
 const Li = styled.li<LiProps>``;
 
 const DeliveryRequirementWrap = styled.div`
@@ -326,11 +282,6 @@ const DeliveryRequirementWrap = styled.div`
   flex-direction: column;
   width: 100%;
 `;
-
-interface PreexistenceSelectProps {
-  margin?: string;
-  color?: string;
-}
 
 const PreexistenceSelect = styled.select<PreexistenceSelectProps>`
   width: 100%;

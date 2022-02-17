@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { BoardPaginationProps, ButtonProps } from "types";
 
-interface PaginationProps {
-  total: number;
-  limit: number;
-  page: number;
-  setPage: Function;
-}
-
-function BoardPagination({ total, limit, page, setPage }: PaginationProps) {
+function BoardPagination({
+  total,
+  limit,
+  page,
+  setPage,
+}: BoardPaginationProps) {
   const numPages = Math.ceil(total / limit);
 
   return (
@@ -46,10 +45,10 @@ const Nav = styled.nav`
   margin: 16px;
 `;
 
-interface ButtonProps {
-  disabled?: boolean;
-  ["aria-current"]?: any;
-}
+// interface ButtonProps {
+//   disabled?: boolean;
+//   ["aria-current"]?: any;
+// }
 
 const Button = styled.button<ButtonProps>`
   border: none;
