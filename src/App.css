@@ -306,7 +306,6 @@ button {
 
 .header_nav {
   display: flex;
-  position: relative;
   justify-content: space-between;
 }
 
@@ -3262,7 +3261,10 @@ article {
   }
 
   .header_nav {
+    position: fixed;
+    width: 100%;
     height: 50px;
+    top: 0;
   }
 
   .join_wrapper {
@@ -3875,7 +3877,10 @@ article {
   }
 
   .header_nav {
+    position: fixed;
+    width: 100%;
     height: 80px;
+    top: 0;
   }
 }
 
