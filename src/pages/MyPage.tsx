@@ -43,6 +43,7 @@ const MyPageWrap = styled.div`
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     width: calc(100% - 80px);
+    min-height: calc(100vh - 251px);
     padding: 40px;
   }
 `;
