@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { parsePhone } from "utils/format-phone";
 import {
   OrderDeliveryFormPcProps,
   DeliveryRequirementOption1,
@@ -146,7 +147,7 @@ const OrderDeliveryFormPc = ({
               title="연락처1_전화번호1"
               value={
                 checkoutData.user.shipping_address
-                  ? checkoutData.user.shipping_address.phone1.substring(0, 3)
+                  ? parsePhone(checkoutData.user.shipping_address.phone1).tel1
                   : ""
               }
               readOnly
@@ -161,7 +162,7 @@ const OrderDeliveryFormPc = ({
               className="delivery_input tel"
               value={
                 checkoutData.user.shipping_address
-                  ? checkoutData.user.shipping_address.phone1.substring(3, 7)
+                  ? parsePhone(checkoutData.user.shipping_address.phone1).tel2
                   : ""
               }
               readOnly
@@ -176,7 +177,7 @@ const OrderDeliveryFormPc = ({
               title="연락처1_전화번호3"
               value={
                 checkoutData.user.shipping_address
-                  ? checkoutData.user.shipping_address.phone1.substring(7, 11)
+                  ? parsePhone(checkoutData.user.shipping_address.phone1).tel3
                   : ""
               }
               readOnly
@@ -198,7 +199,7 @@ const OrderDeliveryFormPc = ({
               value={
                 checkoutData.user.shipping_address &&
                 checkoutData.user.shipping_address.phone2
-                  ? checkoutData.user.shipping_address.phone2.substring(0, 3)
+                  ? parsePhone(checkoutData.user.shipping_address.phone2).tel1
                   : ""
               }
               readOnly
@@ -213,7 +214,7 @@ const OrderDeliveryFormPc = ({
               value={
                 checkoutData.user.shipping_address &&
                 checkoutData.user.shipping_address.phone2
-                  ? checkoutData.user.shipping_address.phone2.substring(3, 7)
+                  ? parsePhone(checkoutData.user.shipping_address.phone2).tel2
                   : ""
               }
               readOnly
@@ -228,7 +229,7 @@ const OrderDeliveryFormPc = ({
               value={
                 checkoutData.user.shipping_address &&
                 checkoutData.user.shipping_address.phone2
-                  ? checkoutData.user.shipping_address.phone2.substring(7, 11)
+                  ? parsePhone(checkoutData.user.shipping_address.phone2).tel3
                   : ""
               }
               readOnly

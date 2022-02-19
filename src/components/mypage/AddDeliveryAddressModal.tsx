@@ -5,6 +5,7 @@ import useDeliveryData from "hooks/useDeliveryData";
 import useMyPageData from "hooks/useMyPageData";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import Loading from "components/common/Loading";
+import { parsePhone } from "utils/format-phone";
 import { AddDeliveryAddressModalProps, Address } from "types";
 
 const AddDeliveryAddressModal = ({
@@ -33,12 +34,16 @@ const AddDeliveryAddressModal = ({
       setAddress1(myData.shipping_address.postal_code);
       setAddressDetail1(myData.shipping_address.address1);
       setAddressDetail2(myData.shipping_address.address2);
-      setTel1(myData.shipping_address.phone1.substring(0, 3));
-      setTel2(myData.shipping_address.phone1.substring(3, 7));
-      setTel3(myData.shipping_address.phone1.substring(7, 11));
-      setTel4(myData.shipping_address.phone2.substring(0, 3));
-      setTel5(myData.shipping_address.phone2.substring(3, 7));
-      setTel6(myData.shipping_address.phone2.substring(7, 11));
+
+      const phone1 = parsePhone(myData.shipping_address.phone1);
+      setTel1(phone1.tel1);
+      setTel2(phone1.tel2);
+      setTel3(phone1.tel3);
+
+      const phone2 = parsePhone(myData.shipping_address.phone2);
+      setTel4(phone2.tel1);
+      setTel5(phone2.tel2);
+      setTel6(phone2.tel3);
     }
   }, []);
 

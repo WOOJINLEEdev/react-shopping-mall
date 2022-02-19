@@ -4,6 +4,7 @@ import styled from "styled-components";
 import AddDeliveryAddressModal from "./AddDeliveryAddressModal";
 import useDeliveryData from "hooks/useDeliveryData";
 import { updateShippingAddressApi } from "api";
+import { formatPhone } from "utils/format-phone";
 import {
   MyPageDeliveryModalProps,
   CloseBtnProps,
@@ -156,7 +157,9 @@ const MyPageDeliveryModal = ({
                 <ItemContent>
                   {myDeliveryAddress.address1} {myDeliveryAddress.address2}
                 </ItemContent>
-                <ItemContent>{myDeliveryAddress.phone1}</ItemContent>
+                <ItemContent>
+                  {formatPhone(myDeliveryAddress.phone1)}
+                </ItemContent>
               </ItemContentWrap>
               <ModifyBtn type="button" onClick={handleModifyBtn}>
                 수정

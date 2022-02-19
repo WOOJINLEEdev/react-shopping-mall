@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
+import { formatPhone } from "utils/format-phone";
 import {
   OrderDeliveryFormTabletProps,
   DeliveryRequirementOption,
@@ -50,13 +51,7 @@ const OrderDeliveryFormTablet = ({
               </p>
               <span className="preexistence_phone">
                 {checkoutData.user.shipping_address &&
-                  checkoutData.user.shipping_address.phone1.substring(0, 3)}
-                -
-                {checkoutData.user.shipping_address &&
-                  checkoutData.user.shipping_address.phone1.substring(3, 7)}
-                -
-                {checkoutData.user.shipping_address &&
-                  checkoutData.user.shipping_address.phone1.substring(7, 11)}
+                  formatPhone(checkoutData.user.shipping_address.phone1)}
               </span>
               <PreexistenceSelect
                 color={"#333"}
