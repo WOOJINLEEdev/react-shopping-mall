@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 import { BoardItemModalProps } from "types";
 

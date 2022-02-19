@@ -4,7 +4,7 @@ import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 import { getShopVisitCountApi } from "api";
 import { ApexOptions } from "apexcharts";
 

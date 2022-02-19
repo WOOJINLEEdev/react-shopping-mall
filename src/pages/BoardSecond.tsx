@@ -12,7 +12,7 @@ import { getToken } from "utils/token";
 import axios from "axios";
 import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 import { useDevice } from "hooks/useDevice";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 
 Modal.setAppElement("#root");
 

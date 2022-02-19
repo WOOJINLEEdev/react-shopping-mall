@@ -9,7 +9,7 @@ import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import Loading from "components/common/Loading";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 import { getOrderNumber } from "utils/order";
 import { useDevice } from "hooks/useDevice";
 import { getOrdersApi } from "api";

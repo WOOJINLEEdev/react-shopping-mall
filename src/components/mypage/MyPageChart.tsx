@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 import { getMyVisitCountApi } from "api";
 import { ApexOptions } from "apexcharts";
 import { MyPageChartProps, VisitData } from "types";

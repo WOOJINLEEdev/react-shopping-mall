@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useHistory, RouteComponentProps } from "react-router-dom";
 import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 
 interface MatchParams {
   id: string;

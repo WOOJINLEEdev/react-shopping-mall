@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import CurTime from "components/home/CurTime";
-import { formatDate } from "utils/formatDate";
+import { formatDate } from "utils/format-date";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
