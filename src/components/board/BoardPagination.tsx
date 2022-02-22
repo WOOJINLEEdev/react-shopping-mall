@@ -45,11 +45,6 @@ const Nav = styled.nav`
   margin: 16px;
 `;
 
-// interface ButtonProps {
-//   disabled?: boolean;
-//   ["aria-current"]?: any;
-// }
-
 const Button = styled.button<ButtonProps>`
   border: none;
   border-radius: 8px;
