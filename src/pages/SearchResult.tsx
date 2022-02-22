@@ -71,7 +71,9 @@ const SearchResult = () => {
     return res.data;
   };
 
-  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
+  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
+    revalidateFirstPage: false,
+  });
 
   if (error) return <div>에러 발생...</div>;
   if (!data) return <Loading />;

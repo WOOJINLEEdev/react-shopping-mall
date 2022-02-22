@@ -33,7 +33,9 @@ function ListGroup() {
       }, timeout);
     });
   };
-  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher);
+  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
+    revalidateFirstPage: false,
+  });
 
   if (error) return <div>에러 발생...</div>;
   if (!data) return <ListGroupSkeleton />;
