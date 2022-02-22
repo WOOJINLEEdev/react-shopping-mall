@@ -136,7 +136,6 @@ const AboutMe = () => {
           },
           yaxis: {
             tickAmount: 5,
-            max: 10,
             axisBorder: {
               show: false,
             },
