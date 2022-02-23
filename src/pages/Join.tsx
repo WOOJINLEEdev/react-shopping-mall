@@ -128,9 +128,12 @@ const Join = () => {
           <div className="join_wrapper">
             <div className="join">
               <h2 className="join_head">회원가입</h2>
-              <label htmlFor="userId" className="form_label">
-                아이디 (ID)
-              </label>
+              <LabelWrap>
+                <label htmlFor="userId" className="form_label">
+                  아이디 (ID)
+                </label>
+                <span>4글자 이상</span>
+              </LabelWrap>
               <Div>
                 <Field
                   type="text"
@@ -144,9 +147,12 @@ const Join = () => {
               </Div>
               <ErrorMessage name="id" component="div" className="input_check" />
 
-              <label htmlFor="userPassword1" className="form_label">
-                비밀번호 (Password)
-              </label>
+              <LabelWrap>
+                <label htmlFor="userPassword1" className="form_label">
+                  비밀번호 (Password)
+                </label>
+                <span>영문 숫자 조합 8 ~ 16자리</span>
+              </LabelWrap>
               <Field
                 type="password"
                 id="userPassword1"
@@ -292,5 +298,31 @@ const IdCheckBtn = styled.button`
     max-width: 140px;
     font-size: 13px;
     margin-left: 10px;
+  }
+`;
+
+const LabelWrap = styled.div`
+  display: flex;
+  & span {
+    font-size: 12px;
+    color: #6d6d6d;
+    line-height: 14px;
+    margin-top: 20px;
+    padding-bottom: 12px;
+    margin-left: 10px;
+  }
+
+  @media only screen and (min-width: 320px) and (max-width: 359px) {
+    flex-direction: column;
+
+    & .form_label {
+      padding-bottom: 5px;
+    }
+
+    & span {
+      margin: 0;
+      padding-left: 5px;
+      padding-bottom: 5px;
+    }
   }
 `;
