@@ -167,7 +167,7 @@ describe("CheckoutValidator", () => {
 
         // then
         expect(valid).toBeFalsy();
-        expect(invalidMsg).toBe("연락처 첫번째 칸은 2자리 이상 입력해주세요.");
+        expect(invalidMsg).toBe("연락처 첫번째 칸을 입력해주세요.");
       });
       it("만약 연락처 첫번째 칸을 숫자 하나만 입력했다면, invalid하고 '연락처 첫번째 칸은 2자리 이상 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
@@ -214,7 +214,7 @@ describe("CheckoutValidator", () => {
 
         // then
         expect(valid).toBeFalsy();
-        expect(invalidMsg).toBe("연락처 두번째 칸은 4자리를 입력해주세요.");
+        expect(invalidMsg).toBe("연락처 두번째 칸을 입력해주세요.");
       });
       it("만약 연락처 두번째 칸을 3자리로 입력했을 경우, invalid하고 '연락처 두번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
@@ -263,7 +263,7 @@ describe("CheckoutValidator", () => {
 
         // then
         expect(valid).toBeFalsy();
-        expect(invalidMsg).toBe("연락처 세번째 칸은 4자리를 입력해주세요.");
+        expect(invalidMsg).toBe("연락처 세번째 칸을 입력해주세요.");
       });
       it("만약 연락처 세번째 칸을 3자리로 입력했을 경우, invalid하고 '연락처 세번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
