@@ -267,11 +267,27 @@ const Cart = () => {
                       className="info_img_box"
                       aria-label={`${item.product_name} 상품 페이지로 이동`}
                     >
-                      <img
-                        className="cart_item_img"
-                        alt={`${item.product_name}_이미지`}
-                        src={item.product_image_src}
-                      />
+                      <picture className="cart_item_picture">
+                        <source
+                          media="(max-width: 849px)"
+                          srcSet={
+                            item.product_image_src.slice(0, -4) + "_150x200.jpg"
+                          }
+                        />
+                        <source
+                          media="(min-width: 850px)"
+                          srcSet={
+                            item.product_image_src.slice(0, -4) + "_200x200.jpg"
+                          }
+                        />
+                        <img
+                          className="cart_item_img"
+                          alt={`${item.product_name}_상품 이미지`}
+                          src={
+                            item.product_image_src.slice(0, -4) + "_200x200.jpg"
+                          }
+                        />
+                      </picture>
                     </Link>
                     <div className="info_box">
                       <div className="info_text">

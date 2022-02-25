@@ -59,11 +59,12 @@ const OrderTotal = ({
                 <Link
                   to={`/products/${item.product_id}`}
                   className="info_list_box"
+                  aria-label={`${item.product_name} 상품 페이지로 이동`}
                 >
                   <img
                     className="info_list_img"
-                    alt={`${item.product_name} 상품 페이지로 이동`}
-                    src={item.image_src}
+                    alt={`${item.product_name}_상품 이미지`}
+                    src={item.image_src.slice(0, -4) + "_150x200.jpg"}
                   />
                 </Link>
 
@@ -174,11 +175,12 @@ const OrderTotal = ({
                 <Link
                   to={`/products/${firstItem.product_id}`}
                   className="info_list_box"
+                  aria-label={`${firstItem.product_name} 상품 페이지로 이동`}
                 >
                   <img
                     className="info_list_img"
-                    alt=""
-                    src={firstItem.image_src}
+                    alt={`${firstItem.product_name}_상품 이미지`}
+                    src={firstItem.image_src.slice(0, -4) + "_150x200.jpg"}
                   />
                 </Link>
               </li>
@@ -215,11 +217,12 @@ const OrderTotal = ({
                   <Link
                     to={`/products/${item.product_id}`}
                     className="info_list_box"
+                    aria-label={`${item.product_name} 상품 페이지로 이동`}
                   >
                     <img
                       className="info_list_img"
-                      alt=""
-                      src={item.image_src}
+                      alt={`${item.product_name}_상품 이미지`}
+                      src={item.image_src.slice(0, -4) + "_150x200.jpg"}
                     />
                   </Link>
                 </li>
@@ -296,11 +299,12 @@ const OrderTotal = ({
                 <Link
                   to={`/products/${firstItem.product_id}`}
                   className="info_list_box"
+                  aria-label={`${firstItem.product_name} 상품 페이지로 이동`}
                 >
                   <img
                     className="info_list_img"
-                    alt=""
-                    src={firstItem.image_src}
+                    alt={`${firstItem.product_name}_상품 이미지`}
+                    src={firstItem.image_src.slice(0, -4) + "_150x200.jpg"}
                   />
                 </Link>
               </li>
@@ -337,11 +341,12 @@ const OrderTotal = ({
                   <Link
                     to={`/products/${item.product_id}`}
                     className="info_list_box"
+                    aria-label={`${item.product_name} 상품 페이지로 이동`}
                   >
                     <img
                       className="info_list_img"
-                      alt=""
-                      src={item.image_src}
+                      alt={`${item.product_name}_상품 이미지`}
+                      src={item.image_src.slice(0, -4) + "_150x200.jpg"}
                     />
                   </Link>
                 </li>

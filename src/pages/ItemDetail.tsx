@@ -157,7 +157,25 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         contentPadding={contentPadding}
       />
       <div className="image_wrapper">
-        <img className="image" alt="" src={data.images[0].src} />
+        <picture className="image_picture">
+          <source
+            media="(max-width: 440px)"
+            srcSet={data.images[0].src.slice(0, -4) + "_400x300.jpg"}
+          />
+          <source
+            media="(max-width: 767px)"
+            srcSet={data.images[0].src.slice(0, -4) + "_500x300.jpg"}
+          />
+          <source
+            media="(max-width: 1016px)"
+            srcSet={data.images[0].src.slice(0, -4) + "_400x300.jpg"}
+          />
+          <img
+            className="image"
+            src={data.images[0].src.slice(0, -4) + "_400x300.jpg"}
+            alt={`${data.name}_상품 이미지`}
+          />
+        </picture>
       </div>
 
       <div className="image_text_wrap" id="imageTextWrap">
