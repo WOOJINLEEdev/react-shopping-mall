@@ -176,6 +176,7 @@ table {
   src: url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff2") format("woff2"),
     url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff") format("woff"),
     url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
@@ -190,31 +191,42 @@ table {
 @font-face {
   font-family: "RobotoCondensed Light";
   font-weight: "200";
-  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Light.ttf")
-    format("truetype");
+  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Light.woff2")
+      format("woff2"),
+    url("./fonts/Roboto_Condensed/RobotoCondensed-Light.woff") format("woff"),
+    url("./fonts/Roboto_Condensed/RobotoCondensed-Light.ttf") format("truetype");
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
 @font-face {
   font-family: "RobotoCondensed Regular";
   font-weight: "300";
-  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf")
-    format("truetype");
+  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.woff2")
+      format("woff2"),
+    url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.woff") format("woff"),
+    url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf")
+      format("truetype");
   unicode-range: U+0041-005A, U+0061-007A;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "RobotoCondensed Bold";
   font-weight: "700";
-  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf")
-    format("truetype");
+  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.woff2")
+      format("woff2"),
+    url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.woff") format("woff"),
+    url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf") format("truetype");
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
 @font-face {
   font-family: "Caveat";
   font-weight: "500";
-  src: url("./fonts/Caveat-Medium.ttf") format("truetype");
+  src: url("./fonts/Caveat/Caveat-Medium.woff2") format("woff2"),
+    url("./fonts/Caveat/Caveat-Medium.woff") format("woff"),
+    url("./fonts/Caveat/Caveat-Medium.ttf") format("truetype");
+  font-display: swap;
 }
 
 html,
@@ -387,6 +399,8 @@ button {
 }
 
 .signin_img {
+  width: 32px;
+  height: 32px;
   margin: 24px 29px;
 }
 
@@ -607,18 +621,20 @@ main {
 }
 
 .image_wrapper {
-  display: flex;
   width: 50%;
   margin: 0;
 }
 
+.image_picture {
+  display: flex;
+}
+
 .image {
-  max-width: 500px;
-  width: 80%;
-  max-height: 300px;
+  width: 400px;
+  height: 300px;
   margin: 0 auto;
   border-radius: 5px;
-  background: no-repeat url(./images/no_image.jpg) rgb(194, 194, 194) center;
+  background: rgb(238, 238, 238);
 }
 
 .image_text_wrap {
@@ -1561,10 +1577,16 @@ main {
   padding: 20px 0;
 }
 
+.cart_item_picture {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .cart_item_img {
   text-align: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
+  max-width: 180px;
   max-height: 150px;
   margin: 0 auto;
   border-radius: 5px;
@@ -1810,7 +1832,7 @@ main {
   min-width: 120px;
   max-width: 120px;
   min-height: 120px;
-  max-height: 140px;
+  max-height: 120px;
   border-radius: 5px;
   background: rgb(194, 194, 194);
   vertical-align: middle;
@@ -1838,6 +1860,12 @@ main {
   padding: 10px 0;
   vertical-align: middle;
   font-size: 15px;
+}
+
+.list_price_text > .price {
+  padding: 0;
+  padding-right: 2px;
+  line-height: 16px;
 }
 
 .detail_wrap {
@@ -1896,7 +1924,9 @@ main {
 }
 
 .list_price_text {
+  display: flex;
   padding: 10px 0;
+  font-size: 15px;
 }
 
 .price_quantity {
@@ -2677,8 +2707,13 @@ article {
     text-align: center;
   }
 
+  .image_picture {
+    display: initial;
+  }
+
   .image {
     width: 100%;
+    max-width: 500px;
     height: 100%;
   }
 
@@ -2727,8 +2762,11 @@ article {
     width: 45%;
   }
 
-  .cart_item_img {
+  .cart_item_picture {
     width: 100%;
+  }
+
+  .cart_item_img {
     max-width: 150px;
   }
 
@@ -3031,6 +3069,7 @@ article {
     width: 100%;
     min-width: 100%;
     min-height: 96px;
+    max-height: 96px;
     vertical-align: middle;
   }
 
@@ -3371,7 +3410,7 @@ article {
     padding: 10px;
   }
 
-  .price {
+  .list_price_text > .price {
     padding: 0;
     font-size: 13px;
     line-height: 35px;
@@ -3881,6 +3920,14 @@ article {
     width: 100%;
     height: 80px;
     top: 0;
+  }
+
+  .image_picture {
+    display: flex;
+  }
+
+  .image {
+    height: 300px;
   }
 }
 
