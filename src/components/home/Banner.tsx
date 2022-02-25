@@ -4,14 +4,6 @@ import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Skeleton from "components/home/Skeleton";
-import BannerImage1 from "images/1.jpg";
-import BannerImage2 from "images/2.jpg";
-import BannerImage3 from "images/3.jpg";
-import BannerImage4 from "images/4.jpg";
-import BannerImage5 from "images/5.jpg";
-import BannerImage6 from "images/6.jpg";
-import BannerImage7 from "images/7.jpg";
-import BannerImage8 from "images/8.jpg";
 
 let firstLoaded = false;
 
@@ -19,42 +11,162 @@ const Banner = () => {
   const imageData = [
     {
       id: "banner_1",
-      url: BannerImage1,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/1_1200x400.jpg",
+      },
       name: "하늘과 구름",
     },
     {
       id: "banner_2",
-      url: BannerImage2,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/2_1200x400.jpg",
+      },
       name: "구름바다",
     },
     {
       id: "banner_3",
-      url: BannerImage3,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/3_1200x400.jpg",
+      },
       name: "노을진 하늘",
     },
     {
       id: "banner_4",
-      url: BannerImage4,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/4_1200x400.jpg",
+      },
       name: "노을과 호수 배경",
     },
     {
       id: "banner_5",
-      url: BannerImage5,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/5_1200x400.jpg",
+      },
       name: "맑은 하늘에 뜬 태양",
     },
     {
       id: "banner_6",
-      url: BannerImage6,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/6_1200x400.jpg",
+      },
       name: "안개 낀 바다",
     },
     {
       id: "banner_7",
-      url: BannerImage7,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/7_1200x400.jpg",
+      },
       name: "구름과 하늘",
     },
     {
       id: "banner_8",
-      url: BannerImage8,
+      urls: {
+        "400x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_400x250.jpg",
+        "600x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_600x250.jpg",
+        "800x250":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_800x250.jpg",
+        "800x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_800x400.jpg",
+        "1000x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_1000x400.jpg",
+        "1024x500":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_1024x500.jpg",
+        "1200x400":
+          "https://shopping-mall-api-lab-seoul.s3.ap-northeast-2.amazonaws.com/banner/8_1200x400.jpg",
+      },
       name: "민들레꽃이 핀 초원과 하늘",
     },
   ];
@@ -140,7 +252,37 @@ const Banner = () => {
           ? ""
           : data.map((item) => (
               <SlideItem key={item.id}>
-                <Image src={item.url} alt={item.name} />
+                <picture>
+                  <source
+                    media="(max-width: 400px)"
+                    srcSet={item.urls["400x250"]}
+                  />
+                  <source
+                    media="(max-width: 600px)"
+                    srcSet={item.urls["600x250"]}
+                  />
+                  <source
+                    media="(max-width: 767px)"
+                    srcSet={item.urls["800x250"]}
+                  />
+                  <source
+                    media="(max-width: 800px)"
+                    srcSet={item.urls["800x400"]}
+                  />
+                  <source
+                    media="(max-width: 1000px)"
+                    srcSet={item.urls["1000x400"]}
+                  />
+                  <source
+                    media="(max-width: 1023px)"
+                    srcSet={item.urls["1200x400"]}
+                  />
+                  <source
+                    media="(min-width: 1024px)"
+                    srcSet={item.urls["1024x500"]}
+                  />
+                  <Image src={item.urls["1024x500"]} alt={item.name} />
+                </picture>
               </SlideItem>
             ))}
       </StyledSlider>
@@ -186,16 +328,21 @@ const SlideItem = styled.div`
 
 const Image = styled.img`
   display: inline-block;
-  width: 100%;
+  width: 1024px;
+  height: 500px;
   max-height: 100%;
   margin: 0;
   border-radius: 5px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+    height: 250px;
     min-height: 250px;
   }
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    height: 400px;
     min-height: 400px;
   }
 `;
