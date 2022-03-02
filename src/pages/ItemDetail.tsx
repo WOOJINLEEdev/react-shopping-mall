@@ -34,6 +34,8 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [btnText2, setBtnText2] = useState("쇼핑 계속하기");
   const [btnWidth, setBtnWidth] = useState("40%");
   const [contentPadding, setContentPadding] = useState("50px 0");
+  const [onOverlayClick, setOnOverlayClick] = useState(false);
+  const [onEsc, setOnEsc] = useState(false);
 
   const productUrl = `/v1/products/${match.params.productId}`;
   const fetcher = (url: string) => {
@@ -97,14 +99,23 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
     setIsOpen(false);
   };
 
-  const yesOrNo = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleModalBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     if ((e.target as HTMLButtonElement).name === "yes") {
       console.log("yes");
       mutateCart(null, true);
       history.push("/cart");
     } else {
       console.log("no");
-      mutateCart(null, true);
+      const newCart = JSON.parse(JSON.stringify(cart));
+
+      newCart.items.push({
+        product_id: data.id,
+        variant_id: itemOption,
+        quantity: quantity,
+      });
+
+      console.log("newcart", newCart);
+      mutateCart(newCart, false);
       setIsOpen(false);
     }
   };
@@ -151,10 +162,12 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
         modalText={modalText}
         btnText1={btnText1}
         btnText2={btnText2}
-        btnClick1={yesOrNo}
-        btnClick2={yesOrNo}
+        btnClick1={handleModalBtn}
+        btnClick2={handleModalBtn}
         btnWidth={btnWidth}
         contentPadding={contentPadding}
+        onOverlayClick={onOverlayClick}
+        onEsc={onEsc}
       />
       <div className="image_wrapper">
         <picture className="image_picture">

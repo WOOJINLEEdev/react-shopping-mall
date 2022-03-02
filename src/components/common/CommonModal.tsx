@@ -15,6 +15,8 @@ const CommonModal = ({
   btnClick2,
   btnWidth,
   contentPadding,
+  onOverlayClick,
+  onEsc,
 }: CommonModalProps) => {
   useEffect(() => {
     if (isOpen) {
@@ -31,7 +33,8 @@ const CommonModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      shouldCloseOnOverlayClick={true}
+      shouldCloseOnOverlayClick={onOverlayClick}
+      shouldCloseOnEsc={onEsc}
       className="common_modal"
       overlayClassName="modal_overlay"
     >

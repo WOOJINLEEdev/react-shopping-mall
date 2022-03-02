@@ -9,6 +9,8 @@ export interface CommonModalProps {
   btnClick2: (e: React.MouseEvent<HTMLButtonElement>) => void;
   btnWidth?: string;
   contentPadding?: string;
+  onOverlayClick?: boolean;
+  onEsc?: boolean;
 }
 
 export interface ModalTextProps {
