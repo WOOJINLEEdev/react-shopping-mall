@@ -6,6 +6,7 @@ import useMyPageData from "hooks/useMyPageData";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import Loading from "components/common/Loading";
 import { parsePhone } from "utils/format-phone";
+import { getFullAddress } from "utils/get-address";
 import { AddDeliveryAddressModalProps, Address } from "types";
 
 const AddDeliveryAddressModal = ({
@@ -80,24 +81,6 @@ const AddDeliveryAddressModal = ({
 
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
-  };
-
-  const getFullAddress = (data: Address) => {
-    let fullAddress = data.address;
-    let extraAddress = "";
-
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
-    return fullAddress;
   };
 
   const handleComplete = (data: Address) => {

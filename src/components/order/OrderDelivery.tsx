@@ -11,6 +11,7 @@ import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
 import OrderDeliveryForm1 from "components/order/OrderDeliveryForm1";
+import { getFullAddress } from "utils/get-address";
 import { OrderDeliveryProps, DeliveryRequirementOption, Address } from "types";
 
 const OrderDelivery = ({
@@ -113,24 +114,6 @@ const OrderDelivery = ({
 
   const handlePostalCode = () => {
     setShowDaumPostModal(true);
-  };
-
-  const getFullAddress = (data: Address) => {
-    let fullAddress = data.address;
-    let extraAddress = "";
-
-    if (data.addressType === "R") {
-      if (data.bname !== "") {
-        extraAddress += data.bname;
-      }
-      if (data.buildingName !== "") {
-        extraAddress +=
-          extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName;
-      }
-
-      fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
-    }
-    return fullAddress;
   };
 
   const handleComplete = (data: Address) => {
