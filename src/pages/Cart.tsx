@@ -193,6 +193,7 @@ const Cart = () => {
         const res = await deleteCartItemApi({ cartItemId });
         console.log(res);
         mutateCart(null, true);
+        setAllChecked(true);
       } catch (err) {
         console.log(err);
       }
