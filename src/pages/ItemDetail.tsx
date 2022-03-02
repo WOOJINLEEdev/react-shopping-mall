@@ -88,7 +88,7 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
           },
         ],
       });
-      console.log(res);
+      mutateCart(res.data, false);
       setIsOpen(true);
     } catch (err) {
       console.log(error);
@@ -102,20 +102,9 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const handleModalBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     if ((e.target as HTMLButtonElement).name === "yes") {
       console.log("yes");
-      mutateCart(null, true);
       history.push("/cart");
     } else {
       console.log("no");
-      const newCart = JSON.parse(JSON.stringify(cart));
-
-      newCart.items.push({
-        product_id: data.id,
-        variant_id: itemOption,
-        quantity: quantity,
-      });
-
-      console.log("newcart", newCart);
-      mutateCart(newCart, false);
       setIsOpen(false);
     }
   };
