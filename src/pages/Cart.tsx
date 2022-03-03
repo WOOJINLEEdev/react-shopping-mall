@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
+import SnackBar from "components/common/SnackBar";
 import useMyCart from "hooks/useMyCart";
 import {
   deleteCartItemApi,
@@ -27,6 +28,8 @@ interface Item {
 const Cart = () => {
   const [chkId, setChkId] = useState("");
   const [allChecked, setAllChecked] = useState<boolean>(true);
+  const [barClassName, setBarClassName] = useState("opacity");
+  const [barText, setBarText] = useState("선택하신 상품이 삭제되었습니다.");
   const history = useHistory();
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
@@ -51,6 +54,7 @@ const Cart = () => {
       const res = await deleteCartItemApi({ cartItemId });
       console.log(res);
       mutateCart(null, true);
+      handleSnackBar();
     } catch (err) {
       console.log(err);
     }
@@ -194,11 +198,24 @@ const Cart = () => {
         console.log(res);
         mutateCart(null, true);
         setAllChecked(true);
+        handleSnackBar();
       } catch (err) {
         console.log(err);
       }
     }
   };
+
+  function handleSnackBar() {
+    if (barClassName === "opacity") {
+      setTimeout(() => {
+        setBarClassName("snack_bar");
+      }, 300);
+
+      return setTimeout(() => {
+        setBarClassName("opacity");
+      }, 3000);
+    }
+  }
 
   return (
     <section className="order_info">
@@ -423,6 +440,7 @@ const Cart = () => {
           BUY NOW
         </button>
       )}
+      <SnackBar name={barClassName} text={barText} />
     </section>
   );
 };

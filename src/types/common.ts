@@ -38,3 +38,9 @@ export interface QuantityAreaProps {
   margin?: boolean;
   flexEnd?: boolean;
 }
+
+// SnackBar
+export interface SnackBarProps {
+  name?: string;
+  text?: string;
+}
