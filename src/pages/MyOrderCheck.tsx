@@ -1,10 +1,10 @@
 import { useState, useEffect, lazy, Suspense } from "react";
+import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import Modal from "react-modal";
 import styled from "styled-components";
 import Loading from "components/common/Loading";
+import MoreViewBtn from "components/common/MoreViewBtn";
 import { instance } from "utils/http-client";
-import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
-import { IoIosArrowDown } from "react-icons/io";
 import { getOrderNumber } from "utils/order";
 import { getOrdersApi } from "api";
 
@@ -121,9 +121,7 @@ const MyOrderCheck = () => {
         })}
       </ul>
       {totalCount > 5 && size * PAGE_LIMIT < totalCount ? (
-        <ListMoreBtn onClick={handleClick}>
-          더보기 <IoIosArrowDown />
-        </ListMoreBtn>
+        <MoreViewBtn onClick={handleClick} />
       ) : (
         ""
       )}
@@ -194,27 +192,6 @@ const NotOrderData = styled.div`
   min-height: 500px;
   line-height: 500px;
   text-align: center;
-`;
-
-const ListMoreBtn = styled.button`
-  width: 100%;
-  height: 50px;
-  color: #333;
-  font-size: 15px;
-  font-weight: bold;
-  background-color: #fff;
-  border: 2px solid #d4d4d4;
-  border-radius: 3px;
-  outline: none;
-  box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
-  margin: 30px 0 0;
-  cursor: pointer;
-
-  @media (hover: hover) {
-    &:hover {
-      border: 2px solid #333;
-    }
-  }
 `;
 
 const TotalOrderCount = styled.p`

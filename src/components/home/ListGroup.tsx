@@ -2,7 +2,7 @@ import { useState } from "react";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import ListItem from "components/home/ListItem";
 import ListGroupSkeleton from "components/home/ListGroupSkeleton";
-import downArrow from "images/down-arrow.png";
+import MoreViewBtn from "components/common/MoreViewBtn";
 import { instance } from "utils/http-client";
 import { Product } from "types";
 
@@ -54,19 +54,8 @@ function ListGroup() {
           return <ListItem key={product.id} item={product} />;
         })}
       </ul>
-      <button
-        type="button"
-        className="more_btn"
-        aria-label="list_more_view"
-        onClick={handleClick}
-      >
-        더보기
-        <img
-          src={downArrow}
-          alt="button_arrow_img"
-          className="more_btn_arrow"
-        />
-      </button>
+
+      <MoreViewBtn onClick={handleClick} margin={"0 0 30px"} />
     </>
   );
 }

@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import ListItem from "components/home/ListItem";
+import Loading from "components/common/Loading";
+import MoreViewBtn from "components/common/MoreViewBtn";
 import { instance } from "utils/http-client";
 import useSearchResult from "hooks/useSearchResult";
-import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
-import Loading from "components/common/Loading";
 import { getProductsApi } from "api";
 
 const SearchResult = () => {
@@ -127,9 +127,7 @@ const SearchResult = () => {
         })}
       </ul>
       {resultCount > 9 && size * pageLimit < resultCount ? (
-        <ResultMoreBtn onClick={handleClick}>
-          더보기 <IoIosArrowDown />
-        </ResultMoreBtn>
+        <MoreViewBtn onClick={handleClick} />
       ) : (
         ""
       )}
@@ -176,25 +174,4 @@ const NoSearchWord = styled.div`
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-`;
-
-const ResultMoreBtn = styled.button`
-  width: 100%;
-  height: 50px;
-  color: #333;
-  font-size: 15px;
-  font-weight: bold;
-  background-color: #fff;
-  border: 2px solid #d4d4d4;
-  border-radius: 3px;
-  outline: none;
-  box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-  cursor: pointer;
-
-  @media (hover: hover) {
-    &:hover {
-      border: 2px solid #333;
-    }
-  }
 `;

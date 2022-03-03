@@ -593,27 +593,6 @@ main {
   margin: 0 auto;
 }
 
-.more_btn {
-  width: 100%;
-  height: 50px;
-  color: #333;
-  font-size: 15px;
-  font-weight: bold;
-  background-color: #fff;
-  border: 2px solid #d4d4d4;
-  border-radius: 3px;
-  outline: none;
-  box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-  cursor: pointer;
-}
-
-.more_btn_arrow {
-  width: 12px;
-  height: 12px;
-  margin-left: 5px;
-}
-
 .list_element_detail {
   display: flex;
   min-height: calc(100vh - 211px);
@@ -4008,10 +3987,6 @@ article {
   .star-rating label:hover,
   .star-rating label:hover ~ label {
     color: #fc0;
-  }
-
-  .more_btn:hover {
-    border: 2px solid #333;
   }
 
   .list_element:hover > .image_dim {

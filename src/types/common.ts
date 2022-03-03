@@ -44,3 +44,13 @@ export interface SnackBarProps {
   name?: string;
   text?: string;
 }
+
+// MoreViewBtn
+export interface MoreViewBtnProps {
+  onClick: () => void;
+  margin?: string;
+}
+
+export interface MoreBtnProps {
+  margin?: string;
+}
