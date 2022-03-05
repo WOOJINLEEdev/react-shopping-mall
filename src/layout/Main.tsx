@@ -1,23 +1,26 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { Route, withRouter, RouteComponentProps } from "react-router-dom";
+import {
+  Route,
+  withRouter,
+  Switch,
+  RouteComponentProps,
+} from "react-router-dom";
 import SearchWrap from "components/search/SearchWrap";
+import Loading from "components/common/Loading";
 import useSearchLocation from "hooks/useSearchLocation";
 import useSearch from "hooks/useSearch";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import useSearchResult from "hooks/useSearchResult";
 import { useDevice } from "hooks/useDevice";
-import Loading from "components/common/Loading";
 import useScrollMove from "hooks/useScrollMove";
 
-const ListGroup = lazy(() => import("components/home/ListGroup"));
+const Home = lazy(() => import("pages/Home"));
 const ItemDetail = lazy(() => import("pages/ItemDetail"));
 const LogIn = lazy(() => import("pages/LogIn"));
 const Cart = lazy(() => import("pages/Cart"));
 const Join = lazy(() => import("pages/Join"));
 const Order = lazy(() => import("pages/Order"));
 const MyPage = lazy(() => import("pages/MyPage"));
-const Banner = lazy(() => import("components/home/Banner"));
-const Clock = lazy(() => import("components/home/Clock"));
 const BoardFirst = lazy(() => import("pages/BoardFirst"));
 const BoardFirstItem = lazy(() => import("pages/BoardFirstItem"));
 const BoardSecond = lazy(() => import("pages/BoardSecond"));
@@ -28,6 +31,7 @@ const OrderCompletion = lazy(() => import("pages/OrderCompletion"));
 const MyOrderCheck = lazy(() => import("pages/MyOrderCheck"));
 const AboutMe = lazy(() => import("pages/AboutMe"));
 const SearchResult = lazy(() => import("pages/SearchResult"));
+const PageNotFound = lazy(() => import("pages/PageNotFound"));
 
 const Main = ({ location, match }: RouteComponentProps) => {
   const { isPc } = useDevice();
@@ -90,33 +94,34 @@ const Main = ({ location, match }: RouteComponentProps) => {
         />
       )}
       <Suspense fallback={<Loading />}>
-        <Route path="/" component={Clock} exact />
-        <Route path="/" component={Banner} exact />
-        <Route path="/" component={ListGroup} exact />
-        <Route path="/products/:productId" component={ItemDetail} exact />
-        <Route path="/login" component={LogIn} exact />
-        <Route path="/cart" component={Cart} exact />
-        <Route path="/join" component={Join} exact />
-        <Route path={"/checkout/:checkoutId"} component={Order} exact />
-        <Route path="/mypage" component={MyPage} exact />
-        <Route path={"/postView/:id"} component={BoardItem} exact />
-        <Route path={"/post/:no"} component={BoardFirstItem} exact />
-        <Route path="/boardPost" component={BoardEditor} exact />
-        <Route path="/selectBoard" component={SelectBoardPage} exact />
-        <Route path="/selectBoard1" component={BoardFirst} exact />
-        <Route path="/selectBoard2" component={BoardSecond} exact />
-        <Route
-          path={"/orderCheck/:checkoutId"}
-          component={OrderCompletion}
-          exact
-        />
-        <Route path={"/myOrderCheck"} component={MyOrderCheck} exact />
-        <Route
-          path={"/searchResult/:searchWord"}
-          component={SearchResult}
-          exact
-        />
-        <Route path={"/aboutMe"} component={AboutMe} exact />
+        <Switch>
+          <Route path="/" component={Home} exact />
+          <Route path="/products/:productId" component={ItemDetail} exact />
+          <Route path="/login" component={LogIn} exact />
+          <Route path="/mypage" component={MyPage} exact />
+          <Route path="/cart" component={Cart} exact />
+          <Route path="/join" component={Join} exact />
+          <Route path={"/checkout/:checkoutId"} component={Order} exact />
+          <Route path={"/postView/:id"} component={BoardItem} exact />
+          <Route path={"/post/:no"} component={BoardFirstItem} exact />
+          <Route path="/boardPost" component={BoardEditor} exact />
+          <Route path="/selectBoard" component={SelectBoardPage} exact />
+          <Route path="/selectBoard1" component={BoardFirst} exact />
+          <Route path="/selectBoard2" component={BoardSecond} exact />
+          <Route
+            path={"/orderCheck/:checkoutId"}
+            component={OrderCompletion}
+            exact
+          />
+          <Route path={"/myOrderCheck"} component={MyOrderCheck} exact />
+          <Route
+            path={"/searchResult/:searchWord"}
+            component={SearchResult}
+            exact
+          />
+          <Route path={"/aboutMe"} component={AboutMe} exact />
+          <Route component={PageNotFound} />
+        </Switch>
       </Suspense>
     </main>
   );
