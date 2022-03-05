@@ -78,11 +78,20 @@ const LogIn = () => {
       clientId: process.env.REACT_APP_NAVER_CLIENT_ID,
       callbackUrl: process.env.REACT_APP_NAVER_CALLBACK_URL,
       isPopup: false,
-      loginButton: { color: "green", type: 3, height: "50" },
+      loginButton: { color: "green", type: 3, width: "200", height: "50" },
       callbackHandle: true,
     });
     naverLogin.init();
-    naverLogin.logout();
+
+    const naverLoginBtn = document.querySelector("#naverIdLogin_loginButton");
+    if (naverLoginBtn) {
+      naverLoginBtn.setAttribute("title", "네이버 아이디로 로그인");
+    }
+
+    const loginBtnImage = naverLoginBtn?.querySelector("img");
+    if (loginBtnImage) {
+      loginBtnImage.setAttribute("alt", "네이버 아이디로 로그인 이미지");
+    }
   };
 
   const getNaverToken = () => {
@@ -165,11 +174,11 @@ const LogIn = () => {
 
             <BtnWrap>
               <SocialBtnWrap>
-                <div
+                <NaverLoginBtn
                   id="naverIdLogin"
                   onClick={initializeNaverLogin}
                   role="button"
-                ></div>
+                />
                 <GoogleLogin
                   clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ""}
                   buttonText="구글 아이디로 로그인"
@@ -231,6 +240,8 @@ const SocialBtnWrap = styled.div`
     }
   }
 `;
+
+const NaverLoginBtn = styled.div``;
 
 const JoinBtn = styled.button`
   width: 45%;
