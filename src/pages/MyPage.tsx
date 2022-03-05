@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import MyPageChart from "components/mypage/MyPageChart";
 import Loading from "components/common/Loading";
@@ -9,8 +9,16 @@ import MyPageInfoDetail from "components/mypage/MyPageInfoDetail";
 const MyPage = () => {
   const { myData, loadingMyData, myDataError } = useMyPageData();
 
+  useEffect(() => {
+    if (myDataError) {
+      return window.location.replace("/login");
+    }
+  }, [myDataError]);
+
   if (loadingMyData) return <Loading />;
-  if (myDataError) return <div>에러발생...</div>;
+  if (myDataError) {
+    return <Loading />;
+  }
 
   return (
     <MyPageWrap className="main_wrap">
