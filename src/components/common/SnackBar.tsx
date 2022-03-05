@@ -9,8 +9,8 @@ export default SnackBar;
 
 const Bar = styled.div`
   position: fixed;
-  width: 85%;
-  max-width: 1000px;
+  width: calc(100% - 100px);
+  max-width: 924px;
   height: 50px;
   left: 0;
   right: 0;
@@ -24,6 +24,7 @@ const Bar = styled.div`
   z-index: 100;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: calc(100% - 60px);
     top: 60px;
   }
 
