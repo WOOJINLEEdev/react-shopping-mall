@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
-import useSearchResult from "hooks/useSearchResult";
 
 const Menu = ({ show }: any) => {
   const [searchClassName, setSearchClassName] = useState("menu_search");
@@ -12,20 +11,21 @@ const Menu = ({ show }: any) => {
   const [searchBtnClassName, setsearchBtnClassName] =
     useState("menu_search_btn");
   const [searchInputId, setSearchInputId] = useState("menuSearchInput");
+  const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const { data, mutate } = useMenuCollapsed();
-  const { searchResultData, searchResultMutate } = useSearchResult();
 
   const handleSearchBtn = (searchInput: string) => {
-    console.log(".....", searchInput);
+    searchInput = searchInput?.trim() ?? "";
+
     if (searchInput === "") {
       alert("검색어를 입력해주세요.");
       return false;
     }
 
     navigate(`/searchResult/${searchInput}`);
-    searchResultMutate(searchInput);
+    ref?.current?.blur();
     mutate(!data);
   };
 
@@ -73,6 +73,7 @@ const Menu = ({ show }: any) => {
               searchBtnClassName={searchBtnClassName}
               searchInputId={searchInputId}
               handleSearchBtn={handleSearchBtn}
+              ref={ref}
             />
           </MenuItem>
         </MenuList>

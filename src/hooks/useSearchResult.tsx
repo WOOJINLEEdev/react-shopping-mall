@@ -4,8 +4,8 @@ function useSearchResult() {
   const { data, mutate } = useSWR("searchResult", () => window.$searchResult);
 
   return {
-    searchResultData: data,
-    searchResultMutate: ($searchResult: any) => {
+    searchResultData: decodeURI(data),
+    searchResultMutate: ($searchResult: string) => {
       window.$searchResult = $searchResult;
 
       return mutate();

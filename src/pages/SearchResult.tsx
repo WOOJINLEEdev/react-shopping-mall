@@ -1,71 +1,58 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import ListItem from "components/home/ListItem";
 import Loading from "components/common/Loading";
 import MoreViewBtn from "components/common/MoreViewBtn";
 import { instance } from "utils/http-client";
-import useSearchResult from "hooks/useSearchResult";
 import { getProductsApi } from "api";
 
 const SearchResult = () => {
-  const [result, setResult] = useState([]);
+  const matchParams = useParams();
   const [resultCount, setResultCount] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const [searchWord, setSearchWord] = useState("");
-  const [pageOffset, setPageOffset] = useState(0);
-
-  const { searchResultData, searchResultMutate } = useSearchResult();
 
   useEffect(() => {
+    setSearchWord(matchParams.searchWord || "");
+
     async function searchProduct() {
       try {
+        setLoading(true);
         const res = await getProductsApi({
-          searchInput: searchResultData,
+          searchInput: matchParams.searchWord || "",
           count: true,
         });
-        console.log("result count", res);
         setResultCount(res.data);
       } catch (err) {
         console.log(err);
       } finally {
         setLoading(false);
       }
-
-      try {
-        const res = await getProductsApi({
-          searchInput: searchResultData,
-          limit: 9,
-          offset: 0,
-        });
-        console.log("result", res.data);
-        setResult(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
     }
 
-    setSearchWord(searchResultData);
-    setLoading(true);
-    searchProduct();
-  }, [searchResultData]);
+    if (matchParams.searchWord !== searchWord) {
+      searchProduct();
+    }
+  }, [matchParams]);
 
   const PAGE_LIMIT = 8;
-  const pageLimit = 8;
 
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
+    if (searchWord === "") {
+      return null;
+    }
+
     if (previousPageData && !previousPageData.length) {
       return null;
     }
 
     return `/v1/products?limit=${PAGE_LIMIT}&offset=${
       pageIndex * PAGE_LIMIT
-    }&name=${searchResultData}`;
+    }&name=${searchWord}`;
   };
 
-  const searchResultUrl = `/v1/products?limit=${pageLimit}&offset=${pageOffset}&name=${searchResultData}`;
   const fetcher = async (url: string) => {
     const res = await instance.get(url);
     return res.data;
@@ -79,17 +66,6 @@ const SearchResult = () => {
   if (!data) return <Loading />;
 
   if (loading) return <Loading />;
-
-  if (result.length === 0)
-    return (
-      <ResultWrap>
-        <SearchResultTitle>
-          <SearchWord>{searchWord}</SearchWord>
-          <span>검색결과 {resultCount}건</span>
-        </SearchResultTitle>
-        <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>
-      </ResultWrap>
-    );
 
   const products = data.flat(Infinity);
 
@@ -122,12 +98,16 @@ const SearchResult = () => {
         <span>검색결과 {resultCount}건</span>
       </SearchResultTitle>
       <ul className="list_group">
-        {products.map((product: Product) => {
-          return <ListItem key={product.id} item={product} />;
-        })}
+        {products.length === 0 ? (
+          <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>
+        ) : (
+          products.map((product: Product) => {
+            return <ListItem key={product.id} item={product} />;
+          })
+        )}
       </ul>
-      {resultCount > 9 && size * pageLimit < resultCount ? (
-        <MoreViewBtn onClick={handleClick} />
+      {resultCount > 9 && size * PAGE_LIMIT < resultCount ? (
+        <MoreViewBtn onClick={handleClick} margin={"0 0 30px"} />
       ) : (
         ""
       )}
@@ -169,6 +149,7 @@ const SearchWord = styled.span`
 `;
 
 const NoSearchWord = styled.div`
+  width: 100%;
   min-height: calc(100% - 40px);
   line-height: calc(100vh - 259px);
   font-size: 20px;

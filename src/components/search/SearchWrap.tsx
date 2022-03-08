@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import { useLocation, useNavigate } from "react-router-dom";
-import useSearchResult from "hooks/useSearchResult";
-import { getProductsApi } from "api";
 import { SearchWrapProps } from "types";
 
 const SearchWrap = ({
@@ -19,8 +17,6 @@ const SearchWrap = ({
   const [searchInputId, setSearchInputId] = useState("mainSearchInput");
   const ref = useRef<HTMLInputElement>(null);
 
-  const { searchResultData, searchResultMutate } = useSearchResult();
-
   useEffect(() => {
     setPathName(location.pathname);
 
@@ -30,21 +26,16 @@ const SearchWrap = ({
   }, [searchData]);
 
   const handleSearchBtn = async (searchInput: string) => {
-    if (searchInput === "" || searchInput === null) {
+    searchInput = searchInput?.trim() ?? "";
+
+    if (searchInput === "") {
       alert("검색어를 입력해주세요.");
       ref?.current?.focus();
       return false;
     }
 
-    try {
-      const res = await getProductsApi({ searchInput, limit: 8, offset: 0 });
-      console.log(res);
-      navigate(`/searchResult/${searchInput}`);
-      console.log("ref.current", ref?.current?.value);
-      ref?.current?.focus();
-    } catch (err) {
-      console.log(err);
-    }
+    navigate(`/searchResult/${searchInput}`);
+    ref?.current?.focus();
   };
 
   return (

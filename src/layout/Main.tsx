@@ -5,7 +5,6 @@ import Loading from "components/common/Loading";
 import useSearchLocation from "hooks/useSearchLocation";
 import useSearch from "hooks/useSearch";
 import useActiveHeaderItem from "hooks/useActiveHeaderItem";
-import useSearchResult from "hooks/useSearchResult";
 import { useDevice } from "hooks/useDevice";
 
 const Home = lazy(() => import("pages/Home"));
@@ -40,16 +39,8 @@ const Main = () => {
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
   const { clickedData, clickedMutate } = useActiveHeaderItem();
-  const { searchResultData, searchResultMutate } = useSearchResult();
 
   useEffect(() => {
-    if (
-      location.pathname.split("/").length === 3 &&
-      location.pathname.split("/")[1] === "searchResult"
-    ) {
-      searchResultMutate(location.pathname.split("/")[2]);
-    }
-
     searchLocationMutate(location.pathname);
     window.scrollTo(0, 0);
 
