@@ -1,28 +1,29 @@
 import { useEffect } from "react";
-import { withRouter, useHistory, RouteComponentProps } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import signInImg from "images/user.png";
 import useMyCart from "hooks/useMyCart";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
 import useSearch from "hooks/useSearch";
 import useSearchLocation from "hooks/useSearchLocation";
+import useActiveHeaderItem from "hooks/useActiveHeaderItem";
+import useTokenStatus from "hooks/useTokenStatus";
+import { useDevice } from "hooks/useDevice";
+import signInImg from "images/user.png";
 import { ReactComponent as MenuImg } from "images/menu.svg";
 import { GoSearch } from "@react-icons/all-files/go/GoSearch";
 import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
-import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import Loading from "components/common/Loading";
-import useTokenStatus from "hooks/useTokenStatus";
-import { useDevice } from "hooks/useDevice";
 import {
   updateMyVisitCountsApi,
   updateShopVisitCountsApi,
   createAccessTokenApi,
 } from "api";
 
-const Header = ({ location }: RouteComponentProps) => {
-  const history = useHistory();
+const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { token, mutateToken } = useTokenStatus();
   const { isPc } = useDevice();
 
@@ -108,7 +109,7 @@ const Header = ({ location }: RouteComponentProps) => {
   };
 
   function routeIfNotCurrentPath(path: string) {
-    location.pathname !== path && history.push(path);
+    location.pathname !== path && navigate(path);
   }
 
   return (
@@ -201,7 +202,7 @@ const Header = ({ location }: RouteComponentProps) => {
   );
 };
 
-export default withRouter(Header);
+export default Header;
 
 const MenuHomeWrap = styled.div`
   display: flex;

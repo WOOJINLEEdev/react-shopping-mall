@@ -1,5 +1,3 @@
-import { RouteComponentProps } from "react-router";
-
 export interface SearchInputBtnProps {
   show?: any;
   searchClassName?: string;
@@ -11,7 +9,7 @@ export interface SearchInputBtnProps {
   searchInputId?: string;
 }
 
-export interface SearchWrapProps extends RouteComponentProps {
+export interface SearchWrapProps {
   searchData: boolean;
   searchClassName: string;
   searchInputClassName: string;

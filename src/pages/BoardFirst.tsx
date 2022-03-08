@@ -1,6 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 import BoardTable from "components/board/BoardTable";
@@ -21,7 +20,7 @@ Modal.setAppElement("#root");
 const BoardFirstModal = lazy(() => import("components/board/BoardFirstModal"));
 
 const BoardFirst = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
@@ -77,7 +76,7 @@ const BoardFirst = () => {
 
   const handleWriteBtn = () => {
     if (token) {
-      history.push("/boardPost");
+      navigate("/boardPost");
     } else {
       alert("로그인 후 이용해주세요!");
       return false;

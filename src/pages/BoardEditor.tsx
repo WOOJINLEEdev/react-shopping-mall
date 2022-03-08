@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import DOMPurify from "dompurify";
@@ -19,7 +19,7 @@ const BoardEditor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<any>(null);
   const [inputTitle, setInputTitle] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const token = getToken();
   const boardLocalStorage = localStorage.getItem("board");
@@ -40,8 +40,8 @@ const BoardEditor = () => {
     },
   };
 
-  const moveBoard = () => {
-    history.goBack();
+  const handleMoveBoardBtn = () => {
+    navigate(-1);
   };
 
   const handleEditorSave = async () => {
@@ -88,7 +88,7 @@ const BoardEditor = () => {
             <button
               type="button"
               className="editor_back_btn"
-              onClick={moveBoard}
+              onClick={handleMoveBoardBtn}
             >
               목록
             </button>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
 import useSearchResult from "hooks/useSearchResult";
@@ -12,7 +12,7 @@ const Menu = ({ show }: any) => {
   const [searchBtnClassName, setsearchBtnClassName] =
     useState("menu_search_btn");
   const [searchInputId, setSearchInputId] = useState("menuSearchInput");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { data, mutate } = useMenuCollapsed();
   const { searchResultData, searchResultMutate } = useSearchResult();
@@ -24,7 +24,7 @@ const Menu = ({ show }: any) => {
       return false;
     }
 
-    history.push(`/searchResult/${searchInput}`);
+    navigate(`/searchResult/${searchInput}`);
     searchResultMutate(searchInput);
     mutate(!data);
   };
@@ -35,11 +35,11 @@ const Menu = ({ show }: any) => {
     const itemName = (e.target as HTMLLIElement).dataset.name;
 
     if (itemName === "ABOUT ME") {
-      history.push("/aboutMe");
+      navigate("/aboutMe");
     }
 
     if (itemName === "COMMUNITY") {
-      history.push("/selectBoard");
+      navigate("/selectBoard");
     }
     mutate(!data);
   };

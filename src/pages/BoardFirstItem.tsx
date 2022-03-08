@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { postList } from "components/board/board-first-data";
-
-interface MatchParams {
-  no: string;
-}
 
 interface PostListType {
   no: number;
@@ -16,10 +12,11 @@ interface PostListType {
   readCount: number;
 }
 
-const BoardFirstItem = ({ match }: RouteComponentProps<MatchParams>) => {
-  const history = useHistory();
+const BoardFirstItem = () => {
+  const navigate = useNavigate();
+  const matchParams = useParams();
 
-  const boardItemNo = Number(match.params.no);
+  const boardItemNo = Number(matchParams.no);
   const boardItem: PostListType | undefined = postList.find(
     (post) => post.no === boardItemNo
   );
@@ -28,15 +25,19 @@ const BoardFirstItem = ({ match }: RouteComponentProps<MatchParams>) => {
     return <div>해당 데이터를 찾지 못하였습니다.</div>;
   }
 
-  const moveBoard = () => {
-    history.goBack();
+  const handleMoveBoardBtn = () => {
+    navigate(-1);
   };
 
   return (
     <ListItemWrap>
       <ItemWrap>
         <ListButtonWrap>
-          <button type="button" className="board_item_back" onClick={moveBoard}>
+          <button
+            type="button"
+            className="board_item_back"
+            onClick={handleMoveBoardBtn}
+          >
             목록
           </button>
         </ListButtonWrap>

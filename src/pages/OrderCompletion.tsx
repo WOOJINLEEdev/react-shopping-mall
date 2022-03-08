@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import { ReactComponent as ShoppingBag } from "images/shopping-bag.svg";
@@ -13,10 +13,6 @@ import { formatDate } from "utils/format-date";
 import { getOrderNumber } from "utils/order";
 import { useDevice } from "hooks/useDevice";
 import { getOrdersApi } from "api";
-
-interface MatchParams {
-  checkoutId: string;
-}
 
 interface OrderData {
   created_at: string;
@@ -61,7 +57,8 @@ type Coupon = {
   user_coupon_id: number;
 };
 
-const OrderCompletion = ({ match }: RouteComponentProps<MatchParams>) => {
+const OrderCompletion = () => {
+  const matchParams = useParams();
   const [orderData, setOrderData] = useState<OrderData[]>([]);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [arrowImg, setArrowImg] = useState(upArrow);
@@ -72,7 +69,7 @@ const OrderCompletion = ({ match }: RouteComponentProps<MatchParams>) => {
 
   const { isPc, isTablet, isMobile } = useDevice();
 
-  const checkoutNumber = Number(match.params.checkoutId);
+  const checkoutNumber = Number(matchParams.checkoutId);
   const date = new Date();
 
   useEffect(() => {

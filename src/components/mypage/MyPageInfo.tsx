@@ -1,5 +1,5 @@
 import React, { useState, lazy, Suspense, useCallback } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 import Loading from "components/common/Loading";
@@ -22,7 +22,7 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
   const [btnText1, setBtnText1] = useState("예");
   const [btnText2, setBtnText2] = useState("아니오");
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const logout = useCallback(() => {
     async function createLogout() {
@@ -45,7 +45,7 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
       false
     );
 
-    history.push("/");
+    navigate("/");
   }, []);
 
   const handleLogoutBtn = useCallback(() => {

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
@@ -30,7 +29,7 @@ const Cart = () => {
   const [allChecked, setAllChecked] = useState<boolean>(true);
   const [barClassName, setBarClassName] = useState("opacity");
   const [barText, setBarText] = useState("선택하신 상품이 삭제되었습니다.");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
@@ -156,7 +155,7 @@ const Cart = () => {
         lineItems: checkedLineItems,
       });
       setChkId(res.data.checkout_id);
-      history.push(`/checkout/${res.data.checkout_id}`);
+      navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
       console.log(err);
     }
@@ -180,7 +179,7 @@ const Cart = () => {
           },
         ],
       });
-      history.push(`/checkout/${res.data.checkout_id}`);
+      navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
       console.log(err);
     }

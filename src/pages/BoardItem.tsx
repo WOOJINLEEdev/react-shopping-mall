@@ -1,33 +1,34 @@
 import styled from "styled-components";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useBoardItem from "hooks/useBoardItem";
 import Loading from "components/common/Loading";
 import { formatDate } from "utils/format-date";
 
-interface MatchParams {
-  id: string;
-}
-
-const BoardItem = ({ match }: RouteComponentProps<MatchParams>) => {
-  const history = useHistory();
+const BoardItem = () => {
+  const navigate = useNavigate();
+  const matchParams = useParams();
   const date = new Date();
   const curDate = formatDate(date);
 
-  const boardItemId = Number(match.params.id);
+  const boardItemId = Number(matchParams.id);
   const { boardItem, boardItemError } = useBoardItem(boardItemId);
 
   if (boardItemError) return <div>failed to load</div>;
   if (!boardItem) return <Loading />;
 
-  const moveBoard = () => {
-    history.goBack();
+  const handleMoveBoardBtn = () => {
+    navigate(-1);
   };
 
   return (
     <ListItemWrap>
       <ItemWrap>
         <ListButtonWrap>
-          <button type="button" className="board_item_back" onClick={moveBoard}>
+          <button
+            type="button"
+            className="board_item_back"
+            onClick={handleMoveBoardBtn}
+          >
             목록
           </button>
         </ListButtonWrap>

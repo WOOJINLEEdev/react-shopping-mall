@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
@@ -41,7 +41,7 @@ const getPostsCache = () => {
 };
 
 const BoardSecond = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
     useCurrentBoardPage();
@@ -112,7 +112,7 @@ const BoardSecond = () => {
 
   const handleWriteBtn = () => {
     if (token) {
-      history.push("/boardPost");
+      navigate("/boardPost");
     } else {
       alert("로그인 후 이용해주세요!");
       return false;

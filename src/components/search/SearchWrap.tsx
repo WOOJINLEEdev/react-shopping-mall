@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import { withRouter, useHistory } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import useSearchResult from "hooks/useSearchResult";
 import { getProductsApi } from "api";
 import { SearchWrapProps } from "types";
@@ -11,9 +11,9 @@ const SearchWrap = ({
   searchClassName,
   searchInputClassName,
   searchBtnClassName,
-  location,
 }: SearchWrapProps) => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [pathName, setPathName] = useState("");
   const [searchPlaceHolder, setSearchPlaceHolder] = useState("Search");
   const [searchInputId, setSearchInputId] = useState("mainSearchInput");
@@ -39,7 +39,7 @@ const SearchWrap = ({
     try {
       const res = await getProductsApi({ searchInput, limit: 8, offset: 0 });
       console.log(res);
-      history.push(`/searchResult/${searchInput}`);
+      navigate(`/searchResult/${searchInput}`);
       console.log("ref.current", ref?.current?.value);
       ref?.current?.focus();
     } catch (err) {
@@ -63,7 +63,7 @@ const SearchWrap = ({
   );
 };
 
-export default withRouter(SearchWrap);
+export default SearchWrap;
 
 const SearchWrapper = styled.div`
   position: relative;

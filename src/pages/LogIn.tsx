@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Formik, Form, ErrorMessage, Field } from "formik";
 import * as Yup from "yup";
 import { userId, userPassword } from "utils/login-validation";
@@ -13,7 +13,7 @@ const LogIn = () => {
   const location = useLocation();
   const [naverIdToken, setNaverIdToken] = useState("");
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     initializeNaverLogin();
@@ -124,7 +124,7 @@ const LogIn = () => {
   };
 
   const handleJoinBtn = () => {
-    history.push("/join");
+    navigate("/join");
   };
 
   return (

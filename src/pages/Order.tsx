@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import OrderDelivery from "components/order/OrderDelivery";
 import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
@@ -8,12 +8,9 @@ import useCheckout from "hooks/useCheckout";
 import Loading from "components/common/Loading";
 import { useDevice } from "hooks/useDevice";
 
-interface MatchParams {
-  checkoutId: string;
-}
-
-const Order = ({ match }: RouteComponentProps<MatchParams>) => {
-  const checkoutNumber = Number(match.params.checkoutId);
+const Order = () => {
+  const matchParams = useParams();
+  const checkoutNumber = Number(matchParams.checkoutId);
 
   const { isPc, isTablet, isMobile } = useDevice();
 

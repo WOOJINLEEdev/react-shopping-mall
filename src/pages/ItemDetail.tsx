@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useSWR from "swr";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
@@ -8,10 +8,6 @@ import { instance } from "utils/http-client";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { addToCartApi, createCheckoutsApi } from "api";
-
-interface MatchParams {
-  productId: string;
-}
 
 interface Option {
   id: number;
@@ -23,8 +19,9 @@ interface Option {
   product_id: number;
 }
 
-const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
-  const history = useHistory();
+const ItemDetail = () => {
+  const navigate = useNavigate();
+  const matchParams = useParams();
   const [quantity, setQuantity] = useState(1);
   const [itemOption, setItemOption] = useState<number | string>("");
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +34,7 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const [onOverlayClick, setOnOverlayClick] = useState(false);
   const [onEsc, setOnEsc] = useState(false);
 
-  const productUrl = `/v1/products/${match.params.productId}`;
+  const productUrl = `/v1/products/${matchParams.productId}`;
   const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);
   };
@@ -102,7 +99,7 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
   const handleModalBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     if ((e.target as HTMLButtonElement).name === "yes") {
       console.log("yes");
-      history.push("/cart");
+      navigate("/cart");
     } else {
       console.log("no");
       setIsOpen(false);
@@ -137,7 +134,7 @@ const ItemDetail = ({ match }: RouteComponentProps<MatchParams>) => {
           },
         ],
       });
-      history.push(`/checkout/${res.data.checkout_id}`);
+      navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
       console.log(err);
     }
