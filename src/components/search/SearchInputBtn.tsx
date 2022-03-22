@@ -1,7 +1,9 @@
 import { useState, useMemo, forwardRef } from "react";
+import styled from "styled-components";
 import useSearchResult from "hooks/useSearchResult";
 import { debounce } from "lodash";
 import { SearchInputBtnProps } from "types";
+import { FaTimesCircle } from "@react-icons/all-files/fa/FaTimesCircle";
 
 const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
   (
@@ -14,6 +16,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
       searchBtnClassName,
       searchPlaceHolder,
       searchInputId,
+      handleRemoveBtn,
     },
     ref
   ) => {
@@ -61,6 +64,17 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
           ref={ref}
         />
 
+        {handleRemoveBtn && searchInput.trim().length > 0 ? (
+          <RemoveBtn
+            role="button"
+            onClick={() => handleRemoveBtn(setSearchInput)}
+          >
+            <FaTimesCircle />
+          </RemoveBtn>
+        ) : (
+          ""
+        )}
+
         <button
           type="button"
           className={searchBtnClassName}
@@ -74,3 +88,28 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
 );
 
 export default SearchInputBtn;
+
+const RemoveBtn = styled.div`
+  position: absolute;
+  right: 50px;
+  padding: 10px;
+  cursor: pointer;
+
+  & svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 20px 10px;
+  }
+
+  @media only screen and (max-width: 1023px) {
+    padding: 0;
+    right: 20%;
+
+    & svg {
+      width: 14px;
+      height: 14px;
+      padding: 18px 10px;
+    }
+  }
+`;

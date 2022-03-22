@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface SearchInputBtnProps {
   show?: any;
   searchClassName?: string;
@@ -7,6 +9,7 @@ export interface SearchInputBtnProps {
   searchBtnClassName?: string;
   searchPlaceHolder?: string;
   searchInputId?: string;
+  handleRemoveBtn?: (setState: Dispatch<SetStateAction<string>>) => void;
 }
 
 export interface SearchWrapProps {

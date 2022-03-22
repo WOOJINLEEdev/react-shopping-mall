@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -38,6 +38,11 @@ const SearchWrap = ({
     ref?.current?.focus();
   };
 
+  const handleRemoveBtn = (setState: Dispatch<SetStateAction<string>>) => {
+    setState("");
+    ref?.current?.focus();
+  };
+
   return (
     <SearchWrapper className={searchData ? "" : "search_hidden"}>
       <SearchInputBtn
@@ -48,6 +53,7 @@ const SearchWrap = ({
         handleSearchBtn={handleSearchBtn}
         searchPlaceHolder={searchPlaceHolder}
         searchInputId={searchInputId}
+        handleRemoveBtn={handleRemoveBtn}
         ref={ref}
       />
     </SearchWrapper>

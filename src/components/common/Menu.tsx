@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import SearchInputBtn from "components/search/SearchInputBtn";
@@ -44,6 +44,11 @@ const Menu = ({ show }: any) => {
     mutate(!data);
   };
 
+  const handleRemoveBtn = (setState: Dispatch<SetStateAction<string>>) => {
+    setState("");
+    ref?.current?.focus();
+  };
+
   return (
     <MenuWrap className={show ? "" : "menu_hidden"}>
       <nav aria-labelledby="aside_menu">
@@ -73,6 +78,7 @@ const Menu = ({ show }: any) => {
               searchBtnClassName={searchBtnClassName}
               searchInputId={searchInputId}
               handleSearchBtn={handleSearchBtn}
+              handleRemoveBtn={handleRemoveBtn}
               ref={ref}
             />
           </MenuItem>
