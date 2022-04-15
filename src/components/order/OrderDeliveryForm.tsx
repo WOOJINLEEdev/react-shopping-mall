@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import {
-  OrderDeliveryForm1Props,
+  OrderDeliveryFormProps,
   DeliveryRequirementOption1,
   PreexistenceSelectProps,
 } from "types";
 
-const OrderDeliveryForm1 = ({
+const OrderDeliveryForm = ({
   deliveryForm1,
   designation,
   handleDeliveryInputChange1,
@@ -33,7 +33,7 @@ const OrderDeliveryForm1 = ({
   deliveryRequirementOption1,
   deliveryRequirementWrite1,
   handleDeliveryInputChange5,
-}: OrderDeliveryForm1Props) => {
+}: OrderDeliveryFormProps) => {
   return (
     <div className={deliveryForm1}>
       <div className="delivery_box">
@@ -219,7 +219,7 @@ const OrderDeliveryForm1 = ({
   );
 };
 
-export default OrderDeliveryForm1;
+export default OrderDeliveryForm;
 
 const DeliveryRequirementWrap = styled.div`
   display: flex;

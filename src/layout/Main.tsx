@@ -19,7 +19,7 @@ const BoardFirstItem = lazy(() => import("pages/BoardFirstItem"));
 const BoardSecond = lazy(() => import("pages/BoardSecond"));
 const BoardItem = lazy(() => import("pages/BoardItem"));
 const BoardEditor = lazy(() => import("pages/BoardEditor"));
-const SelectBoardPage = lazy(() => import("pages/SelectBoardPage"));
+const SelectBoard = lazy(() => import("pages/SelectBoard"));
 const OrderCompletion = lazy(() => import("pages/OrderCompletion"));
 const MyOrderCheck = lazy(() => import("pages/MyOrderCheck"));
 const AboutMe = lazy(() => import("pages/AboutMe"));
@@ -30,10 +30,10 @@ const Main = () => {
   const location = useLocation();
   const { isPc } = useDevice();
   const [searchClassName, setSearchClassName] = useState("header_search_style");
-  const [searchInputClassName, setsearchInputClassName] = useState(
+  const [searchInputClassName, setSearchInputClassName] = useState(
     "header_search_input"
   );
-  const [searchBtnClassName, setsearchBtnClassName] =
+  const [searchBtnClassName, setSearchBtnClassName] =
     useState("header_search_btn");
 
   const { searchData, searchMutate } = useSearch();
@@ -73,14 +73,14 @@ const Main = () => {
           <Route path="/postView/:id" element={<BoardItem />} />
           <Route path="/post/:no" element={<BoardFirstItem />} />
           <Route path="/boardPost" element={<BoardEditor />} />
-          <Route path="/selectBoard" element={<SelectBoardPage />} />
+          <Route path="/selectBoard" element={<SelectBoard />} />
           <Route path="/selectBoard1" element={<BoardFirst />} />
           <Route path="/selectBoard2" element={<BoardSecond />} />
           <Route path="/orderCheck/:checkoutId" element={<OrderCompletion />} />
           <Route path="/myOrderCheck" element={<MyOrderCheck />} />
           <Route path="/searchResult/:searchWord" element={<SearchResult />} />
           <Route path="/aboutMe" element={<AboutMe />} />
-          <Route element={<PageNotFound />} />
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </main>

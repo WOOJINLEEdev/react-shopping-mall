@@ -175,8 +175,8 @@ export interface DeliveryRequirementOption {
   selected?: string;
 }
 
-//---------------------------------------------- OrderDeliveryForm1
-export interface OrderDeliveryForm1Props {
+//---------------------------------------------- OrderDeliveryForm
+export interface OrderDeliveryFormProps {
   deliveryForm1: string;
   designation: string;
   handleDeliveryInputChange1: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -10,7 +10,7 @@ import OrderDeliveryHead from "./OrderDeliveryHead";
 import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
-import OrderDeliveryForm1 from "components/order/OrderDeliveryForm1";
+import OrderDeliveryForm from "components/order/OrderDeliveryForm";
 import { getFullAddress } from "utils/get-address";
 import { OrderDeliveryProps, DeliveryRequirementOption, Address } from "types";
 
@@ -342,7 +342,7 @@ const OrderDelivery = ({
         />
       )}
 
-      <OrderDeliveryForm1
+      <OrderDeliveryForm
         deliveryForm1={deliveryForm1}
         designation={designation}
         handleDeliveryInputChange1={handleDeliveryInputChange1}
