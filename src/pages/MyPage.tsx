@@ -10,9 +10,7 @@ const MyPage = () => {
   const { myData, loadingMyData, myDataError } = useMyPageData();
 
   useEffect(() => {
-    if (myDataError) {
-      return window.location.replace("/login");
-    }
+    myDataError && window.location.replace("/login");
   }, [myDataError]);
 
   if (loadingMyData) return <Loading />;

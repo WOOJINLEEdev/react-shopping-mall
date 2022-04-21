@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
@@ -17,36 +17,28 @@ interface MyToken {
 
 const BoardEditor = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const editorRef = useRef<any>(null);
-  const [inputTitle, setInputTitle] = useState("");
+  const editorRef = useRef<Editor>(null);
+  const [inputTitle, setInputTitle] = useState<string>("");
   const navigate = useNavigate();
 
   const token = getToken();
   const boardLocalStorage = localStorage.getItem("board");
   const decoded = jwt_decode<MyToken>(token);
   const userId = decoded.user.user_id;
-  let isFocusTitle = false;
 
   useEffect(() => {
     inputRef?.current?.focus();
-  });
+  }, []);
 
-  const eventHandler = {
-    focus: () => {
-      if (!isFocusTitle) {
-        inputRef?.current?.focus();
-        isFocusTitle = true;
-      }
-    },
-  };
-
-  const handleMoveBoardBtn = () => {
+  const handleMoveBoardBtnClick = useCallback(() => {
     navigate(-1);
-  };
+  }, []);
 
-  const handleEditorSave = async () => {
+  const handleEditorSaveBtnClick = useCallback(async () => {
+    if (!editorRef.current) return;
+
     const inputBody = DOMPurify.sanitize(
-      editorRef?.current?.getInstance().getEditorElements().wwEditor.innerText
+      editorRef?.current?.getInstance().getHTML()
     );
 
     console.log("inputBody", inputBody);
@@ -65,17 +57,20 @@ const BoardEditor = () => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
-  const handleEditorTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputTitle(e.target.value);
-  };
+  const handleEditorTitleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputTitle(e.target.value);
+    },
+    [inputTitle]
+  );
 
-  const handleAlert = () => {
+  const handleEditorSaveBtnAlert = useCallback(() => {
     alert(
       "현재 서비스 준비 중입니다. Board Second에서는 저장하기 버튼 클릭 시 console 창에서 확인 가능합니다. "
     );
-  };
+  }, []);
 
   return (
     <EditorWrap>
@@ -88,7 +83,7 @@ const BoardEditor = () => {
             <button
               type="button"
               className="editor_back_btn"
-              onClick={handleMoveBoardBtn}
+              onClick={handleMoveBoardBtnClick}
             >
               목록
             </button>
@@ -96,7 +91,9 @@ const BoardEditor = () => {
               type="button"
               className="editor_save_btn"
               onClick={
-                boardLocalStorage === "second" ? handleEditorSave : handleAlert
+                boardLocalStorage === "second"
+                  ? handleEditorSaveBtnClick
+                  : handleEditorSaveBtnAlert
               }
             >
               저장하기
@@ -107,7 +104,7 @@ const BoardEditor = () => {
           type="text"
           className="board_editor_input_title"
           placeholder="제목"
-          onChange={handleEditorTitle}
+          onChange={handleEditorTitleChange}
           ref={inputRef}
         />
       </div>
@@ -119,7 +116,8 @@ const BoardEditor = () => {
         placeholder="말은 우리 내면을 비추는 거울입니다."
         language="ko"
         ref={editorRef}
-        events={eventHandler}
+        // events={eventHandler}
+        autofocus={false}
       />
     </EditorWrap>
   );

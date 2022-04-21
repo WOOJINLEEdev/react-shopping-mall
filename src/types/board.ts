@@ -6,7 +6,7 @@ export interface BoardFilterProps {
 // BoardFirstModal
 export interface BoardFirstModalProps {
   isOpen: boolean;
-  onRequestClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
+  onRequestClose: () => void;
   postList: Post[];
   boardItemNo: number;
 }
@@ -24,13 +24,13 @@ export interface Post {
 // BoardItemModal
 export interface BoardItemModalProps {
   isOpen: boolean;
-  onRequestClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
+  onRequestClose: () => void;
   boardItemId: number;
 }
 
 // BoardModalCloseBtn
 export interface BoardModalCloseBtnProps {
-  handleModalClose: (event: React.MouseEvent<Element, MouseEvent>) => void;
+  handleModalClose: () => void;
 }
 
 // BoardPagination
@@ -49,20 +49,20 @@ export interface ButtonProps {
 // BoardTable
 export interface BoardTableProps {
   headersName: string[];
-  children?: Object;
+  children?: React.ReactNode;
   loading?: any;
   boardLocal?: "first" | "second";
 }
 
 // BoardTableColumn
 export interface BoardTableColumnProp {
-  children?: Object;
+  children?: React.ReactNode;
   title?: string;
 }
 
 // BoardTableRow
 export interface BoardTableRowProps {
-  children?: Object;
+  children?: React.ReactNode;
   background?: string;
 }
 

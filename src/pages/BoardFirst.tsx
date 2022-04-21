@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -9,57 +9,58 @@ import BoardPagination from "components/board/BoardPagination";
 import { postList, sortedPostList } from "components/board/board-first-data";
 import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 import Loading from "components/common/Loading";
-import { getToken } from "utils/token";
 import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 import { useDevice } from "hooks/useDevice";
+import { getToken } from "utils/token";
+import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 
 Modal.setAppElement("#root");
+
+interface PostListType {
+  no: number;
+  type: string;
+  title: string;
+  content: string | string[];
+  user: string;
+  createDate: string;
+  readCount: number;
+}
+
+const headersName = [
+  "번호",
+  "구분",
+  "제목",
+  "작성자",
+  "등록일",
+  "조회수",
+  "미리보기",
+];
 
 const BoardFirstModal = lazy(() => import("components/board/BoardFirstModal"));
 
 const BoardFirst = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
     useCurrentBoardPage();
 
-  interface PostListType {
-    no: number;
-    type: string;
-    title: string;
-    content: string | string[];
-    user: string;
-    createDate: string;
-    readCount: number;
-  }
-
   const initialPage = getCurrentBoardPage("first");
   const [dataList, setDataList] = useState<PostListType[]>([]);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(initialPage);
-  const [selectedPreviewId, setSelectedPreviewId] = useState(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [page, setPage] = useState<number>(initialPage);
+  const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
   const offset = (page - 1) * limit;
 
-  const [searchClassName, setSearchClassName] = useState("search_wrap");
+  const [searchClassName, setSearchClassName] = useState<string>("search_wrap");
   const [searchInputClassName, setsearchInputClassName] =
-    useState("board_search_input");
+    useState<string>("board_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
-    useState("board_search_btn");
-  const [selectedOption, setSelectedOption] = useState("");
+    useState<string>("board_search_btn");
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
   const token = getToken();
-  const headersName = [
-    "번호",
-    "구분",
-    "제목",
-    "작성자",
-    "등록일",
-    "조회수",
-    "미리보기",
-  ];
   const { isPc, isTablet, isMobile } = useDevice();
 
   const notice = postList.filter((data) => data.type === "공지사항");
@@ -74,66 +75,64 @@ const BoardFirst = () => {
     mutateCurrentBoardPage("first", page);
   }, [page]);
 
-  const handleWriteBtn = () => {
+  const handleWriteBtnClick = useCallback(() => {
     if (token) {
       navigate("/boardPost");
     } else {
       alert("로그인 후 이용해주세요!");
       return false;
     }
-  };
+  }, [token]);
 
-  const handlePreviewBtn = (itemId: number) => {
-    setSelectedPreviewId(itemId);
-    setIsOpen(true);
-  };
+  const handlePreviewBtnClick = useCallback(
+    (itemId: number) => {
+      setSelectedPreviewId(itemId);
+      setIsOpen(true);
+    },
+    [isOpen, selectedPreviewId]
+  );
 
-  const onRequestClose = () => {
+  const onRequestClose = useCallback(() => {
     setIsOpen(false);
-  };
+  }, [isOpen]);
 
-  const handleSelectOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === "공지사항") {
-      setSelectedOption("공지사항");
-      console.log(selectedOption);
+  const handleSelectOption = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      if (e.target.value === "공지사항") {
+        setSelectedOption("공지사항");
 
-      if (dataList.length !== 12) {
-        const a = sortedPostList.filter((data) => data.type === "공지사항");
-        setDataList(a);
-        return;
+        let list = dataList.length !== 12 ? sortedPostList : dataList;
+        let noticeList = list.filter((data) => data.type === "공지사항");
+        return setDataList(noticeList);
       }
-      const b = dataList.filter((data) => data.type === "공지사항");
-      setDataList(b);
-    } else if (e.target.value === "일반") {
-      setSelectedOption("일반");
-      console.log(selectedOption);
-      if (dataList.length < 12) {
-        const c = sortedPostList.filter((data) => data.type === "일반");
-        setDataList(c);
-      } else {
-        const d = dataList.filter((data) => data.type === "일반");
-        setDataList(d);
+
+      if (e.target.value === "일반") {
+        setSelectedOption("일반");
+
+        let list = dataList.length < 12 ? sortedPostList : dataList;
+        let noticeList = list.filter((data) => data.type === "일반");
+        return setDataList(noticeList);
       }
-    } else {
+
       setSelectedOption("");
-      console.log(selectedOption);
       setDataList(sortedPostList);
-    }
-  };
+    },
+    [selectedOption, dataList]
+  );
 
-  const handleSearchBtn = () => {
+  const handleSearchBtnClick = () => {
     const searchFilter = dataList.filter((item: PostListType) =>
       item.title.includes(searchInput)
     );
     setDataList(searchFilter);
   };
 
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     searchInput = targetValue;
   };
 
-  const getHeadersName = () => {
+  const getHeadersName = useCallback(() => {
     if (isTablet) {
       return ["번호", "구분", "제목", "작성자", "등록일", "조회수"];
     }
@@ -142,7 +141,7 @@ const BoardFirst = () => {
     }
 
     return headersName;
-  };
+  }, [isTablet, isMobile]);
 
   return (
     <BoardWrap>
@@ -158,13 +157,13 @@ const BoardFirst = () => {
           searchClassName={searchClassName}
           searchInputClassName={searchInputClassName}
           searchBtnClassName={searchBtnClassName}
-          handleSearchBtn={handleSearchBtn}
-          handleSearchInput={handleSearchInput}
+          handleSearchBtnClick={handleSearchBtnClick}
+          handleSearchInputChange={handleSearchInputChange}
         />
         <button
           type="button"
           className="board_write_btn"
-          onClick={handleWriteBtn}
+          onClick={handleWriteBtnClick}
         >
           글쓰기
         </button>
@@ -216,7 +215,7 @@ const BoardFirst = () => {
                 <button
                   type="button"
                   className="board_preview_btn"
-                  onClick={() => handlePreviewBtn(item.no)}
+                  onClick={() => handlePreviewBtnClick(item.no)}
                 >
                   <span className="visually_hidden">미리보기</span>
                 </button>
@@ -255,7 +254,7 @@ const BoardFirst = () => {
                   <button
                     type="button"
                     className="board_preview_btn"
-                    onClick={() => handlePreviewBtn(item.no)}
+                    onClick={() => handlePreviewBtnClick(item.no)}
                   >
                     <span className="visually_hidden">미리보기</span>
                   </button>

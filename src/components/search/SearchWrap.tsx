@@ -12,9 +12,9 @@ const SearchWrap = ({
 }: SearchWrapProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [pathName, setPathName] = useState("");
-  const [searchPlaceHolder, setSearchPlaceHolder] = useState("Search");
-  const [searchInputId, setSearchInputId] = useState("mainSearchInput");
+  const [pathName, setPathName] = useState<string>("");
+  const [searchPlaceHolder, setSearchPlaceHolder] = useState<string>("Search");
+  const [searchInputId, setSearchInputId] = useState<string>("mainSearchInput");
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const SearchWrap = ({
     }
   }, [searchData]);
 
-  const handleSearchBtn = async (searchInput: string) => {
+  const handleSearchBtnClick = async (searchInput: string) => {
     searchInput = searchInput?.trim() ?? "";
 
     if (searchInput === "") {
@@ -38,7 +38,7 @@ const SearchWrap = ({
     ref?.current?.focus();
   };
 
-  const handleRemoveBtn = (setState: Dispatch<SetStateAction<string>>) => {
+  const handleRemoveBtnClick = (setState: Dispatch<SetStateAction<string>>) => {
     setState("");
     ref?.current?.focus();
   };
@@ -50,10 +50,10 @@ const SearchWrap = ({
         searchClassName={searchClassName}
         searchInputClassName={searchInputClassName}
         searchBtnClassName={searchBtnClassName}
-        handleSearchBtn={handleSearchBtn}
+        handleSearchBtnClick={handleSearchBtnClick}
         searchPlaceHolder={searchPlaceHolder}
         searchInputId={searchInputId}
-        handleRemoveBtn={handleRemoveBtn}
+        handleRemoveBtnClick={handleRemoveBtnClick}
         ref={ref}
       />
     </SearchWrapper>

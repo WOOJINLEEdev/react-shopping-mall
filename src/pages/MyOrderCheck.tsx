@@ -15,10 +15,9 @@ const MyOrderCheckModal = lazy(
 );
 
 const MyOrderCheck = () => {
-  const [isOpen3, setIsOpen3] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [selectItemId, setSelectItemId] = useState<number>();
-  const [pageOffset, setPageOffset] = useState(0);
 
   useEffect(() => {
     async function getMyOrderCount() {
@@ -41,7 +40,6 @@ const MyOrderCheck = () => {
     return `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageIndex * PAGE_LIMIT}`;
   };
 
-  const myOrderCheckUrl = `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageOffset}`;
   const fetcher = async (url: string) => {
     const res = await instance.get(url);
     return res.data;
@@ -58,15 +56,14 @@ const MyOrderCheck = () => {
 
   const handleOrderListItem = (itemId: number) => {
     setSelectItemId(itemId);
-    setIsOpen3(true);
+    setIsOpen(true);
   };
 
-  const onRequestClose3 = () => {
-    setIsOpen3(false);
+  const onRequestClose = () => {
+    setIsOpen(false);
   };
 
-  function handleClick() {
-    console.log("더보기 클릭");
+  function handleMoreViewBtnClick() {
     setSize(size + 1);
   }
 
@@ -82,8 +79,8 @@ const MyOrderCheck = () => {
       )}
       <Suspense fallback={<Loading />}>
         <MyOrderCheckModal
-          isOpen3={isOpen3}
-          onRequestClose3={onRequestClose3}
+          isOpen={isOpen}
+          onRequestClose={onRequestClose}
           myOrderList={myOrderList}
           orderItemId={selectItemId}
         />
@@ -121,7 +118,7 @@ const MyOrderCheck = () => {
         })}
       </ul>
       {totalCount > 5 && size * PAGE_LIMIT < totalCount ? (
-        <MoreViewBtn onClick={handleClick} />
+        <MoreViewBtn onClick={handleMoreViewBtnClick} />
       ) : (
         ""
       )}

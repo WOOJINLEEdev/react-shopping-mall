@@ -12,6 +12,6 @@ const Div = styled.div`
   line-height: calc(100vh - 171px);
   font-size: 35px;
   font-weight: bold;
-  background: #efefef;
+  background: #fff;
   text-align: center;
 `;

@@ -9,10 +9,10 @@ const CommonModal = ({
   isOpen,
   onRequestClose,
   modalText,
-  btnText1,
-  btnText2,
-  btnClick1,
-  btnClick2,
+  yesBtnText,
+  noBtnText,
+  yesBtnClick,
+  noBtnClick,
   btnWidth,
   contentPadding,
   onOverlayClick,
@@ -40,8 +40,8 @@ const CommonModal = ({
     >
       <ModalText contentPadding={contentPadding}>{modalText}</ModalText>
       <ModalBtnWrap>
-        <ModalBtn type="button" width={btnWidth} onClick={btnClick2} name="no">
-          {btnText2}
+        <ModalBtn type="button" width={btnWidth} onClick={noBtnClick} name="no">
+          {noBtnText}
         </ModalBtn>
         <ModalBtn
           type="button"
@@ -49,10 +49,10 @@ const CommonModal = ({
           backgroundColor={"green"}
           border={"3px solid green"}
           color={"white"}
-          onClick={btnClick1}
+          onClick={yesBtnClick}
           name="yes"
         >
-          {btnText1}
+          {yesBtnText}
         </ModalBtn>
       </ModalBtnWrap>
     </Modal>

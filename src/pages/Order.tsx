@@ -4,34 +4,33 @@ import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
-import useCheckout from "hooks/useCheckout";
 import Loading from "components/common/Loading";
+import useCheckout from "hooks/useCheckout";
 import { useDevice } from "hooks/useDevice";
+
+interface LineItem {
+  image_src: string;
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+  variant_price: string;
+}
 
 const Order = () => {
   const matchParams = useParams();
   const checkoutNumber = Number(matchParams.checkoutId);
 
   const { isPc, isTablet, isMobile } = useDevice();
-
   const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
     useCheckout(checkoutNumber);
 
   if (checkoutError) return <div>failed to load...</div>;
   if (loadingCheckout) return <Loading />;
 
-  interface LineItem {
-    image_src: string;
-    product_id: number;
-    product_name: string;
-    quantity: number;
-    variant_id: number;
-    variant_name: string;
-    variant_price: string;
-  }
-
-  const items = checkoutData.line_items;
-  const totalPrice = items
+  const items: LineItem[] = checkoutData.line_items;
+  const totalPrice: number = items
     .map((item: LineItem) => Number(item.variant_price) * item.quantity)
     .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
   const deliveryCharge: string = localStorage.getItem("delivery")!;

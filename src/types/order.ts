@@ -179,15 +179,17 @@ export interface DeliveryRequirementOption {
 export interface OrderDeliveryFormProps {
   deliveryForm1: string;
   designation: string;
-  handleDeliveryInputChange1: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleDesignationInputChange: (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => void;
   recipient: string;
-  handleDeliveryInputChange2: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRecipientInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   address1: string;
-  handlePostalCode: () => void;
+  handlePostcodeBtnClick: () => void;
   addressDetail1: string;
   addressDetail2: string;
-  handleAddressDetail2: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDeliveryInputChange3: (
+  handleAddressDetailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleTelInputChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => void;
@@ -203,19 +205,14 @@ export interface OrderDeliveryFormProps {
   setTel5: React.Dispatch<React.SetStateAction<string>>;
   tel6: string;
   setTel6: React.Dispatch<React.SetStateAction<string>>;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementOption1: DeliveryRequirementOption1[];
-  deliveryRequirementWrite1: string;
-  handleDeliveryInputChange5: (
+  handleRequirementOptionChange: (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => void;
+  deliverySecondRequirementOption: DeliveryRequirementOption[];
+  deliverySecondRequirementWrite: string;
+  handleSecondRequirementChange: (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
-}
-
-export interface DeliveryRequirementOption1 {
-  no: string;
-  label: string;
-  value: string;
-  selected?: string;
 }
 
 export interface PreexistenceSelectProps {
@@ -226,17 +223,19 @@ export interface PreexistenceSelectProps {
 //---------------------------------------------- OrderDeliveryFormMobile
 export interface OrderDeliveryFormMobileProps {
   deliveryWrapClass: string;
-  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
+  handleDeliveryTabClick: (e: React.MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutData: DeliveryFormMobileCheckoutData;
   deliveryForm: string;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementWrite: string;
-  handleDeliveryInputChange4: (
+  handleRequirementOptionChange: (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => void;
+  deliveryFirstRequirementWrite: string;
+  handleFirstRequirementChange: (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
-  deliveryRequirementOption: DeliveryRequirementOption[];
+  deliveryFirstRequirementOption: DeliveryRequirementOption[];
 }
 
 export interface DeliveryFormMobileCheckoutData {
@@ -262,18 +261,20 @@ export interface DeliveryFormMobileShippingAddress {
 //---------------------------------------------- OrderDeliveryFormPc
 export interface OrderDeliveryFormPcProps {
   deliveryWrapClass: string;
-  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
+  handleDeliveryTabClick: (e: React.MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutData: DeliveryFormPcCheckoutData;
   deliveryForm: string;
   designation: string;
   address: string;
-  handlePostalCode: () => void;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementOption1: DeliveryRequirementOption1[];
-  deliveryRequirementWrite: string;
-  handleDeliveryInputChange4: (
+  handlePostcodeBtnClick: () => void;
+  handleRequirementOptionChange: (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => void;
+  deliveryFirstRequirementOption: DeliveryRequirementOption[];
+  deliveryFirstRequirementWrite: string;
+  handleFirstRequirementChange: (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
 }
@@ -306,17 +307,19 @@ export interface LiProps {
 //---------------------------------------------- OrderDeliveryFormTablet
 export interface OrderDeliveryFormTabletProps {
   deliveryWrapClass: string;
-  handleDeliveryWrite: (e: React.MouseEvent<HTMLUListElement>) => void;
+  handleDeliveryTabClick: (e: React.MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutData: DeliveryFormTabletCheckoutData;
   deliveryForm: string;
-  handleDeliveryRequirement: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  deliveryRequirementWrite: string;
-  handleDeliveryInputChange4: (
+  handleRequirementOptionChange: (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => void;
+  deliveryFirstRequirementWrite: string;
+  handleFirstRequirementChange: (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
-  deliveryRequirementOption: DeliveryRequirementOption[];
+  deliveryFirstRequirementOption: DeliveryRequirementOption[];
 }
 
 export interface DeliveryFormTabletCheckoutData {
@@ -349,7 +352,7 @@ export interface OrderDeliveryHeadProps {
   addressDetail1: string;
   addressDetail2: string;
   checkoutData: OrderDeliveryHeadCheckoutData;
-  handleAddressBtn: () => void;
+  handleAddressBtnClick: () => void;
   arrowImg: string;
 }
 

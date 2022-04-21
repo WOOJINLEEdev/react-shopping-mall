@@ -10,19 +10,19 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
     {
       show,
       searchClassName,
-      handleSearchBtn,
-      handleSearchInput,
+      handleSearchBtnClick,
+      handleSearchInputChange,
       searchInputClassName,
       searchBtnClassName,
       searchPlaceHolder,
       searchInputId,
-      handleRemoveBtn,
+      handleRemoveBtnClick,
     },
     ref
   ) => {
-    const [searchInput, setSearchInput] = useState("");
+    const [searchInput, setSearchInput] = useState<string>("");
 
-    const { searchResultData, searchResultMutate } = useSearchResult();
+    const { searchResultMutate } = useSearchResult();
 
     const debouncedSearchResultMutate = useMemo(
       () => debounce(searchResultMutate, 1000),
@@ -36,14 +36,14 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
         debouncedSearchResultMutate(e.target.value);
       }
 
-      if (handleSearchInput) {
-        handleSearchInput(e);
+      if (handleSearchInputChange) {
+        handleSearchInputChange(e);
       }
     };
 
     const onCheckEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter") {
-        handleSearchBtn(searchInput);
+        handleSearchBtnClick(searchInput);
       }
     };
 
@@ -64,10 +64,10 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
           ref={ref}
         />
 
-        {handleRemoveBtn && searchInput.trim().length > 0 ? (
+        {handleRemoveBtnClick && searchInput.trim().length > 0 ? (
           <RemoveBtn
-            role="button"
-            onClick={() => handleRemoveBtn(setSearchInput)}
+            type="button"
+            onClick={() => handleRemoveBtnClick(setSearchInput)}
           >
             <FaTimesCircle />
           </RemoveBtn>
@@ -78,7 +78,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
         <button
           type="button"
           className={searchBtnClassName}
-          onClick={() => handleSearchBtn(searchInput)}
+          onClick={() => handleSearchBtnClick(searchInput)}
         >
           <span className="visually_hidden">검색</span>
         </button>
@@ -89,10 +89,12 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
 
 export default SearchInputBtn;
 
-const RemoveBtn = styled.div`
+const RemoveBtn = styled.button`
   position: absolute;
   right: 50px;
   padding: 10px;
+  border: 0;
+  background: transparent;
   cursor: pointer;
 
   & svg {

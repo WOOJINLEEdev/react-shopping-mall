@@ -15,22 +15,23 @@ import { MyOrderCheckModalProps, MyOrderList, LineItems } from "types";
 Modal.setAppElement("#root");
 
 const MyOrderCheckModal = ({
-  isOpen3,
-  onRequestClose3,
+  isOpen,
+  onRequestClose,
   myOrderList,
   orderItemId,
 }: MyOrderCheckModalProps) => {
-  const [arrowImg, setArrowImg] = useState(upArrow);
-  const [arrowImg1, setArrowImg1] = useState(downArrow);
-  const [closeText, setCloseText] = useState("");
-  const [itemInfoClass, setItemInfoClass] = useState("info_group");
-  const [remainderClass, setRemainderClass] = useState("info_remainder");
-  const [itemInfoHeadClass, setItemInfoHeadClass] = useState("hide");
+  const [arrowImg, setArrowImg] = useState<string>(upArrow);
+  const [arrowImg1, setArrowImg1] = useState<string>(downArrow);
+  const [closeText, setCloseText] = useState<string>("");
+  const [itemInfoClass, setItemInfoClass] = useState<string>("info_group");
+  const [remainderClass, setRemainderClass] =
+    useState<string>("info_remainder");
+  const [itemInfoHeadClass, setItemInfoHeadClass] = useState<string>("hide");
 
   const { isPc, isTablet, isMobile } = useDevice();
 
   useEffect(() => {
-    if (isOpen3) {
+    if (isOpen) {
       document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
       return () => {
         const scrollY = document.body.style.top;
@@ -38,7 +39,7 @@ const MyOrderCheckModal = ({
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
       };
     }
-  }, [isOpen3]);
+  }, [isOpen]);
 
   if (!myOrderList) {
     return <Loading />;
@@ -92,8 +93,8 @@ const MyOrderCheckModal = ({
 
   return (
     <Modal
-      isOpen={isOpen3}
-      onRequestClose={onRequestClose3}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
       shouldCloseOnOverlayClick={true}
       className="my_order_check_modal"
       overlayClassName="modal_overlay"
@@ -127,7 +128,7 @@ const MyOrderCheckModal = ({
         <OrderCompletionDeliveryInfo orderData={selectedOrderData} />
         <OrderCompletionPayInfo orderData={selectedOrderData} />
       </ModalContent>
-      <CloseBtn onClick={onRequestClose3}>닫기</CloseBtn>
+      <CloseBtn onClick={onRequestClose}>닫기</CloseBtn>
     </Modal>
   );
 };

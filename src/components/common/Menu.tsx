@@ -5,18 +5,18 @@ import SearchInputBtn from "components/search/SearchInputBtn";
 import useMenuCollapsed from "hooks/useMenuCollapsed";
 
 const Menu = ({ show }: any) => {
-  const [searchClassName, setSearchClassName] = useState("menu_search");
+  const [searchClassName, setSearchClassName] = useState<string>("menu_search");
   const [searchInputClassName, setsearchInputClassName] =
-    useState("menu_search_input");
+    useState<string>("menu_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
-    useState("menu_search_btn");
-  const [searchInputId, setSearchInputId] = useState("menuSearchInput");
+    useState<string>("menu_search_btn");
+  const [searchInputId, setSearchInputId] = useState<string>("menuSearchInput");
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const { data, mutate } = useMenuCollapsed();
 
-  const handleSearchBtn = (searchInput: string) => {
+  const handleSearchBtnClick = (searchInput: string) => {
     searchInput = searchInput?.trim() ?? "";
 
     if (searchInput === "") {
@@ -34,17 +34,13 @@ const Menu = ({ show }: any) => {
   ) => {
     const itemName = (e.target as HTMLLIElement).dataset.name;
 
-    if (itemName === "ABOUT ME") {
-      navigate("/aboutMe");
-    }
+    itemName === "ABOUT ME" && navigate("/aboutMe");
+    itemName === "COMMUNITY" && navigate("/selectBoard");
 
-    if (itemName === "COMMUNITY") {
-      navigate("/selectBoard");
-    }
     mutate(!data);
   };
 
-  const handleRemoveBtn = (setState: Dispatch<SetStateAction<string>>) => {
+  const handleRemoveBtnClick = (setState: Dispatch<SetStateAction<string>>) => {
     setState("");
     ref?.current?.focus();
   };
@@ -77,8 +73,8 @@ const Menu = ({ show }: any) => {
               searchInputClassName={searchInputClassName}
               searchBtnClassName={searchBtnClassName}
               searchInputId={searchInputId}
-              handleSearchBtn={handleSearchBtn}
-              handleRemoveBtn={handleRemoveBtn}
+              handleSearchBtnClick={handleSearchBtnClick}
+              handleRemoveBtnClick={handleRemoveBtnClick}
               ref={ref}
             />
           </MenuItem>

@@ -14,7 +14,7 @@ const QuantityCounter = ({
   };
 
   return (
-    <QuantityArea margin={margin}>
+    <QuantityArea margin={margin} flexEnd={flexEnd}>
       <input
         type="button"
         className="qty minus"

@@ -13,8 +13,8 @@ export interface Address {
 
 // MyOrderCheckModal
 export interface MyOrderCheckModalProps {
-  isOpen3: boolean;
-  onRequestClose3: () => void;
+  isOpen: boolean;
+  onRequestClose: () => void;
   myOrderList: MyOrderList[];
   orderItemId?: number;
 }
@@ -68,8 +68,8 @@ export interface VisitData {
 
 // MyPageCouponModal
 export interface MyPageCouponModalProps {
-  isOpen2: boolean;
-  onRequestClose2: () => void;
+  isOpen: boolean;
+  onRequestClose: () => void;
   myCoupon?: CouponInfo[];
 }
 

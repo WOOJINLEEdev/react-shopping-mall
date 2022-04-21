@@ -1,6 +1,7 @@
-import { useState, useEffect, lazy, Suspense } from "react";
-import styled from "styled-components";
+import { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import axios from "axios";
 import Modal from "react-modal";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
@@ -8,15 +9,16 @@ import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import { getToken } from "utils/token";
-import axios from "axios";
 import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 import { useDevice } from "hooks/useDevice";
+import { getToken } from "utils/token";
 import { formatDate } from "utils/format-date";
 
 Modal.setAppElement("#root");
 
 const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
+
+const headersName = ["번호", "제목", "작성자", "등록일", "조회수", "미리보기"];
 
 interface PostType {
   body: string;
@@ -47,39 +49,33 @@ const BoardSecond = () => {
     useCurrentBoardPage();
 
   const detectMobile = detectMobileDevice();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const initialPage = getCurrentBoardPage("second");
-  const [selectedPreviewId, setSelectedPreviewId] = useState(1);
-  const [posts, setPosts] = useState(getPostsCache());
-  const [limit, setLimit] = useState(10);
-  const [mobileLimit, setMobileLimit] = useState(20);
-  const [page, setPage] = useState(initialPage);
+  const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
+  const [posts, setPosts] = useState<PostType[]>(getPostsCache());
+  const [limit, setLimit] = useState<number>(10);
+  const [mobileLimit, setMobileLimit] = useState<number>(20);
+  const [page, setPage] = useState<number>(initialPage);
   const offset =
     detectMobile === true ? (page - 1) * mobileLimit : (page - 1) * limit;
   const offsetLimit =
     detectMobile === true ? offset + mobileLimit : offset + limit;
 
-  const [searchClassName, setSearchClassName] = useState("search_wrap");
+  const [searchClassName, setSearchClassName] = useState<string>("search_wrap");
   const [searchInputClassName, setsearchInputClassName] =
-    useState("board_search_input");
+    useState<string>("board_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
-    useState("board_search_btn");
+    useState<string>("board_search_btn");
 
   const token = getToken();
   const date = new Date();
   let searchInput = "";
 
-  const headersName = [
-    "번호",
-    "제목",
-    "작성자",
-    "등록일",
-    "조회수",
-    "미리보기",
-  ];
   const { isPc, isTablet, isMobile } = useDevice();
 
   useEffect(() => {
+    detectMobileDevice();
+
     if (existPostsCache()) {
       return;
     }
@@ -100,47 +96,46 @@ const BoardSecond = () => {
     mutateCurrentBoardPage("second", page);
   }, [page]);
 
-  useEffect(() => {
-    detectMobileDevice();
-  }, []);
-
   function detectMobileDevice() {
     const minWidth = 500;
 
     return window.innerWidth <= minWidth;
   }
 
-  const handleWriteBtn = () => {
+  const handleWriteBtnClick = useCallback(() => {
     if (token) {
       navigate("/boardPost");
     } else {
       alert("로그인 후 이용해주세요!");
       return false;
     }
-  };
+  }, [token]);
 
-  const handlePreviewBtn = (itemId: number) => {
-    setSelectedPreviewId(itemId);
-    setIsOpen(true);
-  };
+  const handlePreviewBtnClick = useCallback(
+    (itemId: number) => {
+      setSelectedPreviewId(itemId);
+      setIsOpen(true);
+    },
+    [selectedPreviewId, isOpen]
+  );
 
-  const onRequestClose = () => {
+  const onRequestClose = useCallback(() => {
     setIsOpen(false);
-  };
+  }, [isOpen]);
 
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     searchInput = targetValue;
   };
 
-  const handleSearchBtn = () => {
+  const handleSearchBtnClick = () => {
     const searchFilter = posts.filter((item) =>
       item.title.includes(searchInput)
     );
     console.log(searchFilter);
   };
 
-  const getHeadersName = () => {
+  const getHeadersName = useCallback(() => {
     if (isTablet) {
       return ["번호", "제목", "작성자", "등록일", "조회수"];
     }
@@ -149,7 +144,7 @@ const BoardSecond = () => {
     }
 
     return headersName;
-  };
+  }, [isTablet, isMobile]);
 
   return (
     <BoardWrap>
@@ -161,13 +156,13 @@ const BoardSecond = () => {
           searchClassName={searchClassName}
           searchInputClassName={searchInputClassName}
           searchBtnClassName={searchBtnClassName}
-          handleSearchBtn={handleSearchBtn}
-          handleSearchInput={handleSearchInput}
+          handleSearchBtnClick={handleSearchBtnClick}
+          handleSearchInputChange={handleSearchInputChange}
         />
         <button
           type="button"
           className="board_write_btn"
-          onClick={handleWriteBtn}
+          onClick={handleWriteBtnClick}
         >
           글쓰기
         </button>
@@ -204,7 +199,7 @@ const BoardSecond = () => {
                 <button
                   type="button"
                   className="board_preview_btn"
-                  onClick={() => handlePreviewBtn(item.id)}
+                  onClick={() => handlePreviewBtnClick(item.id)}
                 >
                   <span className="visually_hidden">미리보기</span>
                 </button>

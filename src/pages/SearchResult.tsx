@@ -8,11 +8,28 @@ import MoreViewBtn from "components/common/MoreViewBtn";
 import { instance } from "utils/http-client";
 import { getProductsApi } from "api";
 
+interface Product {
+  id: number;
+  images: Images[];
+  name: string;
+  variants: Variants[];
+}
+
+interface Images {
+  id: number;
+  product_id: number;
+  src: string;
+}
+
+interface Variants {
+  price: string;
+}
+
 const SearchResult = () => {
   const matchParams = useParams();
   const [resultCount, setResultCount] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
-  const [searchWord, setSearchWord] = useState("");
+  const [searchWord, setSearchWord] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setSearchWord(matchParams.searchWord || "");
@@ -69,26 +86,8 @@ const SearchResult = () => {
 
   const products = data.flat(Infinity);
 
-  function handleClick() {
-    console.log("더보기 클릭");
+  function handleMoreViewBtnClick() {
     setSize(size + 1);
-  }
-
-  interface Product {
-    id: number;
-    images: Images[];
-    name: string;
-    variants: Variants[];
-  }
-
-  interface Images {
-    id: number;
-    product_id: number;
-    src: string;
-  }
-
-  interface Variants {
-    price: string;
   }
 
   return (
@@ -107,7 +106,7 @@ const SearchResult = () => {
         )}
       </ul>
       {resultCount > 9 && size * PAGE_LIMIT < resultCount ? (
-        <MoreViewBtn onClick={handleClick} margin={"0 0 30px"} />
+        <MoreViewBtn onClick={handleMoreViewBtnClick} margin={"0 0 30px"} />
       ) : (
         ""
       )}

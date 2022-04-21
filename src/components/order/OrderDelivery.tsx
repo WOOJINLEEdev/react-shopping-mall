@@ -20,49 +20,49 @@ const OrderDelivery = ({
   isTablet,
   isMobile,
 }: OrderDeliveryProps) => {
-  const [showDaumPostModal, setShowDaumPostModal] = useState(false);
-  const [address, setAddress] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [addressDetail, setAddressDetail] = useState("");
-  const [addressDetail1, setAddressDetail1] = useState("");
-  const [addressDetail2, setAddressDetail2] = useState("");
+  const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
+  const [address, setAddress] = useState<string>("");
+  const [address1, setAddress1] = useState<string>("");
+  const [addressDetail, setAddressDetail] = useState<string>("");
+  const [addressDetail1, setAddressDetail1] = useState<string>("");
+  const [addressDetail2, setAddressDetail2] = useState<string>("");
 
   const [deliveryClassName, setDeliveryClassName] =
-    useState("delivery_write old");
+    useState<string>("delivery_write old");
   const [deliveryClassName1, setDeliveryClassName1] =
-    useState("delivery_write new");
-  const [deliveryForm, setDeliveryForm] = useState("delivery_box_wrap");
-  const [deliveryForm1, setDeliveryForm1] = useState(
+    useState<string>("delivery_write new");
+  const [deliveryForm, setDeliveryForm] = useState<string>("delivery_box_wrap");
+  const [deliveryForm1, setDeliveryForm1] = useState<string>(
     "delivery_box_wrap_second hide"
   );
 
-  const [arrowImg, setArrowImg] = useState(upArrow);
-  const [infoHeadAddress, setInfoHeadAddress] = useState("hide");
-  const [deliveryWrapClass, setDeliveryWrapClass] = useState("delivery_wrap");
+  const [arrowImg, setArrowImg] = useState<string>(upArrow);
+  const [infoHeadAddress, setInfoHeadAddress] = useState<string>("hide");
+  const [deliveryWrapClass, setDeliveryWrapClass] =
+    useState<string>("delivery_wrap");
   const [deliveryWrite, setDeliveryWrite] = useState<string | undefined>("");
-  const [deliveryRequirementWrite, setDeliveryRequirementWrite] =
-    useState("hide");
-  const [deliveryRequirementWrite1, setDeliveryRequirementWrite1] =
-    useState("hide");
+  const [deliveryFirstRequirementWrite, setDeliveryFirstRequirementWrite] =
+    useState<string>("hide");
+  const [deliverySecondRequirementWrite, setDeliverySecondRequirementWrite] =
+    useState<string>("hide");
 
-  const [deliveryRequirementOption, setDeliveryRequirementOption] =
+  const [deliveryFirstRequirementOption, setDeliveryFirstRequirementOption] =
     useState<DeliveryRequirementOption[]>(optionData);
-  const [deliveryRequirementOption1, setDeliveryRequirementOption1] =
+  const [deliverySecondRequirementOption, setDeliverySecondRequirementOption] =
     useState<DeliveryRequirementOption[]>(optionData);
 
   const [requirementTest, setRequirementTest] = useState<string>("");
-  const [selectedOptionNo, setSelectedOptionNo] = useState();
 
-  const [designation, setDesignation] = useState("");
-  const [recipient, setRecipient] = useState("");
-  const [tel1, setTel1] = useState("");
-  const [tel2, setTel2] = useState("");
-  const [tel3, setTel3] = useState("");
-  const [tel4, setTel4] = useState("");
-  const [tel5, setTel5] = useState("");
-  const [tel6, setTel6] = useState("");
-  const [requirement, setRequirement] = useState("");
-  const [requirement1, setRequirement1] = useState("");
+  const [designation, setDesignation] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>("");
+  const [tel1, setTel1] = useState<string>("");
+  const [tel2, setTel2] = useState<string>("");
+  const [tel3, setTel3] = useState<string>("");
+  const [tel4, setTel4] = useState<string>("");
+  const [tel5, setTel5] = useState<string>("");
+  const [tel6, setTel6] = useState<string>("");
+  const [requirement, setRequirement] = useState<string>("");
+  const [requirement1, setRequirement1] = useState<string>("");
 
   const { checkoutDeliveryData, MutateCheckoutDeliveryData } =
     useCheckoutDeliveryData();
@@ -112,7 +112,7 @@ const OrderDelivery = ({
     }
   }, [checkoutDeliveryData]);
 
-  const handlePostalCode = () => {
+  const handlePostcodeBtnClick = () => {
     setShowDaumPostModal(true);
   };
 
@@ -133,7 +133,7 @@ const OrderDelivery = ({
     setShowDaumPostModal(false);
   };
 
-  const handleDeliveryWrite = (e: React.MouseEvent<HTMLUListElement>) => {
+  const handleDeliveryTabClick = (e: React.MouseEvent<HTMLUListElement>) => {
     const deliveryTabName = (e.target as HTMLUListElement).dataset.name;
 
     setDeliveryWrite(deliveryTabName);
@@ -153,7 +153,7 @@ const OrderDelivery = ({
     }
   };
 
-  const handleAddressBtn = () => {
+  const handleAddressBtnClick = () => {
     console.log(deliveryWrite);
 
     if (arrowImg === upArrow) {
@@ -189,45 +189,46 @@ const OrderDelivery = ({
     }
   };
 
-  const handleAddressDetail2 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+  const handleAddressDetailChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAddressDetail2(e.target.value);
   };
 
-  const handleDeliveryInputChange1 = (
+  const handleDesignationInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setDesignation(e.target.value);
   };
 
-  const handleDeliveryInputChange2 = (
+  const handleRecipientInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRecipient(e.target.value);
   };
 
-  const handleDeliveryInputChange3 = (
+  const handleTelInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    let curValue = e.target.value;
-    let phoneValue = curValue.replace(/[^0-9]/g, "");
+    let telValue = e.target.value.replace(/[^0-9]/g, "");
 
-    setState(phoneValue);
+    setState(telValue);
   };
 
-  const handleDeliveryInputChange4 = (
+  const handleFirstRequirementChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setRequirement(e.target.value);
   };
-  const handleDeliveryInputChange5 = (
+
+  const handleSecondRequirementChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     setRequirement1(e.target.value);
   };
 
-  const handleDeliveryRequirement = (
+  const handleRequirementOptionChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const targetValue = e.target.value;
@@ -238,19 +239,17 @@ const OrderDelivery = ({
     ) {
       setRequirement(targetValue);
       if (targetValue === "직접 입력") {
-        return setDeliveryRequirementWrite("delivery_requirement_write");
-      } else {
-        return setDeliveryRequirementWrite("hide");
+        return setDeliveryFirstRequirementWrite("delivery_requirement_write");
       }
+      return setDeliveryFirstRequirementWrite("hide");
     }
 
     if (deliveryWrite === "신규 입력") {
       setRequirement1(targetValue);
       if (targetValue === "직접 입력") {
-        return setDeliveryRequirementWrite1("delivery_requirement_write");
-      } else {
-        return setDeliveryRequirementWrite1("hide");
+        return setDeliverySecondRequirementWrite("delivery_requirement_write");
       }
+      return setDeliverySecondRequirementWrite("hide");
     }
 
     if (
@@ -259,10 +258,9 @@ const OrderDelivery = ({
     ) {
       setRequirement1(targetValue);
       if (targetValue === "직접 입력") {
-        return setDeliveryRequirementWrite1("delivery_requirement_write");
-      } else {
-        return setDeliveryRequirementWrite1("hide");
+        return setDeliverySecondRequirementWrite("delivery_requirement_write");
       }
+      return setDeliverySecondRequirementWrite("hide");
     }
   };
 
@@ -277,7 +275,7 @@ const OrderDelivery = ({
         addressDetail1={addressDetail1}
         addressDetail2={addressDetail2}
         checkoutData={checkoutData}
-        handleAddressBtn={handleAddressBtn}
+        handleAddressBtnClick={handleAddressBtnClick}
         arrowImg={arrowImg}
       />
 
@@ -297,63 +295,63 @@ const OrderDelivery = ({
       {isPc && (
         <OrderDeliveryFormPc
           deliveryWrapClass={deliveryWrapClass}
-          handleDeliveryWrite={handleDeliveryWrite}
+          handleDeliveryTabClick={handleDeliveryTabClick}
           deliveryClassName={deliveryClassName}
           deliveryClassName1={deliveryClassName1}
           checkoutData={checkoutData}
           deliveryForm={deliveryForm}
           designation={designation}
           address={address}
-          handlePostalCode={handlePostalCode}
-          handleDeliveryRequirement={handleDeliveryRequirement}
-          deliveryRequirementOption1={deliveryRequirementOption1}
-          deliveryRequirementWrite={deliveryRequirementWrite}
-          handleDeliveryInputChange4={handleDeliveryInputChange4}
+          handlePostcodeBtnClick={handlePostcodeBtnClick}
+          handleRequirementOptionChange={handleRequirementOptionChange}
+          deliveryFirstRequirementOption={deliveryFirstRequirementOption}
+          deliveryFirstRequirementWrite={deliveryFirstRequirementWrite}
+          handleFirstRequirementChange={handleFirstRequirementChange}
         />
       )}
 
       {isTablet && (
         <OrderDeliveryFormTablet
           deliveryWrapClass={deliveryWrapClass}
-          handleDeliveryWrite={handleDeliveryWrite}
+          handleDeliveryTabClick={handleDeliveryTabClick}
           deliveryClassName={deliveryClassName}
           deliveryClassName1={deliveryClassName1}
           checkoutData={checkoutData}
           deliveryForm={deliveryForm}
-          handleDeliveryRequirement={handleDeliveryRequirement}
-          deliveryRequirementWrite={deliveryRequirementWrite}
-          handleDeliveryInputChange4={handleDeliveryInputChange4}
-          deliveryRequirementOption={deliveryRequirementOption}
+          handleRequirementOptionChange={handleRequirementOptionChange}
+          deliveryFirstRequirementWrite={deliveryFirstRequirementWrite}
+          handleFirstRequirementChange={handleFirstRequirementChange}
+          deliveryFirstRequirementOption={deliveryFirstRequirementOption}
         />
       )}
 
       {isMobile && (
         <OrderDeliveryFormMobile
           deliveryWrapClass={deliveryWrapClass}
-          handleDeliveryWrite={handleDeliveryWrite}
+          handleDeliveryTabClick={handleDeliveryTabClick}
           deliveryClassName={deliveryClassName}
           deliveryClassName1={deliveryClassName1}
           checkoutData={checkoutData}
           deliveryForm={deliveryForm}
-          handleDeliveryRequirement={handleDeliveryRequirement}
-          deliveryRequirementWrite={deliveryRequirementWrite}
-          handleDeliveryInputChange4={handleDeliveryInputChange4}
-          deliveryRequirementOption={deliveryRequirementOption}
+          handleRequirementOptionChange={handleRequirementOptionChange}
+          deliveryFirstRequirementWrite={deliveryFirstRequirementWrite}
+          handleFirstRequirementChange={handleFirstRequirementChange}
+          deliveryFirstRequirementOption={deliveryFirstRequirementOption}
         />
       )}
 
       <OrderDeliveryForm
         deliveryForm1={deliveryForm1}
         designation={designation}
-        handleDeliveryInputChange1={handleDeliveryInputChange1}
+        handleDesignationInputChange={handleDesignationInputChange}
         recipient={recipient}
-        handleDeliveryInputChange2={handleDeliveryInputChange2}
+        handleRecipientInputChange={handleRecipientInputChange}
         address1={address1}
-        handlePostalCode={handlePostalCode}
+        handlePostcodeBtnClick={handlePostcodeBtnClick}
         addressDetail1={addressDetail1}
         addressDetail2={addressDetail2}
-        handleAddressDetail2={handleAddressDetail2}
-        handleDeliveryInputChange3={handleDeliveryInputChange3}
+        handleAddressDetailChange={handleAddressDetailChange}
+        handleTelInputChange={handleTelInputChange}
         tel1={tel1}
         setTel1={setTel1}
         tel2={tel2}
@@ -366,10 +364,10 @@ const OrderDelivery = ({
         setTel5={setTel5}
         tel6={tel6}
         setTel6={setTel6}
-        handleDeliveryRequirement={handleDeliveryRequirement}
-        deliveryRequirementOption1={deliveryRequirementOption1}
-        deliveryRequirementWrite1={deliveryRequirementWrite1}
-        handleDeliveryInputChange5={handleDeliveryInputChange5}
+        handleRequirementOptionChange={handleRequirementOptionChange}
+        deliverySecondRequirementOption={deliverySecondRequirementOption}
+        deliverySecondRequirementWrite={deliverySecondRequirementWrite}
+        handleSecondRequirementChange={handleSecondRequirementChange}
       />
     </section>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Formik, Form, ErrorMessage, Field } from "formik";
+import { Formik, Form, ErrorMessage, Field, FormikValues } from "formik";
 import * as Yup from "yup";
 import { userId, userPassword } from "utils/login-validation";
 import styled from "styled-components";
@@ -11,7 +11,7 @@ import { createSocialLoginApi, createLoginApi } from "api";
 const LogIn = () => {
   const { naver } = window;
   const location = useLocation();
-  const [naverIdToken, setNaverIdToken] = useState("");
+  const [naverIdToken, setNaverIdToken] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const LogIn = () => {
     userPassword: userPassword(),
   });
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: FormikValues) => {
     try {
       const res = await createLoginApi({
         userId: values.userId,
@@ -68,9 +68,9 @@ const LogIn = () => {
 
     if (!response.data) {
       return false;
-    } else {
-      window.location.replace("/mypage");
     }
+
+    window.location.replace("/mypage");
   }
 
   const initializeNaverLogin = () => {
@@ -103,6 +103,20 @@ const LogIn = () => {
   const onSuccess = async (response: any) => {
     console.log(response);
 
+    try {
+      const res = await createSocialLoginApi({
+        socialType: "google",
+        profile: {
+          id: response.profileObj.googleId,
+          name: response.profileObj.name,
+          email: response.profileObj.email,
+        },
+      });
+      console.log(res);
+      loginCheck(res);
+    } catch (err) {
+      console.log(err);
+    }
     try {
       const res = await createSocialLoginApi({
         socialType: "google",

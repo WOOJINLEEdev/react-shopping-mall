@@ -14,15 +14,15 @@ const MyPageDeliveryModal = lazy(
 );
 
 const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleDeliveryAddress = useCallback(() => {
     setIsOpen(true);
-  }, []);
+  }, [isOpen]);
 
   const onRequestClose = useCallback(() => {
     setIsOpen(false);
-  }, []);
+  }, [isOpen]);
 
   return (
     <MyInfoDetail>
@@ -37,13 +37,9 @@ const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
       <MyInfoDetailList>
         <Link
           to="/myOrderCheck"
-          style={{
-            textDecoration: "none",
-            color: "black",
-          }}
-          tabIndex={0}
           className="order_check_link"
           aria-labelledby="myOrderCheck"
+          tabIndex={0}
         >
           <h3 id="myOrderCheck" className="my_order_check">
             주문내역 조회
@@ -101,6 +97,8 @@ const MyInfoDetailList = styled.li`
 
   & .order_check_link {
     width: 100%;
+    text-decoration: none;
+    color: #000;
   }
 
   & .arrow_right {

@@ -7,13 +7,13 @@ import { OrderCompletionDeliveryInfoProps } from "types";
 const OrderCompletionDeliveryInfo = ({
   orderData,
 }: OrderCompletionDeliveryInfoProps) => {
-  const [arrowImg, setArrowImg] = useState(downArrow);
-  const [deliveryInfoClass, setDeliveryInfoClass] = useState("hide");
-  const [infoHeadAddress, setInfoHeadAddress] = useState(
+  const [arrowImg, setArrowImg] = useState<string>(downArrow);
+  const [deliveryInfoClass, setDeliveryInfoClass] = useState<string>("hide");
+  const [infoHeadAddress, setInfoHeadAddress] = useState<string>(
     "order_check_head_address"
   );
 
-  const handleOpenCloseBtn = () => {
+  const handleOrderDeliveryInfoBtnClick = () => {
     if (arrowImg === upArrow) {
       setArrowImg(downArrow);
       setInfoHeadAddress("order_check_head_address");
@@ -39,7 +39,7 @@ const OrderCompletionDeliveryInfo = ({
           <button
             type="button"
             className="order_delivery_info_btn"
-            onClick={handleOpenCloseBtn}
+            onClick={handleOrderDeliveryInfoBtnClick}
           >
             <img
               src={arrowImg}

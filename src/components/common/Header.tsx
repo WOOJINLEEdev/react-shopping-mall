@@ -87,7 +87,6 @@ const Header = () => {
   const handleSearchClick = () => {
     searchMutate(!searchData);
 
-    console.log("검색버튼클릭", location.pathname);
     searchLocationMutate(location.pathname);
   };
 

@@ -9,19 +9,19 @@ import {
 
 const OrderDeliveryFormTablet = ({
   deliveryWrapClass,
-  handleDeliveryWrite,
+  handleDeliveryTabClick,
   deliveryClassName,
   deliveryClassName1,
   checkoutData,
   deliveryForm,
-  handleDeliveryRequirement,
-  deliveryRequirementWrite,
-  handleDeliveryInputChange4,
-  deliveryRequirementOption,
+  handleRequirementOptionChange,
+  deliveryFirstRequirementWrite,
+  handleFirstRequirementChange,
+  deliveryFirstRequirementOption,
 }: OrderDeliveryFormTabletProps) => {
   return (
     <div className={deliveryWrapClass}>
-      <ul className="delivery_write_choice" onClick={handleDeliveryWrite}>
+      <ul className="delivery_write_choice" onClick={handleDeliveryTabClick}>
         <li className={deliveryClassName} data-name="기존 배송지" tabIndex={0}>
           기존 배송지
         </li>
@@ -56,10 +56,10 @@ const OrderDeliveryFormTablet = ({
               <PreexistenceSelect
                 color={"#333"}
                 margin={"20px 0 0"}
-                onChange={handleDeliveryRequirement}
+                onChange={handleRequirementOptionChange}
                 tabIndex={0}
               >
-                {deliveryRequirementOption.map(
+                {deliveryFirstRequirementOption.map(
                   (item: DeliveryRequirementOption) => (
                     <option key={item.no} value={item.label}>
                       {item.value}
@@ -68,10 +68,10 @@ const OrderDeliveryFormTablet = ({
                 )}
               </PreexistenceSelect>
               <SelectRequirementWrite
-                className={deliveryRequirementWrite}
+                className={deliveryFirstRequirementWrite}
                 placeholder="배송시 요청사항을 작성해 주세요. (최대 30자 이내)"
                 maxLength={30}
-                onChange={handleDeliveryInputChange4}
+                onChange={handleFirstRequirementChange}
               />
             </div>
           </PreexistenceItem>

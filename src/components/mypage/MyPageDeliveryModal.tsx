@@ -20,12 +20,13 @@ const MyPageDeliveryModal = ({
   onRequestClose,
   myDeliveryAddress,
 }: MyPageDeliveryModalProps) => {
-  const [addDeliveryClassName, setAddDeliveryClassName] = useState("hide");
-  const [addressDisplay, setAddressDisplay] = useState("block");
-  const [addBtnDisplay, setAddBtnDisplay] = useState("block");
-  const [btnWrapDisplay, setBtnWrapDisplay] = useState("none");
-  const [closBtnDisplay, setClosBtnDisplay] = useState("");
-  const [notAddressClassName, setNotAddressClassName] = useState("");
+  const [addDeliveryClassName, setAddDeliveryClassName] =
+    useState<string>("hide");
+  const [addressDisplay, setAddressDisplay] = useState<string>("block");
+  const [addBtnDisplay, setAddBtnDisplay] = useState<string>("block");
+  const [btnWrapDisplay, setBtnWrapDisplay] = useState<string>("none");
+  const [closBtnDisplay, setClosBtnDisplay] = useState<string>("");
+  const [notAddressClassName, setNotAddressClassName] = useState<string>("");
 
   const { myDeliveryData, MutateMyDeliveryData } = useDeliveryData();
 
@@ -40,7 +41,7 @@ const MyPageDeliveryModal = ({
     }
   }, [isOpen]);
 
-  const handleModifyBtn = () => {
+  const handleModifyBtnClick = () => {
     setAddDeliveryClassName("delivery_register");
     setAddressDisplay("none");
     setBtnWrapDisplay("flex");
@@ -48,7 +49,7 @@ const MyPageDeliveryModal = ({
     setNotAddressClassName("hide");
   };
 
-  const handleAddBtn = () => {
+  const handleAddBtnClick = () => {
     setAddDeliveryClassName("");
     setAddBtnDisplay("none");
     setBtnWrapDisplay("flex");
@@ -56,7 +57,7 @@ const MyPageDeliveryModal = ({
     setNotAddressClassName("hide");
   };
 
-  const handleCancelBtn = () => {
+  const handleCancelBtnClick = () => {
     setAddDeliveryClassName("hide");
     setAddBtnDisplay("block");
     setBtnWrapDisplay("none");
@@ -69,35 +70,27 @@ const MyPageDeliveryModal = ({
     }
   };
 
-  const handleRegistrationBtn = async () => {
-    if (!myDeliveryData.recipient || myDeliveryData.recipient === undefined) {
+  const handleRegistrationBtnClick = async () => {
+    if (!myDeliveryData.recipient) {
       return alert("수령인을 입력해주세요.");
     }
 
-    if (myDeliveryData.recipient && myDeliveryData.recipient.length < 2) {
+    if (
+      myDeliveryData.recipient &&
+      myDeliveryData.recipient.trim().length < 2
+    ) {
       return alert("수령인은 2자 이상만 가능합니다.");
     }
 
-    if (
-      !myDeliveryData.addressDetail1 ||
-      myDeliveryData.addressDetail1 === undefined
-    ) {
+    if (!myDeliveryData.addressDetail1) {
       return alert("주소를 입력해주세요.");
     }
 
-    if (
-      !myDeliveryData.addressDetail2 ||
-      myDeliveryData.addressDetail2 === undefined
-    ) {
+    if (!myDeliveryData.addressDetail2) {
       return alert("상세주소를 입력해주세요.");
     }
 
-    if (
-      !myDeliveryData.tel1 ||
-      myDeliveryData.tel1 === undefined ||
-      myDeliveryData.tel2 === undefined ||
-      myDeliveryData.tel3 === undefined
-    ) {
+    if (!myDeliveryData.tel1 || !myDeliveryData.tel2 || !myDeliveryData.tel3) {
       return alert("연락처1을 입력해주세요.");
     }
 
@@ -126,7 +119,7 @@ const MyPageDeliveryModal = ({
       });
       console.log(res);
       alert("배송지 등록이 완료되었습니다.");
-      handleCancelBtn();
+      handleCancelBtnClick();
     } catch (err) {
       console.log(err);
     }
@@ -161,7 +154,7 @@ const MyPageDeliveryModal = ({
                   {formatPhone(myDeliveryAddress.phone1)}
                 </ItemContent>
               </ItemContentWrap>
-              <ModifyBtn type="button" onClick={handleModifyBtn}>
+              <ModifyBtn type="button" onClick={handleModifyBtnClick}>
                 수정
               </ModifyBtn>
             </DeliveryAddressItem>
@@ -173,17 +166,21 @@ const MyPageDeliveryModal = ({
       </ModalContentContainer>
       <BtnContainer>
         {!myDeliveryAddress ? (
-          <AddBtn type="button" display={addBtnDisplay} onClick={handleAddBtn}>
+          <AddBtn
+            type="button"
+            display={addBtnDisplay}
+            onClick={handleAddBtnClick}
+          >
             배송지 등록하기
           </AddBtn>
         ) : (
           ""
         )}
         <CancelRegistrationBtnWrap display={btnWrapDisplay}>
-          <CancelBtn type="button" onClick={handleCancelBtn}>
+          <CancelBtn type="button" onClick={handleCancelBtnClick}>
             취소하기
           </CancelBtn>
-          <RegistrationBtn type="button" onClick={handleRegistrationBtn}>
+          <RegistrationBtn type="button" onClick={handleRegistrationBtnClick}>
             등록하기
           </RegistrationBtn>
         </CancelRegistrationBtnWrap>

@@ -1,22 +1,22 @@
 import styled from "styled-components";
 import {
   OrderDeliveryFormProps,
-  DeliveryRequirementOption1,
+  DeliveryRequirementOption,
   PreexistenceSelectProps,
 } from "types";
 
 const OrderDeliveryForm = ({
   deliveryForm1,
   designation,
-  handleDeliveryInputChange1,
+  handleDesignationInputChange,
   recipient,
-  handleDeliveryInputChange2,
+  handleRecipientInputChange,
   address1,
-  handlePostalCode,
+  handlePostcodeBtnClick,
   addressDetail1,
   addressDetail2,
-  handleAddressDetail2,
-  handleDeliveryInputChange3,
+  handleAddressDetailChange,
+  handleTelInputChange,
   tel1,
   setTel1,
   tel2,
@@ -29,10 +29,10 @@ const OrderDeliveryForm = ({
   setTel5,
   tel6,
   setTel6,
-  handleDeliveryRequirement,
-  deliveryRequirementOption1,
-  deliveryRequirementWrite1,
-  handleDeliveryInputChange5,
+  handleRequirementOptionChange,
+  deliverySecondRequirementOption,
+  deliverySecondRequirementWrite,
+  handleSecondRequirementChange,
 }: OrderDeliveryFormProps) => {
   return (
     <div className={deliveryForm1}>
@@ -45,7 +45,7 @@ const OrderDeliveryForm = ({
           className="delivery_input first"
           id="deliveryTitle1"
           value={designation}
-          onChange={handleDeliveryInputChange1}
+          onChange={handleDesignationInputChange}
         />
       </div>
 
@@ -60,7 +60,7 @@ const OrderDeliveryForm = ({
           className="delivery_input second"
           id="deliveryName1"
           value={recipient}
-          onChange={handleDeliveryInputChange2}
+          onChange={handleRecipientInputChange}
         />
       </div>
 
@@ -78,14 +78,14 @@ const OrderDeliveryForm = ({
               className="delivery_input postalCode"
               placeholder="우편번호"
               value={address1}
-              onClick={handlePostalCode}
+              onClick={handlePostcodeBtnClick}
               readOnly
             />
             <input
               type="button"
-              className="postalCode_search"
+              className="postcode_search_btn"
               value="우편번호 찾기"
-              onClick={handlePostalCode}
+              onClick={handlePostcodeBtnClick}
             />
           </div>
           <input
@@ -104,7 +104,7 @@ const OrderDeliveryForm = ({
             className="delivery_input address"
             placeholder="상세주소"
             value={addressDetail2}
-            onChange={handleAddressDetail2}
+            onChange={handleAddressDetailChange}
           />
         </div>
       </div>
@@ -123,7 +123,7 @@ const OrderDeliveryForm = ({
             id="phone1First"
             className="delivery_input tel"
             title="연락처1-전화번호1"
-            onChange={(e) => handleDeliveryInputChange3(e, setTel1)}
+            onChange={(e) => handleTelInputChange(e, setTel1)}
             value={tel1}
           />
           <span className="tel_dash">-</span>
@@ -134,7 +134,7 @@ const OrderDeliveryForm = ({
             id="phone1Second"
             className="delivery_input tel"
             title="연락처1-전화번호2"
-            onChange={(e) => handleDeliveryInputChange3(e, setTel2)}
+            onChange={(e) => handleTelInputChange(e, setTel2)}
             value={tel2}
           />
           <span className="tel_dash">-</span>
@@ -145,7 +145,7 @@ const OrderDeliveryForm = ({
             id="phone1Third"
             className="delivery_input tel"
             title="연락처1-전화번호3"
-            onChange={(e) => handleDeliveryInputChange3(e, setTel3)}
+            onChange={(e) => handleTelInputChange(e, setTel3)}
             value={tel3}
           />
         </div>
@@ -162,7 +162,7 @@ const OrderDeliveryForm = ({
             className="delivery_input tel"
             id="subPhone1First"
             title="연락처2-전화번호1"
-            onChange={(e) => handleDeliveryInputChange3(e, setTel4)}
+            onChange={(e) => handleTelInputChange(e, setTel4)}
             value={tel4}
           />
           <span className="tel_dash">-</span>
@@ -172,7 +172,7 @@ const OrderDeliveryForm = ({
             id="subPhone1Second"
             className="delivery_input tel"
             title="연락처2-전화번호2"
-            onChange={(e) => handleDeliveryInputChange3(e, setTel5)}
+            onChange={(e) => handleTelInputChange(e, setTel5)}
             value={tel5}
           />
           <span className="tel_dash">-</span>
@@ -182,7 +182,7 @@ const OrderDeliveryForm = ({
             id="subPhone1Third"
             className="delivery_input tel"
             title="연락처2-전화번호3"
-            onChange={(e) => handleDeliveryInputChange3(e, setTel6)}
+            onChange={(e) => handleTelInputChange(e, setTel6)}
             value={tel6}
           />
         </div>
@@ -193,10 +193,10 @@ const OrderDeliveryForm = ({
         <DeliveryRequirementWrap>
           <PreexistenceSelect
             color={"#333"}
-            onChange={handleDeliveryRequirement}
+            onChange={handleRequirementOptionChange}
           >
-            {deliveryRequirementOption1.map(
-              (item: DeliveryRequirementOption1) => (
+            {deliverySecondRequirementOption.map(
+              (item: DeliveryRequirementOption) => (
                 <option key={item.no} value={item.label}>
                   {item.value}
                 </option>
@@ -204,10 +204,10 @@ const OrderDeliveryForm = ({
             )}
           </PreexistenceSelect>
           <SelectRequirementWrite
-            className={deliveryRequirementWrite1}
+            className={deliverySecondRequirementWrite}
             placeholder="배송시 요청사항을 작성해 주세요. (최대 30자 이내)"
             maxLength={30}
-            onChange={handleDeliveryInputChange5}
+            onChange={handleSecondRequirementChange}
           />
         </DeliveryRequirementWrap>
       </div>

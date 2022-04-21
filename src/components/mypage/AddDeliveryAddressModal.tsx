@@ -1,33 +1,33 @@
 import { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
+import Loading from "components/common/Loading";
 import useDeliveryData from "hooks/useDeliveryData";
 import useMyPageData from "hooks/useMyPageData";
-import { CgClose } from "@react-icons/all-files/cg/CgClose";
-import Loading from "components/common/Loading";
 import { parsePhone } from "utils/format-phone";
 import { getFullAddress } from "utils/get-address";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import { AddDeliveryAddressModalProps, Address } from "types";
 
 const AddDeliveryAddressModal = ({
   addDeliveryClassName,
 }: AddDeliveryAddressModalProps) => {
-  const [address1, setAddress1] = useState("");
-  const [addressDetail1, setAddressDetail1] = useState("");
-  const [addressDetail2, setAddressDetail2] = useState("");
+  const [address1, setAddress1] = useState<string>("");
+  const [addressDetail1, setAddressDetail1] = useState<string>("");
+  const [addressDetail2, setAddressDetail2] = useState<string>("");
 
-  const [designation, setDesignation] = useState("");
-  const [recipient, setRecipient] = useState("");
+  const [designation, setDesignation] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>("");
 
-  const [tel1, setTel1] = useState("");
-  const [tel2, setTel2] = useState("");
-  const [tel3, setTel3] = useState("");
-  const [tel4, setTel4] = useState("");
-  const [tel5, setTel5] = useState("");
-  const [tel6, setTel6] = useState("");
-  const [showDaumPostModal, setShowDaumPostModal] = useState(false);
+  const [tel1, setTel1] = useState<string>("");
+  const [tel2, setTel2] = useState<string>("");
+  const [tel3, setTel3] = useState<string>("");
+  const [tel4, setTel4] = useState<string>("");
+  const [tel5, setTel5] = useState<string>("");
+  const [tel6, setTel6] = useState<string>("");
+  const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
 
-  const { myDeliveryData, MutateMyDeliveryData } = useDeliveryData();
+  const { MutateMyDeliveryData } = useDeliveryData();
 
   useEffect(() => {
     if (myData.shipping_address) {
@@ -79,7 +79,7 @@ const AddDeliveryAddressModal = ({
   if (loadingMyData) return <Loading />;
   if (myDataError) return <div>에러발생...</div>;
 
-  const handlePostalCode = () => {
+  const handlePostcodeBtnClick = () => {
     setShowDaumPostModal(true);
   };
 
@@ -92,34 +92,36 @@ const AddDeliveryAddressModal = ({
     setShowDaumPostModal(false);
   };
 
-  const postModalEsc = () => {
+  const handlePostModalEscBtnClick = () => {
     setShowDaumPostModal(false);
   };
 
-  const handleAddressDetail2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAddressDetailChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setAddressDetail2(e.target.value);
   };
 
-  const handleDeliveryInputChange1 = (
+  const handleDesignationInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setDesignation(e.target.value);
   };
 
-  const handleDeliveryInputChange2 = (
+  const handleRecipientInputChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setRecipient(e.target.value);
+    let recipientValue = e.target.value.replace(/[^a-zㄱ-ㅎ가-힣]/gi, "");
+    setRecipient(recipientValue);
   };
 
-  const handleDeliveryInputChange3 = (
+  const handleTelInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
-    let curValue = e.target.value;
-    let phoneValue = curValue.replace(/[^0-9]/g, "");
+    let telValue = e.target.value.replace(/[^0-9]/g, "");
 
-    setState(phoneValue);
+    setState(telValue);
   };
 
   return (
@@ -129,7 +131,7 @@ const AddDeliveryAddressModal = ({
           <PostModalEscBtn
             type="button"
             aria-label="close"
-            onClick={postModalEsc}
+            onClick={handlePostModalEscBtnClick}
           >
             <CgClose />
           </PostModalEscBtn>
@@ -146,7 +148,7 @@ const AddDeliveryAddressModal = ({
             type="text"
             className="delivery_input first"
             id="deliveryTitle1"
-            onChange={handleDeliveryInputChange1}
+            onChange={handleDesignationInputChange}
             value={designation}
           />
         </div>
@@ -162,7 +164,7 @@ const AddDeliveryAddressModal = ({
             className="delivery_input second"
             id="deliveryName1"
             value={recipient}
-            onChange={handleDeliveryInputChange2}
+            onChange={handleRecipientInputChange}
           />
         </div>
 
@@ -180,14 +182,14 @@ const AddDeliveryAddressModal = ({
                 className="delivery_input postalCode"
                 placeholder="우편번호"
                 value={address1}
-                onClick={handlePostalCode}
+                onClick={handlePostcodeBtnClick}
                 readOnly
               />
               <input
                 type="button"
-                className="postalCode_search"
+                className="postcode_search_btn"
                 value="우편번호 찾기"
-                onClick={handlePostalCode}
+                onClick={handlePostcodeBtnClick}
               />
             </div>
             <input
@@ -206,7 +208,7 @@ const AddDeliveryAddressModal = ({
               className="delivery_input address"
               placeholder="상세주소"
               value={addressDetail2}
-              onChange={handleAddressDetail2}
+              onChange={handleAddressDetailChange}
             />
           </div>
         </div>
@@ -224,7 +226,7 @@ const AddDeliveryAddressModal = ({
               name="phoneOne"
               id="phone1First"
               className="delivery_input tel"
-              onChange={(e) => handleDeliveryInputChange3(e, setTel1)}
+              onChange={(e) => handleTelInputChange(e, setTel1)}
               value={tel1}
             />
             <span className="tel_dash">-</span>
@@ -234,7 +236,7 @@ const AddDeliveryAddressModal = ({
               name="phoneTwo"
               id="phone1Second"
               className="delivery_input tel"
-              onChange={(e) => handleDeliveryInputChange3(e, setTel2)}
+              onChange={(e) => handleTelInputChange(e, setTel2)}
               value={tel2}
             />
             <span className="tel_dash">-</span>
@@ -244,7 +246,7 @@ const AddDeliveryAddressModal = ({
               name="phoneThree"
               id="phone1Third"
               className="delivery_input tel"
-              onChange={(e) => handleDeliveryInputChange3(e, setTel3)}
+              onChange={(e) => handleTelInputChange(e, setTel3)}
               value={tel3}
             />
           </div>
@@ -260,7 +262,7 @@ const AddDeliveryAddressModal = ({
               maxLength={4}
               className="delivery_input tel"
               id="subPhone1First"
-              onChange={(e) => handleDeliveryInputChange3(e, setTel4)}
+              onChange={(e) => handleTelInputChange(e, setTel4)}
               value={tel4}
             />
             <span className="tel_dash">-</span>
@@ -268,7 +270,7 @@ const AddDeliveryAddressModal = ({
               type="text"
               maxLength={4}
               className="delivery_input tel"
-              onChange={(e) => handleDeliveryInputChange3(e, setTel5)}
+              onChange={(e) => handleTelInputChange(e, setTel5)}
               value={tel5}
             />
             <span className="tel_dash">-</span>
@@ -276,7 +278,7 @@ const AddDeliveryAddressModal = ({
               type="text"
               maxLength={4}
               className="delivery_input tel"
-              onChange={(e) => handleDeliveryInputChange3(e, setTel6)}
+              onChange={(e) => handleTelInputChange(e, setTel6)}
               value={tel6}
             />
           </div>

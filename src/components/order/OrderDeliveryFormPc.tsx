@@ -2,29 +2,29 @@ import styled from "styled-components";
 import { parsePhone } from "utils/format-phone";
 import {
   OrderDeliveryFormPcProps,
-  DeliveryRequirementOption1,
+  DeliveryRequirementOption,
   PreexistenceSelectProps,
   LiProps,
 } from "types";
 
 const OrderDeliveryFormPc = ({
   deliveryWrapClass,
-  handleDeliveryWrite,
+  handleDeliveryTabClick,
   deliveryClassName,
   deliveryClassName1,
   checkoutData,
   deliveryForm,
   designation,
   address,
-  handlePostalCode,
-  handleDeliveryRequirement,
-  deliveryRequirementOption1,
-  deliveryRequirementWrite,
-  handleDeliveryInputChange4,
+  handlePostcodeBtnClick,
+  handleRequirementOptionChange,
+  deliveryFirstRequirementOption,
+  deliveryFirstRequirementWrite,
+  handleFirstRequirementChange,
 }: OrderDeliveryFormPcProps) => {
   return (
     <div className={deliveryWrapClass}>
-      <ul className="delivery_write_choice" onClick={handleDeliveryWrite}>
+      <ul className="delivery_write_choice" onClick={handleDeliveryTabClick}>
         <Li
           className={deliveryClassName}
           disabled={!checkoutData.user.shipping_address ? "disabled" : false}
@@ -89,15 +89,15 @@ const OrderDeliveryFormPc = ({
                     ? checkoutData.user.shipping_address.postal_code
                     : address
                 }
-                onClick={handlePostalCode}
+                onClick={handlePostcodeBtnClick}
                 disabled
                 readOnly
               />
               <input
                 type="button"
-                className="postalCode_search"
+                className="postcode_search_btn"
                 value="우편번호 찾기"
-                onClick={handlePostalCode}
+                onClick={handlePostcodeBtnClick}
                 disabled
               />
             </div>
@@ -242,10 +242,10 @@ const OrderDeliveryFormPc = ({
           <DeliveryRequirementWrap>
             <PreexistenceSelect
               color={"#333"}
-              onChange={handleDeliveryRequirement}
+              onChange={handleRequirementOptionChange}
             >
-              {deliveryRequirementOption1.map(
-                (item: DeliveryRequirementOption1) => (
+              {deliveryFirstRequirementOption.map(
+                (item: DeliveryRequirementOption) => (
                   <option
                     key={item.no}
                     value={item.label}
@@ -257,10 +257,10 @@ const OrderDeliveryFormPc = ({
               )}
             </PreexistenceSelect>
             <SelectRequirementWrite
-              className={deliveryRequirementWrite}
+              className={deliveryFirstRequirementWrite}
               placeholder="배송시 요청사항을 작성해 주세요. (최대 30자 이내)"
               maxLength={30}
-              onChange={handleDeliveryInputChange4}
+              onChange={handleFirstRequirementChange}
             />
           </DeliveryRequirementWrap>
         </div>

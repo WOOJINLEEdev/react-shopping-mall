@@ -1,4 +1,3 @@
-import { useState } from "react";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import ListItem from "components/home/ListItem";
 import ListGroupSkeleton from "components/home/ListGroupSkeleton";
@@ -18,11 +17,6 @@ const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
 };
 
 function ListGroup() {
-  const pageLimit = 8;
-
-  const [pageOffset, setPageOffset] = useState(0);
-
-  const listUrl = `/v1/products?limit=${pageLimit}&offset=${pageOffset}`;
   const fetcher = (url: string) => {
     return new Promise((resolve, reject) => {
       const timeout = !firstLoaded ? 3000 : 0;
@@ -42,8 +36,7 @@ function ListGroup() {
 
   const products = data.flat(Infinity) as Product[];
 
-  function handleClick() {
-    console.log("더보기 클릭");
+  function handleMoreViewBtnClick() {
     setSize(size + 1);
   }
 
@@ -55,7 +48,7 @@ function ListGroup() {
         })}
       </ul>
 
-      <MoreViewBtn onClick={handleClick} margin={"0 0 30px"} />
+      <MoreViewBtn onClick={handleMoreViewBtnClick} margin={"0 0 30px"} />
     </>
   );
 }

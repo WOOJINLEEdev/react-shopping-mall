@@ -16,11 +16,12 @@ const MyPageCouponModal = lazy(
 );
 
 const MyPageInfo = ({ myData }: MyPageInfoProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpen2, setIsOpen2] = useState(false);
-  const [modalText, setModalText] = useState("정말 로그아웃 하시겠습니까?");
-  const [btnText1, setBtnText1] = useState("예");
-  const [btnText2, setBtnText2] = useState("아니오");
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState<boolean>(false);
+  const [modalText, setModalText] =
+    useState<string>("정말 로그아웃 하시겠습니까?");
+  const [yesBtnText, setYesBtnText] = useState<string>("예");
+  const [noBtnText, setNoBtnText] = useState<string>("아니오");
 
   const navigate = useNavigate();
 
@@ -48,25 +49,25 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
     navigate("/");
   }, []);
 
-  const handleLogoutBtn = useCallback(() => {
-    setIsOpen(true);
-  }, []);
+  const handleLogoutBtnClick = useCallback(() => {
+    setIsLogoutModalOpen(true);
+  }, [isLogoutModalOpen]);
 
-  const handleModifyBtn = useCallback(() => {
+  const handleModifyBtnClick = useCallback(() => {
     alert("현재 서비스 준비 중입니다.");
   }, []);
 
-  const onRequestClose = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const onRequestCloseLogoutModal = useCallback(() => {
+    setIsLogoutModalOpen(false);
+  }, [isLogoutModalOpen]);
 
   const handleCouponModal = useCallback(() => {
-    setIsOpen2(true);
-  }, []);
+    setIsCouponModalOpen(true);
+  }, [isCouponModalOpen]);
 
-  const onRequestClose2 = useCallback(() => {
-    setIsOpen2(false);
-  }, []);
+  const onRequestCloseCouponModal = useCallback(() => {
+    setIsCouponModalOpen(false);
+  }, [isCouponModalOpen]);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
   const { removeToken } = useTokenStatus();
@@ -78,17 +79,17 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
     <MyInfo>
       <Suspense fallback={<Loading />}>
         <CommonModal
-          isOpen={isOpen}
-          onRequestClose={onRequestClose}
+          isOpen={isLogoutModalOpen}
+          onRequestClose={onRequestCloseLogoutModal}
           modalText={modalText}
-          btnText1={btnText1}
-          btnText2={btnText2}
-          btnClick1={logout}
-          btnClick2={onRequestClose}
+          yesBtnText={yesBtnText}
+          noBtnText={noBtnText}
+          yesBtnClick={logout}
+          noBtnClick={onRequestCloseLogoutModal}
         />
         <MyPageCouponModal
-          isOpen2={isOpen2}
-          onRequestClose2={onRequestClose2}
+          isOpen={isCouponModalOpen}
+          onRequestClose={onRequestCloseCouponModal}
           myCoupon={myData.coupons}
         />
       </Suspense>
@@ -101,10 +102,10 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
         님, <p style={{ paddingTop: "10px" }}>안녕하세요!</p>
       </Greet>
       <ModifyLogoutWrap className="modify_logout_wrap">
-        <Btn type="button" onClick={handleModifyBtn}>
+        <Btn type="button" onClick={handleModifyBtnClick}>
           회원정보 수정
         </Btn>
-        <Btn type="button" onClick={handleLogoutBtn}>
+        <Btn type="button" onClick={handleLogoutBtnClick}>
           로그아웃
         </Btn>
       </ModifyLogoutWrap>

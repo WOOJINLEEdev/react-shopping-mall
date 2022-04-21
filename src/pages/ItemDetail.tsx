@@ -1,12 +1,12 @@
 import { useState } from "react";
-import useSWR from "swr";
 import { useNavigate, useParams } from "react-router-dom";
+import useSWR from "swr";
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
-import { instance } from "utils/http-client";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
+import { instance } from "utils/http-client";
 import { addToCartApi, createCheckoutsApi } from "api";
 
 interface Option {
@@ -22,17 +22,17 @@ interface Option {
 const ItemDetail = () => {
   const navigate = useNavigate();
   const matchParams = useParams();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
   const [itemOption, setItemOption] = useState<number | string>("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalText, setModalText] =
-    useState("장바구니에 상품이 추가되었습니다.");
-  const [btnText1, setBtnText1] = useState("장바구니 이동");
-  const [btnText2, setBtnText2] = useState("쇼핑 계속하기");
-  const [btnWidth, setBtnWidth] = useState("40%");
-  const [contentPadding, setContentPadding] = useState("50px 0");
-  const [onOverlayClick, setOnOverlayClick] = useState(false);
-  const [onEsc, setOnEsc] = useState(false);
+    useState<string>("장바구니에 상품이 추가되었습니다.");
+  const [yesBtnText, setYesBtnText] = useState<string>("장바구니 이동");
+  const [noBtnText, setNoBtnText] = useState<string>("쇼핑 계속하기");
+  const [btnWidth, setBtnWidth] = useState<string>("40%");
+  const [contentPadding, setContentPadding] = useState<string>("50px 0");
+  const [onOverlayClick, setOnOverlayClick] = useState<boolean>(false);
+  const [onEsc, setOnEsc] = useState<boolean>(false);
 
   const productUrl = `/v1/products/${matchParams.productId}`;
   const fetcher = (url: string) => {
@@ -65,8 +65,6 @@ const ItemDetail = () => {
   };
 
   async function putItem() {
-    console.log("장바구니 버튼 클릭");
-
     if (!token) {
       return alert("로그인 후 이용해주세요!");
     }
@@ -146,10 +144,10 @@ const ItemDetail = () => {
         isOpen={isOpen}
         onRequestClose={onRequestClose}
         modalText={modalText}
-        btnText1={btnText1}
-        btnText2={btnText2}
-        btnClick1={handleModalBtn}
-        btnClick2={handleModalBtn}
+        yesBtnText={yesBtnText}
+        noBtnText={noBtnText}
+        yesBtnClick={handleModalBtn}
+        noBtnClick={handleModalBtn}
         btnWidth={btnWidth}
         contentPadding={contentPadding}
         onOverlayClick={onOverlayClick}

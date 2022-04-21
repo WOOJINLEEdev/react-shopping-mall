@@ -54,7 +54,7 @@ const Join = () => {
     email: userEmail(),
   });
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: FormikValues) => {
     try {
       const res = await createJoinApi({
         userId: values.id,

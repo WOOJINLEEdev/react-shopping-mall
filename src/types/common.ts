@@ -3,10 +3,10 @@ export interface CommonModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   modalText: string;
-  btnText1: string;
-  btnText2: string;
-  btnClick1: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  btnClick2: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  yesBtnText: string;
+  noBtnText: string;
+  yesBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  noBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   btnWidth?: string;
   contentPadding?: string;
   onOverlayClick?: boolean;

@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import OrderTotalDetail from "./OrderTotalDetail";
+import OrderTotalDetail from "components/order/OrderTotalDetail";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 import { OrderTotalProps, LineItem } from "types";
@@ -12,10 +12,10 @@ const OrderTotal = ({
   isTablet,
   isMobile,
 }: OrderTotalProps) => {
-  const [checkoutNum, setCheckoutNum] = useState(checkoutNumber);
-  const [remainderClass, setRemainderClass] = useState("info_remainder");
-  const [arrowImg, setArrowImg] = useState(downArrow);
-  const [closeText, setCloseText] = useState("");
+  const [remainderClassName, setRemainderClassName] =
+    useState<string>("info_remainder");
+  const [arrowImg, setArrowImg] = useState<string>(downArrow);
+  const [closeText, setCloseText] = useState<string>("");
 
   const items = useMemo(
     () => checkoutData.line_items,
@@ -24,25 +24,25 @@ const OrderTotal = ({
 
   const totalPrice = items
     .map((item: LineItem) => Number(item.variant_price) * item.quantity)
-    .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
+    .reduce((prevValue: number, curValue: number) => prevValue + curValue, 0);
 
   const deliveryCharge: string = localStorage.getItem("delivery")!;
   const firstItem = items[0];
   const remainder = items.filter((item) => item !== firstItem);
   const itemQuantity = items.map((item) => item.quantity);
-  const sum = itemQuantity.reduce((a, b) => a + b);
+  const sum = itemQuantity.reduce((prev, cur) => prev + cur, 0);
 
-  const handleInfoOpenBtn = () => {
-    if (remainderClass === "info_remainder") {
+  const handleInfoOpenBtnClick = () => {
+    if (remainderClassName === "info_remainder") {
       setArrowImg(upArrow);
       setCloseText("닫기");
-      return setRemainderClass("open");
+      return setRemainderClassName("open");
     }
 
-    if (remainderClass === "open") {
+    if (remainderClassName === "open") {
       setArrowImg(downArrow);
       setCloseText("");
-      return setRemainderClass("info_remainder");
+      return setRemainderClassName("info_remainder");
     }
   };
 
@@ -185,7 +185,7 @@ const OrderTotal = ({
                 </Link>
               </li>
             }
-            <div className={remainderClass}>
+            <div className={remainderClassName}>
               {remainder.map((item) => (
                 <li key={item.variant_id} className="info_list_wrap">
                   <div className="list_info">
@@ -232,7 +232,7 @@ const OrderTotal = ({
               <button
                 type="button"
                 className="info_all_btn"
-                onClick={handleInfoOpenBtn}
+                onClick={handleInfoOpenBtnClick}
               >
                 <span className="info_all_btn_text">
                   총{" "}
@@ -309,7 +309,7 @@ const OrderTotal = ({
                 </Link>
               </li>
             }
-            <div className={remainderClass}>
+            <div className={remainderClassName}>
               {remainder.map((item) => (
                 <li key={item.variant_id} className="info_list_wrap">
                   <div className="list_info">
@@ -356,7 +356,7 @@ const OrderTotal = ({
               <button
                 type="button"
                 className="info_all_btn"
-                onClick={handleInfoOpenBtn}
+                onClick={handleInfoOpenBtnClick}
               >
                 <span className="info_all_btn_text">
                   총{" "}
@@ -393,4 +393,4 @@ const OrderTotal = ({
   );
 };
 
-export default React.memo(OrderTotal);
+export default OrderTotal;

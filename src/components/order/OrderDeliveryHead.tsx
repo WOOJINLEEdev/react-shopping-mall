@@ -9,7 +9,7 @@ const OrderDeliveryHead = ({
   addressDetail1,
   addressDetail2,
   checkoutData,
-  handleAddressBtn,
+  handleAddressBtnClick,
   arrowImg,
 }: OrderDeliveryHeadProps) => {
   return (
@@ -36,7 +36,7 @@ const OrderDeliveryHead = ({
           <button
             type="button"
             className="address_btn"
-            onClick={handleAddressBtn}
+            onClick={handleAddressBtnClick}
           >
             <img src={arrowImg} alt="buttonArrow" className="address_btn_img" />
           </button>
@@ -58,7 +58,7 @@ const OrderDeliveryHead = ({
           <button
             type="button"
             className="address_btn"
-            onClick={handleAddressBtn}
+            onClick={handleAddressBtnClick}
           >
             <img src={arrowImg} alt="buttonArrow" className="address_btn_img" />
           </button>

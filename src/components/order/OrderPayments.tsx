@@ -75,7 +75,7 @@ const OrderPaymentList = React.memo(() => {
   ];
 
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState<number>();
-  const [paymentName, setPaymentName] = useState("");
+  const [paymentName, setPaymentName] = useState<string>("");
 
   const basePaymentClass = "payment";
   const selectedPaymentClass = "on";

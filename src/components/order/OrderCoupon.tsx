@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 import { OrderCouponProps, Coupon } from "types";
 
@@ -9,15 +9,16 @@ const OrderCoupon = ({
 }: OrderCouponProps) => {
   const { checkoutCouponData, MutateCheckoutCouponData } =
     useCheckoutCouponData();
-  const [coupons, setCoupons] = useState(checkoutData.user.coupons);
-  const [mileage, setMileage] = useState(checkoutData.user.mileage);
+  const [coupons, setCoupons] = useState<Coupon[] | undefined>(
+    checkoutData.user.coupons
+  );
+  const [mileage, setMileage] = useState<number>(checkoutData.user.mileage);
   const [availableMileage, setAvailableMileage] = useState<number>(
     checkoutData.user.mileage
   );
-  const [selectCouponId, setSelectCouponId] = useState(0);
-  const [selectOption, setSelectOption] = useState(0);
-  const [usedMileage, setUsedMileage] = useState<number>();
-  const [value, setValue] = useState("");
+  const [selectCouponId, setSelectCouponId] = useState<number>(0);
+  const [selectOption, setSelectOption] = useState<number>(0);
+  const [usedMileage, setUsedMileage] = useState<number>(0);
 
   useEffect(() => {
     MutateCheckoutCouponData({
@@ -27,16 +28,16 @@ const OrderCoupon = ({
     });
   }, [usedMileage, selectCouponId, selectOption]);
 
-  const handleSelectOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectOptionChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     if (coupons) {
       if (e.target.value === "가입축하 20% 할인") {
-        console.log("20퍼센트 할인");
-
         setSelectOption(0.2);
         return setSelectCouponId(coupons[0].id);
-      } else if (e.target.value === "가입축하 5,000원 할인") {
-        console.log("5천원 할인");
+      }
 
+      if (e.target.value === "가입축하 5,000원 할인") {
         if (coupons.length < 2) {
           setSelectCouponId(coupons[0].id);
           return setSelectOption(5000);
@@ -44,47 +45,49 @@ const OrderCoupon = ({
 
         setSelectCouponId(coupons[1].id);
         return setSelectOption(5000);
-      } else {
-        setSelectCouponId(0);
-        return setSelectOption(0);
       }
+
+      setSelectCouponId(0);
+      return setSelectOption(0);
     }
   };
 
-  const handleMileage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let targetValue = Number(
-      e.target.value
-        .replace(/[^0-9.]/g, "")
-        .replace(/(\.*)\./g, "")
-        .replace(/(^0+)/, "")
-    );
+  function removeNotNumber(text: string) {
+    return text
+      .replace(/[^0-9.]/g, "")
+      .replace(/(\.*)\./g, "")
+      .replace(/(^0+)/, "");
+  }
 
-    if (
-      (targetValue > 0 && availableMileage === 0) ||
-      (targetValue > 0 && availableMileage === undefined)
-    ) {
+  const handleMileageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let mileageInput = Number(removeNotNumber(e.target.value));
+
+    let unavailableMileage =
+      availableMileage === 0 || availableMileage === undefined;
+
+    if (mileageInput > 0 && unavailableMileage) {
       alert("보유 마일리지보다 많이 입력할 수 없습니다.");
       setMileage(0);
       return setUsedMileage(0);
     }
 
-    if (targetValue > availableMileage) {
+    if (mileageInput > availableMileage) {
       alert("보유 마일리지보다 많이 사용할 수 없습니다.");
-      targetValue = availableMileage;
       setMileage(0);
       return setUsedMileage(availableMileage);
     }
 
-    setMileage(availableMileage - targetValue);
-    return setUsedMileage(targetValue);
+    setMileage(availableMileage - mileageInput);
+    return setUsedMileage(mileageInput);
   };
 
-  const allMileage = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAllMileageBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     let allMileageTarget = (e.target as HTMLButtonElement).name;
+
+    if (availableMileage === 0) return;
 
     if (allMileageTarget === "allMileage") {
       if (usedMileage === availableMileage && mileage === 0) {
-        allMileageTarget = "mile";
         setMileage(availableMileage);
         setUsedMileage(0);
         return;
@@ -92,14 +95,14 @@ const OrderCoupon = ({
 
       if (!checkoutData.user.mileage) {
         setMileage(0);
-        return setUsedMileage(0);
+        setUsedMileage(0);
+        return;
       }
 
-      if (!usedMileage || usedMileage === undefined) {
+      if (!usedMileage) {
         setUsedMileage(0);
       }
-      console.log("모두사용 버튼 클릭");
-      allMileageTarget = "mile";
+
       setMileage(0);
       setUsedMileage(availableMileage);
       return;
@@ -107,7 +110,6 @@ const OrderCoupon = ({
 
     if (allMileageTarget === "mile") {
       if (usedMileage === availableMileage && mileage === 0) {
-        allMileageTarget = "allMileage";
         setMileage(availableMileage);
         setUsedMileage(0);
         return;
@@ -115,17 +117,16 @@ const OrderCoupon = ({
 
       if (!checkoutData.user.mileage) {
         setMileage(0);
-        return setUsedMileage(0);
+        setUsedMileage(0);
+        return;
       }
 
-      if (!usedMileage || usedMileage === undefined) {
+      if (!usedMileage) {
         setUsedMileage(0);
       }
 
-      allMileageTarget = "allMileage";
       setMileage(0);
       setUsedMileage(availableMileage);
-      return;
     }
   };
 
@@ -165,7 +166,7 @@ const OrderCoupon = ({
           </div>
           <select
             className="coupon_select"
-            onChange={handleSelectOption}
+            onChange={handleSelectOptionChange}
             id="couponSelect"
           >
             <option value="">
@@ -191,7 +192,7 @@ const OrderCoupon = ({
                 type="text"
                 className="mileage_input"
                 id="mileageInput"
-                onChange={handleMileage}
+                onChange={handleMileageInputChange}
                 placeholder="0"
                 value={usedMileage}
               />
@@ -199,7 +200,7 @@ const OrderCoupon = ({
                 type="button"
                 className="all_mileage"
                 name="allMileage"
-                onClick={allMileage}
+                onClick={handleAllMileageBtnClick}
               >
                 모두 사용
               </button>
@@ -222,4 +223,4 @@ const OrderCoupon = ({
   );
 };
 
-export default React.memo(OrderCoupon);
+export default OrderCoupon;

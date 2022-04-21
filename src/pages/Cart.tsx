@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import QuantityCounter from "components/common/QuantityCounter";
@@ -25,10 +25,11 @@ interface Item {
 }
 
 const Cart = () => {
-  const [chkId, setChkId] = useState("");
+  const [chkId, setChkId] = useState<string>("");
   const [allChecked, setAllChecked] = useState<boolean>(true);
-  const [barClassName, setBarClassName] = useState("opacity");
-  const [barText, setBarText] = useState("선택하신 상품이 삭제되었습니다.");
+  const [barClassName, setBarClassName] = useState<string>("opacity");
+  const [barText, setBarText] =
+    useState<string>("선택하신 상품이 삭제되었습니다.");
   const navigate = useNavigate();
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
@@ -46,7 +47,9 @@ const Cart = () => {
 
   const items = cart.items;
 
-  const onRemove = async (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleItemRemoveBtnClick = async (
+    e: React.MouseEvent<HTMLInputElement>
+  ) => {
     const cartItemId = Number((e.target as HTMLInputElement).name);
 
     try {
@@ -112,7 +115,7 @@ const Cart = () => {
     );
   };
 
-  const handleCheck = () => {
+  const handleAllCheckChange = () => {
     handleCartItemAllCheck(allChecked);
     setAllChecked((value) => !value);
   };
@@ -185,7 +188,7 @@ const Cart = () => {
     }
   };
 
-  const handleChoiceItemRemove = async () => {
+  const handleChoiceItemRemoveBtnClick = async () => {
     const chkItems = cart.items.filter((item: Item) => item.checked);
     console.log(chkItems);
 
@@ -230,7 +233,7 @@ const Cart = () => {
                 name="allCheck"
                 id="allCheck"
                 className="check_all"
-                onChange={handleCheck}
+                onChange={handleAllCheckChange}
                 checked={allChecked}
               />
               <label htmlFor="allCheck" className="allCheck_text">
@@ -241,7 +244,7 @@ const Cart = () => {
               type="button"
               className="choice_item_remove_btn"
               value="선택 삭제"
-              onClick={handleChoiceItemRemove}
+              onClick={handleChoiceItemRemoveBtnClick}
             />
           </div>
         </div>
@@ -271,10 +274,10 @@ const Cart = () => {
                     <input
                       type="button"
                       value="삭제"
-                      className="item_remove"
+                      className="item_remove_btn"
                       key={item.id}
                       name={item.id.toString()}
-                      onClick={onRemove}
+                      onClick={handleItemRemoveBtnClick}
                     />
                   </div>
 

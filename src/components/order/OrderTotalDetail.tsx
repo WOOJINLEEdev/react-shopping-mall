@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import OrderCheckoutButton from "./OrderCheckoutButton";
-import OrderAgreeCheck from "./OrderAgreeCheck";
+import OrderCheckoutButton from "components/order/OrderCheckoutButton";
+import OrderAgreeCheck from "components/order/OrderAgreeCheck";
 import useCheckoutCouponData from "hooks/useCheckoutCouponData";
 import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
 import { OrderTotalDetailProps } from "types";
@@ -14,13 +14,10 @@ const OrderTotalDetail = ({
   isTablet,
   isMobile,
 }: OrderTotalDetailProps) => {
-  const [agreeChecked, setAgreeChecked] = useState(false);
+  const [agreeChecked, setAgreeChecked] = useState<boolean>(false);
 
-  const { checkoutTotalDetailData, MutateCheckoutTotalDetailData } =
-    useCheckoutTotalDetailData();
-
+  const { MutateCheckoutTotalDetailData } = useCheckoutTotalDetailData();
   const { checkoutCouponData } = useCheckoutCouponData();
-
   const { usedMileage, selectCouponId, selectOption } = checkoutCouponData;
 
   const finalPrice =
@@ -30,13 +27,6 @@ const OrderTotalDetail = ({
     (Number.isInteger(selectOption) === false
       ? totalPrice * selectOption
       : selectOption);
-
-  const usedCoupon =
-    Number.isInteger(selectOption) === false
-      ? (totalPrice * selectOption)
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      : selectOption.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   useEffect(() => {
     MutateCheckoutTotalDetailData({

@@ -6,12 +6,12 @@ import { MyPageCouponModalProps, CouponInfo } from "types";
 Modal.setAppElement("#root");
 
 const MyPageCouponModal = ({
-  isOpen2,
-  onRequestClose2,
+  isOpen,
+  onRequestClose,
   myCoupon,
 }: MyPageCouponModalProps) => {
   useEffect(() => {
-    if (isOpen2) {
+    if (isOpen) {
       document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
       return () => {
         const scrollY = document.body.style.top;
@@ -19,12 +19,12 @@ const MyPageCouponModal = ({
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
       };
     }
-  }, [isOpen2]);
+  }, [isOpen]);
 
   return (
     <Modal
-      isOpen={isOpen2}
-      onRequestClose={onRequestClose2}
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
       shouldCloseOnOverlayClick={true}
       className="mypage_coupon_modal"
       overlayClassName="modal_overlay"
@@ -44,7 +44,7 @@ const MyPageCouponModal = ({
           })
         )}
       </ul>
-      <CouponCloseBtn onClick={onRequestClose2}>닫기</CouponCloseBtn>
+      <CouponCloseBtn onClick={onRequestClose}>닫기</CouponCloseBtn>
     </Modal>
   );
 };

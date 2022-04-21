@@ -14,7 +14,7 @@ interface VisitDate {
 }
 
 const AboutMe = () => {
-  const [total, setTotal] = useState();
+  const [total, setTotal] = useState<number>(0);
   const [today, setToday] = useState<number>(0);
   const [yesterday, setYesterday] = useState<number>(0);
   const [series, setSeries] = useState<ApexOptions["series"]>();
@@ -40,8 +40,12 @@ const AboutMe = () => {
           visitEndDate,
         });
 
-        const visitDate = res.data.map((item: VisitDate) => item.visit_date);
-        const visitCount = res.data.map((item: VisitDate) => item.visit_count);
+        const visitDate: string[] = res.data.map(
+          (item: VisitDate) => item.visit_date
+        );
+        const visitCount: number[] = res.data.map(
+          (item: VisitDate) => item.visit_count
+        );
         const sum = visitCount.reduce((a: number, b: number) => a + b);
 
         const todayVisit = res.data.find(
@@ -108,7 +112,7 @@ const AboutMe = () => {
             position: "bottom",
             labels: {
               show: true,
-              formatter: function (val: any) {
+              formatter: function (val: string) {
                 return val?.slice(-5);
               },
             },
@@ -145,8 +149,8 @@ const AboutMe = () => {
             },
             labels: {
               show: true,
-              formatter: function (val: any) {
-                return val;
+              formatter: function (val: number) {
+                return String(val);
               },
             },
           },

@@ -23,7 +23,7 @@ const OrderCheckoutButton = ({
   const { checkoutTotalDetailData, MutateCheckoutTotalDetailData } =
     useCheckoutTotalDetailData();
 
-  const handleOrderSubmit = () => {
+  const handleCheckoutBtnClick = () => {
     const { valid, invalidMsg } = validateCheckout({
       checkoutDeliveryData,
       checkoutPaymentData,
@@ -49,7 +49,7 @@ const OrderCheckoutButton = ({
         <button
           type="submit"
           className="checkout_btn"
-          onClick={handleOrderSubmit}
+          onClick={handleCheckoutBtnClick}
         >
           CHECK OUT
         </button>
@@ -58,7 +58,7 @@ const OrderCheckoutButton = ({
         <button
           type="submit"
           className="checkout_btn"
-          onClick={handleOrderSubmit}
+          onClick={handleCheckoutBtnClick}
         >
           CHECK OUT
         </button>
@@ -67,7 +67,7 @@ const OrderCheckoutButton = ({
         <button
           type="submit"
           className="checkout_btn"
-          onClick={handleOrderSubmit}
+          onClick={handleCheckoutBtnClick}
           tabIndex={0}
         >
           {(

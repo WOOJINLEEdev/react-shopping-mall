@@ -29,16 +29,18 @@ const PageNotFound = lazy(() => import("pages/PageNotFound"));
 const Main = () => {
   const location = useLocation();
   const { isPc } = useDevice();
-  const [searchClassName, setSearchClassName] = useState("header_search_style");
-  const [searchInputClassName, setSearchInputClassName] = useState(
+  const [searchClassName, setSearchClassName] = useState<string>(
+    "header_search_style"
+  );
+  const [searchInputClassName, setSearchInputClassName] = useState<string>(
     "header_search_input"
   );
   const [searchBtnClassName, setSearchBtnClassName] =
-    useState("header_search_btn");
+    useState<string>("header_search_btn");
 
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
-  const { clickedData, clickedMutate } = useActiveHeaderItem();
+  const { clickedMutate } = useActiveHeaderItem();
 
   useEffect(() => {
     searchLocationMutate(location.pathname);

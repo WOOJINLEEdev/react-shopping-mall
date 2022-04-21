@@ -60,12 +60,13 @@ type Coupon = {
 const OrderCompletion = () => {
   const matchParams = useParams();
   const [orderData, setOrderData] = useState<OrderData[]>([]);
-  const [remainderClass, setRemainderClass] = useState("info_remainder");
-  const [arrowImg, setArrowImg] = useState(upArrow);
-  const [arrowImg1, setArrowImg1] = useState(downArrow);
-  const [closeText, setCloseText] = useState("");
-  const [itemInfoClass, setItemInfoClass] = useState("info_group");
-  const [itemInfoHeadClass, setItemInfoHeadClass] = useState("hide");
+  const [remainderClass, setRemainderClass] =
+    useState<string>("info_remainder");
+  const [arrowImg, setArrowImg] = useState<string>(upArrow);
+  const [arrowImg1, setArrowImg1] = useState<string>(downArrow);
+  const [closeText, setCloseText] = useState<string>("");
+  const [itemInfoClass, setItemInfoClass] = useState<string>("info_group");
+  const [itemInfoHeadClass, setItemInfoHeadClass] = useState<string>("hide");
 
   const { isPc, isTablet, isMobile } = useDevice();
 
@@ -90,13 +91,13 @@ const OrderCompletion = () => {
     return <Loading />;
   }
 
-  const items = orderData[0].line_items;
+  const items: Item[] = orderData[0].line_items;
   const firstItem = items[0];
   const remainder = items.filter((item: Item) => item !== firstItem);
   const itemQuantity = items.map((item: Item) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
-  const handleInfoOpenBtn = () => {
+  const handleInfoOpenBtnClick = () => {
     if (remainderClass === "info_remainder") {
       setArrowImg1(upArrow);
       setCloseText("닫기");
@@ -110,7 +111,7 @@ const OrderCompletion = () => {
     }
   };
 
-  const handleOpenCloseBtn = () => {
+  const handleOpenCloseBtnClick = () => {
     if (arrowImg === upArrow) {
       setArrowImg(downArrow);
       setItemInfoHeadClass("info_head_total_item");
@@ -153,8 +154,8 @@ const OrderCompletion = () => {
         remainderClass={remainderClass}
         itemInfoHeadClass={itemInfoHeadClass}
         itemInfoClass={itemInfoClass}
-        handleOpenCloseBtn={handleOpenCloseBtn}
-        handleInfoOpenBtn={handleInfoOpenBtn}
+        handleOpenCloseBtn={handleOpenCloseBtnClick}
+        handleInfoOpenBtn={handleInfoOpenBtnClick}
         arrowImg={arrowImg}
         arrowImg1={arrowImg1}
         closeText={closeText}

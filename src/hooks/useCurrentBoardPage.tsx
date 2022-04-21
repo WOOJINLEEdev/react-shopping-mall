@@ -8,11 +8,11 @@ function useCurrentBoardPage() {
 
   return {
     currentBoardPageData: data,
-    getCurrentBoardPage: ($boardType: any) =>
+    getCurrentBoardPage: ($boardType: string) =>
       window.$currentBoardPage && window.$currentBoardPage[$boardType] > 0
         ? window.$currentBoardPage[$boardType]
         : 1,
-    resetBoardData: ($boardType: any) => {
+    resetBoardData: ($boardType: string) => {
       if (window.$currentBoardPage) {
         window.$currentBoardPage[$boardType] = 0;
       }
