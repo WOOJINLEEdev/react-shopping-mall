@@ -1333,24 +1333,24 @@ main {
   border-top-right-radius: 3px;
 }
 
-.old {
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  background: #fff;
-  color: #333;
-  width: 50%;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-}
-
-.new {
+.delivery_write {
   width: 50%;
   height: 40px;
   border: none;
   border-bottom: 1px solid #d4d4d4;
   background-color: #eee;
   color: #bababa;
+  line-height: 40px;
+  text-align: center;
+}
+
+.selected {
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  background: #fff;
+  color: #333;
+  width: 50%;
+  height: 40px;
   line-height: 40px;
   text-align: center;
 }
@@ -3562,12 +3562,12 @@ article {
     line-height: 50px;
   }
 
-  .old {
+  .delivery_write {
     height: 50px;
     line-height: 50px;
   }
 
-  .new {
+  .selected {
     height: 50px;
     line-height: 50px;
   }

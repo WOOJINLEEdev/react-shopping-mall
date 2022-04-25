@@ -150,6 +150,7 @@ export interface OrderDeliveryProps {
 }
 
 export interface OrderDeliveryCheckoutData {
+  id: number;
   user: OrderDeliveryUser;
 }
 
@@ -178,41 +179,15 @@ export interface DeliveryRequirementOption {
 //---------------------------------------------- OrderDeliveryForm
 export interface OrderDeliveryFormProps {
   deliveryForm1: string;
-  designation: string;
-  handleDesignationInputChange: (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => void;
-  recipient: string;
-  handleRecipientInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  address1: string;
-  handlePostcodeBtnClick: () => void;
-  addressDetail1: string;
-  addressDetail2: string;
-  handleAddressDetailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleTelInputChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => void;
-  tel1: string;
-  setTel1: React.Dispatch<React.SetStateAction<string>>;
-  tel2: string;
-  setTel2: React.Dispatch<React.SetStateAction<string>>;
-  tel3: string;
-  setTel3: React.Dispatch<React.SetStateAction<string>>;
-  tel4: string;
-  setTel4: React.Dispatch<React.SetStateAction<string>>;
-  tel5: string;
-  setTel5: React.Dispatch<React.SetStateAction<string>>;
-  tel6: string;
-  setTel6: React.Dispatch<React.SetStateAction<string>>;
+  deliveryClassName: string;
+  deliveryClassName1: string;
+  checkoutId: number;
   handleRequirementOptionChange: (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => void;
   deliverySecondRequirementOption: DeliveryRequirementOption[];
   deliverySecondRequirementWrite: string;
-  handleSecondRequirementChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
+  requirement1: string;
 }
 
 export interface PreexistenceSelectProps {
@@ -232,10 +207,9 @@ export interface OrderDeliveryFormMobileProps {
     e: React.ChangeEvent<HTMLSelectElement>
   ) => void;
   deliveryFirstRequirementWrite: string;
-  handleFirstRequirementChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
   deliveryFirstRequirementOption: DeliveryRequirementOption[];
+  checkoutId: number;
+  requirement: string;
 }
 
 export interface DeliveryFormMobileCheckoutData {
@@ -266,17 +240,13 @@ export interface OrderDeliveryFormPcProps {
   deliveryClassName1: string;
   checkoutData: DeliveryFormPcCheckoutData;
   deliveryForm: string;
-  designation: string;
-  address: string;
-  handlePostcodeBtnClick: () => void;
   handleRequirementOptionChange: (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => void;
   deliveryFirstRequirementOption: DeliveryRequirementOption[];
   deliveryFirstRequirementWrite: string;
-  handleFirstRequirementChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
+  checkoutId: number;
+  requirement: string;
 }
 
 export interface DeliveryFormPcCheckoutData {
@@ -316,10 +286,9 @@ export interface OrderDeliveryFormTabletProps {
     e: React.ChangeEvent<HTMLSelectElement>
   ) => void;
   deliveryFirstRequirementWrite: string;
-  handleFirstRequirementChange: (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => void;
   deliveryFirstRequirementOption: DeliveryRequirementOption[];
+  checkoutId: number;
+  requirement: string;
 }
 
 export interface DeliveryFormTabletCheckoutData {
@@ -349,14 +318,13 @@ export interface OrderDeliveryHeadProps {
   isMobile: boolean;
   deliveryWrite: string | undefined;
   infoHeadAddress: string;
-  addressDetail1: string;
-  addressDetail2: string;
   checkoutData: OrderDeliveryHeadCheckoutData;
   handleAddressBtnClick: () => void;
   arrowImg: string;
 }
 
 export interface OrderDeliveryHeadCheckoutData {
+  id: number;
   user?: OrderDeliveryHeadUser;
 }
 

@@ -6,6 +6,9 @@ import {
   PreexistenceSelectProps,
   LiProps,
 } from "types";
+import { useRecoilState } from "recoil";
+import { deliveryInfoState } from "./OrderDeliveryForm";
+import { useEffect } from "react";
 
 const OrderDeliveryFormPc = ({
   deliveryWrapClass,
@@ -14,20 +17,33 @@ const OrderDeliveryFormPc = ({
   deliveryClassName1,
   checkoutData,
   deliveryForm,
-  designation,
-  address,
-  handlePostcodeBtnClick,
   handleRequirementOptionChange,
   deliveryFirstRequirementOption,
   deliveryFirstRequirementWrite,
-  handleFirstRequirementChange,
+  checkoutId,
+  requirement,
 }: OrderDeliveryFormPcProps) => {
+  const [deliveryState, setDeliveryState] = useRecoilState(
+    deliveryInfoState(checkoutId)
+  );
+
+  useEffect(() => {
+    return setDeliveryState({
+      ...deliveryState,
+      requirement,
+    });
+  }, [requirement]);
+
+  const handleFirstRequirementChange = (requirement: string) => {
+    setDeliveryState({ ...deliveryState, requirement });
+  };
+
   return (
     <div className={deliveryWrapClass}>
       <ul className="delivery_write_choice" onClick={handleDeliveryTabClick}>
         <Li
           className={deliveryClassName}
-          disabled={!checkoutData.user.shipping_address ? "disabled" : false}
+          disabled={!checkoutData.user.shipping_address && "disabled"}
           data-name="기존 배송지"
           tabIndex={0}
         >
@@ -46,7 +62,10 @@ const OrderDeliveryFormPc = ({
             type="text"
             className="delivery_input first"
             id="deliveryTitle"
-            value={designation}
+            value={
+              checkoutData.user.shipping_address?.name &&
+              checkoutData.user.shipping_address.name
+            }
             readOnly
           />
         </div>
@@ -85,11 +104,9 @@ const OrderDeliveryFormPc = ({
                 className="delivery_input postalCode"
                 placeholder="우편번호"
                 value={
-                  checkoutData.user.shipping_address
-                    ? checkoutData.user.shipping_address.postal_code
-                    : address
+                  checkoutData.user.shipping_address &&
+                  checkoutData.user.shipping_address.postal_code
                 }
-                onClick={handlePostcodeBtnClick}
                 disabled
                 readOnly
               />
@@ -97,7 +114,6 @@ const OrderDeliveryFormPc = ({
                 type="button"
                 className="postcode_search_btn"
                 value="우편번호 찾기"
-                onClick={handlePostcodeBtnClick}
                 disabled
               />
             </div>
@@ -260,7 +276,8 @@ const OrderDeliveryFormPc = ({
               className={deliveryFirstRequirementWrite}
               placeholder="배송시 요청사항을 작성해 주세요. (최대 30자 이내)"
               maxLength={30}
-              onChange={handleFirstRequirementChange}
+              value={deliveryState.requirement}
+              onChange={(e) => handleFirstRequirementChange(e.target.value)}
             />
           </DeliveryRequirementWrap>
         </div>

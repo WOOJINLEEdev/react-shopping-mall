@@ -38,7 +38,7 @@ export function validateCheckout({
   checkoutPaymentData,
   checkoutTotalDetailData,
 }: ValidateCheckoutProps) {
-  if (checkoutDeliveryData.deliveryClassName === "delivery_write old") {
+  if (checkoutDeliveryData.deliveryClassName === "delivery_write selected") {
     if (!checkoutPaymentData.paymentName) {
       return {
         valid: false,
@@ -55,7 +55,7 @@ export function validateCheckout({
   }
 
   if (
-    checkoutDeliveryData.deliveryClassName === "delivery_write new" ||
+    checkoutDeliveryData.deliveryClassName === "delivery_write" ||
     checkoutDeliveryData.deliveryClassName === "delivery_write disabled"
   ) {
     if (

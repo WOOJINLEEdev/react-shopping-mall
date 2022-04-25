@@ -6,6 +6,9 @@ import {
   DeliveryRequirementOption,
   PreexistenceSelectProps,
 } from "types";
+import { deliveryInfoState } from "./OrderDeliveryForm";
+import { useRecoilState } from "recoil";
+import { useEffect } from "react";
 
 const OrderDeliveryFormTablet = ({
   deliveryWrapClass,
@@ -16,9 +19,25 @@ const OrderDeliveryFormTablet = ({
   deliveryForm,
   handleRequirementOptionChange,
   deliveryFirstRequirementWrite,
-  handleFirstRequirementChange,
   deliveryFirstRequirementOption,
+  checkoutId,
+  requirement,
 }: OrderDeliveryFormTabletProps) => {
+  const [deliveryState, setDeliveryState] = useRecoilState(
+    deliveryInfoState(checkoutId)
+  );
+
+  useEffect(() => {
+    return setDeliveryState({
+      ...deliveryState,
+
+      requirement,
+    });
+  }, [requirement]);
+
+  const handleFirstRequirementChange = (requirement: string) => {
+    setDeliveryState({ ...deliveryState, requirement });
+  };
   return (
     <div className={deliveryWrapClass}>
       <ul className="delivery_write_choice" onClick={handleDeliveryTabClick}>
@@ -71,7 +90,8 @@ const OrderDeliveryFormTablet = ({
                 className={deliveryFirstRequirementWrite}
                 placeholder="배송시 요청사항을 작성해 주세요. (최대 30자 이내)"
                 maxLength={30}
-                onChange={handleFirstRequirementChange}
+                value={deliveryState.requirement}
+                onChange={(e) => handleFirstRequirementChange(e.target.value)}
               />
             </div>
           </PreexistenceItem>

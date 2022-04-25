@@ -24,7 +24,7 @@ interface UpdateCheckoutsPayload {
 interface CheckoutShippingAddress {
   name?: string;
   recipient_name: string;
-  postal_code: number;
+  postal_code: string;
   address1: string;
   address2: string;
   note: string;
@@ -40,6 +40,10 @@ export function updateCheckoutsApi({
   mileageToBeUsed,
   paymentMethod,
 }: UpdateCheckoutsPayload) {
+  console.log(
+    "updateCheckoutsApi shippingAddress ",
+    JSON.stringify(shippingAddress, null, 2)
+  );
   return instance.put(`/v1/checkouts/${checkoutNumber}`, {
     shipping_address: shippingAddress,
     user_coupon_id_to_be_used: userCouponIdToBeUsed,

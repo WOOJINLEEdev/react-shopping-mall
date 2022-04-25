@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from "react";
-import DaumPostcode from "react-daum-postcode";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
-import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import { optionData } from "components/order/order-delivery-option-data";
-import useCheckoutDeliveryData from "hooks/useCheckoutDeliveryData";
 import OrderDeliveryHead from "./OrderDeliveryHead";
 import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
 import OrderDeliveryForm from "components/order/OrderDeliveryForm";
-import { getFullAddress } from "utils/get-address";
-import { OrderDeliveryProps, DeliveryRequirementOption, Address } from "types";
+import { OrderDeliveryProps, DeliveryRequirementOption } from "types";
 
 const OrderDelivery = ({
   checkoutData,
@@ -20,17 +15,11 @@ const OrderDelivery = ({
   isTablet,
   isMobile,
 }: OrderDeliveryProps) => {
-  const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
-  const [address, setAddress] = useState<string>("");
-  const [address1, setAddress1] = useState<string>("");
-  const [addressDetail, setAddressDetail] = useState<string>("");
-  const [addressDetail1, setAddressDetail1] = useState<string>("");
-  const [addressDetail2, setAddressDetail2] = useState<string>("");
-
-  const [deliveryClassName, setDeliveryClassName] =
-    useState<string>("delivery_write old");
+  const [deliveryClassName, setDeliveryClassName] = useState<string>(
+    "delivery_write selected"
+  );
   const [deliveryClassName1, setDeliveryClassName1] =
-    useState<string>("delivery_write new");
+    useState<string>("delivery_write");
   const [deliveryForm, setDeliveryForm] = useState<string>("delivery_box_wrap");
   const [deliveryForm1, setDeliveryForm1] = useState<string>(
     "delivery_box_wrap_second hide"
@@ -40,7 +29,7 @@ const OrderDelivery = ({
   const [infoHeadAddress, setInfoHeadAddress] = useState<string>("hide");
   const [deliveryWrapClass, setDeliveryWrapClass] =
     useState<string>("delivery_wrap");
-  const [deliveryWrite, setDeliveryWrite] = useState<string | undefined>("");
+  const [deliveryWrite, setDeliveryWrite] = useState<string>("");
   const [deliveryFirstRequirementWrite, setDeliveryFirstRequirementWrite] =
     useState<string>("hide");
   const [deliverySecondRequirementWrite, setDeliverySecondRequirementWrite] =
@@ -51,111 +40,44 @@ const OrderDelivery = ({
   const [deliverySecondRequirementOption, setDeliverySecondRequirementOption] =
     useState<DeliveryRequirementOption[]>(optionData);
 
-  const [requirementTest, setRequirementTest] = useState<string>("");
-
-  const [designation, setDesignation] = useState<string>("");
-  const [recipient, setRecipient] = useState<string>("");
-  const [tel1, setTel1] = useState<string>("");
-  const [tel2, setTel2] = useState<string>("");
-  const [tel3, setTel3] = useState<string>("");
-  const [tel4, setTel4] = useState<string>("");
-  const [tel5, setTel5] = useState<string>("");
-  const [tel6, setTel6] = useState<string>("");
   const [requirement, setRequirement] = useState<string>("");
   const [requirement1, setRequirement1] = useState<string>("");
-
-  const { checkoutDeliveryData, MutateCheckoutDeliveryData } =
-    useCheckoutDeliveryData();
-
-  useEffect(() => {
-    MutateCheckoutDeliveryData({
-      designation,
-      recipient,
-      address1,
-      addressDetail1,
-      addressDetail2,
-      tel1,
-      tel2,
-      tel3,
-      tel4,
-      tel5,
-      tel6,
-      requirement,
-      requirement1,
-      deliveryClassName,
-      deliveryClassName1,
-    });
-  }, [
-    designation,
-    recipient,
-    address1,
-    addressDetail1,
-    addressDetail2,
-    tel1,
-    tel2,
-    tel3,
-    tel4,
-    tel5,
-    tel6,
-    requirement,
-    requirement1,
-    deliveryClassName,
-    deliveryClassName1,
-  ]);
 
   useEffect(() => {
     if (!checkoutData.user.shipping_address) {
       setDeliveryClassName("delivery_write disabled");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
-      return setDeliveryClassName1("delivery_write old");
+      return setDeliveryClassName1("delivery_write selected");
     }
-  }, [checkoutDeliveryData]);
-
-  const handlePostcodeBtnClick = () => {
-    setShowDaumPostModal(true);
-  };
-
-  const handleComplete = (data: Address) => {
-    let fullAddress = getFullAddress(data);
-
-    if (deliveryClassName === "delivery_write old") {
-      setAddress(data.zonecode);
-      setAddressDetail(fullAddress);
-    } else if (deliveryClassName1 === "delivery_write old") {
-      setAddress1(data.zonecode);
-      setAddressDetail1(fullAddress);
-    }
-    setShowDaumPostModal(false);
-  };
-
-  const postModalEsc = () => {
-    setShowDaumPostModal(false);
-  };
+  }, []);
 
   const handleDeliveryTabClick = (e: React.MouseEvent<HTMLUListElement>) => {
     const deliveryTabName = (e.target as HTMLUListElement).dataset.name;
 
-    setDeliveryWrite(deliveryTabName);
+    if (!checkoutData.user.shipping_address) {
+      return false;
+    }
+
+    setDeliveryWrite(deliveryTabName || "");
 
     if (deliveryTabName === "신규 입력") {
-      setDeliveryClassName("delivery_write new");
-      setDeliveryClassName1("delivery_write old");
+      setDeliveryClassName("delivery_write");
+      setDeliveryClassName1("delivery_write selected");
       setDeliveryForm("delivery_box_wrap_second hide");
       setDeliveryForm1("delivery_box_wrap");
-      setRequirementTest("신규 입력");
-    } else if (deliveryTabName === "기존 배송지") {
-      setDeliveryClassName("delivery_write old");
-      setDeliveryClassName1("delivery_write new");
+      return;
+    }
+
+    if (deliveryTabName === "기존 배송지") {
+      setDeliveryClassName("delivery_write selected");
+      setDeliveryClassName1("delivery_write");
       setDeliveryForm("delivery_box_wrap");
       setDeliveryForm1("delivery_box_wrap_second hide");
-      setRequirementTest("기존 배송지");
     }
   };
 
   const handleAddressBtnClick = () => {
-    console.log(deliveryWrite);
-
     if (arrowImg === upArrow) {
       if (!checkoutData.user.shipping_address || deliveryWrite === "") {
         setDeliveryForm1("delivery_box_wrap_second hide");
@@ -165,11 +87,14 @@ const OrderDelivery = ({
         setDeliveryForm1("delivery_box_wrap_second hide");
         setArrowImg(downArrow);
         setInfoHeadAddress("info_head_address");
-        return setDeliveryWrapClass("hide");
+        setDeliveryWrapClass("hide");
+        return;
       }
+
       setArrowImg(downArrow);
       setInfoHeadAddress("info_head_address");
-      return setDeliveryWrapClass("hide");
+      setDeliveryWrapClass("hide");
+      return;
     }
 
     if (arrowImg === downArrow) {
@@ -177,55 +102,22 @@ const OrderDelivery = ({
         setDeliveryForm1("delivery_box_wrap");
       }
 
+      if (checkoutData.user.shipping_address) {
+        setDeliveryForm1("delivery_box_wrap_second hide");
+      }
+
       if (deliveryWrite === "신규 입력") {
         setArrowImg(upArrow);
         setInfoHeadAddress("hide");
         setDeliveryForm1("delivery_box_wrap");
-        return setDeliveryWrapClass("delivery_wrap");
+        setDeliveryWrapClass("delivery_wrap");
+        return;
       }
+
       setArrowImg(upArrow);
       setInfoHeadAddress("hide");
-      return setDeliveryWrapClass("delivery_wrap");
+      setDeliveryWrapClass("delivery_wrap");
     }
-  };
-
-  const handleAddressDetailChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAddressDetail2(e.target.value);
-  };
-
-  const handleDesignationInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDesignation(e.target.value);
-  };
-
-  const handleRecipientInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRecipient(e.target.value);
-  };
-
-  const handleTelInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    let telValue = e.target.value.replace(/[^0-9]/g, "");
-
-    setState(telValue);
-  };
-
-  const handleFirstRequirementChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setRequirement(e.target.value);
-  };
-
-  const handleSecondRequirementChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setRequirement1(e.target.value);
   };
 
   const handleRequirementOptionChange = (
@@ -235,7 +127,7 @@ const OrderDelivery = ({
 
     if (
       deliveryWrite === "기존 배송지" ||
-      deliveryClassName === "delivery_write old"
+      deliveryClassName === "delivery_write selected"
     ) {
       setRequirement(targetValue);
       if (targetValue === "직접 입력") {
@@ -254,7 +146,7 @@ const OrderDelivery = ({
 
     if (
       deliveryClassName === "delivery_write disabled" ||
-      deliveryClassName1 === "delivery_write old"
+      deliveryClassName1 === "delivery_write selected"
     ) {
       setRequirement1(targetValue);
       if (targetValue === "직접 입력") {
@@ -272,25 +164,10 @@ const OrderDelivery = ({
         isMobile={isMobile}
         deliveryWrite={deliveryWrite}
         infoHeadAddress={infoHeadAddress}
-        addressDetail1={addressDetail1}
-        addressDetail2={addressDetail2}
         checkoutData={checkoutData}
         handleAddressBtnClick={handleAddressBtnClick}
         arrowImg={arrowImg}
       />
-
-      {showDaumPostModal ? (
-        <PostWrap>
-          <PostModalEscBtn
-            type="button"
-            aria-label="close"
-            onClick={postModalEsc}
-          >
-            <CgClose />
-          </PostModalEscBtn>
-          <DaumPostCodeStyle onComplete={handleComplete} />
-        </PostWrap>
-      ) : null}
 
       {isPc && (
         <OrderDeliveryFormPc
@@ -300,13 +177,11 @@ const OrderDelivery = ({
           deliveryClassName1={deliveryClassName1}
           checkoutData={checkoutData}
           deliveryForm={deliveryForm}
-          designation={designation}
-          address={address}
-          handlePostcodeBtnClick={handlePostcodeBtnClick}
           handleRequirementOptionChange={handleRequirementOptionChange}
           deliveryFirstRequirementOption={deliveryFirstRequirementOption}
           deliveryFirstRequirementWrite={deliveryFirstRequirementWrite}
-          handleFirstRequirementChange={handleFirstRequirementChange}
+          checkoutId={checkoutData.id}
+          requirement={requirement}
         />
       )}
 
@@ -320,8 +195,9 @@ const OrderDelivery = ({
           deliveryForm={deliveryForm}
           handleRequirementOptionChange={handleRequirementOptionChange}
           deliveryFirstRequirementWrite={deliveryFirstRequirementWrite}
-          handleFirstRequirementChange={handleFirstRequirementChange}
           deliveryFirstRequirementOption={deliveryFirstRequirementOption}
+          checkoutId={checkoutData.id}
+          requirement={requirement}
         />
       )}
 
@@ -335,94 +211,24 @@ const OrderDelivery = ({
           deliveryForm={deliveryForm}
           handleRequirementOptionChange={handleRequirementOptionChange}
           deliveryFirstRequirementWrite={deliveryFirstRequirementWrite}
-          handleFirstRequirementChange={handleFirstRequirementChange}
           deliveryFirstRequirementOption={deliveryFirstRequirementOption}
+          checkoutId={checkoutData.id}
+          requirement={requirement}
         />
       )}
 
       <OrderDeliveryForm
         deliveryForm1={deliveryForm1}
-        designation={designation}
-        handleDesignationInputChange={handleDesignationInputChange}
-        recipient={recipient}
-        handleRecipientInputChange={handleRecipientInputChange}
-        address1={address1}
-        handlePostcodeBtnClick={handlePostcodeBtnClick}
-        addressDetail1={addressDetail1}
-        addressDetail2={addressDetail2}
-        handleAddressDetailChange={handleAddressDetailChange}
-        handleTelInputChange={handleTelInputChange}
-        tel1={tel1}
-        setTel1={setTel1}
-        tel2={tel2}
-        setTel2={setTel2}
-        tel3={tel3}
-        setTel3={setTel3}
-        tel4={tel4}
-        setTel4={setTel4}
-        tel5={tel5}
-        setTel5={setTel5}
-        tel6={tel6}
-        setTel6={setTel6}
+        deliveryClassName={deliveryClassName}
+        deliveryClassName1={deliveryClassName1}
+        checkoutId={checkoutData.id}
         handleRequirementOptionChange={handleRequirementOptionChange}
         deliverySecondRequirementOption={deliverySecondRequirementOption}
         deliverySecondRequirementWrite={deliverySecondRequirementWrite}
-        handleSecondRequirementChange={handleSecondRequirementChange}
+        requirement1={requirement1}
       />
     </section>
   );
 };
 
 export default OrderDelivery;
-
-const PostWrap = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  height: 100%;
-  top: 53%;
-  left: 49%;
-  right: auto;
-  bottom: auto;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  z-index: 100;
-
-  @media only screen and (min-width: 320px) and (max-width: 767px) {
-    width: 85%;
-  }
-
-  @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    width: 80%;
-  }
-`;
-
-const DaumPostCodeStyle = styled(DaumPostcode)`
-  display: block;
-  width: 100%;
-  min-height: 500px;
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-
-  @media only screen and (min-width: 768px) and (max-width: 1023px) {
-    min-height: 700px;
-  }
-`;
-
-const PostModalEscBtn = styled.button`
-  display: block;
-  width: 100%;
-  margin: 0 auto;
-  padding: 10px 0 0;
-  border: 0;
-  margin: 0 3px;
-  border-radius: 5px;
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #333;
-  cursor: pointer;
-  font-size: 30px;
-  line-height: 30px;
-  text-align: right;
-`;

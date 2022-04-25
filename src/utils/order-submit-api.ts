@@ -1,7 +1,8 @@
 import { updateCheckoutsApi } from "api";
+import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 
 interface SubmitCheckoutProps {
-  checkoutDeliveryData: CheckoutDeliveryData;
+  checkoutDeliveryData: DeliveryInfoState;
   checkoutPaymentData: CheckoutPaymentData;
   checkoutTotalDetailData: CheckoutTotalDetailData;
   checkoutData: CheckoutData;
@@ -27,24 +28,6 @@ interface ShippingAddress {
   request_note?: string;
 }
 
-interface CheckoutDeliveryData {
-  address1: string;
-  addressDetail1: string;
-  addressDetail2: string;
-  deliveryClassName: "delivery_write old" | "delivery_write new";
-  deliveryClassName1: "delivery_write old" | "delivery_write new";
-  designation: string;
-  recipient: string;
-  requirement: string;
-  requirement1: string;
-  tel1: string;
-  tel2: string;
-  tel3: string;
-  tel4: string;
-  tel5: string;
-  tel6: string;
-}
-
 interface CheckoutPaymentData {
   paymentName: string;
 }
@@ -63,17 +46,19 @@ export async function submitCheckout({
   checkoutData,
   checkoutNumber,
 }: SubmitCheckoutProps) {
-  if (checkoutDeliveryData.deliveryClassName === "delivery_write old") {
+  if (checkoutDeliveryData.deliveryClassName === "delivery_write selected") {
     try {
       const res = await updateCheckoutsApi({
         checkoutNumber,
         shippingAddress: {
           name: checkoutDeliveryData.designation,
           recipient_name: checkoutData.user.shipping_address.recipient_name,
-          postal_code: Number(checkoutData.user.shipping_address.postal_code),
+          postal_code: checkoutData.user.shipping_address.postal_code,
           address1: checkoutData.user.shipping_address.address1,
           address2: checkoutData.user.shipping_address.address2,
-          note: checkoutDeliveryData.requirement,
+          note: checkoutDeliveryData.requirement
+            ? checkoutDeliveryData.requirement
+            : "",
           phone1: checkoutData.user.shipping_address.phone1,
           request_note: checkoutDeliveryData.requirement,
         },
@@ -89,25 +74,28 @@ export async function submitCheckout({
     }
   }
 
-  if (checkoutDeliveryData.deliveryClassName === "delivery_write new") {
+  if (checkoutDeliveryData.deliveryClassName1 === "delivery_write selected") {
     try {
       const res = await updateCheckoutsApi({
         checkoutNumber,
         shippingAddress: {
           name: checkoutDeliveryData.designation,
           recipient_name: checkoutDeliveryData.recipient,
-          postal_code: Number(checkoutDeliveryData.address1),
+          postal_code: checkoutDeliveryData.address1,
           address1: checkoutDeliveryData.addressDetail1,
           address2: checkoutDeliveryData.addressDetail2,
-          note: checkoutDeliveryData.requirement1,
+          note: checkoutDeliveryData.requirement1
+            ? checkoutDeliveryData.requirement1
+            : "",
           phone1:
             checkoutDeliveryData.tel1 +
             checkoutDeliveryData.tel2 +
             checkoutDeliveryData.tel3,
-          phone2:
-            checkoutDeliveryData.tel4 +
-            checkoutDeliveryData.tel5 +
-            checkoutDeliveryData.tel6,
+          phone2: checkoutDeliveryData.tel4
+            ? checkoutDeliveryData.tel4 +
+              checkoutDeliveryData.tel5 +
+              checkoutDeliveryData.tel6
+            : "",
           request_note: checkoutDeliveryData.requirement1,
         },
         userCouponIdToBeUsed: checkoutTotalDetailData.selectCouponId,

@@ -1,4 +1,4 @@
-import { validateCheckout } from "./checkout-validator";
+import { validateCheckout } from "utils/checkout-validator";
 
 describe("CheckoutValidator", () => {
   describe("validateCheckout", () => {
@@ -6,7 +6,7 @@ describe("CheckoutValidator", () => {
       it("만약 결제수단이 비어있으면, invalid하고 '결제방법을 선택해주세요'는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write old",
+          deliveryClassName: "delivery_write selected",
         };
         const checkoutPaymentData = {};
         const checkoutTotalDetailData = {};
@@ -25,7 +25,7 @@ describe("CheckoutValidator", () => {
       it("만약 주문 동의에 체크하지 않았으면, invalid하고 '주문 동의에 체크를 하셔야 주문이 가능합니다'는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write old",
+          deliveryClassName: "delivery_write selected",
         };
         const checkoutPaymentData = { paymentName: "신용/체크카드" };
         const checkoutTotalDetailData = { agreeChecked: false };
@@ -45,7 +45,7 @@ describe("CheckoutValidator", () => {
       it("만약 유효하면, valid를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write old",
+          deliveryClassName: "delivery_write selected",
         };
         const checkoutPaymentData = { paymentName: "신용/체크카드" };
         const checkoutTotalDetailData = { agreeChecked: true };
@@ -66,7 +66,7 @@ describe("CheckoutValidator", () => {
       it("만약 수령인을 입력하지 않았다면, invalid하고 '수령인을 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "",
         };
         const checkoutPaymentData = {};
@@ -86,7 +86,7 @@ describe("CheckoutValidator", () => {
       it("만약 수령인을 2글자 이상 입력하지 않았다면, invalid하고 '수령인은 2자 이상만 가능합니다.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이",
         };
         const checkoutPaymentData = {};
@@ -106,7 +106,7 @@ describe("CheckoutValidator", () => {
       it("만약 주소를 입력하지 않았다면, invalid하고 '주소를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "",
         };
@@ -127,7 +127,7 @@ describe("CheckoutValidator", () => {
       it("만약 상세주소를 입력하지 않았다면, invalid하고 '상세주소를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "",
@@ -149,7 +149,7 @@ describe("CheckoutValidator", () => {
       it("만약 연락처 첫번째 칸을 입력하지 않았다면, invalid하고 '연락처 첫번째 칸은 2자리 이상 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -172,7 +172,7 @@ describe("CheckoutValidator", () => {
       it("만약 연락처 첫번째 칸을 숫자 하나만 입력했다면, invalid하고 '연락처 첫번째 칸은 2자리 이상 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -195,7 +195,7 @@ describe("CheckoutValidator", () => {
       it("만약 연락처 두번째 칸을 입력하지 않았다면, invalid하고 '연락처 두번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -219,7 +219,7 @@ describe("CheckoutValidator", () => {
       it("만약 연락처 두번째 칸을 3자리로 입력했을 경우, invalid하고 '연락처 두번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -243,7 +243,7 @@ describe("CheckoutValidator", () => {
       it("만약 연락처 세번째 칸을 입력하지 않았다면, invalid하고 '연락처 세번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -268,7 +268,7 @@ describe("CheckoutValidator", () => {
       it("만약 연락처 세번째 칸을 3자리로 입력했을 경우, invalid하고 '연락처 세번째 칸은 4자리를 입력해주세요.'라는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -294,7 +294,7 @@ describe("CheckoutValidator", () => {
       it("만약 결제수단이 비어있으면, invalid하고 '결제방법을 선택해주세요'는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -319,7 +319,7 @@ describe("CheckoutValidator", () => {
       it("만약 주문 동의에 체크하지 않았으면, invalid하고 '주문 동의에 체크를 하셔야 주문이 가능합니다'는 메시지를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",
@@ -345,7 +345,7 @@ describe("CheckoutValidator", () => {
       it("만약 유효하면, valid를 반환해야 한다.", () => {
         // given
         const checkoutDeliveryData = {
-          deliveryClassName: "delivery_write new",
+          deliveryClassName: "delivery_write",
           recipient: "이이",
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "ㅇㅇㅇ",

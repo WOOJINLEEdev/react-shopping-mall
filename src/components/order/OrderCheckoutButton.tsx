@@ -1,9 +1,10 @@
-import useCheckoutDeliveryData from "hooks/useCheckoutDeliveryData";
 import useCheckoutPaymentData from "hooks/useCheckoutPaymentData";
 import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
 import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
 import { OrderCheckoutButtonProps } from "types";
+import { useRecoilValue } from "recoil";
+import { deliveryInfoState } from "components/order/OrderDeliveryForm";
 
 const OrderCheckoutButton = ({
   checkoutData,
@@ -16,8 +17,9 @@ const OrderCheckoutButton = ({
   isTablet,
   isMobile,
 }: OrderCheckoutButtonProps) => {
-  const { checkoutDeliveryData, MutateCheckoutDeliveryData } =
-    useCheckoutDeliveryData();
+  const checkoutDeliveryData = useRecoilValue(
+    deliveryInfoState(checkoutData.id)
+  );
   const { checkoutPaymentData, MutateCheckoutPaymentData } =
     useCheckoutPaymentData();
   const { checkoutTotalDetailData, MutateCheckoutTotalDetailData } =

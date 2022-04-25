@@ -1,41 +1,142 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   OrderDeliveryFormProps,
   DeliveryRequirementOption,
   PreexistenceSelectProps,
+  Address,
 } from "types";
+import { atomFamily, useRecoilState } from "recoil";
+import DaumPostcode from "react-daum-postcode";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
+import { getFullAddress } from "utils/get-address";
+
+export interface DeliveryInfoState {
+  designation?: string;
+  recipient: string;
+  address1: string;
+  addressDetail1: string;
+  addressDetail2: string;
+  tel1: string;
+  tel2: string;
+  tel3: string;
+  tel4?: string;
+  tel5?: string;
+  tel6?: string;
+  requirement?: string;
+  requirement1?: string;
+  deliveryClassName: string;
+  deliveryClassName1: string;
+}
+
+export const deliveryInfoState = atomFamily<DeliveryInfoState, number>({
+  key: "deliveryInfoState",
+  default: (id) => {
+    return {
+      id,
+      designation: "",
+      recipient: "",
+      address1: "",
+      addressDetail1: "",
+      addressDetail2: "",
+      tel1: "",
+      tel2: "",
+      tel3: "",
+      tel4: "",
+      tel5: "",
+      tel6: "",
+      requirement: "",
+      requirement1: "",
+      deliveryClassName: "",
+      deliveryClassName1: "",
+    };
+  },
+});
 
 const OrderDeliveryForm = ({
   deliveryForm1,
-  designation,
-  handleDesignationInputChange,
-  recipient,
-  handleRecipientInputChange,
-  address1,
-  handlePostcodeBtnClick,
-  addressDetail1,
-  addressDetail2,
-  handleAddressDetailChange,
-  handleTelInputChange,
-  tel1,
-  setTel1,
-  tel2,
-  setTel2,
-  tel3,
-  setTel3,
-  tel4,
-  setTel4,
-  tel5,
-  setTel5,
-  tel6,
-  setTel6,
+  deliveryClassName,
+  deliveryClassName1,
+  checkoutId,
   handleRequirementOptionChange,
   deliverySecondRequirementOption,
   deliverySecondRequirementWrite,
-  handleSecondRequirementChange,
+  requirement1,
 }: OrderDeliveryFormProps) => {
+  const [deliveryState, setDeliveryState] = useRecoilState(
+    deliveryInfoState(checkoutId)
+  );
+  const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    return setDeliveryState({
+      ...deliveryState,
+      deliveryClassName,
+      deliveryClassName1,
+      requirement1,
+    });
+  }, [requirement1, deliveryClassName, deliveryClassName1]);
+
+  const handleDesignationInputChange = (designation: string) => {
+    setDeliveryState({ ...deliveryState, designation });
+  };
+
+  const handleRecipientInputChange = (recipient: string) => {
+    setDeliveryState({ ...deliveryState, recipient });
+  };
+
+  const handleAddressDetailChange = (addressDetail2: string) => {
+    setDeliveryState({ ...deliveryState, addressDetail2 });
+  };
+
+  const handleTelInputChange = (key: string, tel: string) => {
+    let isNumberCheck = /^[0-9]+$/;
+    if (!isNumberCheck.test(tel) && tel !== "") return false;
+
+    setDeliveryState({ ...deliveryState, [key]: tel });
+  };
+
+  const handleSecondRequirementChange = (requirement1: string) => {
+    setDeliveryState({ ...deliveryState, requirement1 });
+  };
+
+  const handlePostcodeBtnClick = () => {
+    setShowDaumPostModal(true);
+  };
+
+  const handlePostModalEscBtnClick = () => {
+    setShowDaumPostModal(false);
+  };
+
+  const handleComplete = (data: Address) => {
+    let fullAddress = getFullAddress(data);
+
+    if (deliveryClassName1 === "delivery_write selected") {
+      setDeliveryState({
+        ...deliveryState,
+        address1: data.zonecode,
+        addressDetail1: fullAddress,
+      });
+    }
+
+    setShowDaumPostModal(false);
+  };
+
   return (
     <div className={deliveryForm1}>
+      {showDaumPostModal && (
+        <PostWrap>
+          <PostModalEscBtn
+            type="button"
+            aria-label="close"
+            onClick={handlePostModalEscBtnClick}
+          >
+            <CgClose />
+          </PostModalEscBtn>
+          <DaumPostCodeStyle onComplete={handleComplete} />
+        </PostWrap>
+      )}
+
       <div className="delivery_box">
         <div className="label_box">
           <label htmlFor="deliveryTitle1">배송지명</label>
@@ -44,8 +145,8 @@ const OrderDeliveryForm = ({
           type="text"
           className="delivery_input first"
           id="deliveryTitle1"
-          value={designation}
-          onChange={handleDesignationInputChange}
+          value={deliveryState.designation}
+          onChange={(e) => handleDesignationInputChange(e.target.value)}
         />
       </div>
 
@@ -59,8 +160,8 @@ const OrderDeliveryForm = ({
           type="text"
           className="delivery_input second"
           id="deliveryName1"
-          value={recipient}
-          onChange={handleRecipientInputChange}
+          value={deliveryState.recipient}
+          onChange={(e) => handleRecipientInputChange(e.target.value)}
         />
       </div>
 
@@ -77,7 +178,7 @@ const OrderDeliveryForm = ({
               id="sample5_postcode"
               className="delivery_input postalCode"
               placeholder="우편번호"
-              value={address1}
+              value={deliveryState.address1}
               onClick={handlePostcodeBtnClick}
               readOnly
             />
@@ -94,7 +195,7 @@ const OrderDeliveryForm = ({
             name="deliveryAddress"
             className="delivery_input address"
             placeholder="주소"
-            value={addressDetail1}
+            value={deliveryState.addressDetail1}
             disabled
             readOnly
           />
@@ -103,8 +204,8 @@ const OrderDeliveryForm = ({
             id="sample5_detailAddress"
             className="delivery_input address"
             placeholder="상세주소"
-            value={addressDetail2}
-            onChange={handleAddressDetailChange}
+            value={deliveryState.addressDetail2}
+            onChange={(e) => handleAddressDetailChange(e.target.value)}
           />
         </div>
       </div>
@@ -123,8 +224,8 @@ const OrderDeliveryForm = ({
             id="phone1First"
             className="delivery_input tel"
             title="연락처1-전화번호1"
-            onChange={(e) => handleTelInputChange(e, setTel1)}
-            value={tel1}
+            value={deliveryState.tel1}
+            onChange={(e) => handleTelInputChange("tel1", e.target.value)}
           />
           <span className="tel_dash">-</span>
           <input
@@ -134,8 +235,8 @@ const OrderDeliveryForm = ({
             id="phone1Second"
             className="delivery_input tel"
             title="연락처1-전화번호2"
-            onChange={(e) => handleTelInputChange(e, setTel2)}
-            value={tel2}
+            value={deliveryState.tel2}
+            onChange={(e) => handleTelInputChange("tel2", e.target.value)}
           />
           <span className="tel_dash">-</span>
           <input
@@ -145,8 +246,8 @@ const OrderDeliveryForm = ({
             id="phone1Third"
             className="delivery_input tel"
             title="연락처1-전화번호3"
-            onChange={(e) => handleTelInputChange(e, setTel3)}
-            value={tel3}
+            value={deliveryState.tel3}
+            onChange={(e) => handleTelInputChange("tel3", e.target.value)}
           />
         </div>
       </div>
@@ -162,8 +263,8 @@ const OrderDeliveryForm = ({
             className="delivery_input tel"
             id="subPhone1First"
             title="연락처2-전화번호1"
-            onChange={(e) => handleTelInputChange(e, setTel4)}
-            value={tel4}
+            value={deliveryState.tel4}
+            onChange={(e) => handleTelInputChange("tel4", e.target.value)}
           />
           <span className="tel_dash">-</span>
           <input
@@ -172,8 +273,8 @@ const OrderDeliveryForm = ({
             id="subPhone1Second"
             className="delivery_input tel"
             title="연락처2-전화번호2"
-            onChange={(e) => handleTelInputChange(e, setTel5)}
-            value={tel5}
+            value={deliveryState.tel5}
+            onChange={(e) => handleTelInputChange("tel5", e.target.value)}
           />
           <span className="tel_dash">-</span>
           <input
@@ -182,8 +283,8 @@ const OrderDeliveryForm = ({
             id="subPhone1Third"
             className="delivery_input tel"
             title="연락처2-전화번호3"
-            onChange={(e) => handleTelInputChange(e, setTel6)}
-            value={tel6}
+            value={deliveryState.tel6}
+            onChange={(e) => handleTelInputChange("tel6", e.target.value)}
           />
         </div>
       </div>
@@ -207,7 +308,8 @@ const OrderDeliveryForm = ({
             className={deliverySecondRequirementWrite}
             placeholder="배송시 요청사항을 작성해 주세요. (최대 30자 이내)"
             maxLength={30}
-            onChange={handleSecondRequirementChange}
+            value={deliveryState.requirement1}
+            onChange={(e) => handleSecondRequirementChange(e.target.value)}
           />
         </DeliveryRequirementWrap>
       </div>
@@ -260,4 +362,56 @@ const SelectRequirementWrite = styled.textarea`
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     width: calc(100% - 30px);
   }
+`;
+
+const PostWrap = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  height: 100%;
+  top: 53%;
+  left: 49%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 85%;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 80%;
+  }
+`;
+
+const DaumPostCodeStyle = styled(DaumPostcode)`
+  display: block;
+  width: 100%;
+  min-height: 500px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    min-height: 700px;
+  }
+`;
+
+const PostModalEscBtn = styled.button`
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 0 0;
+  border: 0;
+  margin: 0 3px;
+  border-radius: 5px;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #333;
+  cursor: pointer;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: right;
 `;
