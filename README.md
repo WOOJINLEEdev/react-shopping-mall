@@ -2,7 +2,7 @@
 
 ## 기술 스택
 
-- React, swr, styled-components
+- React, SWR, styled-components
 
 ## 프로젝트 설명
 
@@ -10,12 +10,10 @@
   - 모바일: 320 ~ 767px
   - 태블릿: 768 ~ 1023px
   - PC: 1024px 이상
-- 상태 관리: swr 활용
+- 상태 관리: SWR (현재 client state는 Recoil, server state는 SWR로 분리중)
 - 스켈레톤 UI 적용
   - 배너
   - 상품 리스트
-- 디바운스를 적용해 상품 검색 API 호출 최적화
-- 쓰로틀링을 적용해 마우스 스크롤 이벤트 최적화
 - 로그인
 - 회원 가입
   - 가입 제약 조건
