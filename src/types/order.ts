@@ -348,7 +348,7 @@ export interface OrderPaymentItemProps {
   i: number;
   selected: boolean;
   item: Payment;
-  handlePaymentMethod: (e: React.MouseEvent<HTMLLIElement>) => void;
+  handlePaymentMethodClick: (e: React.MouseEvent<HTMLLIElement>) => void;
   basePaymentClass: string;
   selectedPaymentClass: string;
 }

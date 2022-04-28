@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import downArrow from "images/down-arrow.png";
 import upArrow from "images/up-arrow-icon.png";
 import { optionData } from "components/order/order-delivery-option-data";
-import OrderDeliveryHead from "./OrderDeliveryHead";
+import OrderDeliveryHead from "components/order/OrderDeliveryHead";
 import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";

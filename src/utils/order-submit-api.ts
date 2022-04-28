@@ -3,7 +3,7 @@ import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 
 interface SubmitCheckoutProps {
   checkoutDeliveryData: DeliveryInfoState;
-  checkoutPaymentData: CheckoutPaymentData;
+  checkoutPaymentData: string;
   checkoutTotalDetailData: CheckoutTotalDetailData;
   checkoutData: CheckoutData;
   checkoutNumber: number;
@@ -64,7 +64,7 @@ export async function submitCheckout({
         },
         userCouponIdToBeUsed: checkoutTotalDetailData.selectCouponId,
         mileageToBeUsed: Number(checkoutTotalDetailData.usedMileage),
-        paymentMethod: checkoutPaymentData.paymentName,
+        paymentMethod: checkoutPaymentData,
       });
       console.log("주문성공", res);
 
@@ -100,7 +100,7 @@ export async function submitCheckout({
         },
         userCouponIdToBeUsed: checkoutTotalDetailData.selectCouponId,
         mileageToBeUsed: Number(checkoutTotalDetailData.usedMileage),
-        paymentMethod: checkoutPaymentData.paymentName,
+        paymentMethod: checkoutPaymentData,
       });
       console.log("주문성공", res);
       window.location.replace(`/orderCheck/${checkoutNumber}`);

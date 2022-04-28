@@ -1,9 +1,42 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 import OrderCheckoutButton from "components/order/OrderCheckoutButton";
 import OrderAgreeCheck from "components/order/OrderAgreeCheck";
-import useCheckoutCouponData from "hooks/useCheckoutCouponData";
-import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
+import { couponStateSelector } from "components/order/OrderCoupon";
 import { OrderTotalDetailProps } from "types";
+
+const finalPriceState = atom<number>({
+  key: "finalPriceState",
+  default: 0,
+});
+
+const agreeCheckedState = atom<boolean>({
+  key: "agreeCheckedState",
+  default: false,
+});
+
+interface TotalDetailSelector {
+  selectCouponId: number;
+  usedMileage: number;
+  agreeChecked: boolean;
+  finalPrice: number;
+}
+
+export const totalDetailSelector = selector<TotalDetailSelector>({
+  key: "totalDetailSelector",
+  get: ({ get }) => {
+    const couponData = get(couponStateSelector);
+    const agreeChecked = get(agreeCheckedState);
+    const finalPrice = get(finalPriceState);
+
+    return {
+      selectCouponId: couponData.selectCouponId,
+      usedMileage: couponData.usedMileage,
+      agreeChecked: agreeChecked,
+      finalPrice: finalPrice,
+    };
+  },
+});
 
 const OrderTotalDetail = ({
   totalPrice,
@@ -14,13 +47,13 @@ const OrderTotalDetail = ({
   isTablet,
   isMobile,
 }: OrderTotalDetailProps) => {
-  const [agreeChecked, setAgreeChecked] = useState<boolean>(false);
+  const couponState = useRecoilValue(couponStateSelector);
+  const { usedMileage, selectOption } = couponState;
+  const [agreeChecked, setAgreeChecked] =
+    useRecoilState<boolean>(agreeCheckedState);
+  const [finalPrice, setFinalPrice] = useRecoilState<number>(finalPriceState);
 
-  const { MutateCheckoutTotalDetailData } = useCheckoutTotalDetailData();
-  const { checkoutCouponData } = useCheckoutCouponData();
-  const { usedMileage, selectCouponId, selectOption } = checkoutCouponData;
-
-  const finalPrice =
+  const countFinalPrice =
     totalPrice +
     Number(deliveryCharge) -
     Number(!usedMileage ? 0 : usedMileage) -
@@ -29,13 +62,8 @@ const OrderTotalDetail = ({
       : selectOption);
 
   useEffect(() => {
-    MutateCheckoutTotalDetailData({
-      selectCouponId,
-      usedMileage,
-      finalPrice,
-      agreeChecked,
-    });
-  }, [selectCouponId, usedMileage, finalPrice, agreeChecked]);
+    setFinalPrice(countFinalPrice);
+  }, [countFinalPrice]);
 
   const handleAgreeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
@@ -114,16 +142,7 @@ const OrderTotalDetail = ({
           </div>
           <p className="price_unit final">
             <span className="final_price_zone" id="finalPriceDetail">
-              {(
-                totalPrice +
-                Number(deliveryCharge) -
-                Number(!usedMileage ? 0 : usedMileage) -
-                (Number.isInteger(selectOption) === false
-                  ? totalPrice * selectOption
-                  : selectOption)
-              )
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {countFinalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </span>
             원
           </p>

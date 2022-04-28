@@ -1,14 +1,44 @@
-import { useEffect, useState } from "react";
-import useCheckoutCouponData from "hooks/useCheckoutCouponData";
+import { useState } from "react";
 import { OrderCouponProps, Coupon } from "types";
+import { atom, useRecoilState, selector } from "recoil";
+
+const selectOptionState = atom<number>({
+  key: "selectOptionState",
+  default: 0,
+});
+
+const selectCouponIdState = atom<number>({
+  key: "selectCouponIdState",
+  default: 0,
+});
+
+const usedMileageState = atom<number>({
+  key: "usedMileageState",
+  default: 0,
+});
+
+interface CouponStateSelector {
+  selectOption: number;
+  selectCouponId: number;
+  usedMileage: number;
+}
+
+export const couponStateSelector = selector<CouponStateSelector>({
+  key: "couponStateSelector",
+  get: ({ get }) => {
+    const selectOption = get(selectOptionState);
+    const selectCouponId = get(selectCouponIdState);
+    const usedMileage = get(usedMileageState);
+
+    return { selectOption, selectCouponId, usedMileage };
+  },
+});
 
 const OrderCoupon = ({
   checkoutData,
   isMobile,
   isTablet,
 }: OrderCouponProps) => {
-  const { checkoutCouponData, MutateCheckoutCouponData } =
-    useCheckoutCouponData();
   const [coupons, setCoupons] = useState<Coupon[] | undefined>(
     checkoutData.user.coupons
   );
@@ -16,17 +46,16 @@ const OrderCoupon = ({
   const [availableMileage, setAvailableMileage] = useState<number>(
     checkoutData.user.mileage
   );
-  const [selectCouponId, setSelectCouponId] = useState<number>(0);
-  const [selectOption, setSelectOption] = useState<number>(0);
-  const [usedMileage, setUsedMileage] = useState<number>(0);
+  const [selectOption, setSelectOption] =
+    useRecoilState<number>(selectOptionState);
+  const [selectCouponId, setSelectCouponId] =
+    useRecoilState<number>(selectCouponIdState);
+  const [usedMileage, setUsedMileage] =
+    useRecoilState<number>(usedMileageState);
 
-  useEffect(() => {
-    MutateCheckoutCouponData({
-      selectOption,
-      selectCouponId,
-      usedMileage,
-    });
-  }, [usedMileage, selectCouponId, selectOption]);
+  console.log("selectOption", selectOption);
+  console.log("selectCouponId", selectCouponId);
+  console.log("usedMileage", usedMileage);
 
   const handleSelectOptionChange = (
     e: React.ChangeEvent<HTMLSelectElement>

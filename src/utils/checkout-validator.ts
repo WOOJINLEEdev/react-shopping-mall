@@ -1,6 +1,6 @@
 interface ValidateCheckoutProps {
   checkoutDeliveryData: DeliveryData;
-  checkoutPaymentData: PaymentData;
+  checkoutPaymentData: string;
   checkoutTotalDetailData: TotalDetailData;
 }
 
@@ -39,7 +39,7 @@ export function validateCheckout({
   checkoutTotalDetailData,
 }: ValidateCheckoutProps) {
   if (checkoutDeliveryData.deliveryClassName === "delivery_write selected") {
-    if (!checkoutPaymentData.paymentName) {
+    if (!checkoutPaymentData) {
       return {
         valid: false,
         invalidMsg: "결제방법을 선택해주세요.",
@@ -134,7 +134,7 @@ export function validateCheckout({
       };
     }
 
-    if (!checkoutPaymentData.paymentName) {
+    if (!checkoutPaymentData) {
       return {
         valid: false,
         invalidMsg: "결제방법을 선택해주세요.",

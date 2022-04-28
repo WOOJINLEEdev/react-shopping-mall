@@ -1,13 +1,61 @@
-import React, { useState, useEffect, useCallback } from "react";
-import useCheckoutPaymentData from "hooks/useCheckoutPaymentData";
+import React, { useState, useCallback } from "react";
 import { OrderPaymentItemProps, Payment } from "types";
+import { atom, useRecoilState } from "recoil";
+
+export const paymentState = atom<string>({
+  key: "paymentState",
+  default: "",
+});
+
+const payments = [
+  {
+    id: "1",
+    payment: "신용/체크카드",
+  },
+  {
+    id: "2",
+    payment: "현대카드",
+  },
+  {
+    id: "3",
+    payment: "네이버 페이",
+  },
+  {
+    id: "4",
+    payment: "토스",
+  },
+  {
+    id: "5",
+    payment: "카카오 페이",
+  },
+  {
+    id: "6",
+    payment: "삼성 페이",
+  },
+  {
+    id: "7",
+    payment: "SSG 페이",
+  },
+  {
+    id: "8",
+    payment: "무통장 입금",
+  },
+  {
+    id: "9",
+    payment: "휴대폰 결제",
+  },
+  {
+    id: "10",
+    payment: "계좌 이체",
+  },
+];
 
 const OrderPaymentItem = React.memo(
   ({
     i,
     selected,
     item,
-    handlePaymentMethod,
+    handlePaymentMethodClick,
     basePaymentClass,
     selectedPaymentClass,
   }: OrderPaymentItemProps) => {
@@ -21,7 +69,7 @@ const OrderPaymentItem = React.memo(
         key={item.id}
         data-pay={i}
         value={i}
-        onClick={handlePaymentMethod}
+        onClick={handlePaymentMethodClick}
         tabIndex={0}
       >
         {item.payment}
@@ -31,64 +79,13 @@ const OrderPaymentItem = React.memo(
 );
 
 const OrderPaymentList = React.memo(() => {
-  const payments = [
-    {
-      id: "1",
-      payment: "신용/체크카드",
-    },
-    {
-      id: "2",
-      payment: "현대카드",
-    },
-    {
-      id: "3",
-      payment: "네이버 페이",
-    },
-    {
-      id: "4",
-      payment: "토스",
-    },
-    {
-      id: "5",
-      payment: "카카오 페이",
-    },
-    {
-      id: "6",
-      payment: "삼성 페이",
-    },
-    {
-      id: "7",
-      payment: "SSG 페이",
-    },
-    {
-      id: "8",
-      payment: "무통장 입금",
-    },
-    {
-      id: "9",
-      payment: "휴대폰 결제",
-    },
-    {
-      id: "10",
-      payment: "계좌 이체",
-    },
-  ];
-
+  const [paymentName, setPaymentName] = useRecoilState<string>(paymentState);
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState<number>();
-  const [paymentName, setPaymentName] = useState<string>("");
 
   const basePaymentClass = "payment";
   const selectedPaymentClass = "on";
 
-  const { MutateCheckoutPaymentData } = useCheckoutPaymentData();
-
-  useEffect(() => {
-    MutateCheckoutPaymentData({
-      paymentName,
-    });
-  }, [paymentName]);
-
-  const handlePaymentMethod = useCallback(
+  const handlePaymentMethodClick = useCallback(
     (e: React.MouseEvent<HTMLLIElement>) => {
       const clickedPaymentMethodIndex = (e.target as HTMLLIElement).value;
       setPaymentName((e.target as HTMLLIElement).innerText);
@@ -108,7 +105,7 @@ const OrderPaymentList = React.memo(() => {
           selected={i === selectedPaymentIndex}
           basePaymentClass={basePaymentClass}
           selectedPaymentClass={selectedPaymentClass}
-          handlePaymentMethod={handlePaymentMethod}
+          handlePaymentMethodClick={handlePaymentMethodClick}
         />
       ))}
     </ol>

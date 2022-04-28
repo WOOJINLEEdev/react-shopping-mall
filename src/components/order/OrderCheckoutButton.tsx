@@ -1,10 +1,10 @@
-import useCheckoutPaymentData from "hooks/useCheckoutPaymentData";
-import useCheckoutTotalDetailData from "hooks/useCheckoutTotalDetailData";
 import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
 import { OrderCheckoutButtonProps } from "types";
 import { useRecoilValue } from "recoil";
 import { deliveryInfoState } from "components/order/OrderDeliveryForm";
+import { paymentState } from "components/order/OrderPayments";
+import { totalDetailSelector } from "components/order/OrderTotalDetail";
 
 const OrderCheckoutButton = ({
   checkoutData,
@@ -20,10 +20,8 @@ const OrderCheckoutButton = ({
   const checkoutDeliveryData = useRecoilValue(
     deliveryInfoState(checkoutData.id)
   );
-  const { checkoutPaymentData, MutateCheckoutPaymentData } =
-    useCheckoutPaymentData();
-  const { checkoutTotalDetailData, MutateCheckoutTotalDetailData } =
-    useCheckoutTotalDetailData();
+  const checkoutPaymentData = useRecoilValue(paymentState);
+  const checkoutTotalDetailData = useRecoilValue(totalDetailSelector);
 
   const handleCheckoutBtnClick = () => {
     const { valid, invalidMsg } = validateCheckout({
