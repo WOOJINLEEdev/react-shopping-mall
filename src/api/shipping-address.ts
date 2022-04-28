@@ -1,14 +1,14 @@
 import { instance } from "utils/http-client";
 
 interface UpdateShippingAddressPayload {
-  name: string;
+  name?: string;
   recipientName: string;
-  postalCode: number;
+  postalCode: string;
   address1: string;
   address2: string;
   note: string;
   phone1: string;
-  phone2: string;
+  phone2?: string;
 }
 
 export function updateShippingAddressApi({

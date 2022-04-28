@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-import AddDeliveryAddressModal from "./AddDeliveryAddressModal";
-import useDeliveryData from "hooks/useDeliveryData";
+import AddDeliveryAddressModal, {
+  myDeliveryInfoState,
+} from "components/mypage/AddDeliveryAddressModal";
 import { updateShippingAddressApi } from "api";
 import { formatPhone } from "utils/format-phone";
 import {
@@ -12,6 +13,8 @@ import {
   AddBtnProps,
   DeliveryAddressItemProps,
 } from "types";
+import { useRecoilValue } from "recoil";
+import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 
 Modal.setAppElement("#root");
 
@@ -20,6 +23,9 @@ const MyPageDeliveryModal = ({
   onRequestClose,
   myDeliveryAddress,
 }: MyPageDeliveryModalProps) => {
+  const myDeliveryData = useRecoilValue<DeliveryInfoState>(
+    myDeliveryInfoState(myDeliveryAddress.id)
+  );
   const [addDeliveryClassName, setAddDeliveryClassName] =
     useState<string>("hide");
   const [addressDisplay, setAddressDisplay] = useState<string>("block");
@@ -27,8 +33,6 @@ const MyPageDeliveryModal = ({
   const [btnWrapDisplay, setBtnWrapDisplay] = useState<string>("none");
   const [closBtnDisplay, setClosBtnDisplay] = useState<string>("");
   const [notAddressClassName, setNotAddressClassName] = useState<string>("");
-
-  const { myDeliveryData, MutateMyDeliveryData } = useDeliveryData();
 
   useEffect(() => {
     if (isOpen) {
@@ -106,16 +110,42 @@ const MyPageDeliveryModal = ({
       return alert("연락처 세번째 칸은 4자리를 입력해주세요.");
     }
 
+    if (myDeliveryData.tel4 || myDeliveryData.tel5 || myDeliveryData.tel6) {
+      if (
+        !myDeliveryData.tel4 ||
+        !myDeliveryData.tel5 ||
+        !myDeliveryData.tel6
+      ) {
+        return alert(
+          "연락처2에 입력되어 있는 칸이 있습니다. 연락처2 나머지 칸을 입력해주세요."
+        );
+      }
+
+      if (myDeliveryData.tel4 && myDeliveryData.tel4.length < 2) {
+        return alert("연락처2 첫번째 칸은 2자리 이상 입력해주세요.");
+      }
+
+      if (myDeliveryData.tel5 && myDeliveryData.tel5.length < 4) {
+        return alert("연락처2 두번째 칸은 4자리를 입력해주세요.");
+      }
+
+      if (myDeliveryData.tel6 && myDeliveryData.tel6.length < 4) {
+        return alert("연락처2 세번째 칸은 4자리를 입력해주세요.");
+      }
+    }
+
     try {
       const res = await updateShippingAddressApi({
-        name: myDeliveryData.recipient,
+        name: !myDeliveryData.designation ? " " : myDeliveryData.designation,
         recipientName: myDeliveryData.recipient,
         postalCode: myDeliveryData.address1,
         address1: myDeliveryData.addressDetail1,
         address2: myDeliveryData.addressDetail2,
         note: "없음",
         phone1: myDeliveryData.tel1 + myDeliveryData.tel2 + myDeliveryData.tel3,
-        phone2: myDeliveryData.tel4 + myDeliveryData.tel5 + myDeliveryData.tel6,
+        phone2:
+          myDeliveryData.tel4 &&
+          myDeliveryData.tel4 + myDeliveryData.tel5 + myDeliveryData.tel6,
       });
       console.log(res);
       alert("배송지 등록이 완료되었습니다.");
@@ -161,6 +191,7 @@ const MyPageDeliveryModal = ({
           )}
           <AddDeliveryAddressModal
             addDeliveryClassName={addDeliveryClassName}
+            myDeliveryAddressId={myDeliveryAddress.id}
           />
         </ModalContent>
       </ModalContentContainer>

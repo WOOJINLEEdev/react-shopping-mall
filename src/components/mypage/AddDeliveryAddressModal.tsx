@@ -1,127 +1,112 @@
 import { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
+import { atomFamily, useRecoilState } from "recoil";
 import Loading from "components/common/Loading";
-import useDeliveryData from "hooks/useDeliveryData";
+import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 import useMyPageData from "hooks/useMyPageData";
 import { parsePhone } from "utils/format-phone";
 import { getFullAddress } from "utils/get-address";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import { AddDeliveryAddressModalProps, Address } from "types";
 
+export const myDeliveryInfoState = atomFamily<DeliveryInfoState, number>({
+  key: "myDeliveryInfoState",
+  default: (id) => {
+    return {
+      id,
+      designation: "",
+      recipient: "",
+      address1: "",
+      addressDetail1: "",
+      addressDetail2: "",
+      tel1: "",
+      tel2: "",
+      tel3: "",
+      tel4: "",
+      tel5: "",
+      tel6: "",
+      requirement: "",
+      requirement1: "",
+      deliveryClassName: "",
+      deliveryClassName1: "",
+    };
+  },
+});
+
 const AddDeliveryAddressModal = ({
   addDeliveryClassName,
+  myDeliveryAddressId,
 }: AddDeliveryAddressModalProps) => {
-  const [address1, setAddress1] = useState<string>("");
-  const [addressDetail1, setAddressDetail1] = useState<string>("");
-  const [addressDetail2, setAddressDetail2] = useState<string>("");
+  const [myDeliveryState, setMyDeliveryState] = useRecoilState(
+    myDeliveryInfoState(myDeliveryAddressId)
+  );
 
-  const [designation, setDesignation] = useState<string>("");
-  const [recipient, setRecipient] = useState<string>("");
-
-  const [tel1, setTel1] = useState<string>("");
-  const [tel2, setTel2] = useState<string>("");
-  const [tel3, setTel3] = useState<string>("");
-  const [tel4, setTel4] = useState<string>("");
-  const [tel5, setTel5] = useState<string>("");
-  const [tel6, setTel6] = useState<string>("");
   const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
-
-  const { MutateMyDeliveryData } = useDeliveryData();
 
   useEffect(() => {
     if (myData.shipping_address) {
-      setRecipient(myData.shipping_address.recipient_name);
-      setAddress1(myData.shipping_address.postal_code);
-      setAddressDetail1(myData.shipping_address.address1);
-      setAddressDetail2(myData.shipping_address.address2);
-
       const phone1 = parsePhone(myData.shipping_address.phone1);
-      setTel1(phone1.tel1);
-      setTel2(phone1.tel2);
-      setTel3(phone1.tel3);
-
       const phone2 = parsePhone(myData.shipping_address.phone2);
-      setTel4(phone2.tel1);
-      setTel5(phone2.tel2);
-      setTel6(phone2.tel3);
+
+      setMyDeliveryState({
+        ...myDeliveryState,
+        designation: myData.shipping_address.name,
+        recipient: myData.shipping_address.recipient_name,
+        address1: myData.shipping_address.postal_code,
+        addressDetail1: myData.shipping_address.address1,
+        addressDetail2: myData.shipping_address.address2,
+        tel1: phone1.tel1,
+        tel2: phone1.tel2,
+        tel3: phone1.tel3,
+        tel4: phone2.tel1,
+        tel5: phone2.tel2,
+        tel6: phone2.tel3,
+      });
     }
   }, []);
-
-  useEffect(() => {
-    MutateMyDeliveryData({
-      designation,
-      recipient,
-      address1,
-      addressDetail1,
-      addressDetail2,
-      tel1,
-      tel2,
-      tel3,
-      tel4,
-      tel5,
-      tel6,
-    });
-  }, [
-    recipient,
-    address1,
-    addressDetail1,
-    addressDetail2,
-    tel1,
-    tel2,
-    tel3,
-    tel4,
-    tel5,
-    tel6,
-  ]);
 
   const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
   if (loadingMyData) return <Loading />;
   if (myDataError) return <div>에러발생...</div>;
 
-  const handlePostcodeBtnClick = () => {
-    setShowDaumPostModal(true);
+  const handleDesignationInputChange = (designation: string) => {
+    setMyDeliveryState({ ...myDeliveryState, designation });
   };
 
-  const handleComplete = (data: Address) => {
-    let fullAddress = getFullAddress(data);
+  const handleRecipientInputChange = (recipient: string) => {
+    setMyDeliveryState({ ...myDeliveryState, recipient });
+  };
 
-    setAddress1(data.zonecode);
-    setAddressDetail1(fullAddress);
+  const handleAddressDetailChange = (addressDetail2: string) => {
+    setMyDeliveryState({ ...myDeliveryState, addressDetail2 });
+  };
 
-    setShowDaumPostModal(false);
+  const handleTelInputChange = (key: string, tel: string) => {
+    let isNumberCheck = /^[0-9]+$/;
+    if (!isNumberCheck.test(tel) && tel !== "") return false;
+
+    setMyDeliveryState({ ...myDeliveryState, [key]: tel });
+  };
+
+  const handlePostcodeBtnClick = () => {
+    setShowDaumPostModal(true);
   };
 
   const handlePostModalEscBtnClick = () => {
     setShowDaumPostModal(false);
   };
 
-  const handleAddressDetailChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setAddressDetail2(e.target.value);
-  };
+  const handleComplete = (data: Address) => {
+    let fullAddress = getFullAddress(data);
 
-  const handleDesignationInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDesignation(e.target.value);
-  };
+    setMyDeliveryState({
+      ...myDeliveryState,
+      address1: data.zonecode,
+      addressDetail1: fullAddress,
+    });
 
-  const handleRecipientInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    let recipientValue = e.target.value.replace(/[^a-zㄱ-ㅎ가-힣]/gi, "");
-    setRecipient(recipientValue);
-  };
-
-  const handleTelInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setState: React.Dispatch<React.SetStateAction<string>>
-  ) => {
-    let telValue = e.target.value.replace(/[^0-9]/g, "");
-
-    setState(telValue);
+    setShowDaumPostModal(false);
   };
 
   return (
@@ -148,8 +133,8 @@ const AddDeliveryAddressModal = ({
             type="text"
             className="delivery_input first"
             id="deliveryTitle1"
-            onChange={handleDesignationInputChange}
-            value={designation}
+            value={myDeliveryState.designation}
+            onChange={(e) => handleDesignationInputChange(e.target.value)}
           />
         </div>
 
@@ -163,8 +148,8 @@ const AddDeliveryAddressModal = ({
             type="text"
             className="delivery_input second"
             id="deliveryName1"
-            value={recipient}
-            onChange={handleRecipientInputChange}
+            value={myDeliveryState.recipient}
+            onChange={(e) => handleRecipientInputChange(e.target.value)}
           />
         </div>
 
@@ -181,7 +166,7 @@ const AddDeliveryAddressModal = ({
                 id="sample5_postcode"
                 className="delivery_input postalCode"
                 placeholder="우편번호"
-                value={address1}
+                value={myDeliveryState.address1}
                 onClick={handlePostcodeBtnClick}
                 readOnly
               />
@@ -198,7 +183,7 @@ const AddDeliveryAddressModal = ({
               name="deliveryAddress"
               className="delivery_input address"
               placeholder="주소"
-              value={addressDetail1}
+              value={myDeliveryState.addressDetail1}
               readOnly
               disabled
             />
@@ -207,8 +192,8 @@ const AddDeliveryAddressModal = ({
               id="sample5_detailAddress"
               className="delivery_input address"
               placeholder="상세주소"
-              value={addressDetail2}
-              onChange={handleAddressDetailChange}
+              value={myDeliveryState.addressDetail2}
+              onChange={(e) => handleAddressDetailChange(e.target.value)}
             />
           </div>
         </div>
@@ -226,8 +211,8 @@ const AddDeliveryAddressModal = ({
               name="phoneOne"
               id="phone1First"
               className="delivery_input tel"
-              onChange={(e) => handleTelInputChange(e, setTel1)}
-              value={tel1}
+              value={myDeliveryState.tel1}
+              onChange={(e) => handleTelInputChange("tel1", e.target.value)}
             />
             <span className="tel_dash">-</span>
             <input
@@ -236,8 +221,8 @@ const AddDeliveryAddressModal = ({
               name="phoneTwo"
               id="phone1Second"
               className="delivery_input tel"
-              onChange={(e) => handleTelInputChange(e, setTel2)}
-              value={tel2}
+              value={myDeliveryState.tel2}
+              onChange={(e) => handleTelInputChange("tel2", e.target.value)}
             />
             <span className="tel_dash">-</span>
             <input
@@ -246,8 +231,8 @@ const AddDeliveryAddressModal = ({
               name="phoneThree"
               id="phone1Third"
               className="delivery_input tel"
-              onChange={(e) => handleTelInputChange(e, setTel3)}
-              value={tel3}
+              value={myDeliveryState.tel3}
+              onChange={(e) => handleTelInputChange("tel3", e.target.value)}
             />
           </div>
         </div>
@@ -262,24 +247,24 @@ const AddDeliveryAddressModal = ({
               maxLength={4}
               className="delivery_input tel"
               id="subPhone1First"
-              onChange={(e) => handleTelInputChange(e, setTel4)}
-              value={tel4}
+              value={myDeliveryState.tel4}
+              onChange={(e) => handleTelInputChange("tel4", e.target.value)}
             />
             <span className="tel_dash">-</span>
             <input
               type="text"
               maxLength={4}
               className="delivery_input tel"
-              onChange={(e) => handleTelInputChange(e, setTel5)}
-              value={tel5}
+              value={myDeliveryState.tel5}
+              onChange={(e) => handleTelInputChange("tel5", e.target.value)}
             />
             <span className="tel_dash">-</span>
             <input
               type="text"
               maxLength={4}
               className="delivery_input tel"
-              onChange={(e) => handleTelInputChange(e, setTel6)}
-              value={tel6}
+              value={myDeliveryState.tel6}
+              onChange={(e) => handleTelInputChange("tel6", e.target.value)}
             />
           </div>
         </div>

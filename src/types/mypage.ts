@@ -1,6 +1,7 @@
 // AddDeliveryAddressModal
 export interface AddDeliveryAddressModalProps {
   addDeliveryClassName: string;
+  myDeliveryAddressId: number;
 }
 
 export interface Address {
@@ -47,6 +48,7 @@ export interface MyShippingAddressBasic {
   address2: string;
   phone1: string;
   recipient_name: string;
+  id: number;
 }
 
 export interface MyOrderCheckModalAddress extends MyShippingAddressBasic {
@@ -90,6 +92,7 @@ export interface MyDeliveryAddress {
   address2: string;
   phone1: string;
   recipient_name: string;
+  id: number;
 }
 
 export interface DeliveryAddressItemProps {
