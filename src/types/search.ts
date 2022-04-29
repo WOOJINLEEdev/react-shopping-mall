@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 export interface SearchInputBtnProps {
-  show?: any;
+  show?: boolean;
   searchClassName?: string;
   handleSearchBtnClick: Function;
   handleSearchInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

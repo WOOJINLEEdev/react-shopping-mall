@@ -2,19 +2,16 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import styled from "styled-components";
 import "focus-visible";
 import "App.css";
-import Header from "components/common/Header";
 import Main from "layout/Main";
+import Header from "components/common/Header";
 import Footer from "components/common/Footer";
-import { ReactComponent as UpArrow } from "images/up.svg";
-import useMenuCollapsed from "hooks/useMenuCollapsed";
 import Loading from "components/common/Loading";
+import { ReactComponent as UpArrow } from "images/up.svg";
 
 const Menu = lazy(() => import("components/common/Menu"));
 
 const App = () => {
-  const [scrollY, setScrollY] = useState(false);
-
-  const { data, mutate } = useMenuCollapsed();
+  const [scrollY, setScrollY] = useState<boolean>(false);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScrollY);
@@ -49,27 +46,22 @@ const App = () => {
     }
   }
 
-  const handleTopBtn = () => {
+  const handleTopBtnClick = () => {
     window.scrollTo(0, 0);
-  };
-
-  const handleDimClick = () => {
-    mutate(!data);
   };
 
   return (
     <div className="App">
       <Header />
       <Main />
-      <DimmedLayer className={data ? "" : "hide"} onClick={handleDimClick} />
       <Suspense fallback={<Loading />}>
-        <Menu show={data} />
+        <Menu />
       </Suspense>
       <Footer />
       <TopBtn
         type="button"
         className={scrollY ? "top_btn" : "hidden"}
-        onClick={handleTopBtn}
+        onClick={handleTopBtnClick}
       >
         <UpArrow fill="gray" width="20" height="20" />
         <span className="visually_hidden">Top 버튼</span>
@@ -79,15 +71,6 @@ const App = () => {
 };
 
 export default App;
-
-const DimmedLayer = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.1);
-`;
 
 const TopBtn = styled.button`
   position: fixed;

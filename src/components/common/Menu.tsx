@@ -1,10 +1,15 @@
 import { useState, useRef, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { atom, useRecoilState } from "recoil";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import useMenuCollapsed from "hooks/useMenuCollapsed";
 
-const Menu = ({ show }: any) => {
+export const menuState = atom<boolean>({
+  key: "menuState",
+  default: false,
+});
+
+const Menu = () => {
   const [searchClassName, setSearchClassName] = useState<string>("menu_search");
   const [searchInputClassName, setsearchInputClassName] =
     useState<string>("menu_search_input");
@@ -13,8 +18,7 @@ const Menu = ({ show }: any) => {
   const [searchInputId, setSearchInputId] = useState<string>("menuSearchInput");
   const ref = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-
-  const { data, mutate } = useMenuCollapsed();
+  const [show, setShow] = useRecoilState(menuState);
 
   const handleSearchBtnClick = (searchInput: string) => {
     searchInput = searchInput?.trim() ?? "";
@@ -26,7 +30,8 @@ const Menu = ({ show }: any) => {
 
     navigate(`/searchResult/${searchInput}`);
     ref?.current?.blur();
-    mutate(!data);
+
+    setShow(false);
   };
 
   const handleItemClick = (
@@ -37,7 +42,7 @@ const Menu = ({ show }: any) => {
     itemName === "ABOUT ME" && navigate("/aboutMe");
     itemName === "COMMUNITY" && navigate("/selectBoard");
 
-    mutate(!data);
+    setShow(false);
   };
 
   const handleRemoveBtnClick = (setState: Dispatch<SetStateAction<string>>) => {
@@ -45,46 +50,62 @@ const Menu = ({ show }: any) => {
     ref?.current?.focus();
   };
 
+  const handleDimClick = () => {
+    setShow(false);
+  };
+
   return (
-    <MenuWrap className={show ? "" : "menu_hidden"}>
-      <nav aria-labelledby="aside_menu">
-        <MenuTitle id="aside_menu">MENU</MenuTitle>
-        <MenuList>
-          <MenuItem
-            data-name="ABOUT ME"
-            onClick={handleItemClick}
-            onKeyPress={handleItemClick}
-            tabIndex={0}
-          >
-            ABOUT ME
-          </MenuItem>
-          <MenuItem
-            data-name="COMMUNITY"
-            onClick={handleItemClick}
-            onKeyPress={handleItemClick}
-            tabIndex={0}
-          >
-            COMMUNITY
-          </MenuItem>
-          <MenuItem>
-            <SearchInputBtn
-              show={show}
-              searchClassName={searchClassName}
-              searchInputClassName={searchInputClassName}
-              searchBtnClassName={searchBtnClassName}
-              searchInputId={searchInputId}
-              handleSearchBtnClick={handleSearchBtnClick}
-              handleRemoveBtnClick={handleRemoveBtnClick}
-              ref={ref}
-            />
-          </MenuItem>
-        </MenuList>
-      </nav>
-    </MenuWrap>
+    <>
+      <DimmedLayer className={show ? "" : "hide"} onClick={handleDimClick} />
+      <MenuWrap className={show ? "" : "menu_hidden"}>
+        <nav aria-labelledby="aside_menu">
+          <MenuTitle id="aside_menu">MENU</MenuTitle>
+          <MenuList>
+            <MenuItem
+              data-name="ABOUT ME"
+              onClick={handleItemClick}
+              onKeyPress={handleItemClick}
+              tabIndex={0}
+            >
+              ABOUT ME
+            </MenuItem>
+            <MenuItem
+              data-name="COMMUNITY"
+              onClick={handleItemClick}
+              onKeyPress={handleItemClick}
+              tabIndex={0}
+            >
+              COMMUNITY
+            </MenuItem>
+            <MenuItem>
+              <SearchInputBtn
+                show={show}
+                searchClassName={searchClassName}
+                searchInputClassName={searchInputClassName}
+                searchBtnClassName={searchBtnClassName}
+                searchInputId={searchInputId}
+                handleSearchBtnClick={handleSearchBtnClick}
+                handleRemoveBtnClick={handleRemoveBtnClick}
+                ref={ref}
+              />
+            </MenuItem>
+          </MenuList>
+        </nav>
+      </MenuWrap>
+    </>
   );
 };
 
 export default Menu;
+
+const DimmedLayer = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.1);
+`;
 
 const MenuWrap = styled.aside`
   position: fixed;

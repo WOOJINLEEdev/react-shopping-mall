@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { menuState } from "components/common/Menu";
+import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
-import useMenuCollapsed from "hooks/useMenuCollapsed";
 import useSearch from "hooks/useSearch";
 import useSearchLocation from "hooks/useSearchLocation";
-import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import useTokenStatus from "hooks/useTokenStatus";
 import { useDevice } from "hooks/useDevice";
 import signInImg from "images/user.png";
@@ -14,18 +15,20 @@ import { GoSearch } from "@react-icons/all-files/go/GoSearch";
 import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
-import Loading from "components/common/Loading";
 import {
   updateMyVisitCountsApi,
   updateShopVisitCountsApi,
   createAccessTokenApi,
 } from "api";
+import { headerItemState } from "layout/Main";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { token, mutateToken } = useTokenStatus();
   const { isPc } = useDevice();
+  const setMenuShow = useSetRecoilState(menuState);
+  const activeCheck = useRecoilValue(headerItemState);
 
   useEffect(() => {
     async function updateMyVisitCount() {
@@ -70,10 +73,8 @@ const Header = () => {
   }, []);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-  const { data, mutate } = useMenuCollapsed();
   const { searchData, searchMutate } = useSearch();
   const { searchLocationMutate } = useSearchLocation();
-  const { clickedData, clickedMutate } = useActiveHeaderItem();
 
   if (cartError) return <div>에러 발생...</div>;
   if (loadingCart) return <Loading />;
@@ -81,7 +82,7 @@ const Header = () => {
   const cartAmount = cart.items.length;
 
   const handleMenuClick = () => {
-    mutate(!data);
+    setMenuShow(true);
   };
 
   const handleSearchClick = () => {
@@ -140,7 +141,7 @@ const Header = () => {
             <HeaderSearch
               onClick={handleSearchClick}
               onKeyPress={handleSearchClick}
-              className={clickedData === "search" ? "headerClicked" : ""}
+              className={activeCheck === "search" ? "headerClicked" : ""}
               tabIndex={0}
               aria-label="search"
             >
@@ -150,7 +151,7 @@ const Header = () => {
           )}
           {isPc && (
             <HeaderAbout
-              className={clickedData === "/aboutMe" ? "headerClicked" : ""}
+              className={activeCheck === "/aboutMe" ? "headerClicked" : ""}
               onClick={handleHeaderAboutClick}
               onKeyPress={handleHeaderAboutClick}
               tabIndex={0}
@@ -165,7 +166,7 @@ const Header = () => {
 
           <HeaderSignIn
             className={
-              clickedData === "/mypage" || clickedData === "/login"
+              activeCheck === "/mypage" || activeCheck === "/login"
                 ? "headerClicked"
                 : ""
             }
@@ -183,7 +184,7 @@ const Header = () => {
           </HeaderSignIn>
 
           <HeaderCart
-            className={clickedData === "/cart" ? "headerClicked" : ""}
+            className={activeCheck === "/cart" ? "headerClicked" : ""}
             onClick={handleHeaderCartClick}
             onKeyPress={handleHeaderCartClick}
             tabIndex={0}

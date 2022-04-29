@@ -1,10 +1,10 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { atom, useSetRecoilState } from "recoil";
 import SearchWrap from "components/search/SearchWrap";
 import Loading from "components/common/Loading";
 import useSearchLocation from "hooks/useSearchLocation";
 import useSearch from "hooks/useSearch";
-import useActiveHeaderItem from "hooks/useActiveHeaderItem";
 import { useDevice } from "hooks/useDevice";
 
 const Home = lazy(() => import("pages/Home"));
@@ -26,6 +26,11 @@ const AboutMe = lazy(() => import("pages/AboutMe"));
 const SearchResult = lazy(() => import("pages/SearchResult"));
 const PageNotFound = lazy(() => import("pages/PageNotFound"));
 
+export const headerItemState = atom<string>({
+  key: "",
+  default: "",
+});
+
 const Main = () => {
   const location = useLocation();
   const { isPc } = useDevice();
@@ -40,7 +45,7 @@ const Main = () => {
 
   const { searchData, searchMutate } = useSearch();
   const { searchLocationData, searchLocationMutate } = useSearchLocation();
-  const { clickedMutate } = useActiveHeaderItem();
+  const setHeaderItemState = useSetRecoilState(headerItemState);
 
   useEffect(() => {
     searchLocationMutate(location.pathname);
@@ -51,7 +56,7 @@ const Main = () => {
     }
   }, [location.pathname]);
 
-  clickedMutate(location.pathname);
+  setHeaderItemState(location.pathname);
 
   return (
     <main>
