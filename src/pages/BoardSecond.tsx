@@ -1,7 +1,9 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useSWR from "swr";
 import axios from "axios";
+import { useRecoilState } from "recoil";
 import Modal from "react-modal";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
@@ -9,10 +11,10 @@ import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 import { useDevice } from "hooks/useDevice";
 import { getToken } from "utils/token";
 import { formatDate } from "utils/format-date";
+import { CurBoardState, curBoardState } from "pages/SelectBoard";
 
 Modal.setAppElement("#root");
 
@@ -27,35 +29,20 @@ interface PostType {
   userId: number;
 }
 
-const BOARD_SECOND_POSTS_CACHE: PostType[] = [];
-const initPostsCache = (posts: PostType[]) => {
-  posts.forEach((post: PostType) => {
-    BOARD_SECOND_POSTS_CACHE.push(post);
-  });
-};
-
-const existPostsCache = () => {
-  return BOARD_SECOND_POSTS_CACHE.length > 0;
-};
-
-const getPostsCache = () => {
-  return BOARD_SECOND_POSTS_CACHE;
-};
-
 const BoardSecond = () => {
   const navigate = useNavigate();
 
-  const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
-    useCurrentBoardPage();
+  const [pageState, setPageState] = useRecoilState<CurBoardState>(
+    curBoardState("second")
+  );
 
   const detectMobile = detectMobileDevice();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const initialPage = getCurrentBoardPage("second");
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
-  const [posts, setPosts] = useState<PostType[]>(getPostsCache());
+  const [posts, setPosts] = useState<PostType[]>([]);
   const [limit, setLimit] = useState<number>(10);
   const [mobileLimit, setMobileLimit] = useState<number>(20);
-  const [page, setPage] = useState<number>(initialPage);
+  const [page, setPage] = useState<number>(pageState.pageNumber);
   const offset =
     detectMobile === true ? (page - 1) * mobileLimit : (page - 1) * limit;
   const offsetLimit =
@@ -73,28 +60,28 @@ const BoardSecond = () => {
 
   const { isPc, isTablet, isMobile } = useDevice();
 
+  const postUrl = "https://jsonplaceholder.typicode.com/posts";
+  const fetcher = (url: string) => {
+    return axios.get(url).then((res) => res.data);
+  };
+  const { data, error, mutate } = useSWR(postUrl, fetcher);
+
   useEffect(() => {
     detectMobileDevice();
-
-    if (existPostsCache()) {
-      return;
-    }
-
-    axios
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => {
-        const reverseData = res.data.reverse();
-        setPosts(reverseData);
-        initPostsCache(reverseData);
-      })
-      .then((err) => console.log(err));
 
     localStorage.setItem("board", "second");
   }, []);
 
   useEffect(() => {
-    mutateCurrentBoardPage("second", page);
+    setPageState({ ...pageState, pageNumber: page });
   }, [page]);
+
+  useEffect(() => {
+    if (data) {
+      const reverseData = JSON.parse(JSON.stringify(data)).reverse();
+      setPosts(reverseData);
+    }
+  }, [data]);
 
   function detectMobileDevice() {
     const minWidth = 500;
@@ -145,6 +132,9 @@ const BoardSecond = () => {
 
     return headersName;
   }, [isTablet, isMobile]);
+
+  if (error) return <div>에러 발생...</div>;
+  if (!data) return <Loading />;
 
   return (
     <BoardWrap>

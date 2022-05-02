@@ -2,6 +2,8 @@ import { useState, useEffect, lazy, Suspense, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { CurBoardState, curBoardState } from "pages/SelectBoard";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
@@ -10,7 +12,6 @@ import { postList, sortedPostList } from "components/board/board-first-data";
 import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import Loading from "components/common/Loading";
-import useCurrentBoardPage from "hooks/useCurrentBoardPage";
 import { useDevice } from "hooks/useDevice";
 import { getToken } from "utils/token";
 import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
@@ -43,13 +44,13 @@ const BoardFirst = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { currentBoardPageData, getCurrentBoardPage, mutateCurrentBoardPage } =
-    useCurrentBoardPage();
+  const [pageState, setPageState] = useRecoilState<CurBoardState>(
+    curBoardState("first")
+  );
 
-  const initialPage = getCurrentBoardPage("first");
   const [dataList, setDataList] = useState<PostListType[]>([]);
   const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(initialPage);
+  const [page, setPage] = useState<number>(pageState.pageNumber);
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
   const offset = (page - 1) * limit;
 
@@ -72,7 +73,7 @@ const BoardFirst = () => {
   }, []);
 
   useEffect(() => {
-    mutateCurrentBoardPage("first", page);
+    setPageState({ ...pageState, pageNumber: page });
   }, [page]);
 
   const handleWriteBtnClick = useCallback(() => {

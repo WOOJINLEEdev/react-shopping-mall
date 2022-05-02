@@ -1,11 +1,29 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import useCurrentBoardPage from "hooks/useCurrentBoardPage";
+import { atomFamily, useSetRecoilState } from "recoil";
+
+export interface CurBoardState {
+  pageNumber: number;
+}
+
+export const curBoardState = atomFamily<CurBoardState, string>({
+  key: "curBoardState",
+  default: (type) => {
+    return {
+      type,
+      pageNumber: 1,
+    };
+  },
+});
 
 const SelectBoardPage = () => {
-  const { resetBoardData } = useCurrentBoardPage();
-  const onClickBoardSelect = (boardType: string) => {
-    resetBoardData(boardType);
+  const setBoardFirstState = useSetRecoilState(curBoardState("first"));
+  const setBoardSecondState = useSetRecoilState(curBoardState("second"));
+
+  const handleSelectBoardClick = (boardType: string) => {
+    boardType === "first"
+      ? setBoardFirstState((prevState) => ({ ...prevState, pageNumber: 1 }))
+      : setBoardSecondState((prevState) => ({ ...prevState, pageNumber: 1 }));
   };
 
   return (
@@ -14,7 +32,7 @@ const SelectBoardPage = () => {
         <Link
           to="/selectBoard1"
           className="select_board_link"
-          onClick={() => onClickBoardSelect("first")}
+          onClick={() => handleSelectBoardClick("first")}
         >
           <p className="select_board_text">데이터를 작성하여 만든 게시판</p>
         </Link>
@@ -23,7 +41,7 @@ const SelectBoardPage = () => {
         <Link
           to="/selectBoard2"
           className="select_board_link"
-          onClick={() => onClickBoardSelect("second")}
+          onClick={() => handleSelectBoardClick("second")}
         >
           <p className="select_board_text">
             JSONPlaceholder의 API를 이용하여 만든 게시판
