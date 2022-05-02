@@ -1,11 +1,7 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { atom, useSetRecoilState } from "recoil";
-import SearchWrap from "components/search/SearchWrap";
 import Loading from "components/common/Loading";
-import useSearchLocation from "hooks/useSearchLocation";
-import useSearch from "hooks/useSearch";
-import { useDevice } from "hooks/useDevice";
 
 const Home = lazy(() => import("pages/Home"));
 const ItemDetail = lazy(() => import("pages/ItemDetail"));
@@ -27,47 +23,23 @@ const SearchResult = lazy(() => import("pages/SearchResult"));
 const PageNotFound = lazy(() => import("pages/PageNotFound"));
 
 export const headerItemState = atom<string>({
-  key: "",
+  key: "headerItemState",
   default: "",
 });
 
 const Main = () => {
   const location = useLocation();
-  const { isPc } = useDevice();
-  const [searchClassName, setSearchClassName] = useState<string>(
-    "header_search_style"
-  );
-  const [searchInputClassName, setSearchInputClassName] = useState<string>(
-    "header_search_input"
-  );
-  const [searchBtnClassName, setSearchBtnClassName] =
-    useState<string>("header_search_btn");
 
-  const { searchData, searchMutate } = useSearch();
-  const { searchLocationData, searchLocationMutate } = useSearchLocation();
   const setHeaderItemState = useSetRecoilState(headerItemState);
 
   useEffect(() => {
-    searchLocationMutate(location.pathname);
+    console.log("pathname", location.pathname);
+    setHeaderItemState(location.pathname);
     window.scrollTo(0, 0);
-
-    if (location.pathname !== searchLocationData) {
-      searchMutate(false);
-    }
   }, [location.pathname]);
-
-  setHeaderItemState(location.pathname);
 
   return (
     <main>
-      {isPc && (
-        <SearchWrap
-          searchData={searchData}
-          searchClassName={searchClassName}
-          searchInputClassName={searchInputClassName}
-          searchBtnClassName={searchBtnClassName}
-        />
-      )}
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Home />} />

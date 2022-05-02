@@ -5,8 +5,6 @@ import { useSetRecoilState, useRecoilValue } from "recoil";
 import { menuState } from "components/common/Menu";
 import Loading from "components/common/Loading";
 import useMyCart from "hooks/useMyCart";
-import useSearch from "hooks/useSearch";
-import useSearchLocation from "hooks/useSearchLocation";
 import useTokenStatus from "hooks/useTokenStatus";
 import { useDevice } from "hooks/useDevice";
 import signInImg from "images/user.png";
@@ -21,6 +19,7 @@ import {
   createAccessTokenApi,
 } from "api";
 import { headerItemState } from "layout/Main";
+import SearchModal, { searchWrapState } from "components/search/SearchModal";
 
 const Header = () => {
   const location = useLocation();
@@ -73,8 +72,8 @@ const Header = () => {
   }, []);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-  const { searchData, searchMutate } = useSearch();
-  const { searchLocationMutate } = useSearchLocation();
+
+  const setSearchWrapStatus = useSetRecoilState<boolean>(searchWrapState);
 
   if (cartError) return <div>에러 발생...</div>;
   if (loadingCart) return <Loading />;
@@ -86,9 +85,7 @@ const Header = () => {
   };
 
   const handleSearchClick = () => {
-    searchMutate(!searchData);
-
-    searchLocationMutate(location.pathname);
+    setSearchWrapStatus(true);
   };
 
   const handleHeaderTitleClick = () => {
@@ -198,6 +195,8 @@ const Header = () => {
           </HeaderCart>
         </SignCartWrap>
       </nav>
+
+      {isPc && <SearchModal />}
     </header>
   );
 };

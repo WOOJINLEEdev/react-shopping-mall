@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
-import SearchInputBtn from "components/search/SearchInputBtn";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { SearchWrapProps } from "types";
+import { searchWrapState } from "components/search/SearchModal";
+import SearchInputBtn from "components/search/SearchInputBtn";
 
 const SearchWrap = ({
-  searchData,
+  show,
   searchClassName,
   searchInputClassName,
   searchBtnClassName,
@@ -16,14 +18,15 @@ const SearchWrap = ({
   const [searchPlaceHolder, setSearchPlaceHolder] = useState<string>("Search");
   const [searchInputId, setSearchInputId] = useState<string>("mainSearchInput");
   const ref = useRef<HTMLInputElement>(null);
+  const setSearchWrapState = useSetRecoilState<boolean>(searchWrapState);
 
   useEffect(() => {
     setPathName(location.pathname);
 
-    if (searchData) {
+    if (show) {
       return ref?.current?.focus();
     }
-  }, [searchData]);
+  }, [show]);
 
   const handleSearchBtnClick = async (searchInput: string) => {
     searchInput = searchInput?.trim() ?? "";
@@ -35,6 +38,7 @@ const SearchWrap = ({
     }
 
     navigate(`/searchResult/${searchInput}`);
+    setSearchWrapState(false);
     ref?.current?.focus();
   };
 
@@ -44,9 +48,9 @@ const SearchWrap = ({
   };
 
   return (
-    <SearchWrapper className={searchData ? "" : "search_hidden"}>
+    <SearchWrapper className={show ? "" : "search_hidden"}>
       <SearchInputBtn
-        show={searchData}
+        show={show}
         searchClassName={searchClassName}
         searchInputClassName={searchInputClassName}
         searchBtnClassName={searchBtnClassName}
@@ -68,4 +72,5 @@ const SearchWrapper = styled.div`
   height: 80px;
   margin: 0 auto;
   box-shadow: 0 5px 5px -5px #333;
+  z-index: 100;
 `;

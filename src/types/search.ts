@@ -13,7 +13,7 @@ export interface SearchInputBtnProps {
 }
 
 export interface SearchWrapProps {
-  searchData: boolean;
+  show: boolean;
   searchClassName: string;
   searchInputClassName: string;
   searchBtnClassName: string;

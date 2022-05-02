@@ -1,6 +1,5 @@
-import { useState, useMemo, forwardRef } from "react";
+import { useState, forwardRef } from "react";
 import styled from "styled-components";
-import useSearchResult from "hooks/useSearchResult";
 import { debounce } from "lodash";
 import { SearchInputBtnProps } from "types";
 import { FaTimesCircle } from "@react-icons/all-files/fa/FaTimesCircle";
@@ -22,26 +21,17 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
   ) => {
     const [searchInput, setSearchInput] = useState<string>("");
 
-    const { searchResultMutate } = useSearchResult();
-
-    const debouncedSearchResultMutate = useMemo(
-      () => debounce(searchResultMutate, 1000),
-      []
-    );
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setSearchInput(e.target.value);
-
-      if (show) {
-        debouncedSearchResultMutate(e.target.value);
-      }
 
       if (handleSearchInputChange) {
         handleSearchInputChange(e);
       }
     };
 
-    const onCheckEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleInputEnterPress = (
+      e: React.KeyboardEvent<HTMLInputElement>
+    ) => {
       if (e.key === "Enter") {
         handleSearchBtnClick(searchInput);
       }
@@ -60,7 +50,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
           className={searchInputClassName}
           value={searchInput}
           onChange={handleChange}
-          onKeyPress={onCheckEnter}
+          onKeyPress={handleInputEnterPress}
           ref={ref}
         />
 
