@@ -8,7 +8,7 @@ describe("CheckoutValidator", () => {
         const checkoutDeliveryData = {
           deliveryClassName: "delivery_write selected",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -27,7 +27,7 @@ describe("CheckoutValidator", () => {
         const checkoutDeliveryData = {
           deliveryClassName: "delivery_write selected",
         };
-        const checkoutPaymentData = { paymentName: "신용/체크카드" };
+        const checkoutPaymentData = "신용/체크카드";
         const checkoutTotalDetailData = { agreeChecked: false };
 
         // when
@@ -47,7 +47,7 @@ describe("CheckoutValidator", () => {
         const checkoutDeliveryData = {
           deliveryClassName: "delivery_write selected",
         };
-        const checkoutPaymentData = { paymentName: "신용/체크카드" };
+        const checkoutPaymentData = "신용/체크카드";
         const checkoutTotalDetailData = { agreeChecked: true };
 
         // when
@@ -69,7 +69,7 @@ describe("CheckoutValidator", () => {
           deliveryClassName: "delivery_write",
           recipient: "",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -89,7 +89,7 @@ describe("CheckoutValidator", () => {
           deliveryClassName: "delivery_write",
           recipient: "이",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -110,7 +110,7 @@ describe("CheckoutValidator", () => {
           recipient: "이이",
           addressDetail1: "",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -132,7 +132,7 @@ describe("CheckoutValidator", () => {
           addressDetail1: "서울특별시 ㅇㅇ구 ㅇㅇ동",
           addressDetail2: "",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -155,7 +155,7 @@ describe("CheckoutValidator", () => {
           addressDetail2: "ㅇㅇㅇ",
           tel1: "",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -178,7 +178,7 @@ describe("CheckoutValidator", () => {
           addressDetail2: "ㅇㅇㅇ",
           tel1: "1",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -202,7 +202,7 @@ describe("CheckoutValidator", () => {
           tel1: "02",
           tel2: "",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -226,7 +226,7 @@ describe("CheckoutValidator", () => {
           tel1: "02",
           tel2: "111",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -251,7 +251,7 @@ describe("CheckoutValidator", () => {
           tel2: "1111",
           tel3: "",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -276,7 +276,7 @@ describe("CheckoutValidator", () => {
           tel2: "1111",
           tel3: "111",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -302,7 +302,7 @@ describe("CheckoutValidator", () => {
           tel2: "1111",
           tel3: "1111",
         };
-        const checkoutPaymentData = {};
+        const checkoutPaymentData = "";
         const checkoutTotalDetailData = {};
 
         // when
@@ -327,7 +327,7 @@ describe("CheckoutValidator", () => {
           tel2: "1111",
           tel3: "1111",
         };
-        const checkoutPaymentData = { paymentName: "신용/체크카드" };
+        const checkoutPaymentData = "신용/체크카드";
         const checkoutTotalDetailData = { agreeChecked: false };
 
         // when
@@ -353,7 +353,7 @@ describe("CheckoutValidator", () => {
           tel2: "1111",
           tel3: "1111",
         };
-        const checkoutPaymentData = { paymentName: "신용/체크카드" };
+        const checkoutPaymentData = "신용/체크카드";
         const checkoutTotalDetailData = { agreeChecked: true };
 
         // when

@@ -22,10 +22,6 @@ interface DeliveryData {
   tel6?: string;
 }
 
-interface PaymentData {
-  paymentName?: string;
-}
-
 interface TotalDetailData {
   agreeChecked?: boolean;
   finalPrice?: string | number;
