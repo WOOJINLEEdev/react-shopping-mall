@@ -48,6 +48,6 @@ export function updateCheckoutsApi({
     shipping_address: shippingAddress,
     user_coupon_id_to_be_used: userCouponIdToBeUsed,
     mileage_to_be_used: mileageToBeUsed,
-    payment_method: { paymentName: paymentMethod },
+    payment_method: paymentMethod,
   });
 }

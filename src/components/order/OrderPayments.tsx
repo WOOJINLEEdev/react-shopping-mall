@@ -7,7 +7,7 @@ export const paymentState = atom<string>({
   default: "",
 });
 
-const payments = [
+const PAYMENTS = [
   {
     id: "1",
     payment: "신용/체크카드",
@@ -66,7 +66,7 @@ const OrderPaymentItem = React.memo(
             ? `${basePaymentClass} ${selectedPaymentClass}`
             : basePaymentClass
         }
-        key={item.id}
+        key={`payment_${item.id}`}
         data-pay={i}
         value={i}
         onClick={handlePaymentMethodClick}
@@ -97,9 +97,9 @@ const OrderPaymentList = React.memo(() => {
 
   return (
     <ol className="payment_method">
-      {payments.map((item: Payment, i: number) => (
+      {PAYMENTS.map((item: Payment, i: number) => (
         <OrderPaymentItem
-          key={item.id}
+          key={`payment_${item.id}`}
           item={item}
           i={i}
           selected={i === selectedPaymentIndex}
