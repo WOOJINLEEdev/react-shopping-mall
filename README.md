@@ -2,15 +2,19 @@
 
 ## 기술 스택
 
-- React, SWR, styled-components
+- React, Recoil, SWR, styled-components
 
 ## 프로젝트 설명
+
+- 백엔드는 개발자인 동생의 도움을 받았습니다.
 
 - 반응형 홈페이지
   - 모바일: 320 ~ 767px
   - 태블릿: 768 ~ 1023px
   - PC: 1024px 이상
-- 상태 관리: SWR (현재 client state는 Recoil, server state는 SWR로 분리중)
+- 상태 관리
+  - Client State : Recoil
+  - Server State : SWR
 - 스켈레톤 UI 적용
   - 배너
   - 상품 리스트
