@@ -1,6 +1,7 @@
-import { MouseEvent, useCallback, useState } from "react";
+import { MouseEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import SnackBar from "components/common/SnackBar";
@@ -52,7 +53,6 @@ const Cart = () => {
 
     try {
       const res = await deleteCartItemApi({ cartItemId });
-
       mutateCart(null, true);
       handleSnackBar();
     } catch (err) {
@@ -66,7 +66,7 @@ const Cart = () => {
       mutateCart(
         {
           ...cart,
-          items: items.map((cartItem: Item, index: number) => ({
+          items: items.map((cartItem: Item) => ({
             ...cartItem,
             quantity: cartItem.id === itemId ? quantity : cartItem.quantity,
           })),
@@ -95,7 +95,6 @@ const Cart = () => {
   }
 
   const deliveryCharge = localStorage.getItem("delivery") || "";
-
   const finalPrice = totalPrice + Number(deliveryCharge);
 
   const handleCartItemAllCheck = (allChecked: boolean) => {

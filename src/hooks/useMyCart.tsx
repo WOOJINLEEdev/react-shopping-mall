@@ -1,11 +1,24 @@
 import useSWR from "swr";
+import axios, { AxiosError } from "axios";
+
 import { instance } from "utils/http-client";
 import { isLogin } from "utils/auth";
-import axios, { AxiosError } from "axios";
+
+interface CartItem {
+  cart_id: number;
+  id: number;
+  product_id: number;
+  product_image_src: string;
+  product_name: string;
+  quantity: number;
+  variant_id: number;
+  variant_name: string;
+  variant_price: string;
+}
 
 export default function useMyCart() {
   const cartUrl = "/v1/me/cart";
-  const fetcher = async (url: any) => {
+  const fetcher = async (url: string) => {
     if (!isLogin()) {
       return {
         items: [],
@@ -15,7 +28,7 @@ export default function useMyCart() {
       const res = await instance.get(url);
       return {
         ...res.data,
-        items: res.data.items.map((cartItem: any) => ({
+        items: res.data.items.map((cartItem: CartItem) => ({
           ...cartItem,
           checked: true,
         })),
