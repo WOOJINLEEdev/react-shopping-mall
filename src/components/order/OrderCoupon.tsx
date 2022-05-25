@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { OrderCouponProps, Coupon } from "types";
 import { atom, useRecoilState, selector } from "recoil";
 
@@ -53,13 +53,7 @@ const OrderCoupon = ({
   const [usedMileage, setUsedMileage] =
     useRecoilState<number>(usedMileageState);
 
-  console.log("selectOption", selectOption);
-  console.log("selectCouponId", selectCouponId);
-  console.log("usedMileage", usedMileage);
-
-  const handleSelectOptionChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleSelectOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (coupons) {
       if (e.target.value === "가입축하 20% 할인") {
         setSelectOption(0.2);
@@ -88,7 +82,7 @@ const OrderCoupon = ({
       .replace(/(^0+)/, "");
   }
 
-  const handleMileageInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMileageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     let mileageInput = Number(removeNotNumber(e.target.value));
 
     let unavailableMileage =
@@ -110,7 +104,7 @@ const OrderCoupon = ({
     return setUsedMileage(mileageInput);
   };
 
-  const handleAllMileageBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleAllMileageBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
     let allMileageTarget = (e.target as HTMLButtonElement).name;
 
     if (availableMileage === 0) return;

@@ -1,13 +1,11 @@
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, KeyboardEvent, ChangeEvent } from "react";
 import styled from "styled-components";
-import { debounce } from "lodash";
 import { SearchInputBtnProps } from "types";
 import { FaTimesCircle } from "@react-icons/all-files/fa/FaTimesCircle";
 
 const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
   (
     {
-      show,
       searchClassName,
       handleSearchBtnClick,
       handleSearchInputChange,
@@ -21,7 +19,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
   ) => {
     const [searchInput, setSearchInput] = useState<string>("");
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       setSearchInput(e.target.value);
 
       if (handleSearchInputChange) {
@@ -29,9 +27,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
       }
     };
 
-    const handleInputEnterPress = (
-      e: React.KeyboardEvent<HTMLInputElement>
-    ) => {
+    const handleInputEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter") {
         handleSearchBtnClick(searchInput);
       }

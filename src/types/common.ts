@@ -1,3 +1,5 @@
+import { MouseEvent } from "react";
+
 // CommonModal
 export interface CommonModalProps {
   isOpen: boolean;
@@ -5,8 +7,8 @@ export interface CommonModalProps {
   modalText: string;
   yesBtnText: string;
   noBtnText: string;
-  yesBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  noBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  yesBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  noBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
   btnWidth?: string;
   contentPadding?: string;
   onOverlayClick?: boolean;
@@ -27,8 +29,8 @@ export interface ModalBtnProps {
 // QuantityCounter
 export interface QuantityCounterProps {
   quantity: number;
-  onIncrement: (event: React.MouseEvent<HTMLInputElement>) => void;
-  onDecrement: (event: React.MouseEvent<HTMLInputElement>) => void;
+  onIncrement: (event: MouseEvent<HTMLInputElement>) => void;
+  onDecrement: (event: MouseEvent<HTMLInputElement>) => void;
   margin?: boolean;
   flexEnd?: boolean;
   productId?: number;

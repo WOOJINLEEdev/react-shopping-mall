@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
-import { ReactComponent as ShoppingBag } from "images/shopping-bag.svg";
-import downArrow from "images/down-arrow.png";
-import upArrow from "images/up-arrow-icon.png";
+import { ReactComponent as ShoppingBag } from "assets/images/shopping-bag.svg";
+import downArrow from "assets/images/down-arrow.png";
+import upArrow from "assets/images/up-arrow-icon.png";
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
@@ -77,7 +77,7 @@ const OrderCompletion = () => {
     async function getCompletedOrder() {
       try {
         const res = await getOrdersApi({ checkoutId: checkoutNumber });
-        console.log(res);
+
         setOrderData(res.data);
       } catch (err) {
         console.log(err);

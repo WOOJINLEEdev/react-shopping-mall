@@ -40,10 +40,6 @@ export function updateCheckoutsApi({
   mileageToBeUsed,
   paymentMethod,
 }: UpdateCheckoutsPayload) {
-  console.log(
-    "updateCheckoutsApi shippingAddress ",
-    JSON.stringify(shippingAddress, null, 2)
-  );
   return instance.put(`/v1/checkouts/${checkoutNumber}`, {
     shipping_address: shippingAddress,
     user_coupon_id_to_be_used: userCouponIdToBeUsed,

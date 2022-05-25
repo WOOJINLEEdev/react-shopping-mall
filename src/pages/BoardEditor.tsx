@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, ChangeEvent } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import styled from "styled-components";
@@ -41,8 +41,6 @@ const BoardEditor = () => {
       editorRef?.current?.getInstance().getHTML()
     );
 
-    console.log("inputBody", inputBody);
-
     try {
       const res = await axios.post(
         "https://jsonplaceholder.typicode.com/posts",
@@ -53,14 +51,13 @@ const BoardEditor = () => {
           body: inputBody,
         }
       );
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
   }, []);
 
   const handleEditorTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       setInputTitle(e.target.value);
     },
     [inputTitle]

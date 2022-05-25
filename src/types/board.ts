@@ -1,5 +1,7 @@
+import { ChangeEvent } from "react";
+
 export interface BoardFilterProps {
-  handleSelectOption: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void;
   selectedOption: string;
 }
 

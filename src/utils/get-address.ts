@@ -13,7 +13,5 @@ export const getFullAddress = (data: Address) => {
     fullAddress += extraAddress !== "" ? ` (${extraAddress})` : "";
   }
 
-  console.log("get address", data);
-
   return fullAddress;
 };

@@ -1,4 +1,11 @@
-import { useState, useRef, Dispatch, SetStateAction } from "react";
+import {
+  useState,
+  useRef,
+  Dispatch,
+  SetStateAction,
+  MouseEvent,
+  KeyboardEvent,
+} from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { atom, useRecoilState } from "recoil";
@@ -35,7 +42,7 @@ const Menu = () => {
   };
 
   const handleItemClick = (
-    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
+    e: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>
   ) => {
     const itemName = (e.target as HTMLLIElement).dataset.name;
 
@@ -79,7 +86,6 @@ const Menu = () => {
             </MenuItem>
             <MenuItem>
               <SearchInputBtn
-                show={show}
                 searchClassName={searchClassName}
                 searchInputClassName={searchInputClassName}
                 searchBtnClassName={searchBtnClassName}

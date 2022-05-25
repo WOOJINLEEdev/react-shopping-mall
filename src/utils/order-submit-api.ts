@@ -28,10 +28,6 @@ interface ShippingAddress {
   request_note?: string;
 }
 
-interface CheckoutPaymentData {
-  paymentName: string;
-}
-
 interface CheckoutTotalDetailData {
   agreeChecked: boolean;
   finalPrice: number;
@@ -66,7 +62,6 @@ export async function submitCheckout({
         mileageToBeUsed: Number(checkoutTotalDetailData.usedMileage),
         paymentMethod: checkoutPaymentData,
       });
-      console.log("주문성공", res);
 
       window.location.replace(`/orderCheck/${checkoutNumber}`);
     } catch (err) {
@@ -102,7 +97,7 @@ export async function submitCheckout({
         mileageToBeUsed: Number(checkoutTotalDetailData.usedMileage),
         paymentMethod: checkoutPaymentData,
       });
-      console.log("주문성공", res);
+
       window.location.replace(`/orderCheck/${checkoutNumber}`);
     } catch (err) {
       console.log(err);

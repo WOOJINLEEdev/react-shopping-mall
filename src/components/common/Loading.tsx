@@ -1,4 +1,4 @@
-import LoadingImg from "images/Fading circles.gif";
+import LoadingImg from "assets/images/Fading circles.gif";
 
 const Loading = () => {
   return (

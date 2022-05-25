@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, MouseEvent } from "react";
 import { OrderPaymentItemProps, Payment } from "types";
 import { atom, useRecoilState } from "recoil";
 
@@ -86,7 +86,7 @@ const OrderPaymentList = React.memo(() => {
   const selectedPaymentClass = "on";
 
   const handlePaymentMethodClick = useCallback(
-    (e: React.MouseEvent<HTMLLIElement>) => {
+    (e: MouseEvent<HTMLLIElement>) => {
       const clickedPaymentMethodIndex = (e.target as HTMLLIElement).value;
       setPaymentName((e.target as HTMLLIElement).innerText);
 

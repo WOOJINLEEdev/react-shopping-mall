@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
-import downArrow from "images/down-arrow.png";
-import upArrow from "images/up-arrow-icon.png";
+import downArrow from "assets/images/down-arrow.png";
+import upArrow from "assets/images/up-arrow-icon.png";
 import { OrderTotalProps, LineItem } from "types";
 
 const OrderTotal = ({

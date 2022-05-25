@@ -7,6 +7,7 @@ import styled from "styled-components";
 import GoogleLogin from "react-google-login";
 import useTokenStatus from "hooks/useTokenStatus";
 import { createSocialLoginApi, createLoginApi } from "api";
+import { AxiosResponse } from "axios";
 
 const LogIn = () => {
   const { naver } = window;
@@ -25,7 +26,7 @@ const LogIn = () => {
           socialType: "naver",
           accessToken: naverIdToken,
         });
-        console.log(res);
+
         loginCheck(res);
       } catch (err) {
         console.log(err);
@@ -63,9 +64,7 @@ const LogIn = () => {
     }
   };
 
-  function loginCheck(response: any) {
-    console.log("response ", response);
-
+  function loginCheck(response: AxiosResponse) {
     if (!response.data) {
       return false;
     }
@@ -126,7 +125,7 @@ const LogIn = () => {
           email: response.profileObj.email,
         },
       });
-      console.log(res);
+
       loginCheck(res);
     } catch (err) {
       console.log(err);

@@ -105,7 +105,7 @@ const Join = () => {
 
     try {
       const res = await checkUserIdExistenceApi({ userId });
-      console.log("id check", res.data);
+
       if (res.data) {
         return alert("이미 존재하는 ID 입니다. 다른 ID를 입력해주세요.");
       }

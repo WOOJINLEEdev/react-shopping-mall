@@ -1,4 +1,11 @@
-import { useState, useEffect, lazy, Suspense, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  lazy,
+  Suspense,
+  useCallback,
+  ChangeEvent,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -83,22 +90,19 @@ const BoardFirst = () => {
       alert("로그인 후 이용해주세요!");
       return false;
     }
-  }, [token]);
+  }, [navigate, token]);
 
-  const handlePreviewBtnClick = useCallback(
-    (itemId: number) => {
-      setSelectedPreviewId(itemId);
-      setIsOpen(true);
-    },
-    [isOpen, selectedPreviewId]
-  );
+  const handlePreviewBtnClick = useCallback((itemId: number) => {
+    setSelectedPreviewId(itemId);
+    setIsOpen(true);
+  }, []);
 
   const onRequestClose = useCallback(() => {
     setIsOpen(false);
-  }, [isOpen]);
+  }, []);
 
   const handleSelectOption = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
+    (e: ChangeEvent<HTMLSelectElement>) => {
       if (e.target.value === "공지사항") {
         setSelectedOption("공지사항");
 
@@ -128,7 +132,7 @@ const BoardFirst = () => {
     setDataList(searchFilter);
   };
 
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     searchInput = targetValue;
   };

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import downArrow from "images/down-arrow.png";
-import upArrow from "images/up-arrow-icon.png";
+import { useState, useEffect, MouseEvent, ChangeEvent } from "react";
+import downArrow from "assets/images/down-arrow.png";
+import upArrow from "assets/images/up-arrow-icon.png";
 import { optionData } from "components/order/order-delivery-option-data";
 import OrderDeliveryHead from "components/order/OrderDeliveryHead";
 import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
@@ -52,7 +52,7 @@ const OrderDelivery = ({
     }
   }, []);
 
-  const handleDeliveryTabClick = (e: React.MouseEvent<HTMLUListElement>) => {
+  const handleDeliveryTabClick = (e: MouseEvent<HTMLUListElement>) => {
     const deliveryTabName = (e.target as HTMLUListElement).dataset.name;
 
     if (!checkoutData.user.shipping_address) {
@@ -120,9 +120,7 @@ const OrderDelivery = ({
     }
   };
 
-  const handleRequirementOptionChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleRequirementOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const targetValue = e.target.value;
 
     if (

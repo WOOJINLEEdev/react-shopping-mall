@@ -1,6 +1,7 @@
 import { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { atom, useSetRecoilState } from "recoil";
+
 import Loading from "components/common/Loading";
 
 const Home = lazy(() => import("pages/Home"));
@@ -33,7 +34,6 @@ const Main = () => {
   const setHeaderItemState = useSetRecoilState(headerItemState);
 
   useEffect(() => {
-    console.log("pathname", location.pathname);
     setHeaderItemState(location.pathname);
     window.scrollTo(0, 0);
   }, [location.pathname]);

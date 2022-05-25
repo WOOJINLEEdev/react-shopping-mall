@@ -1,7 +1,9 @@
+import { ChangeEvent, MouseEvent } from "react";
+
 //---------------------------------------------- OrderAgreeCheck
 export interface OrderAgreeCheckProps {
   agreeChecked: boolean;
-  handleAgreeCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleAgreeCheck: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 //---------------------------------------------- OrderCheckoutButton
@@ -182,9 +184,7 @@ export interface OrderDeliveryFormProps {
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutId: number;
-  handleRequirementOptionChange: (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   deliverySecondRequirementOption: DeliveryRequirementOption[];
   deliverySecondRequirementWrite: string;
   requirement1: string;
@@ -198,14 +198,12 @@ export interface PreexistenceSelectProps {
 //---------------------------------------------- OrderDeliveryFormMobile
 export interface OrderDeliveryFormMobileProps {
   deliveryWrapClass: string;
-  handleDeliveryTabClick: (e: React.MouseEvent<HTMLUListElement>) => void;
+  handleDeliveryTabClick: (e: MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutData: DeliveryFormMobileCheckoutData;
   deliveryForm: string;
-  handleRequirementOptionChange: (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   deliveryFirstRequirementWrite: string;
   deliveryFirstRequirementOption: DeliveryRequirementOption[];
   checkoutId: number;
@@ -235,14 +233,12 @@ export interface DeliveryFormMobileShippingAddress {
 //---------------------------------------------- OrderDeliveryFormPc
 export interface OrderDeliveryFormPcProps {
   deliveryWrapClass: string;
-  handleDeliveryTabClick: (e: React.MouseEvent<HTMLUListElement>) => void;
+  handleDeliveryTabClick: (e: MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutData: DeliveryFormPcCheckoutData;
   deliveryForm: string;
-  handleRequirementOptionChange: (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   deliveryFirstRequirementOption: DeliveryRequirementOption[];
   deliveryFirstRequirementWrite: string;
   checkoutId: number;
@@ -277,14 +273,12 @@ export interface LiProps {
 //---------------------------------------------- OrderDeliveryFormTablet
 export interface OrderDeliveryFormTabletProps {
   deliveryWrapClass: string;
-  handleDeliveryTabClick: (e: React.MouseEvent<HTMLUListElement>) => void;
+  handleDeliveryTabClick: (e: MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutData: DeliveryFormTabletCheckoutData;
   deliveryForm: string;
-  handleRequirementOptionChange: (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => void;
+  handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   deliveryFirstRequirementWrite: string;
   deliveryFirstRequirementOption: DeliveryRequirementOption[];
   checkoutId: number;
@@ -348,7 +342,7 @@ export interface OrderPaymentItemProps {
   i: number;
   selected: boolean;
   item: Payment;
-  handlePaymentMethodClick: (e: React.MouseEvent<HTMLLIElement>) => void;
+  handlePaymentMethodClick: (e: MouseEvent<HTMLLIElement>) => void;
   basePaymentClass: string;
   selectedPaymentClass: string;
 }

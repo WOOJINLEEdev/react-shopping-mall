@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 import { updateStarRatingApi } from "api";
@@ -19,7 +19,7 @@ const StarRating = ({ myRating }: StarRatingProps) => {
   }, [myRating]);
 
   const handleStarClick = async (
-    e: React.MouseEvent<SVGElement> | React.KeyboardEvent<SVGElement>,
+    e: MouseEvent<SVGElement> | KeyboardEvent<SVGElement>,
     selectedStar: number
   ) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const StarRating = ({ myRating }: StarRatingProps) => {
       const res = await updateStarRatingApi(
         countClickedStarsNumber(selectedStarRatings)
       );
-      console.log(res);
+
       setStarRatings(selectedStarRatings);
     } catch (err) {
       console.log(err);

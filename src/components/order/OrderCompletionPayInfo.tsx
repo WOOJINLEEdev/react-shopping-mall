@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
-import downArrow from "images/down-arrow.png";
-import upArrow from "images/up-arrow-icon.png";
+import downArrow from "assets/images/down-arrow.png";
+import upArrow from "assets/images/up-arrow-icon.png";
 import { OrderCompletionPayInfoProps } from "types";
 
 const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {

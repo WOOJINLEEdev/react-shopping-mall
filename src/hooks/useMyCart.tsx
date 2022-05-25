@@ -23,7 +23,7 @@ export default function useMyCart() {
     } catch (err: any | AxiosError) {
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
-        console.log("cart e: ", err.response);
+
         if ([401, 404].includes(err.response.status)) {
           return {
             items: [],

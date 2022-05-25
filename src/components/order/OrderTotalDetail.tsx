@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 import OrderCheckoutButton from "components/order/OrderCheckoutButton";
 import OrderAgreeCheck from "components/order/OrderAgreeCheck";
@@ -65,7 +65,7 @@ const OrderTotalDetail = ({
     setFinalPrice(countFinalPrice);
   }, [countFinalPrice]);
 
-  const handleAgreeCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAgreeCheck = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     if (checked) {
       setAgreeChecked(true);

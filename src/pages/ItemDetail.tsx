@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
 import QuantityCounter from "components/common/QuantityCounter";
@@ -51,7 +51,7 @@ const ItemDetail = () => {
 
   const selectOptions = data.variants;
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "") {
       setItemOption("");
     }
@@ -86,7 +86,7 @@ const ItemDetail = () => {
       mutateCart(res.data, false);
       setIsOpen(true);
     } catch (err) {
-      console.log(error);
+      console.log(err);
     }
   }
 
@@ -94,19 +94,15 @@ const ItemDetail = () => {
     setIsOpen(false);
   };
 
-  const handleModalBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleModalBtn = (e: MouseEvent<HTMLButtonElement>) => {
     if ((e.target as HTMLButtonElement).name === "yes") {
-      console.log("yes");
       navigate("/cart");
     } else {
-      console.log("no");
       setIsOpen(false);
     }
   };
 
   const itemCheckout = async () => {
-    console.log("구매하기 버튼 클릭");
-
     if (!token) {
       return alert("로그인 후 이용해주세요!");
     }

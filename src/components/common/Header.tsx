@@ -2,24 +2,26 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSetRecoilState, useRecoilValue } from "recoil";
-import { menuState } from "components/common/Menu";
-import Loading from "components/common/Loading";
-import useMyCart from "hooks/useMyCart";
-import useTokenStatus from "hooks/useTokenStatus";
-import { useDevice } from "hooks/useDevice";
-import signInImg from "images/user.png";
-import { ReactComponent as MenuImg } from "images/menu.svg";
 import { GoSearch } from "@react-icons/all-files/go/GoSearch";
 import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
+
+import { menuState } from "components/common/Menu";
+import Loading from "components/common/Loading";
+import SearchModal, { searchWrapState } from "components/search/SearchModal";
+import useMyCart from "hooks/useMyCart";
+import useTokenStatus from "hooks/useTokenStatus";
+import { useDevice } from "hooks/useDevice";
+
+import signInImg from "assets/images/user.png";
+import { ReactComponent as MenuImg } from "assets/images/menu.svg";
 import {
   updateMyVisitCountsApi,
   updateShopVisitCountsApi,
   createAccessTokenApi,
 } from "api";
 import { headerItemState } from "layout/Main";
-import SearchModal, { searchWrapState } from "components/search/SearchModal";
 
 const Header = () => {
   const location = useLocation();
@@ -33,7 +35,6 @@ const Header = () => {
     async function updateMyVisitCount() {
       try {
         const res = await updateMyVisitCountsApi();
-        console.log("user visit", res.data);
       } catch (err) {
         console.log(err);
       }
@@ -62,7 +63,6 @@ const Header = () => {
     async function updateShopVisitCount() {
       try {
         const res = await updateShopVisitCountsApi();
-        console.log("shop visit", res.data);
       } catch (err) {
         console.log(err);
       }

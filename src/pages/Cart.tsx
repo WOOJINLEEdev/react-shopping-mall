@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { MouseEvent, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import QuantityCounter from "components/common/QuantityCounter";
@@ -47,14 +47,12 @@ const Cart = () => {
 
   const items = cart.items;
 
-  const handleItemRemoveBtnClick = async (
-    e: React.MouseEvent<HTMLInputElement>
-  ) => {
+  const handleItemRemoveBtnClick = async (e: MouseEvent<HTMLInputElement>) => {
     const cartItemId = Number((e.target as HTMLInputElement).name);
 
     try {
       const res = await deleteCartItemApi({ cartItemId });
-      console.log(res);
+
       mutateCart(null, true);
       handleSnackBar();
     } catch (err) {
@@ -75,8 +73,8 @@ const Cart = () => {
         },
         false
       );
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -151,7 +149,6 @@ const Cart = () => {
         variant_id: item.variant_id,
         quantity: item.quantity,
       }));
-    console.log("큰 구매버튼 클릭 ", checkedLineItems);
 
     try {
       const res = await createCheckoutsApi({
@@ -165,8 +162,6 @@ const Cart = () => {
   };
 
   const handleListBuyBtnClick = async (item: Item, quantity: number) => {
-    console.log("작은 구매버튼 클릭");
-
     if (Number(item.variant_price) * item.quantity < 70000) {
       localStorage.setItem("delivery", "3000");
     } else {
@@ -190,14 +185,13 @@ const Cart = () => {
 
   const handleChoiceItemRemoveBtnClick = async () => {
     const chkItems = cart.items.filter((item: Item) => item.checked);
-    console.log(chkItems);
 
     for (const chkItem of chkItems) {
       let cartItemId: number = chkItem.id;
 
       try {
         const res = await deleteCartItemApi({ cartItemId });
-        console.log(res);
+
         mutateCart(null, true);
         setAllChecked(true);
         handleSnackBar();

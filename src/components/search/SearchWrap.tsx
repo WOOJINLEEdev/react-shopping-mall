@@ -50,7 +50,6 @@ const SearchWrap = ({
   return (
     <SearchWrapper className={show ? "" : "search_hidden"}>
       <SearchInputBtn
-        show={show}
         searchClassName={searchClassName}
         searchInputClassName={searchInputClassName}
         searchBtnClassName={searchBtnClassName}

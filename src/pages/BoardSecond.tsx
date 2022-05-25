@@ -1,4 +1,11 @@
-import { useState, useEffect, lazy, Suspense, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  lazy,
+  Suspense,
+  useCallback,
+  ChangeEvent,
+} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSWR from "swr";
@@ -110,7 +117,7 @@ const BoardSecond = () => {
     setIsOpen(false);
   }, [isOpen]);
 
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
     searchInput = targetValue;
   };
