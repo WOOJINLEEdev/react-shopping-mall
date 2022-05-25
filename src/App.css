@@ -146,36 +146,46 @@ table {
   font-family: "Spoqa Han Sans 100";
   font-weight: "100";
   font-style: normal;
-  src: url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.woff2") format("woff2"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.woff") format("woff"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.ttf") format("truetype");
+  src: url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.woff2")
+      format("woff2"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.woff") format("woff"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Thin.ttf")
+      format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans 200";
   font-weight: "200";
   font-style: normal;
-  src: url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.woff2") format("woff2"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.woff") format("woff"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.ttf") format("truetype");
+  src: url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.woff2")
+      format("woff2"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.woff") format("woff"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Light.ttf")
+      format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans 300";
   font-weight: "300";
   font-style: normal;
-  src: url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Regular.woff2") format("woff2"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Regular.woff") format("woff"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Regular.ttf") format("truetype");
+  src: url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Regular.woff2")
+      format("woff2"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Regular.woff")
+      format("woff"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Regular.ttf")
+      format("truetype");
 }
 
 @font-face {
   font-family: "Spoqa Han Sans 400";
   font-weight: "400";
   font-style: normal;
-  src: url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff2") format("woff2"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff") format("woff"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.ttf") format("truetype");
+  src: url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff2")
+      format("woff2"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.woff")
+      format("woff"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Medium.ttf")
+      format("truetype");
   font-display: swap;
 }
 
@@ -183,28 +193,33 @@ table {
   font-family: "Spoqa Han Sans Bold";
   font-weight: "900";
   font-style: normal;
-  src: url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.woff2") format("woff2"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.woff") format("woff"),
-    url("./fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.ttf") format("truetype");
+  src: url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.woff2")
+      format("woff2"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.woff") format("woff"),
+    url("./assets/fonts/SpoqaHanSans/SpoqaHanSansNeo-Bold.ttf")
+      format("truetype");
 }
 
 @font-face {
   font-family: "RobotoCondensed Light";
   font-weight: "200";
-  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Light.woff2")
+  src: url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Light.woff2")
       format("woff2"),
-    url("./fonts/Roboto_Condensed/RobotoCondensed-Light.woff") format("woff"),
-    url("./fonts/Roboto_Condensed/RobotoCondensed-Light.ttf") format("truetype");
+    url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Light.woff")
+      format("woff"),
+    url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Light.ttf")
+      format("truetype");
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
 @font-face {
   font-family: "RobotoCondensed Regular";
   font-weight: "300";
-  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.woff2")
+  src: url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.woff2")
       format("woff2"),
-    url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.woff") format("woff"),
-    url("./fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf")
+    url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.woff")
+      format("woff"),
+    url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf")
       format("truetype");
   unicode-range: U+0041-005A, U+0061-007A;
   font-display: swap;
@@ -213,19 +228,21 @@ table {
 @font-face {
   font-family: "RobotoCondensed Bold";
   font-weight: "700";
-  src: url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.woff2")
+  src: url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.woff2")
       format("woff2"),
-    url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.woff") format("woff"),
-    url("./fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf") format("truetype");
+    url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.woff")
+      format("woff"),
+    url("./assets/fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf")
+      format("truetype");
   unicode-range: U+0041-005A, U+0061-007A;
 }
 
 @font-face {
   font-family: "Caveat";
   font-weight: "500";
-  src: url("./fonts/Caveat/Caveat-Medium.woff2") format("woff2"),
-    url("./fonts/Caveat/Caveat-Medium.woff") format("woff"),
-    url("./fonts/Caveat/Caveat-Medium.ttf") format("truetype");
+  src: url("./assets/fonts/Caveat/Caveat-Medium.woff2") format("woff2"),
+    url("./assets/fonts/Caveat/Caveat-Medium.woff") format("woff"),
+    url("./assets/fonts/Caveat/Caveat-Medium.ttf") format("truetype");
   font-display: swap;
 }
 
@@ -381,7 +398,7 @@ button {
 }
 
 .header_search_btn {
-  background: url("./images/search.png") no-repeat center;
+  background: url("./assets/images/search.png") no-repeat center;
   background-size: 30px 30px;
   border: none;
   padding: 0;
@@ -1960,7 +1977,7 @@ main {
 }
 
 .slick-next {
-  background: url("./images/arrow_right.png") center center no-repeat !important;
+  background: url("./assets/images/arrow_right.png") center center no-repeat !important;
 }
 
 .slick-next:before {
@@ -1968,7 +1985,7 @@ main {
 }
 
 .slick-prev {
-  background: url("./images/arrow_left.png") center center no-repeat !important;
+  background: url("./assets/images/arrow_left.png") center center no-repeat !important;
 }
 
 .slick-prev:before {
@@ -2053,7 +2070,7 @@ main {
 }
 
 .board_preview_btn {
-  background: url("./images/preview.png") no-repeat;
+  background: url("./assets/images/preview.png") no-repeat;
   vertical-align: middle;
   width: 16px;
   height: 16px;
@@ -2180,7 +2197,7 @@ main {
 .board_search_btn {
   overflow: hidden;
   position: relative;
-  background: url("./images/search.png") no-repeat center;
+  background: url("./assets/images/search.png") no-repeat center;
   background-size: 15px 15px;
   border: none;
   width: 20%;
@@ -2221,7 +2238,7 @@ main {
 }
 
 .menu_search_btn {
-  background: url("./images/search.png") no-repeat center;
+  background: url("./assets/images/search.png") no-repeat center;
   background-size: 20px 20px;
   width: 20%;
   padding: 0;
