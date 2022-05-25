@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+
 import AddDeliveryAddressModal, {
   myDeliveryInfoState,
 } from "components/mypage/AddDeliveryAddressModal";
+import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 import { updateShippingAddressApi } from "api";
 import { formatPhone } from "utils/format-phone";
 import {
@@ -13,8 +16,6 @@ import {
   AddBtnProps,
   DeliveryAddressItemProps,
 } from "types";
-import { useRecoilValue } from "recoil";
-import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 
 Modal.setAppElement("#root");
 
@@ -24,15 +25,14 @@ const MyPageDeliveryModal = ({
   myDeliveryAddress,
 }: MyPageDeliveryModalProps) => {
   const myDeliveryData = useRecoilValue<DeliveryInfoState>(
-    myDeliveryInfoState(myDeliveryAddress.id)
+    myDeliveryInfoState(myDeliveryAddress ? myDeliveryAddress.id : 0)
   );
-  const [addDeliveryClassName, setAddDeliveryClassName] =
-    useState<string>("hide");
-  const [addressDisplay, setAddressDisplay] = useState<string>("block");
-  const [addBtnDisplay, setAddBtnDisplay] = useState<string>("block");
-  const [btnWrapDisplay, setBtnWrapDisplay] = useState<string>("none");
-  const [closBtnDisplay, setClosBtnDisplay] = useState<string>("");
-  const [notAddressClassName, setNotAddressClassName] = useState<string>("");
+  const [addDeliveryClassName, setAddDeliveryClassName] = useState("hide");
+  const [addressDisplay, setAddressDisplay] = useState("block");
+  const [addBtnDisplay, setAddBtnDisplay] = useState("block");
+  const [btnWrapDisplay, setBtnWrapDisplay] = useState("none");
+  const [closBtnDisplay, setClosBtnDisplay] = useState("");
+  const [notAddressClassName, setNotAddressClassName] = useState("");
 
   useEffect(() => {
     if (isOpen) {
@@ -191,7 +191,7 @@ const MyPageDeliveryModal = ({
           )}
           <AddDeliveryAddressModal
             addDeliveryClassName={addDeliveryClassName}
-            myDeliveryAddressId={myDeliveryAddress.id}
+            myDeliveryAddressId={myDeliveryAddress ? myDeliveryAddress.id : 0}
           />
         </ModalContent>
       </ModalContentContainer>

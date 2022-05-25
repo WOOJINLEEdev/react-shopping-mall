@@ -2,9 +2,10 @@ import { useState, lazy, Suspense, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
+
 import StarRating from "components/mypage/StarRating";
 import Loading from "components/common/Loading";
-import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
 import { MyPageInfoDetailProps } from "types";
 
 Modal.setAppElement("#root");
@@ -14,15 +15,15 @@ const MyPageDeliveryModal = lazy(
 );
 
 const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleDeliveryAddress = useCallback(() => {
     setIsOpen(true);
-  }, [isOpen]);
+  }, []);
 
   const onRequestClose = useCallback(() => {
     setIsOpen(false);
-  }, [isOpen]);
+  }, []);
 
   return (
     <MyInfoDetail>
@@ -30,7 +31,7 @@ const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
         <MyPageDeliveryModal
           isOpen={isOpen}
           onRequestClose={onRequestClose}
-          myDeliveryAddress={myData.shipping_address}
+          myDeliveryAddress={myData.shipping_address && myData.shipping_address}
         />
       </Suspense>
 

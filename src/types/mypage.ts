@@ -84,7 +84,7 @@ export interface CouponInfo {
 export interface MyPageDeliveryModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  myDeliveryAddress: MyDeliveryAddress;
+  myDeliveryAddress?: MyDeliveryAddress;
 }
 
 export interface MyDeliveryAddress {

@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import styled from "styled-components";
+
 import MyPageChart from "components/mypage/MyPageChart";
 import Loading from "components/common/Loading";
-import useMyPageData from "hooks/useMyPageData";
 import MyPageInfo from "components/mypage/MyPageInfo";
 import MyPageInfoDetail from "components/mypage/MyPageInfoDetail";
+import useMyPageData from "hooks/useMyPageData";
 
 const MyPage = () => {
   const { myData, loadingMyData, myDataError } = useMyPageData();

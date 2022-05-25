@@ -42,7 +42,7 @@ const AddDeliveryAddressModal = ({
     myDeliveryInfoState(myDeliveryAddressId)
   );
 
-  const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
+  const [showDaumPostModal, setShowDaumPostModal] = useState(false);
 
   useEffect(() => {
     if (myData.shipping_address) {
