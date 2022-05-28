@@ -36,30 +36,30 @@ const Main = () => {
   useEffect(() => {
     setHeaderItemState(location.pathname);
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname, setHeaderItemState]);
 
   return (
     <main>
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products/:productId" element={<ItemDetail />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/checkout/:checkoutId" element={<Order />} />
-          <Route path="/postView/:id" element={<BoardItem />} />
-          <Route path="/post/:no" element={<BoardFirstItem />} />
-          <Route path="/boardPost" element={<BoardEditor />} />
-          <Route path="/selectBoard" element={<SelectBoard />} />
-          <Route path="/selectBoard1" element={<BoardFirst />} />
-          <Route path="/selectBoard2" element={<BoardSecond />} />
-          <Route path="/orderCheck/:checkoutId" element={<OrderCompletion />} />
-          <Route path="/myOrderCheck" element={<MyOrderCheck />} />
-          <Route path="/searchResult/:searchWord" element={<SearchResult />} />
-          <Route path="/aboutMe" element={<AboutMe />} />
-          <Route path="/*" element={<PageNotFound />} />
+          <Route path="products/:productId" element={<ItemDetail />} />
+          <Route path="login" element={<LogIn />} />
+          <Route path="mypage" element={<MyPage />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="join" element={<Join />} />
+          <Route path="checkout/:checkoutId" element={<Order />} />
+          <Route path="postView/:id" element={<BoardItem />} />
+          <Route path="post/:no" element={<BoardFirstItem />} />
+          <Route path="boardPost" element={<BoardEditor />} />
+          <Route path="selectBoard" element={<SelectBoard />} />
+          <Route path="selectBoard1" element={<BoardFirst />} />
+          <Route path="selectBoard2" element={<BoardSecond />} />
+          <Route path="orderCheck/:checkoutId" element={<OrderCompletion />} />
+          <Route path="myOrderCheck" element={<MyOrderCheck />} />
+          <Route path="searchResult/:searchWord" element={<SearchResult />} />
+          <Route path="aboutMe" element={<AboutMe />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
     </main>
