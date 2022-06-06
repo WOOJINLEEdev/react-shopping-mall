@@ -43,8 +43,10 @@ export interface QuantityAreaProps {
 
 // SnackBar
 export interface SnackBarProps {
-  name?: string;
-  text?: string;
+  open: boolean;
+  autoHideDuration: number;
+  message?: string;
+  onClose: () => void;
 }
 
 // MoreViewBtn

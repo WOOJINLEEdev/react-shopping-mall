@@ -1,8 +1,28 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+
 import { SnackBarProps } from "types";
 
-const SnackBar = ({ name, text }: SnackBarProps) => {
-  return <Bar className={name}>{text}</Bar>;
+const SnackBar = ({
+  open,
+  autoHideDuration,
+  message,
+  onClose,
+}: SnackBarProps) => {
+  const [barClassName, setBarClassName] = useState("hidden");
+
+  useEffect(() => {
+    if (open) {
+      setBarClassName("snack_bar");
+
+      setTimeout(() => {
+        onClose();
+        return setBarClassName("hidden");
+      }, autoHideDuration);
+    }
+  }, [autoHideDuration, onClose, open]);
+
+  return <Bar className={barClassName}>{message}</Bar>;
 };
 
 export default SnackBar;
@@ -22,6 +42,11 @@ const Bar = styled.div`
   text-align: center;
   transition: all 0.3s;
   z-index: 100;
+
+  &.hidden {
+    display: none;
+    transition: all 2s;
+  }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     width: calc(100% - 60px);

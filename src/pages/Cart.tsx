@@ -28,11 +28,11 @@ interface Item {
 const Cart = () => {
   const [chkId, setChkId] = useState<string>("");
   const [allChecked, setAllChecked] = useState<boolean>(true);
-  const [barClassName, setBarClassName] = useState<string>("opacity");
-  const [barText, setBarText] =
-    useState<string>("선택하신 상품이 삭제되었습니다.");
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
+  const message = "선택하신 상품이 삭제되었습니다.";
+
+  const navigate = useNavigate();
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
   if (cartError)
@@ -54,7 +54,7 @@ const Cart = () => {
     try {
       const res = await deleteCartItemApi({ cartItemId });
       mutateCart(null, true);
-      handleSnackBar();
+      setOpen((prev) => !prev);
     } catch (err) {
       console.log(err);
     }
@@ -193,24 +193,12 @@ const Cart = () => {
 
         mutateCart(null, true);
         setAllChecked(true);
-        handleSnackBar();
+        setOpen((prev) => !prev);
       } catch (err) {
         console.log(err);
       }
     }
   };
-
-  function handleSnackBar() {
-    if (barClassName === "opacity") {
-      setTimeout(() => {
-        setBarClassName("snack_bar");
-      }, 300);
-
-      return setTimeout(() => {
-        setBarClassName("opacity");
-      }, 3000);
-    }
-  }
 
   return (
     <section className="order_info">
@@ -435,7 +423,12 @@ const Cart = () => {
           BUY NOW
         </button>
       )}
-      <SnackBar name={barClassName} text={barText} />
+      <SnackBar
+        open={open}
+        autoHideDuration={3000}
+        message={message}
+        onClose={() => setOpen(false)}
+      />
     </section>
   );
 };
