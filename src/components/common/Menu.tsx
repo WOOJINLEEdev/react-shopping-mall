@@ -5,10 +5,12 @@ import {
   SetStateAction,
   MouseEvent,
   KeyboardEvent,
+  useEffect,
 } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { atom, useRecoilState } from "recoil";
+import styled from "styled-components";
+
 import SearchInputBtn from "components/search/SearchInputBtn";
 
 export const menuState = atom<boolean>({
@@ -17,6 +19,9 @@ export const menuState = atom<boolean>({
 });
 
 const Menu = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [searchClassName, setSearchClassName] = useState<string>("menu_search");
   const [searchInputClassName, setsearchInputClassName] =
     useState<string>("menu_search_input");
@@ -24,8 +29,12 @@ const Menu = () => {
     useState<string>("menu_search_btn");
   const [searchInputId, setSearchInputId] = useState<string>("menuSearchInput");
   const ref = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+
   const [show, setShow] = useRecoilState(menuState);
+
+  useEffect(() => {
+    setShow(false);
+  }, [location.pathname, setShow]);
 
   const handleSearchBtnClick = (searchInput: string) => {
     searchInput = searchInput?.trim() ?? "";
@@ -41,10 +50,10 @@ const Menu = () => {
     setShow(false);
   };
 
-  const handleItemClick = (
+  const handleMenuItemClick = (
     e: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>
   ) => {
-    const itemName = (e.target as HTMLLIElement).dataset.name;
+    const itemName = (e.currentTarget as HTMLLIElement).dataset.name;
 
     itemName === "ABOUT ME" && navigate("/aboutMe");
     itemName === "COMMUNITY" && navigate("/selectBoard");
@@ -70,16 +79,16 @@ const Menu = () => {
           <MenuList>
             <MenuItem
               data-name="ABOUT ME"
-              onClick={handleItemClick}
-              onKeyPress={handleItemClick}
+              onClick={handleMenuItemClick}
+              onKeyPress={handleMenuItemClick}
               tabIndex={0}
             >
               ABOUT ME
             </MenuItem>
             <MenuItem
               data-name="COMMUNITY"
-              onClick={handleItemClick}
-              onKeyPress={handleItemClick}
+              onClick={handleMenuItemClick}
+              onKeyPress={handleMenuItemClick}
               tabIndex={0}
             >
               COMMUNITY
