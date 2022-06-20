@@ -1,11 +1,14 @@
-import React, { useState, lazy, Suspense, useCallback } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
-import Loading from "components/common/Loading";
+
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { createLogoutApi } from "api";
+
+import Loading from "components/common/Loading";
+
 import { MyPageInfoProps } from "types";
 
 Modal.setAppElement("#root");
@@ -16,16 +19,22 @@ const MyPageCouponModal = lazy(
 );
 
 const MyPageInfo = ({ myData }: MyPageInfoProps) => {
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
-  const [isCouponModalOpen, setIsCouponModalOpen] = useState<boolean>(false);
-  const [modalText, setModalText] =
-    useState<string>("정말 로그아웃 하시겠습니까?");
-  const [yesBtnText, setYesBtnText] = useState<string>("예");
-  const [noBtnText, setNoBtnText] = useState<string>("아니오");
-
   const navigate = useNavigate();
 
-  const logout = useCallback(() => {
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState<boolean>(false);
+
+  const modalText = "정말 로그아웃 하시겠습니까?";
+  const yesBtnText = "예";
+  const noBtnText = "아니오";
+
+  const { loadingCart, cartError, mutateCart } = useMyCart();
+  const { removeToken } = useTokenStatus();
+
+  if (loadingCart) return <Loading />;
+  if (cartError) return <div>에러 발생...</div>;
+
+  const logout = () => {
     async function createLogout() {
       try {
         const res = await createLogoutApi();
@@ -47,33 +56,27 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
     );
 
     navigate("/");
-  }, []);
+  };
 
-  const handleLogoutBtnClick = useCallback(() => {
+  const handleLogoutBtnClick = () => {
     setIsLogoutModalOpen(true);
-  }, [isLogoutModalOpen]);
+  };
 
-  const handleModifyBtnClick = useCallback(() => {
+  const handleModifyBtnClick = () => {
     alert("현재 서비스 준비 중입니다.");
-  }, []);
+  };
 
-  const onRequestCloseLogoutModal = useCallback(() => {
+  const onRequestCloseLogoutModal = () => {
     setIsLogoutModalOpen(false);
-  }, [isLogoutModalOpen]);
+  };
 
-  const handleCouponModal = useCallback(() => {
+  const handleCouponModal = () => {
     setIsCouponModalOpen(true);
-  }, [isCouponModalOpen]);
+  };
 
-  const onRequestCloseCouponModal = useCallback(() => {
+  const onRequestCloseCouponModal = () => {
     setIsCouponModalOpen(false);
-  }, [isCouponModalOpen]);
-
-  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-  const { removeToken } = useTokenStatus();
-
-  if (loadingCart) return <Loading />;
-  if (cartError) return <div>에러 발생...</div>;
+  };
 
   return (
     <MyInfo>

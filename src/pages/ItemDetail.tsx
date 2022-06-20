@@ -1,13 +1,16 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
-import QuantityCounter from "components/common/QuantityCounter";
-import Loading from "components/common/Loading";
-import CommonModal from "components/common/CommonModal";
+
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { instance } from "utils/http-client";
+import { getSizedImageUrl } from "utils/image";
 import { addToCartApi, createCheckoutsApi } from "api";
+
+import Loading from "components/common/Loading";
+import CommonModal from "components/common/CommonModal";
+import QuantityCounter from "components/common/QuantityCounter";
 
 interface Option {
   id: number;
@@ -19,20 +22,39 @@ interface Option {
   product_id: number;
 }
 
+const SOURCE_LIST = [
+  {
+    id: "0",
+    media: "(max-width: 440px)",
+    size: "_400x300.jpg",
+  },
+  {
+    id: "1",
+    media: "(max-width: 767px)",
+    size: "_500x300.jpg",
+  },
+  {
+    id: "2",
+    media: "(max-width: 1016px)",
+    size: "_400x300.jpg",
+  },
+];
+
 const ItemDetail = () => {
   const navigate = useNavigate();
   const matchParams = useParams();
+
   const [quantity, setQuantity] = useState<number>(1);
   const [itemOption, setItemOption] = useState<number | string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [modalText, setModalText] =
-    useState<string>("장바구니에 상품이 추가되었습니다.");
-  const [yesBtnText, setYesBtnText] = useState<string>("장바구니 이동");
-  const [noBtnText, setNoBtnText] = useState<string>("쇼핑 계속하기");
-  const [btnWidth, setBtnWidth] = useState<string>("40%");
-  const [contentPadding, setContentPadding] = useState<string>("50px 0");
   const [onOverlayClick, setOnOverlayClick] = useState<boolean>(false);
   const [onEsc, setOnEsc] = useState<boolean>(false);
+
+  const modalText = "장바구니에 상품이 추가되었습니다.";
+  const yesBtnText = "장바구니 이동";
+  const noBtnText = "쇼핑 계속하기";
+  const btnWidth = "40%";
+  const contentPadding = "50px 0";
 
   const productUrl = `/v1/products/${matchParams.productId}`;
   const fetcher = (url: string) => {
@@ -40,8 +62,8 @@ const ItemDetail = () => {
   };
 
   const { data, error } = useSWR(productUrl, fetcher);
-  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-  const { token, mutateToken } = useTokenStatus();
+  const { loadingCart, cartError, mutateCart } = useMyCart();
+  const { token } = useTokenStatus();
 
   if (error) return <div>에러 발생...</div>;
   if (!data) return <Loading />;
@@ -94,7 +116,7 @@ const ItemDetail = () => {
     setIsOpen(false);
   };
 
-  const handleModalBtn = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleModalBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
     if ((e.target as HTMLButtonElement).name === "yes") {
       navigate("/cart");
     } else {
@@ -142,8 +164,8 @@ const ItemDetail = () => {
         modalText={modalText}
         yesBtnText={yesBtnText}
         noBtnText={noBtnText}
-        yesBtnClick={handleModalBtn}
-        noBtnClick={handleModalBtn}
+        yesBtnClick={handleModalBtnClick}
+        noBtnClick={handleModalBtnClick}
         btnWidth={btnWidth}
         contentPadding={contentPadding}
         onOverlayClick={onOverlayClick}
@@ -151,21 +173,18 @@ const ItemDetail = () => {
       />
       <div className="image_wrapper">
         <picture className="image_picture">
-          <source
-            media="(max-width: 440px)"
-            srcSet={data.images[0].src.slice(0, -4) + "_400x300.jpg"}
-          />
-          <source
-            media="(max-width: 767px)"
-            srcSet={data.images[0].src.slice(0, -4) + "_500x300.jpg"}
-          />
-          <source
-            media="(max-width: 1016px)"
-            srcSet={data.images[0].src.slice(0, -4) + "_400x300.jpg"}
-          />
+          {SOURCE_LIST.map((item) => {
+            return (
+              <source
+                key={`item_detail_${item.id}`}
+                media={item.media}
+                srcSet={getSizedImageUrl(data.images[0].src, item.size)}
+              />
+            );
+          })}
           <img
             className="image"
-            src={data.images[0].src.slice(0, -4) + "_400x300.jpg"}
+            src={getSizedImageUrl(data.images[0].src, "_400x300.jpg")}
             alt={`${data.name}_상품 이미지`}
           />
         </picture>
@@ -201,7 +220,7 @@ const ItemDetail = () => {
               <td className="tbody_td">
                 <select className="td_select" onChange={handleSelectChange}>
                   <option value="">- [필수] 옵션을 선택해주세요 -</option>
-                  {selectOptions.map((option: Option, i: number) => (
+                  {selectOptions.map((option: Option) => (
                     <option key={option.option1}>{option.option1}</option>
                   ))}
                 </select>

@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import Loading from "components/common/Loading";
-import Chart from "components/common/Chart";
+import { ApexOptions } from "apexcharts";
 import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
-import { formatDate } from "utils/format-date";
-import { getShopVisitCountApi } from "api";
-import { ApexOptions } from "apexcharts";
 
-interface VisitDate {
+import { formatDate } from "utils/date";
+import { getShopVisitCountApi } from "api";
+
+import Loading from "components/common/Loading";
+import Chart from "components/common/Chart";
+
+interface IVisitDate {
   visit_count: number;
   visit_date: string;
 }
@@ -41,18 +43,18 @@ const AboutMe = () => {
         });
 
         const visitDate: string[] = res.data.map(
-          (item: VisitDate) => item.visit_date
+          (item: IVisitDate) => item.visit_date
         );
         const visitCount: number[] = res.data.map(
-          (item: VisitDate) => item.visit_count
+          (item: IVisitDate) => item.visit_count
         );
         const sum = visitCount.reduce((a: number, b: number) => a + b);
 
         const todayVisit = res.data.find(
-          (t: VisitDate) => t.visit_date === formattedToday
+          (t: IVisitDate) => t.visit_date === formattedToday
         ) || { visit_count: 0 };
         const yesterdayVisit = res.data.find(
-          (t: VisitDate) => t.visit_date === formattedYesterday
+          (t: IVisitDate) => t.visit_date === formattedYesterday
         ) || { visit_count: 0 };
 
         setToday(todayVisit.visit_count);

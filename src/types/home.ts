@@ -1,5 +1,14 @@
-// ListGroup
-export interface Product {
+import { CSSProperties } from "react";
+
+// Banner
+export interface IArrowProps {
+  className?: string;
+  style?: CSSProperties;
+  onClick?: () => void;
+}
+
+// ProductList
+export interface IProduct {
   id: number;
   images: Images[];
   name: string;
@@ -16,8 +25,8 @@ export interface Variants {
   price: string;
 }
 
-// ListItem
-export interface ListItemProps {
+// ProductItem
+export interface IProductItemProps {
   item: ItemType;
 }
 

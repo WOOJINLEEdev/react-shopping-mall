@@ -7,12 +7,13 @@ import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 
-import { menuState } from "components/common/Menu";
-import Loading from "components/common/Loading";
-import SearchModal, { searchWrapState } from "components/search/SearchModal";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { useDevice } from "hooks/useDevice";
+import { headerItemState } from "layout/Main";
+import { menuState } from "components/common/Menu";
+import Loading from "components/common/Loading";
+import SearchModal, { searchWrapState } from "components/search/SearchModal";
 
 import signInImg from "assets/images/user.png";
 import { ReactComponent as MenuImg } from "assets/images/menu.svg";
@@ -21,7 +22,6 @@ import {
   updateShopVisitCountsApi,
   createAccessTokenApi,
 } from "api";
-import { headerItemState } from "layout/Main";
 
 const Header = () => {
   const location = useLocation();
@@ -34,7 +34,7 @@ const Header = () => {
   useEffect(() => {
     async function updateMyVisitCount() {
       try {
-        const res = await updateMyVisitCountsApi();
+        await updateMyVisitCountsApi();
       } catch (err) {
         console.log(err);
       }
@@ -62,7 +62,7 @@ const Header = () => {
   useEffect(() => {
     async function updateShopVisitCount() {
       try {
-        const res = await updateShopVisitCountsApi();
+        await updateShopVisitCountsApi();
       } catch (err) {
         console.log(err);
       }

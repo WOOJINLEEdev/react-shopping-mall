@@ -10,24 +10,26 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSWR from "swr";
 import axios from "axios";
-import { useRecoilState } from "recoil";
 import Modal from "react-modal";
+import { useRecoilState } from "recoil";
+
+import { useDevice } from "hooks/useDevice";
+import { getToken } from "utils/token";
+import { formatDate } from "utils/date";
+
+import { CurBoardState, curBoardState } from "pages/SelectBoard";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import { useDevice } from "hooks/useDevice";
-import { getToken } from "utils/token";
-import { formatDate } from "utils/format-date";
-import { CurBoardState, curBoardState } from "pages/SelectBoard";
 
 Modal.setAppElement("#root");
 
 const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
-const headersName = ["번호", "제목", "작성자", "등록일", "조회수", "미리보기"];
+const HEADER_NAME = ["번호", "제목", "작성자", "등록일", "조회수", "미리보기"];
 
 interface PostType {
   body: string;
@@ -39,27 +41,28 @@ interface PostType {
 const BoardSecond = () => {
   const navigate = useNavigate();
 
+  const detectMobile = detectMobileDevice();
+
   const [pageState, setPageState] = useRecoilState<CurBoardState>(
     curBoardState("second")
   );
 
-  const detectMobile = detectMobileDevice();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
   const [posts, setPosts] = useState<PostType[]>([]);
   const [limit, setLimit] = useState<number>(10);
   const [mobileLimit, setMobileLimit] = useState<number>(20);
   const [page, setPage] = useState<number>(pageState.pageNumber);
-  const offset =
-    detectMobile === true ? (page - 1) * mobileLimit : (page - 1) * limit;
-  const offsetLimit =
-    detectMobile === true ? offset + mobileLimit : offset + limit;
-
   const [searchClassName, setSearchClassName] = useState<string>("search_wrap");
   const [searchInputClassName, setsearchInputClassName] =
     useState<string>("board_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
     useState<string>("board_search_btn");
+
+  const offset =
+    detectMobile === true ? (page - 1) * mobileLimit : (page - 1) * limit;
+  const offsetLimit =
+    detectMobile === true ? offset + mobileLimit : offset + limit;
 
   const token = getToken();
   const date = new Date();
@@ -71,7 +74,7 @@ const BoardSecond = () => {
   const fetcher = (url: string) => {
     return axios.get(url).then((res) => res.data);
   };
-  const { data, error, mutate } = useSWR(postUrl, fetcher);
+  const { data, error } = useSWR(postUrl, fetcher);
 
   useEffect(() => {
     detectMobileDevice();
@@ -105,17 +108,14 @@ const BoardSecond = () => {
     }
   }, [token]);
 
-  const handlePreviewBtnClick = useCallback(
-    (itemId: number) => {
-      setSelectedPreviewId(itemId);
-      setIsOpen(true);
-    },
-    [selectedPreviewId, isOpen]
-  );
+  const handlePreviewBtnClick = useCallback((itemId: number) => {
+    setSelectedPreviewId(itemId);
+    setIsOpen(true);
+  }, []);
 
   const onRequestClose = useCallback(() => {
     setIsOpen(false);
-  }, [isOpen]);
+  }, []);
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
@@ -137,7 +137,7 @@ const BoardSecond = () => {
       return ["번호", "제목", "작성자", "등록일"];
     }
 
-    return headersName;
+    return HEADER_NAME;
   }, [isTablet, isMobile]);
 
   if (error) return <div>에러 발생...</div>;

@@ -1,9 +1,12 @@
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
-import ListItem from "components/home/ListItem";
-import ListGroupSkeleton from "components/home/ListGroupSkeleton";
-import MoreViewBtn from "components/common/MoreViewBtn";
+
 import { instance } from "utils/http-client";
-import { Product } from "types";
+
+import ProductItem from "components/home/ProductItem";
+import ProductListSkeleton from "components/home/ProductListSkeleton";
+import MoreViewBtn from "components/common/MoreViewBtn";
+
+import { IProduct } from "types";
 
 const PAGE_LIMIT = 8;
 let firstLoaded = false;
@@ -16,7 +19,7 @@ const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
   return `/v1/products?limit=${PAGE_LIMIT}&offset=${pageIndex * PAGE_LIMIT}`;
 };
 
-function ListGroup() {
+function ProductList() {
   const fetcher = (url: string) => {
     return new Promise((resolve, reject) => {
       const timeout = !firstLoaded ? 3000 : 0;
@@ -32,9 +35,9 @@ function ListGroup() {
   });
 
   if (error) return <div>에러 발생...</div>;
-  if (!data) return <ListGroupSkeleton />;
+  if (!data) return <ProductListSkeleton />;
 
-  const products = data.flat(Infinity) as Product[];
+  const products = data.flat(Infinity) as IProduct[];
 
   function handleMoreViewBtnClick() {
     setSize(size + 1);
@@ -43,8 +46,8 @@ function ListGroup() {
   return (
     <>
       <ul className="list_group">
-        {products.map((product: Product) => {
-          return <ListItem key={product.id} item={product} />;
+        {products.map((product: IProduct) => {
+          return <ProductItem key={product.id} item={product} />;
         })}
       </ul>
 
@@ -53,4 +56,4 @@ function ListGroup() {
   );
 }
 
-export default ListGroup;
+export default ProductList;

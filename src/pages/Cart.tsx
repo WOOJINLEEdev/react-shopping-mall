@@ -2,15 +2,17 @@ import { MouseEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import QuantityCounter from "components/common/QuantityCounter";
-import Loading from "components/common/Loading";
-import SnackBar from "components/common/SnackBar";
 import useMyCart from "hooks/useMyCart";
+import { getSizedImageUrl } from "utils/image";
 import {
   deleteCartItemApi,
   updateCartItemQuantityApi,
   createCheckoutsApi,
 } from "api";
+
+import QuantityCounter from "components/common/QuantityCounter";
+import Loading from "components/common/Loading";
+import SnackBar from "components/common/SnackBar";
 
 interface Item {
   cart_id: number;
@@ -24,6 +26,11 @@ interface Item {
   variant_name: string;
   variant_price: string;
 }
+
+const SOURCE_LIST = [
+  { id: "0", media: "(max-width:849px)", size: "_150x200.jpg" },
+  { id: "1", media: "(min-width:850px)", size: "_200x200.jpg" },
+];
 
 const Cart = () => {
   const [chkId, setChkId] = useState<string>("");
@@ -39,7 +46,7 @@ const Cart = () => {
     return (
       <CartErrorMessage>
         로그인 후 이용해주세요!
-        <Link to="/login" style={linkStyle}>
+        <Link to="/login" className="login_link">
           로그인
         </Link>
       </CartErrorMessage>
@@ -49,10 +56,10 @@ const Cart = () => {
   const items = cart.items;
 
   const handleItemRemoveBtnClick = async (e: MouseEvent<HTMLInputElement>) => {
-    const cartItemId = Number((e.target as HTMLInputElement).name);
+    const cartItemId = Number((e.currentTarget as HTMLInputElement).name);
 
     try {
-      const res = await deleteCartItemApi({ cartItemId });
+      await deleteCartItemApi({ cartItemId });
       mutateCart(null, true);
       setOpen((prev) => !prev);
     } catch (err) {
@@ -189,8 +196,7 @@ const Cart = () => {
       let cartItemId: number = chkItem.id;
 
       try {
-        const res = await deleteCartItemApi({ cartItemId });
-
+        await deleteCartItemApi({ cartItemId });
         mutateCart(null, true);
         setAllChecked(true);
         setOpen((prev) => !prev);
@@ -234,7 +240,7 @@ const Cart = () => {
           {items.length < 1 ? (
             <CartEmpty>장바구니가 비었습니다.</CartEmpty>
           ) : (
-            items.map((item: Item, idx: number) => {
+            items.map((item: Item, index: number) => {
               return (
                 <li className="item" key={item.id}>
                   <div className="item_select">
@@ -244,8 +250,9 @@ const Cart = () => {
                         name="item_checkbox"
                         id={`itemCheckbox${item.product_id}`}
                         className="item_checkbox"
+                        value={item.product_name}
                         checked={item.checked}
-                        onChange={() => handleCartItemCheck(idx)}
+                        onChange={() => handleCartItemCheck(index)}
                       />
                       <label
                         htmlFor={`itemCheckbox${item.product_id}`}
@@ -269,24 +276,25 @@ const Cart = () => {
                       aria-label={`${item.product_name} 상품 페이지로 이동`}
                     >
                       <picture className="cart_item_picture">
-                        <source
-                          media="(max-width: 849px)"
-                          srcSet={
-                            item.product_image_src.slice(0, -4) + "_150x200.jpg"
-                          }
-                        />
-                        <source
-                          media="(min-width: 850px)"
-                          srcSet={
-                            item.product_image_src.slice(0, -4) + "_200x200.jpg"
-                          }
-                        />
+                        {SOURCE_LIST.map((cartItem) => {
+                          return (
+                            <source
+                              key={`cart_item_picture_${cartItem.id}`}
+                              media={cartItem.media}
+                              srcSet={getSizedImageUrl(
+                                item.product_image_src,
+                                cartItem.size
+                              )}
+                            />
+                          );
+                        })}
                         <img
                           className="cart_item_img"
+                          src={getSizedImageUrl(
+                            item.product_image_src,
+                            "_200x200.jpg"
+                          )}
                           alt={`${item.product_name}_상품 이미지`}
-                          src={
-                            item.product_image_src.slice(0, -4) + "_200x200.jpg"
-                          }
                         />
                       </picture>
                     </Link>
@@ -452,8 +460,8 @@ const CartEmpty = styled.li`
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     min-height: 250px;
-    line-height: 250px;
     max-height: calc(100vh - 808px);
+    line-height: 250px;
   }
 `;
 
@@ -474,6 +482,18 @@ const CartErrorMessage = styled.div`
   margin: 0 auto;
   text-decoration: none;
 
+  & .login_link {
+    height: 100px;
+    margin: 0 auto;
+    line-height: 20px;
+    font-size: 20px;
+    color: transparent;
+    background: linear-gradient(to left bottom, #efefef, #333);
+    background-clip: text;
+    -webkit-background-clip: text;
+    text-decoration: none;
+  }
+
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     font-size: 25px;
   }
@@ -482,15 +502,3 @@ const CartErrorMessage = styled.div`
     font-size: 30px;
   }
 `;
-
-const linkStyle = {
-  background: "linear-gradient(to left bottom, #efefef, #333)",
-  color: "transparent",
-  WebkitBackgroundClip: "text",
-  backgroundClip: "text",
-  height: "100px",
-  margin: "0 auto",
-  fontSize: "20px",
-  lineHeight: "20px",
-  textDecoration: "none",
-};

@@ -2,31 +2,34 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
-import ListItem from "components/home/ListItem";
-import Loading from "components/common/Loading";
-import MoreViewBtn from "components/common/MoreViewBtn";
+
 import { instance } from "utils/http-client";
 import { getProductsApi } from "api";
 
-interface Product {
+import ProductItem from "components/home/ProductItem";
+import Loading from "components/common/Loading";
+import MoreViewBtn from "components/common/MoreViewBtn";
+
+interface IProduct {
   id: number;
-  images: Images[];
+  images: IImages[];
   name: string;
-  variants: Variants[];
+  variants: IVariants[];
 }
 
-interface Images {
+interface IImages {
   id: number;
   product_id: number;
   src: string;
 }
 
-interface Variants {
+interface IVariants {
   price: string;
 }
 
 const SearchResult = () => {
   const matchParams = useParams();
+
   const [resultCount, setResultCount] = useState<number>(0);
   const [searchWord, setSearchWord] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -100,8 +103,8 @@ const SearchResult = () => {
         {products.length === 0 ? (
           <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>
         ) : (
-          products.map((product: Product) => {
-            return <ListItem key={product.id} item={product} />;
+          products.map((product: IProduct) => {
+            return <ProductItem key={product.id} item={product} />;
           })
         )}
       </ul>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { QuantityCounterProps, QuantityAreaProps } from "types";
 
 const QuantityCounter = ({
@@ -9,10 +10,6 @@ const QuantityCounter = ({
   flexEnd,
   productId,
 }: QuantityCounterProps) => {
-  const handleQtyChange = () => {
-    console.log(quantity);
-  };
-
   return (
     <QuantityArea margin={margin} flexEnd={flexEnd}>
       <input
@@ -30,7 +27,7 @@ const QuantityCounter = ({
           id={`itemQty${productId}`}
           className="item_quantity"
           value={quantity}
-          onChange={handleQtyChange}
+          readOnly
         />
         <label htmlFor={`itemQty${productId}`} className="visually_hidden">
           수량

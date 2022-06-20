@@ -1,13 +1,13 @@
 import Clock from "components/home/Clock";
 import Banner from "components/home/Banner";
-import ListGroup from "components/home/ListGroup";
+import ProductList from "components/home/ProductList";
 
 const Home = () => {
   return (
     <>
       <Clock />
       <Banner />
-      <ListGroup />
+      <ProductList />
     </>
   );
 };

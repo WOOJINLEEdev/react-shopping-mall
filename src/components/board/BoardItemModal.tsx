@@ -1,8 +1,11 @@
 import Modal from "react-modal";
+
 import useBoardItem from "hooks/useBoardItem";
+import { formatDate } from "utils/date";
+
 import Loading from "components/common/Loading";
-import { formatDate } from "utils/format-date";
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
+
 import { BoardItemModalProps } from "types";
 
 Modal.setAppElement("#root");

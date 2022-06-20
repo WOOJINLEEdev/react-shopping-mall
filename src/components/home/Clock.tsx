@@ -1,33 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
+
+import { formatDate, getDayOfWeek } from "utils/date";
+
 import CurTime from "components/home/CurTime";
-import { formatDate } from "utils/format-date";
 
 const Clock = () => {
   const [date, setDate] = useState(new Date());
   const curDate = formatDate(date).replaceAll("-", ". ");
   const curDay = getDayOfWeek(date.getDay());
-
-  function getDayOfWeek(day: number) {
-    switch (day) {
-      case 0:
-        return "일요일";
-      case 1:
-        return "월요일";
-      case 2:
-        return "화요일";
-      case 3:
-        return "수요일";
-      case 4:
-        return "목요일";
-      case 5:
-        return "금요일";
-      case 6:
-        return "토요일";
-      default:
-        throw new Error(`not supported day: ${day}`);
-    }
-  }
 
   return (
     <Container className="main_clock">

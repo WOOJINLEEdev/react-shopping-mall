@@ -1,6 +1,6 @@
-import "components/home/ListGroupSkeleton.css";
+import "components/home/ProductListSkeleton.css";
 
-const ListGroupSkeleton = () => {
+const ProductListSkeleton = () => {
   const arr = [1, 2, 3, 4, 5, 6, 7, 8];
   return (
     <div className="skeleton_wrap">
@@ -17,4 +17,4 @@ const ListGroupSkeleton = () => {
   );
 };
 
-export default ListGroupSkeleton;
+export default ProductListSkeleton;

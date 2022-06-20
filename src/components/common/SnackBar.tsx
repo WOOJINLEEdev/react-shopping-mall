@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { SnackBarProps } from "types";
+import { ISnackBarProps } from "types";
 
 const SnackBar = ({
   open,
   autoHideDuration,
   message,
   onClose,
-}: SnackBarProps) => {
+}: ISnackBarProps) => {
   const [barClassName, setBarClassName] = useState("hidden");
 
   useEffect(() => {
     if (open) {
       setBarClassName("snack_bar");
 
-      setTimeout(() => {
+      const timeoutRef = setTimeout(() => {
         onClose();
         return setBarClassName("hidden");
       }, autoHideDuration);
+
+      return () => clearTimeout(timeoutRef);
     }
   }, [autoHideDuration, onClose, open]);
 
@@ -29,15 +31,15 @@ export default SnackBar;
 
 const Bar = styled.div`
   position: fixed;
+  left: 0;
+  right: 0;
   width: calc(100% - 100px);
   max-width: 924px;
   height: 50px;
-  left: 0;
-  right: 0;
   margin: 0 auto;
   line-height: 50px;
-  background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
   text-align: center;
   transition: all 0.3s;

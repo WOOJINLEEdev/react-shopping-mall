@@ -42,7 +42,7 @@ export interface QuantityAreaProps {
 }
 
 // SnackBar
-export interface SnackBarProps {
+export interface ISnackBarProps {
   open: boolean;
   autoHideDuration: number;
   message?: string;

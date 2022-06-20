@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ApexOptions } from "apexcharts";
+
+import { formatDate } from "utils/date";
+import { getMyVisitCountApi } from "api";
+
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
-import { formatDate } from "utils/format-date";
-import { getMyVisitCountApi } from "api";
+
 import { MyPageChartProps, VisitData } from "types";
 
 const MyPageChart = ({ userName }: MyPageChartProps) => {

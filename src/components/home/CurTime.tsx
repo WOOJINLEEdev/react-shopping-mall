@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 
+import { lpad } from "utils/string";
+
 const CurTime = () => {
   const [date, setDate] = useState(new Date());
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  const hours = lpad(date.getHours(), 2, "0");
+  const minutes = lpad(date.getMinutes(), 2, "0");
+  const seconds = lpad(date.getSeconds(), 2, "0");
 
   useEffect(() => {
-    const getDate = () => {
+    const refreshDate = () => {
       setDate(new Date());
     };
 
-    const refreshInterval = setInterval(() => getDate(), 1000);
+    const refreshInterval = setInterval(refreshDate, 1000);
 
     return () => {
       clearInterval(refreshInterval);

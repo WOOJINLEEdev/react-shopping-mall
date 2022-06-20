@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
+
 import useBoardItem from "hooks/useBoardItem";
+import { formatDate } from "utils/date";
+
 import Loading from "components/common/Loading";
-import { formatDate } from "utils/format-date";
 
 const BoardItem = () => {
   const navigate = useNavigate();

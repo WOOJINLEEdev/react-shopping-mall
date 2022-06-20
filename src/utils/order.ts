@@ -1,4 +1,4 @@
-import { formatDate } from "utils/format-date";
+import { formatDate } from "utils/date";
 
 export function getOrderNumber(orderCreatedAt: string, orderId: number) {
   return `${formatDate(new Date(orderCreatedAt)).replaceAll("-", "")} -
