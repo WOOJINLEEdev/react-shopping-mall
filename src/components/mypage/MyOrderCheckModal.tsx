@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
+import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
+
+import { useDevice } from "hooks/useDevice";
+import { getOrderNumber } from "utils/order";
+
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
-import downArrow from "assets/images/down-arrow.png";
-import upArrow from "assets/images/up-arrow-icon.png";
-import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 import Loading from "components/common/Loading";
-import { getOrderNumber } from "utils/order";
-import { useDevice } from "hooks/useDevice";
-import { MyOrderCheckModalProps, MyOrderList, LineItems } from "types";
+
+import upArrow from "assets/images/up-arrow-icon.png";
+import downArrow from "assets/images/down-arrow.png";
+
+import { IMyOrderCheckModalProps, IMyOrderList, ILineItems } from "types";
 
 Modal.setAppElement("#root");
 
@@ -19,7 +23,7 @@ const MyOrderCheckModal = ({
   onRequestClose,
   myOrderList,
   orderItemId,
-}: MyOrderCheckModalProps) => {
+}: IMyOrderCheckModalProps) => {
   const [arrowImg, setArrowImg] = useState<string>(upArrow);
   const [arrowImg1, setArrowImg1] = useState<string>(downArrow);
   const [closeText, setCloseText] = useState<string>("");
@@ -46,7 +50,7 @@ const MyOrderCheckModal = ({
   }
 
   const selectedOrderData = myOrderList.filter(
-    (item: MyOrderList) => item.checkout_id === orderItemId
+    (item: IMyOrderList) => item.checkout_id === orderItemId
   );
 
   if (
@@ -58,9 +62,9 @@ const MyOrderCheckModal = ({
   }
   const items = selectedOrderData[0].line_items;
 
-  const firstItem: LineItems = selectedOrderData[0].line_items[0];
-  const remainder = items.filter((item: LineItems) => item !== firstItem);
-  const itemQuantity = items.map((item: LineItems) => item.quantity);
+  const firstItem: ILineItems = selectedOrderData[0].line_items[0];
+  const remainder = items.filter((item: ILineItems) => item !== firstItem);
+  const itemQuantity = items.map((item: ILineItems) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtn = () => {

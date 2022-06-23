@@ -1,8 +1,10 @@
 import { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { atom, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import Loading from "components/common/Loading";
+
+import { headerItemState } from "state";
 
 const Home = lazy(() => import("pages/Home"));
 const ItemDetail = lazy(() => import("pages/ItemDetail"));
@@ -22,11 +24,6 @@ const MyOrderCheck = lazy(() => import("pages/MyOrderCheck"));
 const AboutMe = lazy(() => import("pages/AboutMe"));
 const SearchResult = lazy(() => import("pages/SearchResult"));
 const PageNotFound = lazy(() => import("pages/PageNotFound"));
-
-export const headerItemState = atom<string>({
-  key: "headerItemState",
-  default: "",
-});
 
 const Main = () => {
   const location = useLocation();

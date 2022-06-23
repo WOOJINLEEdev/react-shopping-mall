@@ -1,4 +1,4 @@
-export const optionData = [
+export const OPTION_DATA = [
   {
     no: "0",
     label: "",

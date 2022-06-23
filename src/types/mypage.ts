@@ -1,10 +1,10 @@
 // AddDeliveryAddressModal
-export interface AddDeliveryAddressModalProps {
+export interface IAddDeliveryAddressModalProps {
   addDeliveryClassName: string;
   myDeliveryAddressId: number;
 }
 
-export interface Address {
+export interface IAddress {
   zonecode: string;
   address: string;
   addressType: string;
@@ -13,17 +13,17 @@ export interface Address {
 }
 
 // MyOrderCheckModal
-export interface MyOrderCheckModalProps {
+export interface IMyOrderCheckModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  myOrderList: MyOrderList[];
+  myOrderList: IMyOrderList[];
   orderItemId?: number;
 }
 
-export interface MyOrderList {
+export interface IMyOrderList {
   checkout_id: number;
   created_at: string;
-  line_items: LineItems[];
+  line_items: ILineItems[];
   id: number;
   payment_method: string;
   shipping_address: MyOrderCheckModalAddress;
@@ -33,7 +33,7 @@ export interface MyOrderList {
   total_price: string;
 }
 
-export interface LineItems {
+export interface ILineItems {
   image_src: string;
   price: string;
   product_id: number;
@@ -59,29 +59,29 @@ export interface MyOrderCheckModalAddress extends MyShippingAddressBasic {
 }
 
 // MyPageChart
-export interface MyPageChartProps {
+export interface IMyPageChartProps {
   userName: string;
 }
 
-export interface VisitData {
+export interface IVisitData {
   visit_count: number;
   visit_date: string;
 }
 
 // MyPageCouponModal
-export interface MyPageCouponModalProps {
+export interface IMyPageCouponModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  myCoupon?: CouponInfo[];
+  myCoupon?: ICouponInfo[];
 }
 
-export interface CouponInfo {
+export interface ICouponInfo {
   id: string | number;
   coupon_name: string;
 }
 
 // MyPageDeliveryModal
-export interface MyPageDeliveryModalProps {
+export interface IMyPageDeliveryModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   myDeliveryAddress?: MyDeliveryAddress;
@@ -95,29 +95,29 @@ export interface MyDeliveryAddress {
   id: number;
 }
 
-export interface DeliveryAddressItemProps {
+export interface IDeliveryAddressItemProps {
   display: string;
 }
 
-export interface AddBtnProps {
+export interface IAddBtnProps {
   display: string;
 }
 
-export interface CancelRegistrationBtnProps {
+export interface ICancelRegistrationBtnProps {
   display: string;
 }
 
-export interface CloseBtnProps {
+export interface ICloseBtnProps {
   display: string;
 }
 
 // MyPageInfo
-export interface MyPageInfoProps {
-  myData: MyData;
+export interface IMyPageInfoProps {
+  myData: IMyData;
 }
 
-export interface MyData {
-  coupons?: CouponInfo[];
+export interface IMyData {
+  coupons?: ICouponInfo[];
   email: string;
   id: number;
   mileage: number;
@@ -127,15 +127,15 @@ export interface MyData {
 }
 
 // MyPageInfoDetail
-export interface MyDetailData extends MyData {
+export interface MyDetailData extends IMyData {
   shipping_address: MyShippingAddressBasic;
   rating: number;
 }
 
-export interface MyPageInfoDetailProps {
+export interface IMyPageInfoDetailProps {
   myData: MyDetailData;
 }
 
-export interface StarRatingProps {
+export interface IStarRatingProps {
   myRating: number;
 }

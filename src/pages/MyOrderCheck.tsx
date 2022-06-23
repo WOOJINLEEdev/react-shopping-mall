@@ -2,11 +2,14 @@ import { useState, useEffect, lazy, Suspense } from "react";
 import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
 import Modal from "react-modal";
 import styled from "styled-components";
-import Loading from "components/common/Loading";
-import MoreViewBtn from "components/common/MoreViewBtn";
+
 import { instance } from "utils/http-client";
 import { getOrderNumber } from "utils/order";
+import { formatPrice } from "utils/money";
 import { getOrdersApi } from "api";
+
+import Loading from "components/common/Loading";
+import MoreViewBtn from "components/common/MoreViewBtn";
 
 Modal.setAppElement("#root");
 
@@ -109,8 +112,7 @@ const MyOrderCheck = () => {
                 {item.line_items.length === 1 ? "" : "건"}
               </ListItemContent>
               <ListItemContent className="list_item_price">
-                결제금액:{" "}
-                {item.total_price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                결제금액: {formatPrice(item.total_price)}
               </ListItemContent>
               <ListItemNumber>{index + 1}</ListItemNumber>
             </OrderListItem>

@@ -1,45 +1,22 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
-import { OrderCouponProps, Coupon } from "types";
-import { atom, useRecoilState, selector } from "recoil";
+import { useRecoilState } from "recoil";
 
-const selectOptionState = atom<number>({
-  key: "selectOptionState",
-  default: 0,
-});
+import { formatPrice } from "utils/money";
 
-const selectCouponIdState = atom<number>({
-  key: "selectCouponIdState",
-  default: 0,
-});
+import { IOrderCouponProps, ICoupon } from "types";
 
-const usedMileageState = atom<number>({
-  key: "usedMileageState",
-  default: 0,
-});
-
-interface CouponStateSelector {
-  selectOption: number;
-  selectCouponId: number;
-  usedMileage: number;
-}
-
-export const couponStateSelector = selector<CouponStateSelector>({
-  key: "couponStateSelector",
-  get: ({ get }) => {
-    const selectOption = get(selectOptionState);
-    const selectCouponId = get(selectCouponIdState);
-    const usedMileage = get(usedMileageState);
-
-    return { selectOption, selectCouponId, usedMileage };
-  },
-});
+import {
+  selectOptionState,
+  selectCouponIdState,
+  usedMileageState,
+} from "state";
 
 const OrderCoupon = ({
   checkoutData,
   isMobile,
   isTablet,
-}: OrderCouponProps) => {
-  const [coupons, setCoupons] = useState<Coupon[] | undefined>(
+}: IOrderCouponProps) => {
+  const [coupons, setCoupons] = useState<ICoupon[] | undefined>(
     checkoutData.user.coupons
   );
   const [mileage, setMileage] = useState<number>(checkoutData.user.mileage);
@@ -197,7 +174,7 @@ const OrderCoupon = ({
               사용가능 쿠폰 {coupons ? coupons.length : "0"}장
             </option>
             {coupons
-              ? coupons.map((coupon: Coupon) => (
+              ? coupons.map((coupon: ICoupon) => (
                   <option key={coupon.id} value={coupon.coupon_name}>
                     {coupon.coupon_name}
                   </option>
@@ -232,9 +209,7 @@ const OrderCoupon = ({
               보유 마일리지
               <span className="mileage_unit">
                 <span className="mileage_in">
-                  {!mileage
-                    ? "0"
-                    : mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {!mileage ? "0" : formatPrice(mileage.toString())}
                 </span>
                 p
               </span>

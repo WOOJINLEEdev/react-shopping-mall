@@ -71,3 +71,19 @@ export interface BoardTableRowProps {
 export interface TableRowProps {
   background?: string;
 }
+
+// board-first-data
+export interface IPosts {
+  no: number;
+  type: string;
+  title: string;
+  content: string | string[];
+  user: string;
+  createDate: string;
+  readCount: number;
+}
+
+// SelectBoard
+export interface ICurBoardState {
+  pageNumber: number;
+}

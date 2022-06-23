@@ -15,9 +15,9 @@ const BoardItemModal = ({
   onRequestClose,
   boardItemId,
 }: BoardItemModalProps) => {
-  const { boardItem, boardItemError } = useBoardItem(boardItemId);
   const date = new Date();
 
+  const { boardItem, boardItemError } = useBoardItem(boardItemId);
   if (boardItemError) return <div>failed to load</div>;
   if (!boardItem) return <Loading />;
 

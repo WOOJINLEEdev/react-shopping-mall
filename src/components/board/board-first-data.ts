@@ -1,3 +1,5 @@
+import { IPosts } from "types";
+
 export const postList = [
   {
     no: 1,
@@ -109,18 +111,8 @@ export const postList = [
   },
 ];
 
-interface PostListType {
-  no: number;
-  type: string;
-  title: string;
-  content: string | string[];
-  user: string;
-  createDate: string;
-  readCount: number;
-}
-
-const sortPostList = (postList: Array<PostListType>) => {
-  return [...postList].sort(function (a, b) {
+const sortPostList = (posts: IPosts[]) => {
+  return [...posts].sort(function (a, b) {
     if (a.no < b.no) {
       return 1;
     }

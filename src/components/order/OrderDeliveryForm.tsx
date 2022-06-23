@@ -1,57 +1,19 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  OrderDeliveryFormProps,
-  DeliveryRequirementOption,
-  PreexistenceSelectProps,
-  Address,
-} from "types";
-import { atomFamily, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import DaumPostcode from "react-daum-postcode";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
+
 import { getFullAddress } from "utils/get-address";
+import { isNumberCheck } from "utils/number";
 
-export interface DeliveryInfoState {
-  designation?: string;
-  recipient: string;
-  address1: string;
-  addressDetail1: string;
-  addressDetail2: string;
-  tel1: string;
-  tel2: string;
-  tel3: string;
-  tel4?: string;
-  tel5?: string;
-  tel6?: string;
-  requirement?: string;
-  requirement1?: string;
-  deliveryClassName: string;
-  deliveryClassName1: string;
-}
-
-export const deliveryInfoState = atomFamily<DeliveryInfoState, number>({
-  key: "deliveryInfoState",
-  default: (id) => {
-    return {
-      id,
-      designation: "",
-      recipient: "",
-      address1: "",
-      addressDetail1: "",
-      addressDetail2: "",
-      tel1: "",
-      tel2: "",
-      tel3: "",
-      tel4: "",
-      tel5: "",
-      tel6: "",
-      requirement: "",
-      requirement1: "",
-      deliveryClassName: "",
-      deliveryClassName1: "",
-    };
-  },
-});
+import { deliveryInfoState } from "state";
+import {
+  IOrderDeliveryFormProps,
+  IDeliveryRequirementOption,
+  IPreexistenceSelectProps,
+  IAddress,
+} from "types";
 
 const OrderDeliveryForm = ({
   deliveryForm1,
@@ -62,7 +24,7 @@ const OrderDeliveryForm = ({
   deliverySecondRequirementOption,
   deliverySecondRequirementWrite,
   requirement1,
-}: OrderDeliveryFormProps) => {
+}: IOrderDeliveryFormProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
     deliveryInfoState(checkoutId)
   );
@@ -90,8 +52,9 @@ const OrderDeliveryForm = ({
   };
 
   const handleTelInputChange = (key: string, tel: string) => {
-    let isNumberCheck = /^[0-9]+$/;
-    if (!isNumberCheck.test(tel) && tel !== "") return false;
+    if (!isNumberCheck(tel)) {
+      return;
+    }
 
     setDeliveryState({ ...deliveryState, [key]: tel });
   };
@@ -108,7 +71,7 @@ const OrderDeliveryForm = ({
     setShowDaumPostModal(false);
   };
 
-  const handleComplete = (data: Address) => {
+  const handleComplete = (data: IAddress) => {
     let fullAddress = getFullAddress(data);
 
     if (deliveryClassName1 === "delivery_write selected") {
@@ -297,7 +260,7 @@ const OrderDeliveryForm = ({
             onChange={handleRequirementOptionChange}
           >
             {deliverySecondRequirementOption.map(
-              (item: DeliveryRequirementOption) => (
+              (item: IDeliveryRequirementOption) => (
                 <option key={item.no} value={item.label}>
                   {item.value}
                 </option>
@@ -329,7 +292,7 @@ const DeliveryRequirementWrap = styled.div`
   width: 100%;
 `;
 
-const PreexistenceSelect = styled.select<PreexistenceSelectProps>`
+const PreexistenceSelect = styled.select<IPreexistenceSelectProps>`
   width: 100%;
   height: 40px;
   border: 1px solid #d4d4d4;

@@ -1,10 +1,11 @@
+import { useRecoilValue } from "recoil";
+
 import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
-import { OrderCheckoutButtonProps } from "types";
-import { useRecoilValue } from "recoil";
-import { deliveryInfoState } from "components/order/OrderDeliveryForm";
-import { paymentState } from "components/order/OrderPayments";
-import { totalDetailSelector } from "components/order/OrderTotalDetail";
+import { formatPrice } from "utils/money";
+
+import { deliveryInfoState, paymentState, totalDetailSelector } from "state";
+import { IOrderCheckoutButtonProps } from "types";
 
 const OrderCheckoutButton = ({
   checkoutData,
@@ -16,7 +17,7 @@ const OrderCheckoutButton = ({
   isPc,
   isTablet,
   isMobile,
-}: OrderCheckoutButtonProps) => {
+}: IOrderCheckoutButtonProps) => {
   const checkoutDeliveryData = useRecoilValue(
     deliveryInfoState(checkoutData.id)
   );
@@ -70,16 +71,16 @@ const OrderCheckoutButton = ({
           onClick={handleCheckoutBtnClick}
           tabIndex={0}
         >
-          {(
-            totalPrice +
-            Number(deliveryCharge) -
-            Number(!usedMileage ? 0 : usedMileage) -
-            (Number.isInteger(selectOption) === false
-              ? totalPrice * selectOption
-              : selectOption)
-          )
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          {formatPrice(
+            (
+              totalPrice +
+              Number(deliveryCharge) -
+              Number(!usedMileage ? 0 : usedMileage) -
+              (Number.isInteger(selectOption) === false
+                ? totalPrice * selectOption
+                : selectOption)
+            ).toString()
+          )}
           원 결제하기
         </button>
       )}

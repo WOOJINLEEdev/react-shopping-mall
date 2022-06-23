@@ -10,22 +10,25 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { CurBoardState, curBoardState } from "pages/SelectBoard";
+import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
+
+import { useDevice } from "hooks/useDevice";
+import { getToken } from "utils/token";
+
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
-import { postList, sortedPostList } from "components/board/board-first-data";
 import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import Loading from "components/common/Loading";
-import { useDevice } from "hooks/useDevice";
-import { getToken } from "utils/token";
-import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
+import { postList, sortedPostList } from "components/board/board-first-data";
+
+import { curBoardState } from "state";
 
 Modal.setAppElement("#root");
 
-interface PostListType {
+interface IPostList {
   no: number;
   type: string;
   title: string;
@@ -51,11 +54,9 @@ const BoardFirst = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const [pageState, setPageState] = useRecoilState<CurBoardState>(
-    curBoardState("first")
-  );
+  const [pageState, setPageState] = useRecoilState(curBoardState("first"));
 
-  const [dataList, setDataList] = useState<PostListType[]>([]);
+  const [dataList, setDataList] = useState<IPostList[]>([]);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(pageState.pageNumber);
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
@@ -126,14 +127,14 @@ const BoardFirst = () => {
   );
 
   const handleSearchBtnClick = () => {
-    const searchFilter = dataList.filter((item: PostListType) =>
+    const searchFilter = dataList.filter((item: IPostList) =>
       item.title.includes(searchInput)
     );
     setDataList(searchFilter);
   };
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const targetValue = e.target.value;
+    const targetValue = e.currentTarget.value;
     searchInput = targetValue;
   };
 
@@ -230,7 +231,7 @@ const BoardFirst = () => {
         ))}
         {dataList
           .slice(offset, offset + limit)
-          .map((item: PostListType, i: number) => (
+          .map((item: IPostList, i: number) => (
             <BoardTableRow key={i}>
               {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
               {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}

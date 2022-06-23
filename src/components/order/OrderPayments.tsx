@@ -1,11 +1,8 @@
 import React, { useState, useCallback, MouseEvent } from "react";
-import { OrderPaymentItemProps, Payment } from "types";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
-export const paymentState = atom<string>({
-  key: "paymentState",
-  default: "",
-});
+import { paymentState } from "state";
+import { IOrderPaymentItemProps, IPayment } from "types";
 
 const PAYMENTS = [
   {
@@ -58,7 +55,7 @@ const OrderPaymentItem = React.memo(
     handlePaymentMethodClick,
     basePaymentClass,
     selectedPaymentClass,
-  }: OrderPaymentItemProps) => {
+  }: IOrderPaymentItemProps) => {
     return (
       <li
         className={
@@ -97,7 +94,7 @@ const OrderPaymentList = React.memo(() => {
 
   return (
     <ol className="payment_method">
-      {PAYMENTS.map((item: Payment, i: number) => (
+      {PAYMENTS.map((item: IPayment, i: number) => (
         <OrderPaymentItem
           key={`payment_${item.id}`}
           item={item}

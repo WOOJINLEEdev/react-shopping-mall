@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-import { CommonModalProps, ModalTextProps, ModalBtnProps } from "types";
+
+import { ICommonModalProps, IModalTextProps, IModalBtnProps } from "types";
 
 Modal.setAppElement("#root");
 
@@ -17,7 +18,7 @@ const CommonModal = ({
   contentPadding,
   onOverlayClick,
   onEsc,
-}: CommonModalProps) => {
+}: ICommonModalProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
@@ -61,7 +62,7 @@ const CommonModal = ({
 
 export default CommonModal;
 
-const ModalText = styled.p<ModalTextProps>`
+const ModalText = styled.p<IModalTextProps>`
   padding: ${(props) => props.contentPadding || "50px 20px"};
   font-size: 18px;
   font-weight: bold;
@@ -78,7 +79,7 @@ const ModalBtnWrap = styled.div`
   width: 100%;
 `;
 
-const ModalBtn = styled.button<ModalBtnProps>`
+const ModalBtn = styled.button<IModalBtnProps>`
   width: ${(props) => props.width || "30%"};
   height: 60px;
   font-size: 15px;

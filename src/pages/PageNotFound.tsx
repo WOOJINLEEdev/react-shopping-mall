@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const PageNotFound = () => {
-  return <Div>Page Not Found!</Div>;
+  return <Div>This page could not be found.</Div>;
 };
 
 export default PageNotFound;

@@ -17,7 +17,6 @@ import { useDevice } from "hooks/useDevice";
 import { getToken } from "utils/token";
 import { formatDate } from "utils/date";
 
-import { CurBoardState, curBoardState } from "pages/SelectBoard";
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
@@ -25,16 +24,18 @@ import BoardPagination from "components/board/BoardPagination";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
 
+import { curBoardState } from "state";
+
 Modal.setAppElement("#root");
 
 const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
 const HEADER_NAME = ["번호", "제목", "작성자", "등록일", "조회수", "미리보기"];
 
-interface PostType {
-  body: string;
+interface IPosts {
   id: number;
   title: string;
+  body: string;
   userId: number;
 }
 
@@ -43,13 +44,11 @@ const BoardSecond = () => {
 
   const detectMobile = detectMobileDevice();
 
-  const [pageState, setPageState] = useRecoilState<CurBoardState>(
-    curBoardState("second")
-  );
+  const [pageState, setPageState] = useRecoilState(curBoardState("second"));
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
-  const [posts, setPosts] = useState<PostType[]>([]);
+  const [posts, setPosts] = useState<IPosts[]>([]);
   const [limit, setLimit] = useState<number>(10);
   const [mobileLimit, setMobileLimit] = useState<number>(20);
   const [page, setPage] = useState<number>(pageState.pageNumber);

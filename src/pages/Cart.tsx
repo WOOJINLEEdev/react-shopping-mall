@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import useMyCart from "hooks/useMyCart";
 import { getSizedImageUrl } from "utils/image";
+import { formatPrice } from "utils/money";
 import {
   deleteCartItemApi,
   updateCartItemQuantityApi,
@@ -14,7 +15,7 @@ import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
 import SnackBar from "components/common/SnackBar";
 
-interface Item {
+interface IItem {
   cart_id: number;
   checked: boolean;
   id: number;
@@ -73,7 +74,7 @@ const Cart = () => {
       mutateCart(
         {
           ...cart,
-          items: items.map((cartItem: Item) => ({
+          items: items.map((cartItem: IItem) => ({
             ...cartItem,
             quantity: cartItem.id === itemId ? quantity : cartItem.quantity,
           })),
@@ -85,10 +86,10 @@ const Cart = () => {
     }
   };
 
-  const checkedItems = cart.items.filter((item: Item) => item.checked);
+  const checkedItems = cart.items.filter((item: IItem) => item.checked);
   const numCheckedTotalItem = checkedItems.length;
   const totalPrice = checkedItems
-    .map((item: Item) => Number(item.variant_price) * item.quantity)
+    .map((item: IItem) => Number(item.variant_price) * item.quantity)
     .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
 
   if (totalPrice < 70000) {
@@ -108,7 +109,7 @@ const Cart = () => {
     mutateCart(
       {
         ...cart,
-        items: items.map((item: Item) => {
+        items: items.map((item: IItem) => {
           const newItem = { ...item };
           newItem.checked = !allChecked;
 
@@ -127,7 +128,7 @@ const Cart = () => {
   const handleCartItemCheck = (cartItemIndex: number) => {
     const newCart = {
       ...cart,
-      items: items.map((cartItem: Item, index: number) => ({
+      items: items.map((cartItem: IItem, index: number) => ({
         ...cartItem,
         checked: cartItemIndex === index ? !cartItem.checked : cartItem.checked,
       })),
@@ -135,13 +136,13 @@ const Cart = () => {
 
     mutateCart(newCart, false);
     const isSomeUnchecked =
-      newCart.items.filter((item: Item) => !item.checked).length > 0;
+      newCart.items.filter((item: IItem) => !item.checked).length > 0;
     if (isSomeUnchecked) {
       setAllChecked(false);
     }
 
     const isAllChecked =
-      newCart.items.filter((item: Item) => item.checked).length ===
+      newCart.items.filter((item: IItem) => item.checked).length ===
       newCart.items.length;
     if (isAllChecked) {
       setAllChecked(true);
@@ -150,8 +151,8 @@ const Cart = () => {
 
   const handleBuyBtnClick = async () => {
     const checkedLineItems = cart.items
-      .filter((item: Item) => item.checked)
-      .map((item: Item) => ({
+      .filter((item: IItem) => item.checked)
+      .map((item: IItem) => ({
         variant_id: item.variant_id,
         quantity: item.quantity,
       }));
@@ -167,7 +168,7 @@ const Cart = () => {
     }
   };
 
-  const handleListBuyBtnClick = async (item: Item, quantity: number) => {
+  const handleListBuyBtnClick = async (item: IItem, quantity: number) => {
     if (Number(item.variant_price) * item.quantity < 70000) {
       localStorage.setItem("delivery", "3000");
     } else {
@@ -190,7 +191,7 @@ const Cart = () => {
   };
 
   const handleChoiceItemRemoveBtnClick = async () => {
-    const chkItems = cart.items.filter((item: Item) => item.checked);
+    const chkItems = cart.items.filter((item: IItem) => item.checked);
 
     for (const chkItem of chkItems) {
       let cartItemId: number = chkItem.id;
@@ -240,7 +241,7 @@ const Cart = () => {
           {items.length < 1 ? (
             <CartEmpty>장바구니가 비었습니다.</CartEmpty>
           ) : (
-            items.map((item: Item, index: number) => {
+            items.map((item: IItem, index: number) => {
               return (
                 <li className="item" key={item.id}>
                   <div className="item_select">
@@ -306,9 +307,7 @@ const Cart = () => {
                       <div className="info_text">
                         <p className="price_area">
                           <span className="price_zone">
-                            {item.variant_price
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            {formatPrice(item.variant_price.toString())}
                           </span>
                           원
                         </p>
@@ -338,9 +337,11 @@ const Cart = () => {
 
                         <div>
                           <span className="item_price_qty">
-                            {(Number(item.variant_price) * item.quantity)
-                              .toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                            {formatPrice(
+                              (
+                                Number(item.variant_price) * item.quantity
+                              ).toString()
+                            )}
                             원
                           </span>
                         </div>
@@ -370,7 +371,7 @@ const Cart = () => {
           </div>
           <p className="price_unit">
             <span className="total_qty" id="totalQty">
-              {items.filter((item: Item) => item.checked).length}
+              {items.filter((item: IItem) => item.checked).length}
             </span>
             개
           </p>
@@ -382,7 +383,7 @@ const Cart = () => {
           </div>
           <p className="price_unit">
             <span className="total_price_zone" id="totalPrice">
-              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(totalPrice.toString())}
             </span>
             원
           </p>
@@ -394,7 +395,7 @@ const Cart = () => {
           </div>
           <p className="price_unit">
             <span className="delivery_charge_zone" id="deliveryCharge">
-              {deliveryCharge.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(deliveryCharge)}
             </span>
             원
           </p>
@@ -408,7 +409,7 @@ const Cart = () => {
           </div>
           <p className="price_unit final">
             <span className="final_price_zone" id="finalPrice">
-              {finalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(finalPrice.toString())}
             </span>
             원
           </p>

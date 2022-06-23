@@ -11,6 +11,7 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
+
 import {
   userId,
   userPassword,
@@ -21,6 +22,7 @@ import {
   userDate,
 } from "utils/login-validation";
 import { createJoinApi, checkUserIdExistenceApi } from "api";
+import { AxiosError } from "axios";
 
 const Join = () => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);
@@ -56,7 +58,7 @@ const Join = () => {
 
   const onSubmit = async (values: FormikValues) => {
     try {
-      const res = await createJoinApi({
+      await createJoinApi({
         userId: values.id,
         userPassword: values.password2,
         name: values.name,

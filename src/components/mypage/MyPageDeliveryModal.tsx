@@ -3,18 +3,19 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
-import AddDeliveryAddressModal, {
-  myDeliveryInfoState,
-} from "components/mypage/AddDeliveryAddressModal";
-import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
-import { updateShippingAddressApi } from "api";
 import { formatPhone } from "utils/format-phone";
+import { updateShippingAddressApi } from "api";
+
+import AddDeliveryAddressModal from "components/mypage/AddDeliveryAddressModal";
+
+import { myDeliveryInfoState } from "state/mypage";
 import {
-  MyPageDeliveryModalProps,
-  CloseBtnProps,
-  CancelRegistrationBtnProps,
-  AddBtnProps,
-  DeliveryAddressItemProps,
+  IMyPageDeliveryModalProps,
+  ICloseBtnProps,
+  ICancelRegistrationBtnProps,
+  IAddBtnProps,
+  IDeliveryAddressItemProps,
+  IDeliveryInfoState,
 } from "types";
 
 Modal.setAppElement("#root");
@@ -23,8 +24,8 @@ const MyPageDeliveryModal = ({
   isOpen,
   onRequestClose,
   myDeliveryAddress,
-}: MyPageDeliveryModalProps) => {
-  const myDeliveryData = useRecoilValue<DeliveryInfoState>(
+}: IMyPageDeliveryModalProps) => {
+  const myDeliveryData = useRecoilValue<IDeliveryInfoState>(
     myDeliveryInfoState(myDeliveryAddress ? myDeliveryAddress.id : 0)
   );
   const [addDeliveryClassName, setAddDeliveryClassName] = useState("hide");
@@ -135,7 +136,7 @@ const MyPageDeliveryModal = ({
     }
 
     try {
-      const res = await updateShippingAddressApi({
+      await updateShippingAddressApi({
         name: !myDeliveryData.designation ? " " : myDeliveryData.designation,
         recipientName: myDeliveryData.recipient,
         postalCode: myDeliveryData.address1,
@@ -278,7 +279,7 @@ const NotDeliveryAddress = styled.p`
   text-align: center;
 `;
 
-const DeliveryAddressItem = styled.div<DeliveryAddressItemProps>`
+const DeliveryAddressItem = styled.div<IDeliveryAddressItemProps>`
   display: ${(props) => props.display || "block"};
   padding: 20px;
   background-color: #fff;
@@ -335,7 +336,7 @@ const ModifyBtn = styled.button`
 
 const BtnContainer = styled.div``;
 
-const AddBtn = styled.button<AddBtnProps>`
+const AddBtn = styled.button<IAddBtnProps>`
   display: ${(props) => props.display || "block"};
   width: 100%;
   min-height: 50px;
@@ -350,7 +351,7 @@ const AddBtn = styled.button<AddBtnProps>`
   cursor: pointer;
 `;
 
-const CancelRegistrationBtnWrap = styled.div<CancelRegistrationBtnProps>`
+const CancelRegistrationBtnWrap = styled.div<ICancelRegistrationBtnProps>`
   display: ${(props) => props.display || "flex"};
   justify-content: space-between;
   margin-top: 10px;
@@ -383,7 +384,7 @@ const RegistrationBtn = styled.button`
   cursor: pointer;
 `;
 
-const CloseBtn = styled.button<CloseBtnProps>`
+const CloseBtn = styled.button<ICloseBtnProps>`
   display: ${(props) => props.display || "block"};
   width: 100%;
   min-height: 50px;

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
+
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
-import { OrderCompletionDeliveryInfoProps } from "types";
+
+import { IOrderCompletionDeliveryInfoProps } from "types";
 
 const OrderCompletionDeliveryInfo = ({
   orderData,
-}: OrderCompletionDeliveryInfoProps) => {
+}: IOrderCompletionDeliveryInfoProps) => {
   const [arrowImg, setArrowImg] = useState<string>(downArrow);
   const [deliveryInfoClass, setDeliveryInfoClass] = useState<string>("hide");
   const [infoHeadAddress, setInfoHeadAddress] = useState<string>(

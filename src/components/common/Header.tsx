@@ -10,25 +10,29 @@ import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { useDevice } from "hooks/useDevice";
-import { headerItemState } from "layout/Main";
-import { menuState } from "components/common/Menu";
-import Loading from "components/common/Loading";
-import SearchModal, { searchWrapState } from "components/search/SearchModal";
-
-import signInImg from "assets/images/user.png";
-import { ReactComponent as MenuImg } from "assets/images/menu.svg";
 import {
   updateMyVisitCountsApi,
   updateShopVisitCountsApi,
   createAccessTokenApi,
 } from "api";
 
+import Loading from "components/common/Loading";
+import SearchModal from "components/search/SearchModal";
+
+import signInImg from "assets/images/user.png";
+import { ReactComponent as MenuImg } from "assets/images/menu.svg";
+
+import { headerItemState, menuState, searchWrapState } from "state";
+
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const { token, mutateToken } = useTokenStatus();
   const { isPc } = useDevice();
+
   const setMenuShow = useSetRecoilState(menuState);
+  const setSearchWrapStatus = useSetRecoilState(searchWrapState);
   const activeCheck = useRecoilValue(headerItemState);
 
   useEffect(() => {
@@ -72,8 +76,6 @@ const Header = () => {
   }, []);
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-
-  const setSearchWrapStatus = useSetRecoilState<boolean>(searchWrapState);
 
   if (cartError) return <div>에러 발생...</div>;
   if (loadingCart) return <Loading />;

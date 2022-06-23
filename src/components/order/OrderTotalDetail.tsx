@@ -1,42 +1,14 @@
 import { ChangeEvent, useEffect } from "react";
-import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+
+import { formatPrice } from "utils/money";
+
 import OrderCheckoutButton from "components/order/OrderCheckoutButton";
 import OrderAgreeCheck from "components/order/OrderAgreeCheck";
-import { couponStateSelector } from "components/order/OrderCoupon";
-import { OrderTotalDetailProps } from "types";
 
-const finalPriceState = atom<number>({
-  key: "finalPriceState",
-  default: 0,
-});
+import { IOrderTotalDetailProps } from "types";
 
-const agreeCheckedState = atom<boolean>({
-  key: "agreeCheckedState",
-  default: false,
-});
-
-interface TotalDetailSelector {
-  selectCouponId: number;
-  usedMileage: number;
-  agreeChecked: boolean;
-  finalPrice: number;
-}
-
-export const totalDetailSelector = selector<TotalDetailSelector>({
-  key: "totalDetailSelector",
-  get: ({ get }) => {
-    const couponData = get(couponStateSelector);
-    const agreeChecked = get(agreeCheckedState);
-    const finalPrice = get(finalPriceState);
-
-    return {
-      selectCouponId: couponData.selectCouponId,
-      usedMileage: couponData.usedMileage,
-      agreeChecked: agreeChecked,
-      finalPrice: finalPrice,
-    };
-  },
-});
+import { finalPriceState, agreeCheckedState, couponStateSelector } from "state";
 
 const OrderTotalDetail = ({
   totalPrice,
@@ -46,12 +18,12 @@ const OrderTotalDetail = ({
   isPc,
   isTablet,
   isMobile,
-}: OrderTotalDetailProps) => {
+}: IOrderTotalDetailProps) => {
   const couponState = useRecoilValue(couponStateSelector);
   const { usedMileage, selectOption } = couponState;
   const [agreeChecked, setAgreeChecked] =
     useRecoilState<boolean>(agreeCheckedState);
-  const [finalPrice, setFinalPrice] = useRecoilState<number>(finalPriceState);
+  const setFinalPrice = useSetRecoilState<number>(finalPriceState);
 
   const countFinalPrice =
     totalPrice +
@@ -63,9 +35,9 @@ const OrderTotalDetail = ({
 
   useEffect(() => {
     setFinalPrice(countFinalPrice);
-  }, [countFinalPrice]);
+  }, [countFinalPrice, setFinalPrice]);
 
-  const handleAgreeCheck = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleAgreeCheckChange = (e: ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked;
     if (checked) {
       setAgreeChecked(true);
@@ -83,7 +55,7 @@ const OrderTotalDetail = ({
           </div>
           <p className="price_unit">
             <span className="total_price_zone" id="totalPriceDetail">
-              {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(totalPrice.toString())}
             </span>
             원
           </p>
@@ -96,7 +68,7 @@ const OrderTotalDetail = ({
           <p className="price_unit">
             {deliveryCharge === "0" ? "" : "+"}
             <span className="delivery_charge_zone" id="deliveryChargeDetail">
-              {deliveryCharge?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(deliveryCharge?.toString())}
             </span>
             원
           </p>
@@ -111,7 +83,7 @@ const OrderTotalDetail = ({
             <span className="mileage_in_zone" id="usedMileageDetail">
               {!usedMileage || usedMileage === 0
                 ? 0
-                : usedMileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                : formatPrice(usedMileage.toString())}
             </span>
             원
           </p>
@@ -125,10 +97,8 @@ const OrderTotalDetail = ({
             {totalPrice * selectOption > 0 || selectOption > 0 ? "-" : ""}
             <span className="coupon_in_zone" id="usedCouponDetail">
               {Number.isInteger(selectOption) === false
-                ? (totalPrice * selectOption)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                : selectOption.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                ? formatPrice((totalPrice * selectOption).toString())
+                : formatPrice(selectOption.toString())}
             </span>
             원
           </p>
@@ -142,7 +112,7 @@ const OrderTotalDetail = ({
           </div>
           <p className="price_unit final">
             <span className="final_price_zone" id="finalPriceDetail">
-              {countFinalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(countFinalPrice.toString())}
             </span>
             원
           </p>
@@ -151,7 +121,7 @@ const OrderTotalDetail = ({
 
       <OrderAgreeCheck
         agreeChecked={agreeChecked}
-        handleAgreeCheck={handleAgreeCheck}
+        handleAgreeCheckChange={handleAgreeCheckChange}
       />
 
       <OrderCheckoutButton

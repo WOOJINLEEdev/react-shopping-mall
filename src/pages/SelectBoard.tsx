@@ -1,20 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { atomFamily, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
-export interface CurBoardState {
-  pageNumber: number;
-}
-
-export const curBoardState = atomFamily<CurBoardState, string>({
-  key: "curBoardState",
-  default: (type) => {
-    return {
-      type,
-      pageNumber: 1,
-    };
-  },
-});
+import { curBoardState } from "state";
 
 const SelectBoardPage = () => {
   const setBoardFirstState = useSetRecoilState(curBoardState("first"));

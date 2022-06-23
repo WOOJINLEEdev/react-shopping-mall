@@ -8,15 +8,12 @@ import {
   useEffect,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 
 import SearchInputBtn from "components/search/SearchInputBtn";
 
-export const menuState = atom<boolean>({
-  key: "menuState",
-  default: false,
-});
+import { menuState } from "state";
 
 const Menu = () => {
   const location = useLocation();

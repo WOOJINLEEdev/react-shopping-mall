@@ -1,23 +1,24 @@
 import { updateCheckoutsApi } from "api";
-import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
 
-interface SubmitCheckoutProps {
-  checkoutDeliveryData: DeliveryInfoState;
+import { IDeliveryInfoState } from "types";
+
+interface ISubmitCheckoutProps {
+  checkoutDeliveryData: IDeliveryInfoState;
   checkoutPaymentData: string;
-  checkoutTotalDetailData: CheckoutTotalDetailData;
-  checkoutData: CheckoutData;
+  checkoutTotalDetailData: ICheckoutTotalDetailData;
+  checkoutData: ICheckoutData;
   checkoutNumber: number;
 }
 
-interface CheckoutData {
-  user: User;
+interface ICheckoutData {
+  user: IUser;
 }
 
-interface User {
-  shipping_address: ShippingAddress;
+interface IUser {
+  shipping_address: IShippingAddress;
 }
 
-interface ShippingAddress {
+interface IShippingAddress {
   address1: string;
   address2: string;
   name?: string;
@@ -28,7 +29,7 @@ interface ShippingAddress {
   request_note?: string;
 }
 
-interface CheckoutTotalDetailData {
+interface ICheckoutTotalDetailData {
   agreeChecked: boolean;
   finalPrice: number;
   selectCouponId: number;
@@ -41,10 +42,10 @@ export async function submitCheckout({
   checkoutTotalDetailData,
   checkoutData,
   checkoutNumber,
-}: SubmitCheckoutProps) {
+}: ISubmitCheckoutProps) {
   if (checkoutDeliveryData.deliveryClassName === "delivery_write selected") {
     try {
-      const res = await updateCheckoutsApi({
+      await updateCheckoutsApi({
         checkoutNumber,
         shippingAddress: {
           name: checkoutDeliveryData.designation,
@@ -71,7 +72,7 @@ export async function submitCheckout({
 
   if (checkoutDeliveryData.deliveryClassName1 === "delivery_write selected") {
     try {
-      const res = await updateCheckoutsApi({
+      await updateCheckoutsApi({
         checkoutNumber,
         shippingAddress: {
           name: checkoutDeliveryData.designation,

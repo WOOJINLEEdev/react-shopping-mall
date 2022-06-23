@@ -1,14 +1,16 @@
 import { useParams } from "react-router-dom";
+
+import useCheckout from "hooks/useCheckout";
+import { useDevice } from "hooks/useDevice";
+
 import OrderDelivery from "components/order/OrderDelivery";
 import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
 import Loading from "components/common/Loading";
-import useCheckout from "hooks/useCheckout";
-import { useDevice } from "hooks/useDevice";
 
-interface LineItem {
+interface ILineItem {
   image_src: string;
   product_id: number;
   product_name: string;
@@ -29,9 +31,9 @@ const Order = () => {
   if (checkoutError) return <div>failed to load...</div>;
   if (loadingCheckout) return <Loading />;
 
-  const items: LineItem[] = checkoutData.line_items;
+  const items: ILineItem[] = checkoutData.line_items;
   const totalPrice: number = items
-    .map((item: LineItem) => Number(item.variant_price) * item.quantity)
+    .map((item: ILineItem) => Number(item.variant_price) * item.quantity)
     .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
   const deliveryCharge: string = localStorage.getItem("delivery")!;
 

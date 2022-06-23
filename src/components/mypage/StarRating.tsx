@@ -1,10 +1,12 @@
 import { useState, useEffect, MouseEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
-import { updateStarRatingApi } from "api";
-import { StarRatingProps } from "types";
 
-const StarRating = ({ myRating }: StarRatingProps) => {
+import { updateStarRatingApi } from "api";
+
+import { IStarRatingProps } from "types";
+
+const StarRating = ({ myRating }: IStarRatingProps) => {
   const stars = [1, 2, 3, 4, 5];
   const [starRatings, setStarRatings] = useState<boolean[]>([
     false,
@@ -27,9 +29,7 @@ const StarRating = ({ myRating }: StarRatingProps) => {
     const selectedStarRatings = updatedStarRatings(selectedStar);
 
     try {
-      const res = await updateStarRatingApi(
-        countClickedStarsNumber(selectedStarRatings)
-      );
+      await updateStarRatingApi(countClickedStarsNumber(selectedStarRatings));
 
       setStarRatings(selectedStarRatings);
     } catch (err) {

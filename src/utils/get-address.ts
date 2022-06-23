@@ -1,6 +1,6 @@
-import { Address } from "types";
+import { IAddress } from "types";
 
-export const getFullAddress = (data: Address) => {
+export const getFullAddress = (data: IAddress) => {
   let fullAddress = data.address;
   let extraAddress = "";
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { BoardModalCloseBtnProps } from "types";
 
 const BoardModalCloseBtn = ({ handleModalClose }: BoardModalCloseBtnProps) => {

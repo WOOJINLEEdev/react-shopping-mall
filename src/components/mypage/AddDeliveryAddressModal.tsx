@@ -1,43 +1,23 @@
 import { useState, useEffect } from "react";
 import DaumPostcode from "react-daum-postcode";
 import styled from "styled-components";
-import { atomFamily, useRecoilState } from "recoil";
-import Loading from "components/common/Loading";
-import { DeliveryInfoState } from "components/order/OrderDeliveryForm";
+import { useRecoilState } from "recoil";
+import { CgClose } from "@react-icons/all-files/cg/CgClose";
+
 import useMyPageData from "hooks/useMyPageData";
 import { parsePhone } from "utils/format-phone";
 import { getFullAddress } from "utils/get-address";
-import { CgClose } from "@react-icons/all-files/cg/CgClose";
-import { AddDeliveryAddressModalProps, Address } from "types";
+import { isNumberCheck } from "utils/number";
 
-export const myDeliveryInfoState = atomFamily<DeliveryInfoState, number>({
-  key: "myDeliveryInfoState",
-  default: (id) => {
-    return {
-      id,
-      designation: "",
-      recipient: "",
-      address1: "",
-      addressDetail1: "",
-      addressDetail2: "",
-      tel1: "",
-      tel2: "",
-      tel3: "",
-      tel4: "",
-      tel5: "",
-      tel6: "",
-      requirement: "",
-      requirement1: "",
-      deliveryClassName: "",
-      deliveryClassName1: "",
-    };
-  },
-});
+import Loading from "components/common/Loading";
+
+import { myDeliveryInfoState } from "state/mypage";
+import { IAddDeliveryAddressModalProps, IAddress } from "types";
 
 const AddDeliveryAddressModal = ({
   addDeliveryClassName,
   myDeliveryAddressId,
-}: AddDeliveryAddressModalProps) => {
+}: IAddDeliveryAddressModalProps) => {
   const [myDeliveryState, setMyDeliveryState] = useRecoilState(
     myDeliveryInfoState(myDeliveryAddressId)
   );
@@ -66,7 +46,7 @@ const AddDeliveryAddressModal = ({
     }
   }, []);
 
-  const { myData, loadingMyData, myDataError, mutateMyData } = useMyPageData();
+  const { myData, loadingMyData, myDataError } = useMyPageData();
   if (loadingMyData) return <Loading />;
   if (myDataError) return <div>에러발생...</div>;
 
@@ -83,8 +63,9 @@ const AddDeliveryAddressModal = ({
   };
 
   const handleTelInputChange = (key: string, tel: string) => {
-    let isNumberCheck = /^[0-9]+$/;
-    if (!isNumberCheck.test(tel) && tel !== "") return false;
+    if (!isNumberCheck(tel)) {
+      return;
+    }
 
     setMyDeliveryState({ ...myDeliveryState, [key]: tel });
   };
@@ -97,7 +78,7 @@ const AddDeliveryAddressModal = ({
     setShowDaumPostModal(false);
   };
 
-  const handleComplete = (data: Address) => {
+  const handleComplete = (data: IAddress) => {
     let fullAddress = getFullAddress(data);
 
     setMyDeliveryState({

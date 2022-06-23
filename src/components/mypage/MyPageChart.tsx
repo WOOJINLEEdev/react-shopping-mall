@@ -8,9 +8,9 @@ import { getMyVisitCountApi } from "api";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 
-import { MyPageChartProps, VisitData } from "types";
+import { IMyPageChartProps, IVisitData } from "types";
 
-const MyPageChart = ({ userName }: MyPageChartProps) => {
+const MyPageChart = ({ userName }: IMyPageChartProps) => {
   const [series, setSeries] = useState<ApexOptions["series"]>();
   const [options, setOptions] = useState<ApexOptions>();
 
@@ -31,8 +31,8 @@ const MyPageChart = ({ userName }: MyPageChartProps) => {
           visitEndDate,
         });
 
-        const visitDate = res.data.map((item: VisitData) => item.visit_date);
-        const visitCount = res.data.map((item: VisitData) => item.visit_count);
+        const visitDate = res.data.map((item: IVisitData) => item.visit_date);
+        const visitCount = res.data.map((item: IVisitData) => item.visit_count);
 
         setSeries([
           {

@@ -6,13 +6,14 @@ import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { instance } from "utils/http-client";
 import { getSizedImageUrl } from "utils/image";
+import { formatPrice } from "utils/money";
 import { addToCartApi, createCheckoutsApi } from "api";
 
 import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
 import QuantityCounter from "components/common/QuantityCounter";
 
-interface Option {
+interface IOption {
   id: number;
   name: string;
   option1?: string;
@@ -78,7 +79,7 @@ const ItemDetail = () => {
       setItemOption("");
     }
 
-    selectOptions.map((variant: Option) => {
+    selectOptions.map((variant: IOption) => {
       if (e.target.value === variant.name) {
         setItemOption(variant.id);
         return variant.id;
@@ -208,9 +209,7 @@ const ItemDetail = () => {
               <th className="tbody_th">Price</th>
               <td className="tbody_td">
                 <span id="imageTextBody">
-                  {data.variants[0].price
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {formatPrice(data.variants[0].price.toString())}
                 </span>
                 원
               </td>
@@ -220,7 +219,7 @@ const ItemDetail = () => {
               <td className="tbody_td">
                 <select className="td_select" onChange={handleSelectChange}>
                   <option value="">- [필수] 옵션을 선택해주세요 -</option>
-                  {selectOptions.map((option: Option) => (
+                  {selectOptions.map((option: IOption) => (
                     <option key={option.option1}>{option.option1}</option>
                   ))}
                 </select>

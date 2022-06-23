@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { QuantityCounterProps, QuantityAreaProps } from "types";
+import { IQuantityCounterProps, IQuantityAreaProps } from "types";
 
 const QuantityCounter = ({
   quantity,
@@ -9,7 +9,7 @@ const QuantityCounter = ({
   margin,
   flexEnd,
   productId,
-}: QuantityCounterProps) => {
+}: IQuantityCounterProps) => {
   return (
     <QuantityArea margin={margin} flexEnd={flexEnd}>
       <input
@@ -47,7 +47,7 @@ const QuantityCounter = ({
 
 export default QuantityCounter;
 
-const QuantityArea = styled.div<QuantityAreaProps>`
+const QuantityArea = styled.div<IQuantityAreaProps>`
   display: flex;
   margin: ${(props) => (props.margin ? "0 70px" : "0")};
 

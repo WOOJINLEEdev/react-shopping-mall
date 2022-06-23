@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { BoardTableRowProps, TableRowProps } from "types";
 
 const BoardTableRow = ({ children, background }: BoardTableRowProps) => {

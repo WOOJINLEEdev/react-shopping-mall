@@ -1,14 +1,15 @@
 import { useState, useRef, useEffect, useCallback, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import styled from "styled-components";
+import jwt_decode from "jwt-decode";
+import DOMPurify from "dompurify";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import axios from "axios";
-import DOMPurify from "dompurify";
+
 import { getToken } from "utils/token";
 
-interface MyToken {
+interface IMyToken {
   user: {
     user_id: string;
   };
@@ -16,14 +17,15 @@ interface MyToken {
 }
 
 const BoardEditor = () => {
+  const [inputTitle, setInputTitle] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
-  const [inputTitle, setInputTitle] = useState<string>("");
+
   const navigate = useNavigate();
 
   const token = getToken();
   const boardLocalStorage = localStorage.getItem("board");
-  const decoded = jwt_decode<MyToken>(token);
+  const decoded = jwt_decode<IMyToken>(token);
   const userId = decoded.user.user_id;
 
   useEffect(() => {
@@ -113,7 +115,6 @@ const BoardEditor = () => {
         placeholder="말은 우리 내면을 비추는 거울입니다."
         language="ko"
         ref={editorRef}
-        // events={eventHandler}
         autofocus={false}
       />
     </EditorWrap>

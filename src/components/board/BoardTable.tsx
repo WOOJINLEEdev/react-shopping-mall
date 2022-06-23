@@ -1,5 +1,7 @@
-import Loading from "components/common/Loading";
 import { useDevice } from "hooks/useDevice";
+
+import Loading from "components/common/Loading";
+
 import { BoardTableProps } from "types";
 
 const BoardTable = ({

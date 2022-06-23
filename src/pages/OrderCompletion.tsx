@@ -17,21 +17,21 @@ import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import Loading from "components/common/Loading";
 
-interface OrderData {
+interface IOrderData {
   created_at: string;
-  line_items: Item[];
+  line_items: IItem[];
   id: number;
-  shipping_address: ShippingAddress;
+  shipping_address: IShippingAddress;
   payment_method: string;
   shipping_price: string;
   product_price: string;
   total_discount: string | number;
   total_price: string;
-  used_coupon?: Coupon;
+  used_coupon?: ICoupon;
   used_point?: number;
 }
 
-interface Item {
+interface IItem {
   image_src: string;
   price: string;
   product_id: number;
@@ -41,7 +41,7 @@ interface Item {
   variant_name: string;
 }
 
-type ShippingAddress = {
+interface IShippingAddress {
   address1: string;
   address2: string;
   name?: string;
@@ -50,19 +50,20 @@ type ShippingAddress = {
   postal_code: string;
   recipient_name: string;
   request_note?: string;
-};
+}
 
-type Coupon = {
+interface ICoupon {
   applied_amount: string;
   id: number;
   name: string;
   type: string;
   user_coupon_id: number;
-};
+}
 
 const OrderCompletion = () => {
   const matchParams = useParams();
-  const [orderData, setOrderData] = useState<OrderData[]>([]);
+
+  const [orderData, setOrderData] = useState<IOrderData[]>([]);
   const [remainderClass, setRemainderClass] =
     useState<string>("info_remainder");
   const [arrowImg, setArrowImg] = useState<string>(upArrow);
@@ -80,7 +81,6 @@ const OrderCompletion = () => {
     async function getCompletedOrder() {
       try {
         const res = await getOrdersApi({ checkoutId: checkoutNumber });
-
         setOrderData(res.data);
       } catch (err) {
         console.log(err);
@@ -94,10 +94,10 @@ const OrderCompletion = () => {
     return <Loading />;
   }
 
-  const items: Item[] = orderData[0].line_items;
+  const items: IItem[] = orderData[0].line_items;
   const firstItem = items[0];
-  const remainder = items.filter((item: Item) => item !== firstItem);
-  const itemQuantity = items.map((item: Item) => item.quantity);
+  const remainder = items.filter((item: IItem) => item !== firstItem);
+  const itemQuantity = items.map((item: IItem) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtnClick = () => {

@@ -1,6 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { OrderDeliveryHeadProps } from "types";
-import { deliveryInfoState } from "./OrderDeliveryForm";
+
+import { deliveryInfoState } from "state";
+
+import { IOrderDeliveryHeadProps } from "types";
 
 const OrderDeliveryHead = ({
   isPc,
@@ -11,7 +13,7 @@ const OrderDeliveryHead = ({
   checkoutData,
   handleAddressBtnClick,
   arrowImg,
-}: OrderDeliveryHeadProps) => {
+}: IOrderDeliveryHeadProps) => {
   const deliveryStateValue = useRecoilValue(deliveryInfoState(checkoutData.id));
 
   return (

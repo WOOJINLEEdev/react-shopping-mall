@@ -1,14 +1,16 @@
-import styled from "styled-components";
-import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
-import { formatPhone } from "utils/format-phone";
-import {
-  OrderDeliveryFormTabletProps,
-  DeliveryRequirementOption,
-  PreexistenceSelectProps,
-} from "types";
-import { deliveryInfoState } from "./OrderDeliveryForm";
-import { useRecoilState } from "recoil";
 import { useEffect } from "react";
+import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
+
+import { formatPhone } from "utils/format-phone";
+
+import { deliveryInfoState } from "state";
+import {
+  IOrderDeliveryFormTabletProps,
+  IDeliveryRequirementOption,
+  IPreexistenceSelectProps,
+} from "types";
 
 const OrderDeliveryFormTablet = ({
   deliveryWrapClass,
@@ -22,7 +24,7 @@ const OrderDeliveryFormTablet = ({
   deliveryFirstRequirementOption,
   checkoutId,
   requirement,
-}: OrderDeliveryFormTabletProps) => {
+}: IOrderDeliveryFormTabletProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
     deliveryInfoState(checkoutId)
   );
@@ -79,7 +81,7 @@ const OrderDeliveryFormTablet = ({
                 tabIndex={0}
               >
                 {deliveryFirstRequirementOption.map(
-                  (item: DeliveryRequirementOption) => (
+                  (item: IDeliveryRequirementOption) => (
                     <option key={item.no} value={item.label}>
                       {item.value}
                     </option>
@@ -128,7 +130,7 @@ const PreexistenceItem = styled.li`
   }
 `;
 
-const PreexistenceSelect = styled.select<PreexistenceSelectProps>`
+const PreexistenceSelect = styled.select<IPreexistenceSelectProps>`
   width: 100%;
   height: 40px;
   border: 1px solid #d4d4d4;

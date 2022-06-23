@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import SearchWrap from "components/search/SearchWrap";
 import { CgClose } from "react-icons/cg";
 
-export const searchWrapState = atom<boolean>({
-  key: "searchWrapState",
-  default: false,
-});
+import SearchWrap from "components/search/SearchWrap";
+
+import { searchWrapState } from "state";
 
 const SearchModal = () => {
   const [searchClassName, setSearchClassName] = useState<string>(
@@ -47,11 +45,11 @@ const SearchModal = () => {
 
 export default SearchModal;
 
-interface DimProps {
+interface IDimmedLayer {
   show: boolean;
 }
 
-const DimmedLayer = styled.div<DimProps>`
+const DimmedLayer = styled.div<IDimmedLayer>`
   display: ${(props) => (props.show ? "block" : "none")};
   position: fixed;
   width: 100%;

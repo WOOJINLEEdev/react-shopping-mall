@@ -1,6 +1,8 @@
 import Modal from "react-modal";
 import styled from "styled-components";
+
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
+
 import { BoardFirstModalProps, Post } from "types";
 
 Modal.setAppElement("#root");

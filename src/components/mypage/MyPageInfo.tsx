@@ -5,11 +5,12 @@ import styled from "styled-components";
 
 import useMyCart from "hooks/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
+import { formatPrice } from "utils/money";
 import { createLogoutApi } from "api";
 
 import Loading from "components/common/Loading";
 
-import { MyPageInfoProps } from "types";
+import { IMyData, IMyPageInfoProps } from "types";
 
 Modal.setAppElement("#root");
 
@@ -18,7 +19,7 @@ const MyPageCouponModal = lazy(
   () => import("components/mypage/MyPageCouponModal")
 );
 
-const MyPageInfo = ({ myData }: MyPageInfoProps) => {
+const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
   const navigate = useNavigate();
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
@@ -37,8 +38,7 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
   const logout = () => {
     async function createLogout() {
       try {
-        const res = await createLogoutApi();
-        console.log("logout res:", res);
+        await createLogoutApi();
         removeToken();
       } catch (err) {
         console.log("logout err:", err);
@@ -78,6 +78,18 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
     setIsCouponModalOpen(false);
   };
 
+  function getMileage(value: number) {
+    return value === 0 || value === undefined
+      ? 0
+      : formatPrice(value.toString());
+  }
+
+  function getUserName(data: IMyData) {
+    return `${data.name} (${
+      data.social_user_id === 0 ? data.user_id : data.email
+    })`;
+  }
+
   return (
     <MyInfo>
       <Suspense fallback={<Loading />}>
@@ -98,11 +110,8 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
       </Suspense>
 
       <Greet>
-        <span className="greet_user">
-          {myData.name} (
-          {myData.social_user_id === 0 ? myData.user_id : myData.email}){" "}
-        </span>{" "}
-        님, <p style={{ paddingTop: "10px" }}>안녕하세요!</p>
+        <span className="greet_user">{getUserName(myData)}</span> 님,{" "}
+        <p style={{ paddingTop: "10px" }}>안녕하세요!</p>
       </Greet>
       <ModifyLogoutWrap className="modify_logout_wrap">
         <Btn type="button" onClick={handleModifyBtnClick}>
@@ -124,11 +133,7 @@ const MyPageInfo = ({ myData }: MyPageInfoProps) => {
         </Coupon>
         <Mileage tabIndex={0}>
           <MileageTitle>마일리지</MileageTitle>{" "}
-          <MileageText>
-            {myData.mileage === 0 || myData.mileage === undefined
-              ? 0
-              : myData.mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </MileageText>
+          <MileageText>{getMileage(myData.mileage)}</MileageText>
         </Mileage>
       </CouponMileageWrap>
     </MyInfo>

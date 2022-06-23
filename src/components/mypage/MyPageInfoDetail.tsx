@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense, useCallback } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -6,7 +6,8 @@ import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
 
 import StarRating from "components/mypage/StarRating";
 import Loading from "components/common/Loading";
-import { MyPageInfoDetailProps } from "types";
+
+import { IMyPageInfoDetailProps } from "types";
 
 Modal.setAppElement("#root");
 
@@ -14,16 +15,16 @@ const MyPageDeliveryModal = lazy(
   () => import("components/mypage/MyPageDeliveryModal")
 );
 
-const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
+const MyPageInfoDetail = ({ myData }: IMyPageInfoDetailProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleDeliveryAddress = useCallback(() => {
+  const handleDeliveryAddress = () => {
     setIsOpen(true);
-  }, []);
+  };
 
-  const onRequestClose = useCallback(() => {
+  const onRequestClose = () => {
     setIsOpen(false);
-  }, []);
+  };
 
   return (
     <MyInfoDetail>
@@ -31,7 +32,7 @@ const MyPageInfoDetail = ({ myData }: MyPageInfoDetailProps) => {
         <MyPageDeliveryModal
           isOpen={isOpen}
           onRequestClose={onRequestClose}
-          myDeliveryAddress={myData.shipping_address && myData.shipping_address}
+          myDeliveryAddress={myData.shipping_address}
         />
       </Suspense>
 

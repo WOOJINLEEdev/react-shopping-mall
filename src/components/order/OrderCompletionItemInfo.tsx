@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { OrderCompletionItemInfoProps } from "types";
+
+import { formatPrice } from "utils/money";
+
+import { IOrderCompletionItemInfoProps } from "types";
 
 const OrderCompletionItemInfo = ({
   items,
@@ -18,7 +21,7 @@ const OrderCompletionItemInfo = ({
   isPc,
   isTablet,
   isMobile,
-}: OrderCompletionItemInfoProps) => {
+}: IOrderCompletionItemInfoProps) => {
   return (
     <OrderItemInfoWrap>
       <div className="order_item_info">
@@ -125,9 +128,7 @@ const OrderCompletionItemInfo = ({
                     <p className="list_price_text">
                       <span className="list_price_dollar"></span>
                       <span className="list_goods price">
-                        {item.price
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        {formatPrice(item.price.toString())}
                       </span>
                       원
                     </p>
@@ -157,10 +158,7 @@ const OrderCompletionItemInfo = ({
                     <p className="list_price_text">
                       <span className="list_price_dollar"></span>
                       <span className="list_goods price">
-                        {firstItem.price
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        원
+                        {formatPrice(firstItem.price.toString())}원
                       </span>
 
                       <span className="list_price_quantity">
@@ -199,10 +197,7 @@ const OrderCompletionItemInfo = ({
                       <p className="list_price_text">
                         <span className="list_price_dollar"></span>
                         <span className="list_goods price">
-                          {item.price
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                          원
+                          {formatPrice(item.price.toString())}원
                         </span>
 
                         <span className="list_price_quantity">
@@ -269,10 +264,7 @@ const OrderCompletionItemInfo = ({
                     <p className="list_price_text">
                       <span className="list_price_dollar"></span>
                       <span className="list_goods price">
-                        {firstItem.price
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        원
+                        {formatPrice(firstItem.price.toString())}원
                       </span>
 
                       <span className="list_price_quantity">
@@ -311,10 +303,7 @@ const OrderCompletionItemInfo = ({
                       <p className="list_price_text">
                         <span className="list_price_dollar"></span>
                         <span className="list_goods price">
-                          {item.price
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                          원
+                          {formatPrice(item.price.toString())}원
                         </span>
 
                         <span className="list_price_quantity">

@@ -1,7 +1,9 @@
+import { lpad } from "utils/string";
+
 export function formatDate(date: Date, format?: string) {
-  const year = String(date.getFullYear());
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
+  const year = lpad(date.getFullYear(), 2, "0");
+  const month = lpad(date.getMonth() + 1, 2, "0");
+  const day = lpad(date.getDate(), 2, "0");
 
   switch (format) {
     case "YYYY-MM-DD":

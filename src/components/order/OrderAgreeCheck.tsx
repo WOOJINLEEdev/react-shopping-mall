@@ -1,9 +1,9 @@
-import { OrderAgreeCheckProps } from "types";
+import { IOrderAgreeCheckProps } from "types";
 
 const OrderAgreeCheck = ({
   agreeChecked,
-  handleAgreeCheck,
-}: OrderAgreeCheckProps) => {
+  handleAgreeCheckChange,
+}: IOrderAgreeCheckProps) => {
   return (
     <div className="order_check">
       <input
@@ -11,7 +11,7 @@ const OrderAgreeCheck = ({
         className="order_agree"
         id="agreeCheck"
         checked={agreeChecked}
-        onChange={handleAgreeCheck}
+        onChange={handleAgreeCheckChange}
       />
       <label htmlFor="agreeCheck" className="agree_label">
         주문하실 상품 및 결제, 주문정보를 확인하였으며, 이에 동의합니다.

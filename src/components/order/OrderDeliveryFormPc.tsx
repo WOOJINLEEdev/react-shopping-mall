@@ -1,14 +1,16 @@
+import { useEffect } from "react";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+
 import { parsePhone } from "utils/format-phone";
+
+import { deliveryInfoState } from "state";
 import {
-  OrderDeliveryFormPcProps,
-  DeliveryRequirementOption,
-  PreexistenceSelectProps,
+  IOrderDeliveryFormPcProps,
+  IDeliveryRequirementOption,
+  IPreexistenceSelectProps,
   LiProps,
 } from "types";
-import { useRecoilState } from "recoil";
-import { deliveryInfoState } from "./OrderDeliveryForm";
-import { useEffect } from "react";
 
 const OrderDeliveryFormPc = ({
   deliveryWrapClass,
@@ -22,7 +24,7 @@ const OrderDeliveryFormPc = ({
   deliveryFirstRequirementWrite,
   checkoutId,
   requirement,
-}: OrderDeliveryFormPcProps) => {
+}: IOrderDeliveryFormPcProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
     deliveryInfoState(checkoutId)
   );
@@ -261,7 +263,7 @@ const OrderDeliveryFormPc = ({
               onChange={handleRequirementOptionChange}
             >
               {deliveryFirstRequirementOption.map(
-                (item: DeliveryRequirementOption) => (
+                (item: IDeliveryRequirementOption) => (
                   <option
                     key={item.no}
                     value={item.label}
@@ -301,7 +303,7 @@ const DeliveryRequirementWrap = styled.div`
   width: 100%;
 `;
 
-const PreexistenceSelect = styled.select<PreexistenceSelectProps>`
+const PreexistenceSelect = styled.select<IPreexistenceSelectProps>`
   width: 100%;
   height: 40px;
   border: 1px solid #d4d4d4;

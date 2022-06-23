@@ -1,10 +1,16 @@
 import { useState } from "react";
 import styled from "styled-components";
+
+import { formatPrice } from "utils/money";
+
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
-import { OrderCompletionPayInfoProps } from "types";
 
-const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
+import { IOrderCompletionPayInfoProps } from "types";
+
+const OrderCompletionPayInfo = ({
+  orderData,
+}: IOrderCompletionPayInfoProps) => {
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [payInfoClass, setPayInfoClass] = useState("order_pay_info_wrap");
   const [infoHeadPayment, setInfoHeadPayment] = useState("hide");
@@ -31,9 +37,7 @@ const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
         <PaymentBtnWrap>
           <div className={infoHeadPayment}>
             {orderData[0].payment_method} /{" "}
-            {orderData[0].total_price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {formatPrice(orderData[0].total_price.toString())}
           </div>
           <button
             type="button"
@@ -55,19 +59,13 @@ const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">총 상품금액</div>
-          <div>
-            {orderData[0].product_price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-          </div>
+          <div>{formatPrice(orderData[0].product_price.toString())}</div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">배송비</div>
           <div>
             {orderData[0].shipping_price !== "0" ? "+" : ""}
-            {orderData[0].shipping_price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {formatPrice(orderData[0].shipping_price.toString())}
           </div>
         </li>
         <li className="order_pay_info">
@@ -75,9 +73,7 @@ const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
           <div className="pay_info_discount_wrap">
             <span className="pay_info_total_discount">
               {orderData[0].total_discount > 0 ? "-" : ""}
-              {orderData[0].total_discount
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              {formatPrice(orderData[0].total_discount.toString())}
             </span>
             <ul className="coupon_mileage_wrap">
               <UsedCouponMileage>
@@ -85,9 +81,9 @@ const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
                 <div>
                   {!orderData[0].used_coupon
                     ? 0
-                    : orderData[0].used_coupon.applied_amount
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    : formatPrice(
+                        orderData[0].used_coupon.applied_amount.toString()
+                      )}
                 </div>
               </UsedCouponMileage>
               <UsedCouponMileage>
@@ -95,9 +91,7 @@ const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
                 <div>
                   {!orderData[0].used_point
                     ? "0"
-                    : orderData[0].used_point
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    : formatPrice(orderData[0].used_point.toString())}
                 </div>
               </UsedCouponMileage>
             </ul>
@@ -108,9 +102,7 @@ const OrderCompletionPayInfo = ({ orderData }: OrderCompletionPayInfoProps) => {
             총 결제금액
           </div>
           <div className="order_final_price">
-            {orderData[0].total_price
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {formatPrice(orderData[0].total_price.toString())}
           </div>
         </li>
       </ul>

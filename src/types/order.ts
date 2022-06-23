@@ -1,13 +1,13 @@
 import { ChangeEvent, MouseEvent } from "react";
 
 //---------------------------------------------- OrderAgreeCheck
-export interface OrderAgreeCheckProps {
+export interface IOrderAgreeCheckProps {
   agreeChecked: boolean;
-  handleAgreeCheck: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleAgreeCheckChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 //---------------------------------------------- OrderCheckoutButton
-export interface OrderCheckoutButtonProps {
+export interface IOrderCheckoutButtonProps {
   checkoutData: OrderCheckoutButtonData;
   checkoutNumber: number;
   totalPrice: number;
@@ -22,11 +22,11 @@ export interface OrderCheckoutButtonProps {
 export interface OrderCheckoutButtonData {
   created_at: string;
   id: number;
-  line_items: LineItem[];
+  line_items: ILineItem[];
   user: OrderCheckoutButtonUser;
 }
 
-export interface LineItem {
+export interface ILineItem {
   image_src: string;
   product_id: number;
   product_name: string;
@@ -52,7 +52,7 @@ export interface OrderCheckoutButtonShippingAddress {
 }
 
 //---------------------------------------------- OrderCompletionDeliveryInfo
-export interface OrderCompletionDeliveryInfoProps {
+export interface IOrderCompletionDeliveryInfoProps {
   orderData: OrderDataType[];
 }
 export interface OrderDataType {
@@ -71,7 +71,7 @@ export interface OrderDeliveryShippingAddress {
 }
 
 //---------------------------------------------- OrderCompletionItemInfo
-export interface OrderCompletionItemInfoProps {
+export interface IOrderCompletionItemInfoProps {
   items: OrderItemType[];
   firstItem: OrderItemType;
   remainder: OrderItemType[];
@@ -100,7 +100,7 @@ export interface OrderItemType {
 }
 
 //---------------------------------------------- OrderCompletionPayInfo
-export interface OrderCompletionPayInfoProps {
+export interface IOrderCompletionPayInfoProps {
   orderData: Order[];
 }
 
@@ -123,7 +123,7 @@ export interface PayInfoCoupon {
 }
 
 //---------------------------------------------- OrderCoupon
-export interface OrderCouponProps {
+export interface IOrderCouponProps {
   checkoutData: OrderCouponCheckoutData;
   isMobile: boolean;
   isTablet: boolean;
@@ -134,17 +134,23 @@ export interface OrderCouponCheckoutData {
 }
 
 export interface OrderCouponUser {
-  coupons?: Coupon[];
+  coupons?: ICoupon[];
   mileage: number;
 }
 
-export interface Coupon {
+export interface ICoupon {
   id: number;
   coupon_name: string;
 }
 
+export interface ICouponStateSelector {
+  selectOption: number;
+  selectCouponId: number;
+  usedMileage: number;
+}
+
 //---------------------------------------------- OrderDelivery
-export interface OrderDeliveryProps {
+export interface IOrderDeliveryProps {
   checkoutData: OrderDeliveryCheckoutData;
   isPc: boolean;
   isTablet: boolean;
@@ -171,7 +177,7 @@ export interface OrderDeliveryShippingAddress {
   request_note?: string;
 }
 
-export interface DeliveryRequirementOption {
+export interface IDeliveryRequirementOption {
   no: string;
   label: string;
   value: string;
@@ -179,24 +185,42 @@ export interface DeliveryRequirementOption {
 }
 
 //---------------------------------------------- OrderDeliveryForm
-export interface OrderDeliveryFormProps {
+export interface IOrderDeliveryFormProps {
   deliveryForm1: string;
   deliveryClassName: string;
   deliveryClassName1: string;
   checkoutId: number;
   handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  deliverySecondRequirementOption: DeliveryRequirementOption[];
+  deliverySecondRequirementOption: IDeliveryRequirementOption[];
   deliverySecondRequirementWrite: string;
   requirement1: string;
 }
 
-export interface PreexistenceSelectProps {
+export interface IPreexistenceSelectProps {
   margin?: string;
   color?: string;
 }
 
+export interface IDeliveryInfoState {
+  designation?: string;
+  recipient: string;
+  address1: string;
+  addressDetail1: string;
+  addressDetail2: string;
+  tel1: string;
+  tel2: string;
+  tel3: string;
+  tel4?: string;
+  tel5?: string;
+  tel6?: string;
+  requirement?: string;
+  requirement1?: string;
+  deliveryClassName: string;
+  deliveryClassName1: string;
+}
+
 //---------------------------------------------- OrderDeliveryFormMobile
-export interface OrderDeliveryFormMobileProps {
+export interface IOrderDeliveryFormMobileProps {
   deliveryWrapClass: string;
   handleDeliveryTabClick: (e: MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
@@ -205,7 +229,7 @@ export interface OrderDeliveryFormMobileProps {
   deliveryForm: string;
   handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   deliveryFirstRequirementWrite: string;
-  deliveryFirstRequirementOption: DeliveryRequirementOption[];
+  deliveryFirstRequirementOption: IDeliveryRequirementOption[];
   checkoutId: number;
   requirement: string;
 }
@@ -231,7 +255,7 @@ export interface DeliveryFormMobileShippingAddress {
 }
 
 //---------------------------------------------- OrderDeliveryFormPc
-export interface OrderDeliveryFormPcProps {
+export interface IOrderDeliveryFormPcProps {
   deliveryWrapClass: string;
   handleDeliveryTabClick: (e: MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
@@ -239,7 +263,7 @@ export interface OrderDeliveryFormPcProps {
   checkoutData: DeliveryFormPcCheckoutData;
   deliveryForm: string;
   handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  deliveryFirstRequirementOption: DeliveryRequirementOption[];
+  deliveryFirstRequirementOption: IDeliveryRequirementOption[];
   deliveryFirstRequirementWrite: string;
   checkoutId: number;
   requirement: string;
@@ -271,7 +295,7 @@ export interface LiProps {
 }
 
 //---------------------------------------------- OrderDeliveryFormTablet
-export interface OrderDeliveryFormTabletProps {
+export interface IOrderDeliveryFormTabletProps {
   deliveryWrapClass: string;
   handleDeliveryTabClick: (e: MouseEvent<HTMLUListElement>) => void;
   deliveryClassName: string;
@@ -280,7 +304,7 @@ export interface OrderDeliveryFormTabletProps {
   deliveryForm: string;
   handleRequirementOptionChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   deliveryFirstRequirementWrite: string;
-  deliveryFirstRequirementOption: DeliveryRequirementOption[];
+  deliveryFirstRequirementOption: IDeliveryRequirementOption[];
   checkoutId: number;
   requirement: string;
 }
@@ -306,7 +330,7 @@ export interface DeliveryFormTabletShippingAddress {
 }
 
 //---------------------------------------------- OrderDeliveryHead
-export interface OrderDeliveryHeadProps {
+export interface IOrderDeliveryHeadProps {
   isPc: boolean;
   isTablet: boolean;
   isMobile: boolean;
@@ -338,22 +362,22 @@ export interface OrderDeliveryHeadShippingAddress {
 }
 
 //---------------------------------------------- OrderPayments
-export interface OrderPaymentItemProps {
+export interface IOrderPaymentItemProps {
   i: number;
   selected: boolean;
-  item: Payment;
+  item: IPayment;
   handlePaymentMethodClick: (e: MouseEvent<HTMLLIElement>) => void;
   basePaymentClass: string;
   selectedPaymentClass: string;
 }
 
-export interface Payment {
+export interface IPayment {
   id: string;
   payment: string;
 }
 
 //---------------------------------------------- OrderTotal
-export interface OrderTotalProps {
+export interface IOrderTotalProps {
   checkoutData: OrderTotalCheckoutData;
   checkoutNumber: number;
   isPc: boolean;
@@ -364,7 +388,7 @@ export interface OrderTotalProps {
 export interface OrderTotalCheckoutData {
   created_at: string;
   id: number;
-  line_items: LineItem[];
+  line_items: ILineItem[];
   user: OrderTotalUser;
 }
 
@@ -384,7 +408,7 @@ export interface OrderTotalShippingAddress {
 }
 
 //---------------------------------------------- OrderTotalDetail
-export interface OrderTotalDetailProps {
+export interface IOrderTotalDetailProps {
   totalPrice: number;
   deliveryCharge: string;
   checkoutData: OrderTotalDetailCheckoutData;
@@ -397,7 +421,7 @@ export interface OrderTotalDetailProps {
 interface OrderTotalDetailCheckoutData {
   created_at: string;
   id: number;
-  line_items: LineItem[];
+  line_items: ILineItem[];
   user: OrderTotalDetailUser;
 }
 
@@ -414,4 +438,11 @@ interface OrderTotalDetailShippingAddress {
   postal_code: string;
   recipient_name: string;
   request_note?: string;
+}
+
+export interface ITotalDetailSelector {
+  selectCouponId: number;
+  usedMileage: number;
+  agreeChecked: boolean;
+  finalPrice: number;
 }

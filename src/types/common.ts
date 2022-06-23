@@ -1,7 +1,7 @@
 import { MouseEvent } from "react";
 
 // CommonModal
-export interface CommonModalProps {
+export interface ICommonModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   modalText: string;
@@ -15,11 +15,11 @@ export interface CommonModalProps {
   onEsc?: boolean;
 }
 
-export interface ModalTextProps {
+export interface IModalTextProps {
   contentPadding?: string;
 }
 
-export interface ModalBtnProps {
+export interface IModalBtnProps {
   width?: string;
   color?: string;
   border?: string;
@@ -27,7 +27,7 @@ export interface ModalBtnProps {
 }
 
 // QuantityCounter
-export interface QuantityCounterProps {
+export interface IQuantityCounterProps {
   quantity: number;
   onIncrement: (event: MouseEvent<HTMLInputElement>) => void;
   onDecrement: (event: MouseEvent<HTMLInputElement>) => void;
@@ -36,7 +36,7 @@ export interface QuantityCounterProps {
   productId?: number;
 }
 
-export interface QuantityAreaProps {
+export interface IQuantityAreaProps {
   margin?: boolean;
   flexEnd?: boolean;
 }
@@ -50,11 +50,11 @@ export interface ISnackBarProps {
 }
 
 // MoreViewBtn
-export interface MoreViewBtnProps {
+export interface IMoreViewBtnProps {
   onClick: () => void;
   margin?: string;
 }
 
-export interface MoreBtnProps {
+export interface IMoreBtnProps {
   margin?: string;
 }

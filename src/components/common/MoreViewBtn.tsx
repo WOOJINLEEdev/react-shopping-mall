@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
-import { MoreViewBtnProps, MoreBtnProps } from "types";
 
-const MoreViewBtn = ({ onClick, margin }: MoreViewBtnProps) => {
+import { IMoreViewBtnProps, IMoreBtnProps } from "types";
+
+const MoreViewBtn = ({ onClick, margin }: IMoreViewBtnProps) => {
   return (
     <MoreBtn onClick={onClick} margin={margin} aria-label="list_more_view">
       더보기 <IoIosArrowDown />
@@ -12,7 +13,7 @@ const MoreViewBtn = ({ onClick, margin }: MoreViewBtnProps) => {
 
 export default MoreViewBtn;
 
-const MoreBtn = styled.button<MoreBtnProps>`
+const MoreBtn = styled.button<IMoreBtnProps>`
   display: flex;
   justify-content: center;
   width: 100%;

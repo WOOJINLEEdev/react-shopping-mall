@@ -1,20 +1,23 @@
 import { useState, useEffect, MouseEvent, ChangeEvent } from "react";
+
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
-import { optionData } from "components/order/order-delivery-option-data";
+
+import { OPTION_DATA } from "components/order/order-delivery-option-data";
 import OrderDeliveryHead from "components/order/OrderDeliveryHead";
 import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
 import OrderDeliveryForm from "components/order/OrderDeliveryForm";
-import { OrderDeliveryProps, DeliveryRequirementOption } from "types";
+
+import { IOrderDeliveryProps, IDeliveryRequirementOption } from "types";
 
 const OrderDelivery = ({
   checkoutData,
   isPc,
   isTablet,
   isMobile,
-}: OrderDeliveryProps) => {
+}: IOrderDeliveryProps) => {
   const [deliveryClassName, setDeliveryClassName] = useState<string>(
     "delivery_write selected"
   );
@@ -36,9 +39,9 @@ const OrderDelivery = ({
     useState<string>("hide");
 
   const [deliveryFirstRequirementOption, setDeliveryFirstRequirementOption] =
-    useState<DeliveryRequirementOption[]>(optionData);
+    useState<IDeliveryRequirementOption[]>(OPTION_DATA);
   const [deliverySecondRequirementOption, setDeliverySecondRequirementOption] =
-    useState<DeliveryRequirementOption[]>(optionData);
+    useState<IDeliveryRequirementOption[]>(OPTION_DATA);
 
   const [requirement, setRequirement] = useState<string>("");
   const [requirement1, setRequirement1] = useState<string>("");

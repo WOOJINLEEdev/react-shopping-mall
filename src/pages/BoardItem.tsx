@@ -9,10 +9,11 @@ import Loading from "components/common/Loading";
 const BoardItem = () => {
   const navigate = useNavigate();
   const matchParams = useParams();
+
   const date = new Date();
   const curDate = formatDate(date);
-
   const boardItemId = Number(matchParams.id);
+
   const { boardItem, boardItemError } = useBoardItem(boardItemId);
 
   if (boardItemError) return <div>failed to load</div>;

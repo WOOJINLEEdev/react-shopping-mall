@@ -1,10 +1,10 @@
-interface ValidateCheckoutProps {
-  checkoutDeliveryData: DeliveryData;
+interface IValidateCheckoutProps {
+  checkoutDeliveryData: IDeliveryData;
   checkoutPaymentData: string;
-  checkoutTotalDetailData: TotalDetailData;
+  checkoutTotalDetailData: ITotalDetailData;
 }
 
-interface DeliveryData {
+interface IDeliveryData {
   address1?: string;
   addressDetail1?: string;
   addressDetail2?: string;
@@ -22,7 +22,7 @@ interface DeliveryData {
   tel6?: string;
 }
 
-interface TotalDetailData {
+interface ITotalDetailData {
   agreeChecked?: boolean;
   finalPrice?: string | number;
   selectCouponId?: number;
@@ -33,7 +33,7 @@ export function validateCheckout({
   checkoutDeliveryData,
   checkoutPaymentData,
   checkoutTotalDetailData,
-}: ValidateCheckoutProps) {
+}: IValidateCheckoutProps) {
   if (checkoutDeliveryData.deliveryClassName === "delivery_write selected") {
     if (!checkoutPaymentData) {
       return {

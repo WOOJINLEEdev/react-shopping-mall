@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-export interface SearchInputBtnProps {
+export interface ISearchInputBtnProps {
   searchClassName?: string;
   handleSearchBtnClick: Function;
   handleSearchInputChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -11,7 +11,7 @@ export interface SearchInputBtnProps {
   handleRemoveBtnClick?: (setState: Dispatch<SetStateAction<string>>) => void;
 }
 
-export interface SearchWrapProps {
+export interface ISearchWrapProps {
   show: boolean;
   searchClassName: string;
   searchInputClassName: string;

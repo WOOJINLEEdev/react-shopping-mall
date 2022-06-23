@@ -1,9 +1,10 @@
 import { useState, forwardRef, KeyboardEvent, ChangeEvent } from "react";
 import styled from "styled-components";
-import { SearchInputBtnProps } from "types";
 import { FaTimesCircle } from "@react-icons/all-files/fa/FaTimesCircle";
 
-const SearchInputBtn = forwardRef<HTMLInputElement, SearchInputBtnProps>(
+import { ISearchInputBtnProps } from "types";
+
+const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
   (
     {
       searchClassName,
