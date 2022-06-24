@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 
+import { fixOverlay } from "utils/fix-overlay";
+
 import { ICommonModalProps, IModalTextProps, IModalBtnProps } from "types";
 
 Modal.setAppElement("#root");
@@ -21,12 +23,7 @@ const CommonModal = ({
 }: ICommonModalProps) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
-      return () => {
-        const scrollY = document.body.style.top;
-        document.body.style.cssText = `position: ""; top: "";`;
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      };
+      return fixOverlay();
     }
   }, [isOpen]);
 

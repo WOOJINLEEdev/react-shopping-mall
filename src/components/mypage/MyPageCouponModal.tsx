@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 
+import { fixOverlay } from "utils/fix-overlay";
+
 import { IMyPageCouponModalProps, ICouponInfo } from "types";
 
 Modal.setAppElement("#root");
@@ -13,14 +15,19 @@ const MyPageCouponModal = ({
 }: IMyPageCouponModalProps) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
-      return () => {
-        const scrollY = document.body.style.top;
-        document.body.style.cssText = `position: ""; top: "";`;
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      };
+      return fixOverlay();
     }
   }, [isOpen]);
+
+  const numCoupon = !myCoupon ? 0 : myCoupon.length;
+
+  const hasUsableCoupon = !myCoupon ? (
+    <li>사용 가능한 쿠폰이 없습니다.</li>
+  ) : (
+    myCoupon.map((coupon: ICouponInfo) => {
+      return <CouponItem key={coupon.id}>{coupon.coupon_name}</CouponItem>;
+    })
+  );
 
   return (
     <Modal
@@ -30,21 +37,8 @@ const MyPageCouponModal = ({
       className="mypage_coupon_modal"
       overlayClassName="modal_overlay"
     >
-      <CouponTitle>
-        사용 가능한 쿠폰{" "}
-        {!myCoupon || myCoupon === undefined ? 0 : myCoupon.length}장
-      </CouponTitle>
-      <ul>
-        {!myCoupon || myCoupon === undefined ? (
-          <div>사용 가능한 쿠폰이 없습니다.</div>
-        ) : (
-          myCoupon.map((coupon: ICouponInfo) => {
-            return (
-              <CouponItem key={coupon.id}>{coupon.coupon_name}</CouponItem>
-            );
-          })
-        )}
-      </ul>
+      <CouponTitle>사용 가능한 쿠폰 {numCoupon}장</CouponTitle>
+      <ul>{hasUsableCoupon}</ul>
       <CouponCloseBtn onClick={onRequestClose}>닫기</CouponCloseBtn>
     </Modal>
   );

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 
 import { formatPhone } from "utils/format-phone";
+import { fixOverlay } from "utils/fix-overlay";
 import { updateShippingAddressApi } from "api";
 
 import AddDeliveryAddressModal from "components/mypage/AddDeliveryAddressModal";
@@ -37,12 +38,7 @@ const MyPageDeliveryModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
-      return () => {
-        const scrollY = document.body.style.top;
-        document.body.style.cssText = `position: ""; top: "";`;
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      };
+      return fixOverlay();
     }
   }, [isOpen]);
 

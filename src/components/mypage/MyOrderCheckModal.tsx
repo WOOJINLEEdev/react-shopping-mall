@@ -5,6 +5,7 @@ import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
 import { useDevice } from "hooks/useDevice";
 import { getOrderNumber } from "utils/order";
+import { fixOverlay } from "utils/fix-overlay";
 
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
@@ -36,12 +37,7 @@ const MyOrderCheckModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`;
-      return () => {
-        const scrollY = document.body.style.top;
-        document.body.style.cssText = `position: ""; top: "";`;
-        window.scrollTo(0, parseInt(scrollY || "0") * -1);
-      };
+      return fixOverlay();
     }
   }, [isOpen]);
 
