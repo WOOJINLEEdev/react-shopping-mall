@@ -15,9 +15,6 @@ const OrderTotalDetail = ({
   deliveryCharge,
   checkoutData,
   checkoutNumber,
-  isPc,
-  isTablet,
-  isMobile,
 }: IOrderTotalDetailProps) => {
   const couponState = useRecoilValue(couponStateSelector);
   const { usedMileage, selectOption } = couponState;
@@ -127,13 +124,6 @@ const OrderTotalDetail = ({
       <OrderCheckoutButton
         checkoutData={checkoutData}
         checkoutNumber={checkoutNumber}
-        totalPrice={totalPrice}
-        deliveryCharge={deliveryCharge}
-        usedMileage={usedMileage}
-        selectOption={selectOption}
-        isPc={isPc}
-        isTablet={isTablet}
-        isMobile={isMobile}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useDevice } from "hooks/useDevice";
 import { formatPrice } from "utils/money";
 
 import OrderTotalDetail from "components/order/OrderTotalDetail";
@@ -10,17 +11,13 @@ import upArrow from "assets/images/up-arrow-icon.png";
 
 import { IOrderTotalProps, ILineItem } from "types";
 
-const OrderTotal = ({
-  checkoutData,
-  checkoutNumber,
-  isPc,
-  isTablet,
-  isMobile,
-}: IOrderTotalProps) => {
+const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
   const [remainderClassName, setRemainderClassName] =
     useState<string>("info_remainder");
   const [arrowImg, setArrowImg] = useState<string>(downArrow);
   const [closeText, setCloseText] = useState<string>("");
+
+  const { isPc, isTablet, isMobile } = useDevice();
 
   const items = useMemo(
     () => checkoutData.line_items,
@@ -375,9 +372,6 @@ const OrderTotal = ({
           deliveryCharge={deliveryCharge}
           checkoutData={checkoutData}
           checkoutNumber={checkoutNumber}
-          isPc={isPc}
-          isTablet={isTablet}
-          isMobile={isMobile}
         />
       )}
     </section>

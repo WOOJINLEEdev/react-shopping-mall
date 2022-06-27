@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { formatPrice } from "utils/money";
+import { formatPrice, formatPriceWithUnit } from "utils/money";
 
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderCompletionPayInfoProps } from "types";
+import { IOrderCompletionPayInfoProps, IUsedCoupon } from "types";
 
 const OrderCompletionPayInfo = ({
   orderData,
@@ -15,7 +15,7 @@ const OrderCompletionPayInfo = ({
   const [payInfoClass, setPayInfoClass] = useState("order_pay_info_wrap");
   const [infoHeadPayment, setInfoHeadPayment] = useState("hide");
 
-  const handleOpenCloseBtn = () => {
+  const handleOpenCloseBtnClick = () => {
     if (arrowImg === downArrow) {
       setArrowImg(upArrow);
       setInfoHeadPayment("hide");
@@ -28,6 +28,22 @@ const OrderCompletionPayInfo = ({
       return setPayInfoClass("hide");
     }
   };
+
+  function getUsedCouponAmount(usedCoupon: IUsedCoupon | undefined) {
+    if (!usedCoupon) {
+      return 0;
+    }
+
+    return formatPrice(usedCoupon.applied_amount.toString());
+  }
+
+  function getUsedMileage(usedPoint: number | undefined) {
+    if (!usedPoint) {
+      return 0;
+    }
+
+    return formatPrice(usedPoint.toString());
+  }
 
   return (
     <PayInfoWrap>
@@ -42,7 +58,7 @@ const OrderCompletionPayInfo = ({
           <button
             type="button"
             className="order_pay_info_btn"
-            onClick={handleOpenCloseBtn}
+            onClick={handleOpenCloseBtnClick}
           >
             <img
               src={arrowImg}
@@ -63,36 +79,22 @@ const OrderCompletionPayInfo = ({
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">배송비</div>
-          <div>
-            {orderData[0].shipping_price !== "0" ? "+" : ""}
-            {formatPrice(orderData[0].shipping_price.toString())}
-          </div>
+          <div>{formatPriceWithUnit(orderData[0].shipping_price, "+")}</div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">할인금액</div>
           <div className="pay_info_discount_wrap">
             <span className="pay_info_total_discount">
-              {orderData[0].total_discount > 0 ? "-" : ""}
-              {formatPrice(orderData[0].total_discount.toString())}
+              {formatPriceWithUnit(orderData[0].total_discount)}
             </span>
             <ul className="coupon_mileage_wrap">
               <UsedCouponMileage>
                 <CouponTitle>쿠폰</CouponTitle>
-                <div>
-                  {!orderData[0].used_coupon
-                    ? 0
-                    : formatPrice(
-                        orderData[0].used_coupon.applied_amount.toString()
-                      )}
-                </div>
+                <div>{getUsedCouponAmount(orderData[0].used_coupon)}</div>
               </UsedCouponMileage>
               <UsedCouponMileage>
                 <MileageTitle>마일리지</MileageTitle>
-                <div>
-                  {!orderData[0].used_point
-                    ? "0"
-                    : formatPrice(orderData[0].used_point.toString())}
-                </div>
+                <div>{getUsedMileage(orderData[0].used_point)}</div>
               </UsedCouponMileage>
             </ul>
           </div>

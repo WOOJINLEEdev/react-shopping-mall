@@ -1,6 +1,7 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 
+import { useDevice } from "hooks/useDevice";
 import { formatPrice } from "utils/money";
 
 import { IOrderCouponProps, ICoupon } from "types";
@@ -11,11 +12,7 @@ import {
   usedMileageState,
 } from "state";
 
-const OrderCoupon = ({
-  checkoutData,
-  isMobile,
-  isTablet,
-}: IOrderCouponProps) => {
+const OrderCoupon = ({ checkoutData }: IOrderCouponProps) => {
   const [coupons, setCoupons] = useState<ICoupon[] | undefined>(
     checkoutData.user.coupons
   );
@@ -29,6 +26,8 @@ const OrderCoupon = ({
     useRecoilState<number>(selectCouponIdState);
   const [usedMileage, setUsedMileage] =
     useRecoilState<number>(usedMileageState);
+
+  const { isTablet, isMobile } = useDevice();
 
   const handleSelectOptionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (coupons) {

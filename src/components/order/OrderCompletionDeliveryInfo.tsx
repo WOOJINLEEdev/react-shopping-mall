@@ -4,7 +4,7 @@ import styled from "styled-components";
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderCompletionDeliveryInfoProps } from "types";
+import { IOrderCompletionDeliveryInfoProps, IShippingAddress } from "types";
 
 const OrderCompletionDeliveryInfo = ({
   orderData,
@@ -29,14 +29,29 @@ const OrderCompletionDeliveryInfo = ({
     }
   };
 
+  function getFormattedShippingAddress(shippingAddress: IShippingAddress) {
+    return shippingAddress.address1 + " " + shippingAddress.address2;
+  }
+
+  function getFormattedRecipient(shippingAddress: IShippingAddress) {
+    return (
+      shippingAddress.recipient_name +
+      "/" +
+      shippingAddress.phone1?.substring(0, 3) +
+      "-" +
+      shippingAddress.phone1?.substring(3, 7) +
+      "-" +
+      shippingAddress.phone1?.substring(7, 11)
+    );
+  }
+
   return (
     <div>
       <div className="order_info_head_wrap deliveryInfo">
         <h2 className="order_info_header">배송 정보</h2>
         <AddressBtnWrap>
           <div className={infoHeadAddress}>
-            {orderData[0].shipping_address.address1}{" "}
-            {orderData[0].shipping_address.address2}
+            {getFormattedShippingAddress(orderData[0].shipping_address)}
           </div>
           <button
             type="button"
@@ -56,18 +71,12 @@ const OrderCompletionDeliveryInfo = ({
         <ul>
           <DeliveryInfo>
             <div>수령인</div>
-            <div>
-              {orderData[0].shipping_address.recipient_name} /{" "}
-              {orderData[0].shipping_address.phone1.substring(0, 3)}-
-              {orderData[0].shipping_address.phone1.substring(3, 7)}-
-              {orderData[0].shipping_address.phone1.substring(7, 11)}
-            </div>
+            <div>{getFormattedRecipient(orderData[0].shipping_address)}</div>
           </DeliveryInfo>
           <DeliveryInfo>
             <div className="delivery_info_address_title">배송지</div>
             <div className="delivery_info_address_content">
-              {orderData[0].shipping_address.address1}{" "}
-              {orderData[0].shipping_address.address2}
+              {getFormattedShippingAddress(orderData[0].shipping_address)}
             </div>
           </DeliveryInfo>
         </ul>

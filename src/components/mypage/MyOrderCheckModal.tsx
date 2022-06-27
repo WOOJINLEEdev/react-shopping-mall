@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
-import { useDevice } from "hooks/useDevice";
 import { getOrderNumber } from "utils/order";
 import { fixOverlay } from "utils/fix-overlay";
 
@@ -33,8 +32,6 @@ const MyOrderCheckModal = ({
     useState<string>("info_remainder");
   const [itemInfoHeadClass, setItemInfoHeadClass] = useState<string>("hide");
 
-  const { isPc, isTablet, isMobile } = useDevice();
-
   useEffect(() => {
     if (isOpen) {
       return fixOverlay();
@@ -63,7 +60,7 @@ const MyOrderCheckModal = ({
   const itemQuantity = items.map((item: ILineItems) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
-  const handleInfoOpenBtn = () => {
+  const handleInfoOpenBtnClick = () => {
     if (remainderClass === "info_remainder") {
       setArrowImg1(upArrow);
       setCloseText("닫기");
@@ -77,7 +74,7 @@ const MyOrderCheckModal = ({
     }
   };
 
-  const handleOpenCloseBtn = () => {
+  const handleOpenCloseBtnClick = () => {
     if (arrowImg === upArrow) {
       setArrowImg(downArrow);
       setItemInfoHeadClass("info_head_total_item");
@@ -115,15 +112,12 @@ const MyOrderCheckModal = ({
           remainderClass={remainderClass}
           itemInfoHeadClass={itemInfoHeadClass}
           itemInfoClass={itemInfoClass}
-          handleOpenCloseBtn={handleOpenCloseBtn}
-          handleInfoOpenBtn={handleInfoOpenBtn}
+          handleOpenCloseBtnClick={handleOpenCloseBtnClick}
+          handleInfoOpenBtnClick={handleInfoOpenBtnClick}
           arrowImg={arrowImg}
           arrowImg1={arrowImg1}
           closeText={closeText}
           sum={sum}
-          isPc={isPc}
-          isTablet={isTablet}
-          isMobile={isMobile}
         />
         <OrderCompletionDeliveryInfo orderData={selectedOrderData} />
         <OrderCompletionPayInfo orderData={selectedOrderData} />

@@ -10,13 +10,6 @@ export interface IOrderAgreeCheckProps {
 export interface IOrderCheckoutButtonProps {
   checkoutData: OrderCheckoutButtonData;
   checkoutNumber: number;
-  totalPrice: number;
-  deliveryCharge: string;
-  usedMileage: string | number;
-  selectOption: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
 }
 
 export interface OrderCheckoutButtonData {
@@ -70,23 +63,27 @@ export interface OrderDeliveryShippingAddress {
   request_note?: string;
 }
 
+export interface IShippingAddress {
+  address1?: string;
+  address2?: string;
+  recipient_name?: string;
+  phone1?: string;
+}
+
 //---------------------------------------------- OrderCompletionItemInfo
 export interface IOrderCompletionItemInfoProps {
   items: OrderItemType[];
   firstItem: OrderItemType;
   remainder: OrderItemType[];
   remainderClass: string;
-  handleOpenCloseBtn: () => void;
-  handleInfoOpenBtn: () => void;
+  handleOpenCloseBtnClick: () => void;
+  handleInfoOpenBtnClick: () => void;
   itemInfoHeadClass: string;
   itemInfoClass: string;
   arrowImg: string;
   arrowImg1: string;
   closeText: string;
   sum: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
 }
 
 export interface OrderItemType {
@@ -122,11 +119,13 @@ export interface PayInfoCoupon {
   user_coupon_id: number;
 }
 
+export interface IUsedCoupon {
+  applied_amount: string;
+}
+
 //---------------------------------------------- OrderCoupon
 export interface IOrderCouponProps {
   checkoutData: OrderCouponCheckoutData;
-  isMobile: boolean;
-  isTablet: boolean;
 }
 
 export interface OrderCouponCheckoutData {
@@ -152,9 +151,6 @@ export interface ICouponStateSelector {
 //---------------------------------------------- OrderDelivery
 export interface IOrderDeliveryProps {
   checkoutData: OrderDeliveryCheckoutData;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
 }
 
 export interface OrderDeliveryCheckoutData {
@@ -380,9 +376,6 @@ export interface IPayment {
 export interface IOrderTotalProps {
   checkoutData: OrderTotalCheckoutData;
   checkoutNumber: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
 }
 
 export interface OrderTotalCheckoutData {
@@ -413,9 +406,6 @@ export interface IOrderTotalDetailProps {
   deliveryCharge: string;
   checkoutData: OrderTotalDetailCheckoutData;
   checkoutNumber: number;
-  isPc: boolean;
-  isTablet: boolean;
-  isMobile: boolean;
 }
 
 interface OrderTotalDetailCheckoutData {
@@ -445,4 +435,20 @@ export interface ITotalDetailSelector {
   usedMileage: number;
   agreeChecked: boolean;
   finalPrice: number;
+}
+
+//---------------------------------------------- OrderItemLink
+export interface IOrderItemLinkProps {
+  item: IItem;
+}
+
+interface IItem {
+  product_id: number;
+  product_name: string;
+  image_src: string;
+}
+
+//---------------------------------------------- OrderItemInfoHeadQty
+export interface IOrderItemInfoHeadQtyProps {
+  sum: number;
 }

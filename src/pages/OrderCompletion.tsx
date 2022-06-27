@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
-import { useDevice } from "hooks/useDevice";
 import { formatDate } from "utils/date";
 import { getOrderNumber } from "utils/order";
 import { getOrdersApi } from "api";
@@ -72,8 +71,6 @@ const OrderCompletion = () => {
   const [itemInfoClass, setItemInfoClass] = useState<string>("info_group");
   const [itemInfoHeadClass, setItemInfoHeadClass] = useState<string>("hide");
 
-  const { isPc, isTablet, isMobile } = useDevice();
-
   const checkoutNumber = Number(matchParams.checkoutId);
   const date = new Date();
 
@@ -88,7 +85,7 @@ const OrderCompletion = () => {
     }
 
     getCompletedOrder();
-  }, []);
+  }, [checkoutNumber]);
 
   if (orderData.length === 0) {
     return <Loading />;
@@ -157,15 +154,12 @@ const OrderCompletion = () => {
         remainderClass={remainderClass}
         itemInfoHeadClass={itemInfoHeadClass}
         itemInfoClass={itemInfoClass}
-        handleOpenCloseBtn={handleOpenCloseBtnClick}
-        handleInfoOpenBtn={handleInfoOpenBtnClick}
+        handleOpenCloseBtnClick={handleOpenCloseBtnClick}
+        handleInfoOpenBtnClick={handleInfoOpenBtnClick}
         arrowImg={arrowImg}
         arrowImg1={arrowImg1}
         closeText={closeText}
         sum={sum}
-        isPc={isPc}
-        isTablet={isTablet}
-        isMobile={isMobile}
       />
       <OrderCompletionDeliveryInfo orderData={orderData} />
       <OrderCompletionPayInfo orderData={orderData} />

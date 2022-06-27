@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { useDevice } from "hooks/useDevice";
 import { formatPrice } from "utils/money";
+
+import OrderItemLink from "components/order/OrderItemLink";
+import OrderItemInfoHeadQty from "components/order/OrderItemInfoHeadQty";
 
 import { IOrderCompletionItemInfoProps } from "types";
 
@@ -10,34 +13,36 @@ const OrderCompletionItemInfo = ({
   firstItem,
   remainder,
   remainderClass,
-  handleOpenCloseBtn,
-  handleInfoOpenBtn,
+  handleOpenCloseBtnClick,
+  handleInfoOpenBtnClick,
   itemInfoHeadClass,
   itemInfoClass,
   arrowImg,
   arrowImg1,
   closeText,
   sum,
-  isPc,
-  isTablet,
-  isMobile,
 }: IOrderCompletionItemInfoProps) => {
+  const { isPc, isTablet, isMobile } = useDevice();
+
+  function getOrderItemSummary(itemName: string, qty: number, total: number) {
+    return `${itemName} ${qty > 1 ? `외 ${qty - 1}건` : ""} (총
+      수량: ${total}개)`;
+  }
+
   return (
     <OrderItemInfoWrap>
       <div className="order_item_info">
         <div className="order_info_head_wrap orderItemInfo">
           <h2 className="order_info_header">주문상품 정보</h2>
           {isPc && (
-            <div style={{ display: "flex" }}>
+            <div className="order_item_info_head">
               <div className={itemInfoHeadClass}>
-                {items[0].product_name}{" "}
-                {items.length > 1 ? "외 " + (items.length - 1) + "건" : ""} (총
-                수량: {sum}개)
+                {getOrderItemSummary(items[0].product_name, items.length, sum)}
               </div>
               <button
                 type="button"
                 className="order_delivery_info_btn"
-                onClick={handleOpenCloseBtn}
+                onClick={handleOpenCloseBtnClick}
               >
                 <img
                   src={arrowImg}
@@ -47,37 +52,17 @@ const OrderCompletionItemInfo = ({
               </button>
             </div>
           )}
-          {isTablet && (
-            <div className="info_head_quantity">
-              <span className="total_quantity_text">
-                총 수량 <em className="item_total_quantity">{sum}</em>개
-              </span>
-            </div>
-          )}
-          {isMobile && (
-            <div className="info_head_quantity">
-              <span className="total_quantity_text">
-                총 수량 <em className="item_total_quantity">{sum}</em>개
-              </span>
-            </div>
-          )}
+          {(isTablet || isMobile) && <OrderItemInfoHeadQty sum={sum} />}
         </div>
 
         {isPc && (
           <ul className={itemInfoClass}>
             {items.map((item) => (
-              <li key={item.product_id} className="info_list_wrap">
-                <Link
-                  to={`/products/${item.product_id}`}
-                  className="info_list_box"
-                  aria-label={`${item.product_name} 상품 페이지로 이동`}
-                >
-                  <img
-                    className="info_list_img"
-                    alt={`${item.product_name}_상품 이미지`}
-                    src={item.image_src.slice(0, -4) + "_150x200.jpg"}
-                  />
-                </Link>
+              <li
+                key={`item_info_${item.product_id}`}
+                className="info_list_wrap"
+              >
+                <OrderItemLink item={item} />
 
                 <div className="list_info">
                   <div className="list_info_text infoHead">
@@ -142,7 +127,10 @@ const OrderCompletionItemInfo = ({
         {isTablet && (
           <ul className="info_group">
             {
-              <li key={firstItem.product_id} className="info_list_wrap">
+              <li
+                key={`first_item_info_${firstItem.product_id}`}
+                className="info_list_wrap"
+              >
                 <div className="list_info">
                   <div className="list_info_text infoHead">
                     <p className="list_goods name">{firstItem.product_name}</p>
@@ -168,22 +156,15 @@ const OrderCompletionItemInfo = ({
                   </div>
                 </div>
 
-                <Link
-                  to={`/products/${firstItem.product_id}`}
-                  className="info_list_box"
-                  aria-label={`${firstItem.product_name} 상품 페이지로 이동`}
-                >
-                  <img
-                    className="info_list_img"
-                    alt={`${firstItem.product_name}_상품 이미지`}
-                    src={firstItem.image_src.slice(0, -4) + "_150x200.jpg"}
-                  />
-                </Link>
+                <OrderItemLink item={firstItem} />
               </li>
             }
             <div className={remainderClass}>
               {remainder.map((item) => (
-                <li key={item.product_id} className="info_list_wrap">
+                <li
+                  key={`remainder_info_${item.product_id}`}
+                  className="info_list_wrap"
+                >
                   <div className="list_info">
                     <div className="list_info_text infoHead">
                       <p className="list_goods name">{item.product_name}</p>
@@ -207,17 +188,7 @@ const OrderCompletionItemInfo = ({
                     </div>
                   </div>
 
-                  <Link
-                    to={`/products/${item.product_id}`}
-                    className="info_list_box"
-                    aria-label={`${item.product_name} 상품 페이지로 이동`}
-                  >
-                    <img
-                      className="info_list_img"
-                      alt={`${item.product_name}_상품 이미지`}
-                      src={item.image_src.slice(0, -4) + "_150x200.jpg"}
-                    />
-                  </Link>
+                  <OrderItemLink item={item} />
                 </li>
               ))}
             </div>
@@ -225,7 +196,7 @@ const OrderCompletionItemInfo = ({
               <button
                 type="button"
                 className="info_all_btn"
-                onClick={handleInfoOpenBtn}
+                onClick={handleInfoOpenBtnClick}
               >
                 <span className="info_all_btn_text">
                   총{" "}
@@ -248,7 +219,10 @@ const OrderCompletionItemInfo = ({
         {isMobile && (
           <ul className="info_group">
             {
-              <li key={firstItem.product_id} className="info_list_wrap">
+              <li
+                key={`first_item_info_${firstItem.product_id}`}
+                className="info_list_wrap"
+              >
                 <div className="list_info">
                   <div className="list_info_text infoHead">
                     <p className="list_goods name">{firstItem.product_name}</p>
@@ -274,22 +248,15 @@ const OrderCompletionItemInfo = ({
                   </div>
                 </div>
 
-                <Link
-                  to={`/products/${firstItem.product_id}`}
-                  className="info_list_box"
-                  aria-label={`${firstItem.product_name} 상품 페이지로 이동`}
-                >
-                  <img
-                    className="info_list_img"
-                    alt={`${firstItem.product_name}_상품 이미지`}
-                    src={firstItem.image_src.slice(0, -4) + "_150x200.jpg"}
-                  />
-                </Link>
+                <OrderItemLink item={firstItem} />
               </li>
             }
             <div className={remainderClass}>
               {remainder.map((item) => (
-                <li key={item.product_id} className="info_list_wrap">
+                <li
+                  key={`remainder_info_${item.product_id}`}
+                  className="info_list_wrap"
+                >
                   <div className="list_info">
                     <div className="list_info_text infoHead">
                       <p className="list_goods name">{item.product_name}</p>
@@ -313,17 +280,7 @@ const OrderCompletionItemInfo = ({
                     </div>
                   </div>
 
-                  <Link
-                    to={`/products/${item.product_id}`}
-                    className="info_list_box"
-                    aria-label={`${item.product_name} 상품 페이지로 이동`}
-                  >
-                    <img
-                      className="info_list_img"
-                      alt={`${item.product_name}_상품 이미지`}
-                      src={item.image_src.slice(0, -4) + "_150x200.jpg"}
-                    />
-                  </Link>
+                  <OrderItemLink item={item} />
                 </li>
               ))}
             </div>
@@ -331,7 +288,7 @@ const OrderCompletionItemInfo = ({
               <button
                 type="button"
                 className="info_all_btn"
-                onClick={handleInfoOpenBtn}
+                onClick={handleInfoOpenBtnClick}
               >
                 <span className="info_all_btn_text">
                   총{" "}
@@ -360,4 +317,8 @@ export default OrderCompletionItemInfo;
 
 const OrderItemInfoWrap = styled.div`
   border-bottom: 3px solid #333;
+
+  & .order_item_info_head {
+    display: flex;
+  }
 `;

@@ -50,17 +50,8 @@ const Order = () => {
     <div className="order_wrapper">
       {isPc && (
         <div className="delivery_coupon_pay_wrap">
-          <OrderDelivery
-            checkoutData={checkoutData}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
-          />
-          <OrderCoupon
-            checkoutData={checkoutData}
-            isMobile={isMobile}
-            isTablet={isTablet}
-          />
+          <OrderDelivery checkoutData={checkoutData} />
+          <OrderCoupon checkoutData={checkoutData} />
           <OrderPayments />
         </div>
       )}
@@ -68,73 +59,40 @@ const Order = () => {
         <OrderTotal
           checkoutData={checkoutData}
           checkoutNumber={checkoutNumber}
-          isPc={isPc}
-          isTablet={isTablet}
-          isMobile={isMobile}
         />
       )}
 
       {isTablet && (
         <div>
-          <OrderDelivery
-            checkoutData={checkoutData}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
-          />
+          <OrderDelivery checkoutData={checkoutData} />
           <OrderTotal
             checkoutData={checkoutData}
             checkoutNumber={checkoutNumber}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
           />
-          <OrderCoupon
-            checkoutData={checkoutData}
-            isTablet={isTablet}
-            isMobile={isMobile}
-          />
+          <OrderCoupon checkoutData={checkoutData} />
           <OrderPayments />
           <OrderTotalDetail
             totalPrice={totalPrice}
             deliveryCharge={deliveryCharge}
             checkoutData={checkoutData}
             checkoutNumber={checkoutNumber}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
           />
         </div>
       )}
       {isMobile && (
         <div>
-          <OrderDelivery
-            checkoutData={checkoutData}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
-          />
+          <OrderDelivery checkoutData={checkoutData} />
           <OrderTotal
             checkoutData={checkoutData}
             checkoutNumber={checkoutNumber}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
           />
-          <OrderCoupon
-            checkoutData={checkoutData}
-            isTablet={isTablet}
-            isMobile={isMobile}
-          />
+          <OrderCoupon checkoutData={checkoutData} />
           <OrderPayments />
           <OrderTotalDetail
             totalPrice={totalPrice}
             deliveryCharge={deliveryCharge}
             checkoutData={checkoutData}
             checkoutNumber={checkoutNumber}
-            isPc={isPc}
-            isTablet={isTablet}
-            isMobile={isMobile}
           />
         </div>
       )}

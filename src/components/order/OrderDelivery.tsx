@@ -1,5 +1,7 @@
 import { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 
+import { useDevice } from "hooks/useDevice";
+
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
@@ -12,12 +14,9 @@ import OrderDeliveryForm from "components/order/OrderDeliveryForm";
 
 import { IOrderDeliveryProps, IDeliveryRequirementOption } from "types";
 
-const OrderDelivery = ({
-  checkoutData,
-  isPc,
-  isTablet,
-  isMobile,
-}: IOrderDeliveryProps) => {
+const OrderDelivery = ({ checkoutData }: IOrderDeliveryProps) => {
+  const { isPc, isTablet, isMobile } = useDevice();
+
   const [deliveryClassName, setDeliveryClassName] = useState<string>(
     "delivery_write selected"
   );
