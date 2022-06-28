@@ -10,10 +10,7 @@ import { getShopVisitCountApi } from "api";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 
-interface IVisitDate {
-  visit_count: number;
-  visit_date: string;
-}
+import { IDailyVisit } from "types";
 
 const AboutMe = () => {
   const [total, setTotal] = useState<number>(0);
@@ -43,18 +40,18 @@ const AboutMe = () => {
         });
 
         const visitDate: string[] = res.data.map(
-          (item: IVisitDate) => item.visit_date
+          (item: IDailyVisit) => item.visit_date
         );
         const visitCount: number[] = res.data.map(
-          (item: IVisitDate) => item.visit_count
+          (item: IDailyVisit) => item.visit_count
         );
         const sum = visitCount.reduce((a: number, b: number) => a + b);
 
         const todayVisit = res.data.find(
-          (t: IVisitDate) => t.visit_date === formattedToday
+          (t: IDailyVisit) => t.visit_date === formattedToday
         ) || { visit_count: 0 };
         const yesterdayVisit = res.data.find(
-          (t: IVisitDate) => t.visit_date === formattedYesterday
+          (t: IDailyVisit) => t.visit_date === formattedYesterday
         ) || { visit_count: 0 };
 
         setToday(todayVisit.visit_count);

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, ChangeEvent } from "react";
+import { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -32,11 +32,11 @@ const BoardEditor = () => {
     inputRef?.current?.focus();
   }, []);
 
-  const handleMoveBoardBtnClick = useCallback(() => {
+  const handleMoveBoardBtnClick = () => {
     navigate(-1);
-  }, []);
+  };
 
-  const handleEditorSaveBtnClick = useCallback(async () => {
+  const handleEditorSaveBtnClick = async () => {
     if (!editorRef.current) return;
 
     const inputBody = DOMPurify.sanitize(
@@ -44,32 +44,26 @@ const BoardEditor = () => {
     );
 
     try {
-      const res = await axios.post(
-        "https://jsonplaceholder.typicode.com/posts",
-        {
-          userId: userId,
-          id: "101",
-          title: inputTitle,
-          body: inputBody,
-        }
-      );
+      await axios.post("https://jsonplaceholder.typicode.com/posts", {
+        userId: userId,
+        id: "101",
+        title: inputTitle,
+        body: inputBody,
+      });
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  };
 
-  const handleEditorTitleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setInputTitle(e.target.value);
-    },
-    [inputTitle]
-  );
+  const handleEditorTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputTitle(e.currentTarget.value);
+  };
 
-  const handleEditorSaveBtnAlert = useCallback(() => {
+  const handleEditorSaveBtnAlertClick = () => {
     alert(
       "현재 서비스 준비 중입니다. Board Second에서는 저장하기 버튼 클릭 시 console 창에서 확인 가능합니다. "
     );
-  }, []);
+  };
 
   return (
     <EditorWrap>
@@ -92,7 +86,7 @@ const BoardEditor = () => {
               onClick={
                 boardLocalStorage === "second"
                   ? handleEditorSaveBtnClick
-                  : handleEditorSaveBtnAlert
+                  : handleEditorSaveBtnAlertClick
               }
             >
               저장하기

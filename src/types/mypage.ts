@@ -63,7 +63,7 @@ export interface IMyPageChartProps {
   userName: string;
 }
 
-export interface IVisitData {
+export interface IDailyVisit {
   visit_count: number;
   visit_date: string;
 }

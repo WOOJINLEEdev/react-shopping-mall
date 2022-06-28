@@ -1,4 +1,4 @@
-import { useState, forwardRef, KeyboardEvent, ChangeEvent } from "react";
+import { useState, forwardRef, ChangeEvent, FormEvent } from "react";
 import styled from "styled-components";
 import { FaTimesCircle } from "@react-icons/all-files/fa/FaTimesCircle";
 
@@ -18,43 +18,42 @@ const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
     },
     ref
   ) => {
-    const [searchInput, setSearchInput] = useState<string>("");
+    const [search, setSearch] = useState<string>("");
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      setSearchInput(e.target.value);
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.currentTarget.value);
 
       if (handleSearchInputChange) {
         handleSearchInputChange(e);
       }
     };
 
-    const handleInputEnterPress = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        handleSearchBtnClick(searchInput);
-      }
+    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      handleSearchBtnClick(search);
     };
 
     return (
-      <div className={searchClassName}>
+      <form className={searchClassName} onSubmit={handleFormSubmit}>
         <label htmlFor={searchInputId} className="visually_hidden">
           검색 입력창
         </label>
         <input
           type="text"
-          id={searchInputId}
           name="search_input"
-          placeholder={searchPlaceHolder ? searchPlaceHolder : "Search..."}
+          id={searchInputId}
           className={searchInputClassName}
-          value={searchInput}
-          onChange={handleChange}
-          onKeyPress={handleInputEnterPress}
+          placeholder={searchPlaceHolder ? searchPlaceHolder : "Search..."}
+          value={search}
+          onChange={handleSearchChange}
           ref={ref}
         />
 
-        {handleRemoveBtnClick && searchInput.trim().length > 0 ? (
+        {handleRemoveBtnClick && search.trim().length > 0 ? (
           <RemoveBtn
             type="button"
-            onClick={() => handleRemoveBtnClick(setSearchInput)}
+            onClick={() => handleRemoveBtnClick(setSearch)}
           >
             <FaTimesCircle />
           </RemoveBtn>
@@ -65,11 +64,10 @@ const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
         <button
           type="button"
           className={searchBtnClassName}
-          onClick={() => handleSearchBtnClick(searchInput)}
-        >
-          <span className="visually_hidden">검색</span>
-        </button>
-      </div>
+          onClick={() => handleSearchBtnClick(search)}
+          aria-label="Search Button"
+        />
+      </form>
     );
   }
 );

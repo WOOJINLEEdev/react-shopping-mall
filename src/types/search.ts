@@ -17,3 +17,7 @@ export interface ISearchWrapProps {
   searchInputClassName: string;
   searchBtnClassName: string;
 }
+
+export interface IDimmedLayer {
+  show: boolean;
+}

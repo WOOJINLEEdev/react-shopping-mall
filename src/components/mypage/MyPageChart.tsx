@@ -8,7 +8,7 @@ import { getMyVisitCountApi } from "api";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 
-import { IMyPageChartProps, IVisitData } from "types";
+import { IMyPageChartProps, IDailyVisit } from "types";
 
 const MyPageChart = ({ userName }: IMyPageChartProps) => {
   const [series, setSeries] = useState<ApexOptions["series"]>();
@@ -31,8 +31,10 @@ const MyPageChart = ({ userName }: IMyPageChartProps) => {
           visitEndDate,
         });
 
-        const visitDate = res.data.map((item: IVisitData) => item.visit_date);
-        const visitCount = res.data.map((item: IVisitData) => item.visit_count);
+        const visitDate = res.data.map((item: IDailyVisit) => item.visit_date);
+        const visitCount = res.data.map(
+          (item: IDailyVisit) => item.visit_count
+        );
 
         setSeries([
           {

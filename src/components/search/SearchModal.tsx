@@ -6,6 +6,7 @@ import { CgClose } from "react-icons/cg";
 import SearchWrap from "components/search/SearchWrap";
 
 import { searchWrapState } from "state";
+import { IDimmedLayer } from "types";
 
 const SearchModal = () => {
   const [searchClassName, setSearchClassName] = useState<string>(
@@ -30,6 +31,7 @@ const SearchModal = () => {
         type="button"
         className="btn_dim_close"
         onClick={handleDimCloseBtnClick}
+        aria-label="Close Button"
       >
         <CgClose />
       </button>
@@ -44,10 +46,6 @@ const SearchModal = () => {
 };
 
 export default SearchModal;
-
-interface IDimmedLayer {
-  show: boolean;
-}
 
 const DimmedLayer = styled.div<IDimmedLayer>`
   display: ${(props) => (props.show ? "block" : "none")};
