@@ -1,19 +1,19 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
-export interface BoardFilterProps {
+export interface IBoardFilterProps {
   handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void;
   selectedOption: string;
 }
 
 // BoardFirstModal
-export interface BoardFirstModalProps {
+export interface IBoardFirstModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  postList: Post[];
+  postList: IPostItem[];
   boardItemNo: number;
 }
 
-export interface Post {
+export interface IPostItem {
   content: string;
   createDate: string;
   no: number;
@@ -24,32 +24,32 @@ export interface Post {
 }
 
 // BoardItemModal
-export interface BoardItemModalProps {
+export interface IBoardItemModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   boardItemId: number;
 }
 
 // BoardModalCloseBtn
-export interface BoardModalCloseBtnProps {
+export interface IBoardModalCloseBtnProps {
   handleModalClose: () => void;
 }
 
 // BoardPagination
-export interface BoardPaginationProps {
+export interface IBoardPaginationProps {
   total: number;
   limit: number;
   page: number;
-  setPage: Function;
+  setPage: Dispatch<SetStateAction<number>>;
 }
 
-export interface ButtonProps {
+export interface IButtonProps {
   disabled?: boolean;
-  ["aria-current"]?: any;
+  ["aria-current"]?: "page";
 }
 
 // BoardTable
-export interface BoardTableProps {
+export interface IBoardTableProps {
   headersName: string[];
   children?: React.ReactNode;
   loading?: any;
@@ -57,18 +57,18 @@ export interface BoardTableProps {
 }
 
 // BoardTableColumn
-export interface BoardTableColumnProp {
+export interface IBoardTableColumnProp {
   children?: React.ReactNode;
   title?: string;
 }
 
 // BoardTableRow
-export interface BoardTableRowProps {
+export interface IBoardTableRowProps {
   children?: React.ReactNode;
   background?: string;
 }
 
-export interface TableRowProps {
+export interface ITableRowProps {
   background?: string;
 }
 

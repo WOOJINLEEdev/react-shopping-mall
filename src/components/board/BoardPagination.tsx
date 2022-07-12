@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { BoardPaginationProps, ButtonProps } from "types";
+
+import { IBoardPaginationProps, IButtonProps } from "types";
 
 function BoardPagination({
   total,
   limit,
   page,
   setPage,
-}: BoardPaginationProps) {
+}: IBoardPaginationProps) {
   const numPages = Math.ceil(total / limit);
 
   return (
@@ -22,7 +23,7 @@ function BoardPagination({
             <Button
               key={i + 1}
               onClick={() => setPage(i + 1)}
-              aria-current={page === i + 1 ? "page" : null}
+              aria-current={page === i + 1 ? "page" : undefined}
             >
               {i + 1}
             </Button>
@@ -45,18 +46,18 @@ const Nav = styled.nav`
   margin: 16px;
 `;
 
-const Button = styled.button<ButtonProps>`
+const Button = styled.button<IButtonProps>`
   border: none;
   border-radius: 8px;
   padding: 8px;
   margin: 0;
   background: #fff;
   color: #333;
-  font-size: 1rem;
+  font-size: 16px;
 
   @media (hover: hover) {
     &:hover {
-      color: green;
+      color: #008000;
       cursor: pointer;
       transform: translateY(-2px);
     }
@@ -70,7 +71,7 @@ const Button = styled.button<ButtonProps>`
   }
 
   &[aria-current] {
-    background: green;
+    background: #008000;
     color: #fff;
     font-weight: bold;
     cursor: revert;

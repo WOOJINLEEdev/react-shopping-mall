@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { BoardModalCloseBtnProps } from "types";
+import { IBoardModalCloseBtnProps } from "types";
 
-const BoardModalCloseBtn = ({ handleModalClose }: BoardModalCloseBtnProps) => {
+const BoardModalCloseBtn = ({ handleModalClose }: IBoardModalCloseBtnProps) => {
   return (
     <BtnWrap>
       <ModalCloseBtn type="button" onClick={handleModalClose}>

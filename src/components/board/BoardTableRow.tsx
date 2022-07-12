@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-import { BoardTableRowProps, TableRowProps } from "types";
+import { IBoardTableRowProps, ITableRowProps } from "types";
 
-const BoardTableRow = ({ children, background }: BoardTableRowProps) => {
+const BoardTableRow = ({ children, background }: IBoardTableRowProps) => {
   return <TableRow background={background}>{children}</TableRow>;
 };
 
 export default BoardTableRow;
 
-const TableRow = styled.tr<TableRowProps>`
+const TableRow = styled.tr<ITableRowProps>`
   @media (hover: hover) {
     &:hover {
       background: ${(props) =>

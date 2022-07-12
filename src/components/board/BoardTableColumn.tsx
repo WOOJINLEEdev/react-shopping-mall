@@ -1,6 +1,6 @@
-import { BoardTableColumnProp } from "types";
+import { IBoardTableColumnProp } from "types";
 
-const BoardTableColumn = ({ children, title }: BoardTableColumnProp) => {
+const BoardTableColumn = ({ children, title }: IBoardTableColumnProp) => {
   return (
     <td className="board_table_column" title={title}>
       {children}

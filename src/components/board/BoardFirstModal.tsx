@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 
-import { BoardFirstModalProps, Post } from "types";
+import { IBoardFirstModalProps, IPostItem } from "types";
 
 Modal.setAppElement("#root");
 
@@ -12,9 +12,11 @@ const BoardItemModal = ({
   onRequestClose,
   postList,
   boardItemNo,
-}: BoardFirstModalProps) => {
+}: IBoardFirstModalProps) => {
   const boardItemNumber = boardItemNo;
-  const boardItem = postList.find((post: Post) => post.no === boardItemNumber);
+  const boardItem = postList.find(
+    (postItem: IPostItem) => postItem.no === boardItemNumber
+  );
 
   return (
     <Modal

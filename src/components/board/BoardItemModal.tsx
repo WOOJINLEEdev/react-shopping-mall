@@ -6,7 +6,7 @@ import { formatDate } from "utils/date";
 import Loading from "components/common/Loading";
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 
-import { BoardItemModalProps } from "types";
+import { IBoardItemModalProps } from "types";
 
 Modal.setAppElement("#root");
 
@@ -14,7 +14,7 @@ const BoardItemModal = ({
   isOpen,
   onRequestClose,
   boardItemId,
-}: BoardItemModalProps) => {
+}: IBoardItemModalProps) => {
   const date = new Date();
 
   const { boardItem, boardItemError } = useBoardItem(boardItemId);

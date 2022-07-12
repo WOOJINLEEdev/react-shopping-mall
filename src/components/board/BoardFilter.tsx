@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-import { BoardFilterProps } from "types";
+import { IBoardFilterProps } from "types";
 
 const BoardFilter = ({
   handleSelectOption,
   selectedOption,
-}: BoardFilterProps) => {
-  const boardType = ["공지사항", "일반"];
+}: IBoardFilterProps) => {
+  const boardTypes = ["공지사항", "일반"];
 
   return (
     <FilterWrap>
@@ -16,7 +16,7 @@ const BoardFilter = ({
         value={selectedOption}
       >
         <option value="">구분</option>
-        {boardType.map((type) => (
+        {boardTypes.map((type) => (
           <option key={type} value={type}>
             {type}
           </option>

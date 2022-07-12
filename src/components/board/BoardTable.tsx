@@ -2,14 +2,14 @@ import { useDevice } from "hooks/useDevice";
 
 import Loading from "components/common/Loading";
 
-import { BoardTableProps } from "types";
+import { IBoardTableProps } from "types";
 
 const BoardTable = ({
   headersName,
   children,
   loading,
   boardLocal,
-}: BoardTableProps) => {
+}: IBoardTableProps) => {
   const { isPc, isTablet, isMobile } = useDevice();
 
   return (
