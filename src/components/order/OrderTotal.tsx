@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import { formatPrice } from "utils/money";
 
 import OrderTotalDetail from "components/order/OrderTotalDetail";

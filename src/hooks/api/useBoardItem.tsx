@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import axios from "axios";
 
-function useBoardItem(boardItemId: number) {
+const useBoardItem = (boardItemId: number) => {
   const boardUrl = `https://jsonplaceholder.typicode.com/posts/${boardItemId}`;
   const fetcher = (url: string) => {
     return axios.get(url).then((res) => res.data);
@@ -15,6 +15,6 @@ function useBoardItem(boardItemId: number) {
     boardItemError: error,
     mutateBoard: mutate,
   };
-}
+};
 
 export default useBoardItem;

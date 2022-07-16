@@ -1,4 +1,4 @@
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 
 import Loading from "components/common/Loading";
 

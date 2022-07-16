@@ -1,6 +1,6 @@
 import { useState, useEffect, MouseEvent, ChangeEvent } from "react";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";

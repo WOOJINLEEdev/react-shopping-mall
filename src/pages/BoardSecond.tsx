@@ -13,7 +13,7 @@ import axios from "axios";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import { getToken } from "utils/token";
 import { formatDate } from "utils/date";
 

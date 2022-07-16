@@ -7,16 +7,15 @@ import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 
-import useMyCart from "hooks/useMyCart";
+import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import {
   updateMyVisitCountsApi,
   updateShopVisitCountsApi,
   createAccessTokenApi,
 } from "api";
 
-import Loading from "components/common/Loading";
 import SearchModal from "components/search/SearchModal";
 
 import signInImg from "assets/images/user.png";
@@ -78,9 +77,8 @@ const Header = () => {
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
   if (cartError) return <div>에러 발생...</div>;
-  if (loadingCart) return <Loading />;
 
-  const cartAmount = cart.items.length;
+  const cartAmount = cart?.items?.length;
 
   const handleMenuClick = () => {
     setMenuShow(true);
@@ -191,7 +189,7 @@ const Header = () => {
           >
             <FiShoppingCart />
             <span className="visually_hidden">장바구니</span>
-            {token && cartAmount > 0 ? (
+            {!loadingCart && token && cartAmount > 0 ? (
               <CartAmount>{cartAmount}</CartAmount>
             ) : null}
           </HeaderCart>

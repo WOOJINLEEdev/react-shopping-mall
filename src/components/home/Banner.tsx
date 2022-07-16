@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
@@ -6,12 +6,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { getSizedImageUrl } from "utils/image";
 
-import Skeleton from "components/home/Skeleton";
 import { IMAGE_DATA } from "components/home/banner-image-data";
 
 import { IArrowProps } from "types";
-
-let firstLoaded = false;
 
 const SOURCE_LIST = [
   {
@@ -52,25 +49,9 @@ const SOURCE_LIST = [
 ];
 
 const Banner = () => {
-  const bannerImageData = firstLoaded ? IMAGE_DATA : [];
+  const bannerImageData = IMAGE_DATA;
+
   const [data, setData] = useState(bannerImageData);
-
-  useEffect(() => {
-    if (data.length === 0) {
-      let ImageDataTimeout = setTimeout(() => {
-        setData(IMAGE_DATA);
-        firstLoaded = true;
-      }, 3000);
-
-      return () => {
-        clearTimeout(ImageDataTimeout);
-      };
-    }
-  }, [data.length]);
-
-  if (data.length === 0) {
-    return <Skeleton />;
-  }
 
   const settings = {
     dots: true,

@@ -1,7 +1,7 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import { formatPrice } from "utils/money";
 
 import { IOrderCouponProps, ICoupon } from "types";

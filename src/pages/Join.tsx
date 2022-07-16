@@ -22,7 +22,6 @@ import {
   userDate,
 } from "utils/login-validation";
 import { createJoinApi, checkUserIdExistenceApi } from "api";
-import { AxiosError } from "axios";
 
 const Join = () => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);
@@ -94,7 +93,7 @@ const Join = () => {
     }
   };
 
-  const handleIdCheckBtn = async () => {
+  const handleIdCheckBtnClick = async () => {
     let userId = formikRef?.current?.values.id;
 
     if (!userId) {
@@ -143,7 +142,7 @@ const Join = () => {
                   name="id"
                   id="userId"
                 />
-                <IdCheckBtn type="button" onClick={handleIdCheckBtn}>
+                <IdCheckBtn type="button" onClick={handleIdCheckBtnClick}>
                   중복체크
                 </IdCheckBtn>
               </Div>

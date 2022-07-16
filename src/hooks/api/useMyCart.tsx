@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 import { instance } from "utils/http-client";
 import { isLogin } from "utils/auth";
 
-interface CartItem {
+interface ICartItem {
   cart_id: number;
   id: number;
   product_id: number;
@@ -16,7 +16,7 @@ interface CartItem {
   variant_price: string;
 }
 
-export default function useMyCart() {
+const useMyCart = () => {
   const cartUrl = "/v1/me/cart";
   const fetcher = async (url: string) => {
     if (!isLogin()) {
@@ -28,7 +28,7 @@ export default function useMyCart() {
       const res = await instance.get(url);
       return {
         ...res.data,
-        items: res.data.items.map((cartItem: CartItem) => ({
+        items: res.data.items.map((cartItem: ICartItem) => ({
           ...cartItem,
           checked: true,
         })),
@@ -56,4 +56,6 @@ export default function useMyCart() {
     cartError: error,
     mutateCart: mutate,
   };
-}
+};
+
+export default useMyCart;

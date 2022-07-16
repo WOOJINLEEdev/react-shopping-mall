@@ -1,7 +1,8 @@
 import useSWR from "swr";
+
 import { instance } from "utils/http-client";
 
-function useMyPageData() {
+const useMyPageData = () => {
   const myPageUrl = "/v1/me";
   const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);
@@ -15,6 +16,6 @@ function useMyPageData() {
     myDataError: error,
     mutateMyData: mutate,
   };
-}
+};
 
 export default useMyPageData;

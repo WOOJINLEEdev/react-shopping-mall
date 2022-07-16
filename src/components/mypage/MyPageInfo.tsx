@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 
-import useMyCart from "hooks/useMyCart";
+import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { formatPrice } from "utils/money";
 import { createLogoutApi } from "api";

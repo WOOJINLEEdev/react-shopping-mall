@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 
-import useBoardItem from "hooks/useBoardItem";
+import useBoardItem from "hooks/api/useBoardItem";
 import { formatDate } from "utils/date";
 
 import Loading from "components/common/Loading";

@@ -12,7 +12,7 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import { getToken } from "utils/token";
 
 import BoardTable from "components/board/BoardTable";

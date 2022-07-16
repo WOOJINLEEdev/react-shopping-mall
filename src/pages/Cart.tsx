@@ -2,7 +2,7 @@ import { MouseEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import useMyCart from "hooks/useMyCart";
+import useMyCart from "hooks/api/useMyCart";
 import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
 import {

@@ -1,11 +1,11 @@
 import useSWR from "swr";
 
-function useTokenStatus() {
+const useTokenStatus = () => {
   const { data, mutate } = useSWR("tokenStatus", () => window.$tokenStatus);
 
   return {
     token: data || false,
-    mutateToken: ($tokenStatus: any) => {
+    mutateToken: ($tokenStatus: string) => {
       window.$tokenStatus = $tokenStatus;
 
       return mutate();
@@ -16,6 +16,6 @@ function useTokenStatus() {
       return mutate();
     },
   };
-}
+};
 
 export default useTokenStatus;

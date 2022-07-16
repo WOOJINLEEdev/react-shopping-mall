@@ -1,6 +1,6 @@
-import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
+import { SWRInfiniteKeyLoader } from "swr/infinite";
 
-import { instance } from "utils/http-client";
+import usePagingQuery from "hooks/api/usePagingQuery";
 
 import ProductItem from "components/home/ProductItem";
 import ProductListSkeleton from "components/home/ProductListSkeleton";
@@ -9,7 +9,6 @@ import MoreViewBtn from "components/common/MoreViewBtn";
 import { IProduct } from "types";
 
 const PAGE_LIMIT = 8;
-let firstLoaded = false;
 
 const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
   if (previousPageData && !previousPageData.length) {
@@ -19,20 +18,8 @@ const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
   return `/v1/products?limit=${PAGE_LIMIT}&offset=${pageIndex * PAGE_LIMIT}`;
 };
 
-function ProductList() {
-  const fetcher = (url: string) => {
-    return new Promise((resolve, reject) => {
-      const timeout = !firstLoaded ? 3000 : 0;
-      setTimeout(async () => {
-        const res = await instance.get(url).then((response) => response.data);
-        firstLoaded = true;
-        resolve(res);
-      }, timeout);
-    });
-  };
-  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
-    revalidateFirstPage: false,
-  });
+const ProductList = () => {
+  const { data, error, size, setSize } = usePagingQuery(getKey);
 
   if (error) return <div>에러 발생...</div>;
   if (!data) return <ProductListSkeleton />;
@@ -54,6 +41,6 @@ function ProductList() {
       <MoreViewBtn onClick={handleMoreViewBtnClick} margin={"0 0 30px"} />
     </>
   );
-}
+};
 
 export default ProductList;

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
-import useCheckout from "hooks/useCheckout";
-import { useDevice } from "hooks/useDevice";
+import useCheckout from "hooks/api/useCheckout";
+import useDevice from "hooks/useDevice";
 
 import OrderDelivery from "components/order/OrderDelivery";
 import OrderCoupon from "components/order/OrderCoupon";

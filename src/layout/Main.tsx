@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
 import Loading from "components/common/Loading";
+import HomeSkeleton from "components/home/HomeSkeleton";
 
 import { headerItemState } from "state";
 
@@ -37,7 +38,9 @@ const Main = () => {
 
   return (
     <main>
-      <Suspense fallback={<Loading />}>
+      <Suspense
+        fallback={location.pathname === "/" ? <HomeSkeleton /> : <Loading />}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="products/:productId" element={<ItemDetail />} />

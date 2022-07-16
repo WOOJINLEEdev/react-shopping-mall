@@ -1,9 +1,9 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
+import { SWRInfiniteKeyLoader } from "swr/infinite";
 import Modal from "react-modal";
 import styled from "styled-components";
 
-import { instance } from "utils/http-client";
+import usePagingQuery from "hooks/api/usePagingQuery";
 import { getOrderNumber } from "utils/order";
 import { formatPrice } from "utils/money";
 import { getOrdersApi } from "api";
@@ -43,14 +43,7 @@ const MyOrderCheck = () => {
     return `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageIndex * PAGE_LIMIT}`;
   };
 
-  const fetcher = async (url: string) => {
-    const res = await instance.get(url);
-    return res.data;
-  };
-
-  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
-    revalidateFirstPage: false,
-  });
+  const { data, error, size, setSize } = usePagingQuery(getKey);
 
   if (error) return <div>에러 발생...</div>;
   if (!data) return <Loading />;

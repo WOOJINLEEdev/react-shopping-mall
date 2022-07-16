@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { CgClose } from "@react-icons/all-files/cg/CgClose";
 
-import useMyPageData from "hooks/useMyPageData";
+import useMyPageData from "hooks/api/useMyPageData";
 import { parsePhone } from "utils/format-phone";
 import { getFullAddress } from "utils/get-address";
 import { isNumberCheck } from "utils/number";

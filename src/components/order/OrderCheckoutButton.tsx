@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
 import { formatPrice } from "utils/money";

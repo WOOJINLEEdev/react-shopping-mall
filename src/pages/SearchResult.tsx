@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import useSWRInfinite, { SWRInfiniteKeyLoader } from "swr/infinite";
+import { SWRInfiniteKeyLoader } from "swr/infinite";
 
-import { instance } from "utils/http-client";
+import usePagingQuery from "hooks/api/usePagingQuery";
 import { getProductsApi } from "api";
 
 import ProductItem from "components/home/ProductItem";
@@ -32,14 +32,14 @@ const SearchResult = () => {
 
   const [resultCount, setResultCount] = useState<number>(0);
   const [searchWord, setSearchWord] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setSearchWord(matchParams.searchWord || "");
 
     async function searchProduct() {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const res = await getProductsApi({
           searchInput: matchParams.searchWord || "",
           count: true,
@@ -48,7 +48,7 @@ const SearchResult = () => {
       } catch (err) {
         console.log(err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
 
@@ -58,7 +58,6 @@ const SearchResult = () => {
   }, [matchParams]);
 
   const PAGE_LIMIT = 8;
-
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
     if (searchWord === "") {
       return null;
@@ -73,19 +72,12 @@ const SearchResult = () => {
     }&name=${searchWord}`;
   };
 
-  const fetcher = async (url: string) => {
-    const res = await instance.get(url);
-    return res.data;
-  };
-
-  const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
-    revalidateFirstPage: false,
-  });
+  const { data, error, size, setSize } = usePagingQuery(getKey);
 
   if (error) return <div>에러 발생...</div>;
   if (!data) return <Loading />;
 
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   const products = data.flat(Infinity);
 

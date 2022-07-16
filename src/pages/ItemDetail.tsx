@@ -2,7 +2,7 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useSWR from "swr";
 
-import useMyCart from "hooks/useMyCart";
+import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import { instance } from "utils/http-client";
 import { getSizedImageUrl } from "utils/image";

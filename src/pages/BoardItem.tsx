@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 
-import useBoardItem from "hooks/useBoardItem";
+import useBoardItem from "hooks/api/useBoardItem";
 import { formatDate } from "utils/date";
 
 import Loading from "components/common/Loading";

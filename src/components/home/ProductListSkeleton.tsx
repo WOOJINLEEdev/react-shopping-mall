@@ -6,10 +6,10 @@ const ProductListSkeleton = () => {
     <div className="skeleton_wrap">
       <ul className="skeleton_listgroup">
         {arr.map((_, i) => (
-          <li key={String(i)} className="skeleton_list">
-            <div className="skeleton_list_img"></div>
-            <p className="skeleton_list_text"></p>
-            <p className="skeleton_list_text"></p>
+          <li key={`skeleton_item_${i}`} className="skeleton_item">
+            <div className="skeleton_item_img"></div>
+            <p className="skeleton_item_text"></p>
+            <p className="skeleton_item_text"></p>
           </li>
         ))}
       </ul>

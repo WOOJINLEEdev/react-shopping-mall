@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { useDevice } from "hooks/useDevice";
+import useDevice from "hooks/useDevice";
 import { formatPrice } from "utils/money";
 
 import OrderItemLink from "components/order/OrderItemLink";

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styled from "styled-components";
 
-import useMyPageData from "hooks/useMyPageData";
+import useMyPageData from "hooks/api/useMyPageData";
 
 import MyPageChart from "components/mypage/MyPageChart";
 import MyPageInfo from "components/mypage/MyPageInfo";
