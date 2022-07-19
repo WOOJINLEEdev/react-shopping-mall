@@ -1,11 +1,11 @@
 import { instance } from "utils/http-client";
 
-interface CreateLoginPayload {
+interface ICreateLoginPayload {
   userId: string;
   userPassword: string;
 }
 
-export function createLoginApi({ userId, userPassword }: CreateLoginPayload) {
+export function createLoginApi({ userId, userPassword }: ICreateLoginPayload) {
   return instance.post(
     "/v1/auth/login",
     {

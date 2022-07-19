@@ -10,6 +10,7 @@ import { getOrdersApi } from "api";
 
 import Loading from "components/common/Loading";
 import MoreViewBtn from "components/common/MoreViewBtn";
+import ErrorMessage from "components/common/ErrorMessage";
 
 Modal.setAppElement("#root");
 
@@ -45,7 +46,7 @@ const MyOrderCheck = () => {
 
   const { data, error, size, setSize } = usePagingQuery(getKey);
 
-  if (error) return <div>에러 발생...</div>;
+  if (error) return <ErrorMessage />;
   if (!data) return <Loading />;
 
   const myOrderList = data.flat(Infinity);

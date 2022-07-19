@@ -5,6 +5,7 @@ import usePagingQuery from "hooks/api/usePagingQuery";
 import ProductItem from "components/home/ProductItem";
 import ProductListSkeleton from "components/home/ProductListSkeleton";
 import MoreViewBtn from "components/common/MoreViewBtn";
+import ErrorMessage from "components/common/ErrorMessage";
 
 import { IProduct } from "types";
 
@@ -21,7 +22,7 @@ const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
 const ProductList = () => {
   const { data, error, size, setSize } = usePagingQuery(getKey);
 
-  if (error) return <div>에러 발생...</div>;
+  if (error) return <ErrorMessage />;
   if (!data) return <ProductListSkeleton />;
 
   const products = data.flat(Infinity) as IProduct[];

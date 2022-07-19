@@ -1,6 +1,6 @@
 import { instance } from "utils/http-client";
 
-interface GetProductsPayload {
+interface IGetProductsPayload {
   searchInput: string;
   limit?: number;
   offset?: number;
@@ -12,7 +12,7 @@ export function getProductsApi({
   limit,
   offset,
   count,
-}: GetProductsPayload) {
+}: IGetProductsPayload) {
   const searchParams = new URLSearchParams();
   if (searchInput) {
     searchParams.append("name", searchInput);

@@ -18,7 +18,7 @@ export function userPassword() {
     .required("비밀번호를 입력해주세요.");
 }
 
-export function userPassword2() {
+export function userPasswordCheck() {
   return Yup.string()
     .oneOf([Yup.ref("password1"), null], "비밀번호가 일치하지 않습니다.")
     .required("비밀번호를 입력해주세요.");
@@ -43,7 +43,12 @@ export function userDate() {
 }
 
 export function userEmail() {
+  const regexEmail =
+    /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
   return Yup.string()
-    .email("유효하지 않은 이메일 주소입니다.")
+    .matches(regexEmail, {
+      message: "유효하지 않은 이메일 주소입니다.",
+    })
     .required("이메일을 입력해주세요.");
 }

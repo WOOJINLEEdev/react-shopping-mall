@@ -1,6 +1,6 @@
 import { instance } from "utils/http-client";
 
-interface UpdateShippingAddressPayload {
+interface IUpdateShippingAddressPayload {
   name?: string;
   recipientName: string;
   postalCode: string;
@@ -20,7 +20,7 @@ export function updateShippingAddressApi({
   note,
   phone1,
   phone2,
-}: UpdateShippingAddressPayload) {
+}: IUpdateShippingAddressPayload) {
   return instance.put("/v1/me/shipping-address", {
     name: name,
     recipient_name: recipientName,

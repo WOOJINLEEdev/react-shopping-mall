@@ -12,6 +12,7 @@ import { addToCartApi, createCheckoutsApi } from "api";
 import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
 import QuantityCounter from "components/common/QuantityCounter";
+import ErrorMessage from "components/common/ErrorMessage";
 
 interface IOption {
   id: number;
@@ -66,11 +67,11 @@ const ItemDetail = () => {
   const { loadingCart, cartError, mutateCart } = useMyCart();
   const { token } = useTokenStatus();
 
-  if (error) return <div>에러 발생...</div>;
+  if (error) return <ErrorMessage />;
   if (!data) return <Loading />;
 
+  if (cartError) return <ErrorMessage />;
   if (loadingCart) return <Loading />;
-  if (cartError) return <div>에러 발생...</div>;
 
   const selectOptions = data.variants;
 

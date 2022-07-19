@@ -1,15 +1,15 @@
 import { instance } from "utils/http-client";
 
-interface CreateCheckoutsPayload {
-  lineItems: LineItem[];
+interface ICreateCheckoutsPayload {
+  lineItems: ILineItem[];
 }
 
-interface LineItem {
+interface ILineItem {
   variant_id: number | string;
   quantity: number;
 }
 
-export function createCheckoutsApi({ lineItems }: CreateCheckoutsPayload) {
+export function createCheckoutsApi({ lineItems }: ICreateCheckoutsPayload) {
   return instance.post("/v1/checkouts", { line_items: lineItems });
 }
 

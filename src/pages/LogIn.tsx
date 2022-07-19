@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Formik, Form, ErrorMessage, Field, FormikValues } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -12,9 +12,9 @@ import { createSocialLoginApi, createLoginApi } from "api";
 
 const LogIn = () => {
   const { naver } = window;
-  const location = useLocation();
-  const [naverIdToken, setNaverIdToken] = useState<string>("");
+  const [naverIdToken, setNaverIdToken] = useState("");
 
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,9 +59,17 @@ const LogIn = () => {
       });
       mutateToken(res.data);
       loginCheck(res);
-    } catch (err) {
-      console.log(err);
-      alert("일치하는 회원이 없습니다.");
+    } catch (err: any | AxiosError) {
+      if (axios.isAxiosError(err)) {
+        err = err as AxiosError;
+        if (err.response.data.error === "user not found") {
+          return alert("등록된 아이디가 없습니다.");
+        }
+
+        if (err.response.data.error === "password not equal") {
+          return alert("비밀번호가 일치하지 않습니다.");
+        }
+      }
     }
   };
 
@@ -161,7 +169,11 @@ const LogIn = () => {
                 id="userId"
                 className="login_input id"
                 placeholder="아이디"
-                autoFocus
+              />
+              <ErrorMessage
+                name="userId"
+                component="div"
+                className="input_check"
               />
             </div>
             <div>

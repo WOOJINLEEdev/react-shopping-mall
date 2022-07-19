@@ -1,11 +1,11 @@
 import { instance } from "utils/http-client";
 
-interface GetOrdersPayload {
+interface IGetOrdersPayload {
   checkoutId?: number;
   count?: boolean;
 }
 
-export function getOrdersApi({ checkoutId, count }: GetOrdersPayload) {
+export function getOrdersApi({ checkoutId, count }: IGetOrdersPayload) {
   const searchParams = new URLSearchParams();
 
   if (checkoutId) {

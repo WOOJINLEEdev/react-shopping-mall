@@ -1,6 +1,6 @@
 import { instance } from "utils/http-client";
 
-interface GetMyVisitCountPayload {
+interface IGetMyVisitCountPayload {
   visitStartDate: string;
   visitEndDate: string;
 }
@@ -8,13 +8,13 @@ interface GetMyVisitCountPayload {
 export function getMyVisitCountApi({
   visitStartDate,
   visitEndDate,
-}: GetMyVisitCountPayload) {
+}: IGetMyVisitCountPayload) {
   return instance.get(
     `/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
   );
 }
 
-interface GetShopVisitCountPayload {
+interface IGetShopVisitCountPayload {
   visitStartDate: string;
   visitEndDate: string;
 }
@@ -22,7 +22,7 @@ interface GetShopVisitCountPayload {
 export function getShopVisitCountApi({
   visitStartDate,
   visitEndDate,
-}: GetShopVisitCountPayload) {
+}: IGetShopVisitCountPayload) {
   return instance.get(
     `/v1/shop/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`
   );

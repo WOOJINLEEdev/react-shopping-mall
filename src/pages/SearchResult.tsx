@@ -9,6 +9,7 @@ import { getProductsApi } from "api";
 import ProductItem from "components/home/ProductItem";
 import Loading from "components/common/Loading";
 import MoreViewBtn from "components/common/MoreViewBtn";
+import ErrorMessage from "components/common/ErrorMessage";
 
 interface IProduct {
   id: number;
@@ -74,7 +75,7 @@ const SearchResult = () => {
 
   const { data, error, size, setSize } = usePagingQuery(getKey);
 
-  if (error) return <div>에러 발생...</div>;
+  if (error) return <ErrorMessage />;
   if (!data) return <Loading />;
 
   if (isLoading) return <Loading />;

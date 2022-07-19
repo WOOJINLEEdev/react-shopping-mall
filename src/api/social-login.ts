@@ -1,12 +1,12 @@
 import { instance } from "utils/http-client";
 
-interface CreateSocialLoginPayload {
+interface ICreateSocialLoginPayload {
   socialType: string;
   accessToken?: string;
-  profile?: SocialProfile;
+  profile?: ISocialProfile;
 }
 
-interface SocialProfile {
+interface ISocialProfile {
   id: string;
   name: string;
   email: string;
@@ -16,7 +16,7 @@ export function createSocialLoginApi({
   socialType,
   accessToken,
   profile,
-}: CreateSocialLoginPayload) {
+}: ICreateSocialLoginPayload) {
   if (profile) {
     return instance.post(
       "/v1/auth/social-login",

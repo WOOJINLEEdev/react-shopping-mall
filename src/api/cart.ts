@@ -1,24 +1,24 @@
 import { instance } from "utils/http-client";
 
-interface AddToCartPayload {
-  items: CartItem[];
+interface IAddToCartPayload {
+  items: ICartItem[];
 }
 
-interface CartItem {
+interface ICartItem {
   product_id: number;
   variant_id: number | string;
   quantity: number;
 }
 
-export function addToCartApi({ items }: AddToCartPayload) {
+export function addToCartApi({ items }: IAddToCartPayload) {
   return instance.put("/v1/me/cart", { items });
 }
 
-interface DeleteCartItemPayload {
+interface IDeleteCartItemPayload {
   cartItemId: number;
 }
 
-export function deleteCartItemApi({ cartItemId }: DeleteCartItemPayload) {
+export function deleteCartItemApi({ cartItemId }: IDeleteCartItemPayload) {
   return instance.delete(`/v1/me/cart/items/${cartItemId}`);
 }
 

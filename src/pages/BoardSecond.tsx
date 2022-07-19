@@ -23,6 +23,7 @@ import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
 import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
+import ErrorMessage from "components/common/ErrorMessage";
 
 import { curBoardState } from "state";
 
@@ -139,7 +140,7 @@ const BoardSecond = () => {
     return HEADER_NAME;
   }, [isTablet, isMobile]);
 
-  if (error) return <div>에러 발생...</div>;
+  if (error) return <ErrorMessage />;
   if (!data) return <Loading />;
 
   return (

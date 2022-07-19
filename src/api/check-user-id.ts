@@ -1,11 +1,11 @@
 import { instance } from "utils/http-client";
 
-interface CheckUserIdExistencePayload {
+interface ICheckUserIdExistencePayload {
   userId: string;
 }
 
 export function checkUserIdExistenceApi({
   userId,
-}: CheckUserIdExistencePayload) {
+}: ICheckUserIdExistencePayload) {
   return instance.get(`v1/auth/check-user-id?user_id=${userId}`);
 }

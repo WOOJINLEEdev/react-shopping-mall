@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import {
   Formik,
   Form,
@@ -15,7 +15,7 @@ import styled from "styled-components";
 import {
   userId,
   userPassword,
-  userPassword2,
+  userPasswordCheck,
   userName,
   userEmail,
   userMonth,
@@ -25,15 +25,6 @@ import { createJoinApi, checkUserIdExistenceApi } from "api";
 
 const Join = () => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);
-
-  const [items, setItems] = useState({
-    id: "",
-    password1: "",
-    password2: "",
-    name: "",
-    birthDay: "",
-    email: "",
-  });
 
   const initialValues = {
     id: "",
@@ -48,7 +39,7 @@ const Join = () => {
   const validationSchema = Yup.object({
     id: userId(),
     password1: userPassword(),
-    password2: userPassword2(),
+    password2: userPasswordCheck(),
     name: userName(),
     month: userMonth(),
     date: userDate(),
@@ -167,12 +158,12 @@ const Join = () => {
                 className="input_check"
               />
 
-              <label htmlFor="userPassword2" className="form_label">
+              <label htmlFor="userPasswordCheck" className="form_label">
                 비밀번호 확인 (Password Confirm)
               </label>
               <Field
                 type="password"
-                id="userPassword2"
+                id="userPasswordCheck"
                 className="form_input"
                 name="password2"
                 autoComplete="off"
@@ -231,19 +222,17 @@ const Join = () => {
                 ? getMonthDateErrorMsg(errors)
                 : null}
 
-              <fieldset className="email">
-                <legend className="form_label">이메일 (E-mail)</legend>
-                <div className="email_box">
-                  <label htmlFor="email"></label>
-                  <Field
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="form_input mail"
-                    placeholder="E-MAIL"
-                  />
-                </div>
-              </fieldset>
+              <label htmlFor="email" className="form_label">
+                이메일 (E-mail)
+              </label>
+              <Field
+                type="email"
+                id="email"
+                name="email"
+                className="form_input mail"
+                placeholder="E-MAIL"
+              />
+
               <ErrorMessage
                 name="email"
                 component="div"
@@ -278,6 +267,7 @@ const BirthWrap = styled.div`
 const Div = styled.div`
   display: flex;
   justify-content: space-between;
+
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     justify-content: flex-start;
   }
@@ -304,6 +294,7 @@ const IdCheckBtn = styled.button`
 
 const LabelWrap = styled.div`
   display: flex;
+
   & span {
     font-size: 12px;
     color: #6d6d6d;

@@ -17,6 +17,7 @@ import {
 } from "api";
 
 import SearchModal from "components/search/SearchModal";
+import ErrorMessage from "components/common/ErrorMessage";
 
 import signInImg from "assets/images/user.png";
 import { ReactComponent as MenuImg } from "assets/images/menu.svg";
@@ -76,7 +77,7 @@ const Header = () => {
 
   const { cart, loadingCart, cartError, mutateCart } = useMyCart();
 
-  if (cartError) return <div>에러 발생...</div>;
+  if (cartError) return <ErrorMessage />;
 
   const cartAmount = cart?.items?.length;
 

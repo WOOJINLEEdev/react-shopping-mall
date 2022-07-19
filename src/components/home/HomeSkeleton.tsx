@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
+import BannerSkeleton from "components/home/BannerSkeleton";
 import ProductListSkeleton from "components/home/ProductListSkeleton";
-import Skeleton from "components/home/Skeleton";
 
 const HomeSkeleton = () => {
   return (
     <DivContainer>
-      <Skeleton />
+      <BannerSkeleton />
       <ProductListSkeleton />
     </DivContainer>
   );
@@ -15,5 +15,17 @@ const HomeSkeleton = () => {
 export default HomeSkeleton;
 
 const DivContainer = styled.div`
+  position: relative;
+  width: 100%;
   padding-top: 50px;
+
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    width: 100%;
+    padding-top: 35px;
+  }
+
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 100%;
+    padding-top: 40px;
+  }
 `;

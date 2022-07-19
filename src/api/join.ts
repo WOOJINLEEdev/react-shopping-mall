@@ -1,6 +1,6 @@
 import { instance } from "utils/http-client";
 
-interface CreateJoinPayload {
+interface ICreateJoinPayload {
   userId: string;
   userPassword: string;
   name: string;
@@ -12,7 +12,7 @@ export function createJoinApi({
   userPassword,
   name,
   email,
-}: CreateJoinPayload) {
+}: ICreateJoinPayload) {
   return instance.post("/v1/auth/join", {
     user_id: userId,
     user_password: userPassword,

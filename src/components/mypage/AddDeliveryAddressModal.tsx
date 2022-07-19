@@ -10,6 +10,7 @@ import { getFullAddress } from "utils/get-address";
 import { isNumberCheck } from "utils/number";
 
 import Loading from "components/common/Loading";
+import ErrorMessage from "components/common/ErrorMessage";
 
 import { myDeliveryInfoState } from "state/mypage";
 import { IAddDeliveryAddressModalProps, IAddress } from "types";
@@ -48,7 +49,7 @@ const AddDeliveryAddressModal = ({
 
   const { myData, loadingMyData, myDataError } = useMyPageData();
   if (loadingMyData) return <Loading />;
-  if (myDataError) return <div>에러발생...</div>;
+  if (myDataError) return <ErrorMessage />;
 
   const handleDesignationInputChange = (designation: string) => {
     setMyDeliveryState({ ...myDeliveryState, designation });

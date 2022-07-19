@@ -9,6 +9,7 @@ import { formatPrice } from "utils/money";
 import { createLogoutApi } from "api";
 
 import Loading from "components/common/Loading";
+import ErrorMessage from "components/common/ErrorMessage";
 
 import { IMyData, IMyPageInfoProps } from "types";
 
@@ -33,7 +34,7 @@ const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
   const { removeToken } = useTokenStatus();
 
   if (loadingCart) return <Loading />;
-  if (cartError) return <div>에러 발생...</div>;
+  if (cartError) return <ErrorMessage />;
 
   const logout = () => {
     async function createLogout() {
