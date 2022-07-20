@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 import { instance } from "utils/http-client";
 import { isLogin } from "utils/auth";
 
-interface ICartItem {
+export interface ICartItem {
   cart_id: number;
   id: number;
   product_id: number;

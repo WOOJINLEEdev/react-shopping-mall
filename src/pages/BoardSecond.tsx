@@ -1,18 +1,10 @@
-import {
-  useState,
-  useEffect,
-  lazy,
-  Suspense,
-  useCallback,
-  ChangeEvent,
-} from "react";
+import { useState, useEffect, lazy, Suspense, ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import useSWR from "swr";
-import axios from "axios";
 import Modal from "react-modal";
 import { useRecoilState } from "recoil";
 
+import useBoardList from "hooks/api/useBoardList";
 import useDevice from "hooks/useDevice";
 import { getToken } from "utils/token";
 import { formatDate } from "utils/date";
@@ -21,8 +13,8 @@ import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
-import Loading from "components/common/Loading";
 import SearchInputBtn from "components/search/SearchInputBtn";
+import Loading from "components/common/Loading";
 import ErrorMessage from "components/common/ErrorMessage";
 
 import { curBoardState } from "state";
@@ -42,14 +34,14 @@ interface IPosts {
 
 const BoardSecond = () => {
   const navigate = useNavigate();
-
+  const { isPc, isTablet, isMobile } = useDevice();
   const detectMobile = detectMobileDevice();
 
   const [pageState, setPageState] = useRecoilState(curBoardState("second"));
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
   const [posts, setPosts] = useState<IPosts[]>([]);
+  const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [mobileLimit, setMobileLimit] = useState<number>(20);
   const [page, setPage] = useState<number>(pageState.pageNumber);
@@ -68,13 +60,7 @@ const BoardSecond = () => {
   const date = new Date();
   let searchInput = "";
 
-  const { isPc, isTablet, isMobile } = useDevice();
-
-  const postUrl = "https://jsonplaceholder.typicode.com/posts";
-  const fetcher = (url: string) => {
-    return axios.get(url).then((res) => res.data);
-  };
-  const { data, error } = useSWR(postUrl, fetcher);
+  const { boardList, boardListError } = useBoardList();
 
   useEffect(() => {
     detectMobileDevice();
@@ -87,11 +73,14 @@ const BoardSecond = () => {
   }, [page]);
 
   useEffect(() => {
-    if (data) {
-      const reverseData = JSON.parse(JSON.stringify(data)).reverse();
+    if (boardList) {
+      const reverseData = JSON.parse(JSON.stringify(boardList)).reverse();
       setPosts(reverseData);
     }
-  }, [data]);
+  }, [boardList]);
+
+  if (!boardList) return <Loading />;
+  if (boardListError) return <ErrorMessage />;
 
   function detectMobileDevice() {
     const minWidth = 500;
@@ -99,23 +88,23 @@ const BoardSecond = () => {
     return window.innerWidth <= minWidth;
   }
 
-  const handleWriteBtnClick = useCallback(() => {
+  const handleWriteBtnClick = () => {
     if (token) {
       navigate("/boardPost");
     } else {
       alert("로그인 후 이용해주세요!");
       return false;
     }
-  }, [token]);
+  };
 
-  const handlePreviewBtnClick = useCallback((itemId: number) => {
+  const handlePreviewBtnClick = (itemId: number) => {
     setSelectedPreviewId(itemId);
     setIsOpen(true);
-  }, []);
+  };
 
-  const onRequestClose = useCallback(() => {
+  const onRequestClose = () => {
     setIsOpen(false);
-  }, []);
+  };
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValue = e.target.value;
@@ -129,7 +118,7 @@ const BoardSecond = () => {
     console.log(searchFilter);
   };
 
-  const getHeadersName = useCallback(() => {
+  const getHeadersName = () => {
     if (isTablet) {
       return ["번호", "제목", "작성자", "등록일", "조회수"];
     }
@@ -138,10 +127,7 @@ const BoardSecond = () => {
     }
 
     return HEADER_NAME;
-  }, [isTablet, isMobile]);
-
-  if (error) return <ErrorMessage />;
-  if (!data) return <Loading />;
+  };
 
   return (
     <BoardWrap>
@@ -174,7 +160,7 @@ const BoardSecond = () => {
 
       <BoardTable headersName={getHeadersName()} boardLocal="second">
         {posts.slice(offset, offsetLimit).map((item, i) => (
-          <BoardTableRow key={i}>
+          <BoardTableRow key={`table_row_${i}`}>
             <BoardTableColumn>{item.id}</BoardTableColumn>
             <BoardTableColumn title={item.title}>
               <Link to={`/postView/${item.id}`} className="board_link">

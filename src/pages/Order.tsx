@@ -9,27 +9,20 @@ import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
 import Loading from "components/common/Loading";
+import ErrorMessage from "components/common/ErrorMessage";
 
-interface ILineItem {
-  image_src: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-  variant_price: string;
-}
+import { ILineItem } from "types";
 
 const Order = () => {
   const matchParams = useParams();
   const checkoutNumber = Number(matchParams.checkoutId);
 
   const { isPc, isTablet, isMobile } = useDevice();
-  const { checkoutData, loadingCheckout, checkoutError, mutateCheckout } =
+  const { checkoutData, loadingCheckout, checkoutError } =
     useCheckout(checkoutNumber);
 
-  if (checkoutError) return <div>failed to load...</div>;
   if (loadingCheckout) return <Loading />;
+  if (checkoutError) return <ErrorMessage />;
 
   const items: ILineItem[] = checkoutData.line_items;
   const totalPrice: number = items

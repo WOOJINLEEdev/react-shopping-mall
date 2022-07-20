@@ -5,6 +5,7 @@ import useBoardItem from "hooks/api/useBoardItem";
 import { formatDate } from "utils/date";
 
 import Loading from "components/common/Loading";
+import ErrorMessage from "components/common/ErrorMessage";
 
 const BoardItem = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const BoardItem = () => {
 
   const { boardItem, boardItemError } = useBoardItem(boardItemId);
 
-  if (boardItemError) return <div>failed to load</div>;
+  if (boardItemError) return <ErrorMessage />;
   if (!boardItem) return <Loading />;
 
   const handleMoveBoardBtn = () => {

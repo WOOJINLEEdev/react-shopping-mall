@@ -8,11 +8,11 @@ export interface IOrderAgreeCheckProps {
 
 //---------------------------------------------- OrderCheckoutButton
 export interface IOrderCheckoutButtonProps {
-  checkoutData: OrderCheckoutButtonData;
+  checkoutData: IOrderCheckoutButtonData;
   checkoutNumber: number;
 }
 
-export interface OrderCheckoutButtonData {
+export interface IOrderCheckoutButtonData {
   created_at: string;
   id: number;
   line_items: ILineItem[];
@@ -140,6 +140,9 @@ export interface OrderCouponUser {
 export interface ICoupon {
   id: number;
   coupon_name: string;
+  coupon_percent: number;
+  coupon_type: "percent" | "amount";
+  used: boolean;
 }
 
 export interface ICouponStateSelector {

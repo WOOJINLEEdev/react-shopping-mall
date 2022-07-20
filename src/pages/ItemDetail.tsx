@@ -1,10 +1,9 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useSWR from "swr";
 
+import useProductItem from "hooks/api/useProductItem";
 import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
-import { instance } from "utils/http-client";
 import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
 import { addToCartApi, createCheckoutsApi } from "api";
@@ -58,22 +57,17 @@ const ItemDetail = () => {
   const btnWidth = "40%";
   const contentPadding = "50px 0";
 
-  const productUrl = `/v1/products/${matchParams.productId}`;
-  const fetcher = (url: string) => {
-    return instance.get(url).then((res) => res.data);
-  };
-
-  const { data, error } = useSWR(productUrl, fetcher);
+  const { productData, productError } = useProductItem(matchParams.productId);
   const { loadingCart, cartError, mutateCart } = useMyCart();
   const { token } = useTokenStatus();
 
-  if (error) return <ErrorMessage />;
-  if (!data) return <Loading />;
+  if (productError) return <ErrorMessage />;
+  if (!productData) return <Loading />;
 
   if (cartError) return <ErrorMessage />;
   if (loadingCart) return <Loading />;
 
-  const selectOptions = data.variants;
+  const selectOptions = productData.variants;
 
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     if (e.target.value === "") {
@@ -101,7 +95,7 @@ const ItemDetail = () => {
       const res = await addToCartApi({
         items: [
           {
-            product_id: data.id,
+            product_id: productData.id,
             variant_id: itemOption,
             quantity: quantity,
           },
@@ -135,11 +129,11 @@ const ItemDetail = () => {
       return alert("옵션을 선택해주세요.");
     }
 
-    if (data.variants[0].price * quantity >= 70000) {
+    if (productData.variants[0].price * quantity >= 70000) {
       localStorage.setItem("delivery", "0");
     }
 
-    if (data.variants[0].price * quantity < 70000) {
+    if (productData.variants[0].price * quantity < 70000) {
       localStorage.setItem("delivery", "3000");
     }
 
@@ -180,14 +174,14 @@ const ItemDetail = () => {
               <source
                 key={`item_detail_${item.id}`}
                 media={item.media}
-                srcSet={getSizedImageUrl(data.images[0].src, item.size)}
+                srcSet={getSizedImageUrl(productData.images[0].src, item.size)}
               />
             );
           })}
           <img
             className="image"
-            src={getSizedImageUrl(data.images[0].src, "_400x300.jpg")}
-            alt={`${data.name}_상품 이미지`}
+            src={getSizedImageUrl(productData.images[0].src, "_400x300.jpg")}
+            alt={`${productData.name}_상품 이미지`}
           />
         </picture>
       </div>
@@ -201,7 +195,7 @@ const ItemDetail = () => {
           <thead>
             <tr>
               <th className="thead_th" colSpan={2} id="imageTextHead">
-                {data.name}
+                {productData.name}
               </th>
             </tr>
           </thead>
@@ -210,7 +204,7 @@ const ItemDetail = () => {
               <th className="tbody_th">Price</th>
               <td className="tbody_td">
                 <span id="imageTextBody">
-                  {formatPrice(data.variants[0].price.toString())}
+                  {formatPrice(productData.variants[0].price.toString())}
                 </span>
                 원
               </td>
