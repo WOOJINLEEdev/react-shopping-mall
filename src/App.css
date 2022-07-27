@@ -294,6 +294,10 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+button {
+  cursor: pointer;
+}
+
 .header_link {
   position: relative;
   width: 120px;
@@ -1738,7 +1742,7 @@ main {
   z-index: 99;
 }
 
-.loading-image {
+.loading_image {
   position: absolute;
   top: 50%;
   left: 50%;
