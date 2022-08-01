@@ -9,6 +9,7 @@ const usePagingQuery = (getKey: SWRInfiniteKeyLoader) => {
 
   const { data, error, size, setSize } = useSWRInfinite(getKey, fetcher, {
     revalidateFirstPage: false,
+    suspense: true,
   });
 
   return {

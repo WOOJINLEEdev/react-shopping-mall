@@ -8,7 +8,9 @@ const useMyPageData = () => {
     return instance.get(url).then((res) => res.data);
   };
 
-  const { data, error, mutate } = useSWR(myPageUrl, fetcher);
+  const { data, error, mutate } = useSWR(myPageUrl, fetcher, {
+    suspense: true,
+  });
 
   return {
     myData: data,

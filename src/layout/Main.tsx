@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
@@ -6,6 +6,9 @@ import Loading from "components/common/Loading";
 import HomeSkeleton from "components/home/HomeSkeleton";
 
 import { headerItemState } from "state";
+
+import AsyncBoundary from "components/common/AsyncBoundary";
+import ErrorMessage from "components/common/ErrorMessage";
 
 const Home = lazy(() => import("pages/Home"));
 const ItemDetail = lazy(() => import("pages/ItemDetail"));
@@ -38,8 +41,11 @@ const Main = () => {
 
   return (
     <main>
-      <Suspense
-        fallback={location.pathname === "/" ? <HomeSkeleton /> : <Loading />}
+      <AsyncBoundary
+        rejectedFallback={() => <ErrorMessage />}
+        pendingFallback={
+          location.pathname === "/" ? <HomeSkeleton /> : <Loading />
+        }
       >
         <Routes>
           <Route path="/" element={<Home />} />
@@ -61,7 +67,7 @@ const Main = () => {
           <Route path="aboutMe" element={<AboutMe />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </Suspense>
+      </AsyncBoundary>
     </main>
   );
 };

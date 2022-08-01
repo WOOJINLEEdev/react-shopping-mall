@@ -8,7 +8,10 @@ const useProductItem = (productId?: string) => {
     return instance.get(url).then((res) => res.data);
   };
 
-  const { data, error, mutate } = useSWR(productUrl, fetcher);
+  const { data, error, mutate } = useSWR(productUrl, fetcher, {
+    suspense: true,
+    revalidateOnMount: false,
+  });
 
   return {
     productData: data,

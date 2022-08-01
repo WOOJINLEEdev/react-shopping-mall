@@ -28,10 +28,7 @@ const Cart = () => {
   const message = "선택하신 상품이 삭제되었습니다.";
 
   const navigate = useNavigate();
-  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
-
-  if (loadingCart) return <Loading />;
-  if (cartError) return <CartErrorMessage />;
+  const { cart, mutateCart } = useMyCart();
 
   const items: IItem[] = cart.items;
 

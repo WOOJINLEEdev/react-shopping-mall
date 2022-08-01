@@ -9,7 +9,6 @@ import { formatPrice } from "utils/money";
 import { createLogoutApi } from "api";
 
 import Loading from "components/common/Loading";
-import ErrorMessage from "components/common/ErrorMessage";
 
 import { IMyData, IMyPageInfoProps } from "types";
 
@@ -30,11 +29,8 @@ const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
   const yesBtnText = "예";
   const noBtnText = "아니오";
 
-  const { loadingCart, cartError, mutateCart } = useMyCart();
+  const { mutateCart } = useMyCart();
   const { removeToken } = useTokenStatus();
-
-  if (loadingCart) return <Loading />;
-  if (cartError) return <ErrorMessage />;
 
   const logout = () => {
     async function createLogout() {

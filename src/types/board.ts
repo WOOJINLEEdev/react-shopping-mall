@@ -27,7 +27,7 @@ export interface IPostItem {
 export interface IBoardItemModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  boardItemId: number;
+  boardItemId?: number;
 }
 
 // BoardModalCloseBtn

@@ -3,14 +3,13 @@ import { SWRInfiniteKeyLoader } from "swr/infinite";
 import Modal from "react-modal";
 import styled from "styled-components";
 
+import useMyOrder from "hooks/api/useMyOrder";
 import usePagingQuery from "hooks/api/usePagingQuery";
 import { getOrderNumber } from "utils/order";
 import { formatPrice } from "utils/money";
-import { getOrdersApi } from "api";
 
 import Loading from "components/common/Loading";
 import MoreViewBtn from "components/common/MoreViewBtn";
-import ErrorMessage from "components/common/ErrorMessage";
 
 Modal.setAppElement("#root");
 
@@ -23,18 +22,11 @@ const MyOrderCheck = () => {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [selectItemId, setSelectItemId] = useState<number>();
 
-  useEffect(() => {
-    async function getMyOrderCount() {
-      try {
-        const res = await getOrdersApi({ count: true });
-        setTotalCount(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  const { myOrderData } = useMyOrder({ count: true });
 
-    getMyOrderCount();
-  }, []);
+  // useEffect(() => {
+  //   setTotalCount(myOrderData);
+  // }, []);
 
   const PAGE_LIMIT = 5;
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
@@ -44,12 +36,9 @@ const MyOrderCheck = () => {
     return `/v1/orders?limit=${PAGE_LIMIT}&offset=${pageIndex * PAGE_LIMIT}`;
   };
 
-  const { data, error, size, setSize } = usePagingQuery(getKey);
+  const { data, size, setSize } = usePagingQuery(getKey);
 
-  if (error) return <ErrorMessage />;
-  if (!data) return <Loading />;
-
-  const myOrderList = data.flat(Infinity);
+  const myOrderList = data?.flat(Infinity) ?? [];
 
   const handleOrderListItem = (itemId: number) => {
     setSelectItemId(itemId);
@@ -67,11 +56,11 @@ const MyOrderCheck = () => {
   return (
     <OrderCheckWrap>
       <h2 className="main_title">주문내역 조회</h2>
-      {totalCount === 0 ? (
+      {myOrderData === 0 ? (
         ""
       ) : (
         <TotalOrderCount>
-          - 총 주문 수 : <span>{totalCount}</span>건
+          - 총 주문 수 : <span>{myOrderData}</span>건
         </TotalOrderCount>
       )}
       <Suspense fallback={<Loading />}>
@@ -113,7 +102,7 @@ const MyOrderCheck = () => {
           );
         })}
       </ul>
-      {totalCount > 5 && size * PAGE_LIMIT < totalCount ? (
+      {myOrderData > 5 && size * PAGE_LIMIT < myOrderData ? (
         <MoreViewBtn onClick={handleMoreViewBtnClick} />
       ) : (
         ""

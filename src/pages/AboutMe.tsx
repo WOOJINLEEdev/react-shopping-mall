@@ -4,8 +4,8 @@ import { ApexOptions } from "apexcharts";
 import { ImGithub } from "@react-icons/all-files/im/ImGithub";
 import { BsTriangleFill } from "@react-icons/all-files/bs/BsTriangleFill";
 
+import useVisitCount from "hooks/api/useVisitCount";
 import { formatDate } from "utils/date";
-import { getShopVisitCountApi } from "api";
 
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
@@ -28,147 +28,140 @@ const AboutMe = () => {
   const year = formatDate(now, "YYYY");
   const month = formatDate(now, "MM");
 
+  const visitStartDate = "2021-12-01";
+  const visitEndDate = formattedToday;
+
+  const { data } = useVisitCount({
+    visitStartDate,
+    visitEndDate,
+    division: "shop",
+  });
+
   useEffect(() => {
-    const visitStartDate = "2021-12-01";
-    const visitEndDate = formattedToday;
+    const visitDate: string[] = data.map(
+      (item: IDailyVisit) => item.visit_date
+    );
+    const visitCount: number[] = data.map(
+      (item: IDailyVisit) => item.visit_count
+    );
+    const sum = visitCount.reduce((a: number, b: number) => a + b);
 
-    async function getShopVisitCount() {
-      try {
-        const res = await getShopVisitCountApi({
-          visitStartDate,
-          visitEndDate,
-        });
+    const todayVisit = data.find(
+      (t: IDailyVisit) => t.visit_date === formattedToday
+    ) || { visit_count: 0 };
+    const yesterdayVisit = data.find(
+      (t: IDailyVisit) => t.visit_date === formattedYesterday
+    ) || { visit_count: 0 };
 
-        const visitDate: string[] = res.data.map(
-          (item: IDailyVisit) => item.visit_date
-        );
-        const visitCount: number[] = res.data.map(
-          (item: IDailyVisit) => item.visit_count
-        );
-        const sum = visitCount.reduce((a: number, b: number) => a + b);
+    setToday(todayVisit.visit_count);
+    setYesterday(yesterdayVisit.visit_count);
+    setTotal(sum);
+    setSeries([
+      {
+        name: "방문 수",
+        data: [...visitCount].reverse().slice(-7),
+      },
+    ]);
 
-        const todayVisit = res.data.find(
-          (t: IDailyVisit) => t.visit_date === formattedToday
-        ) || { visit_count: 0 };
-        const yesterdayVisit = res.data.find(
-          (t: IDailyVisit) => t.visit_date === formattedYesterday
-        ) || { visit_count: 0 };
+    setOptions({
+      colors: ["#228B22", "#228B22"],
+      fill: {
+        type: "gradient",
+        gradient: {
+          shadeIntensity: 1,
+          type: "vertical",
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          colorStops: [
+            { offset: 0, color: "#81c147", opacity: 1 },
+            { offset: 100, color: "#008000", opacity: 1 },
+          ],
+        },
+      },
+      chart: {
+        height: 350,
+        type: "bar",
+        toolbar: {
+          show: false,
+        },
+      },
 
-        setToday(todayVisit.visit_count);
-        setYesterday(yesterdayVisit.visit_count);
-        setTotal(sum);
-        setSeries([
-          {
-            name: "방문 수",
-            data: [...visitCount].reverse().slice(-7),
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          dataLabels: {
+            position: "top",
           },
-        ]);
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val: string | number) {
+          return val;
+        },
+        offsetY: -20,
+        style: {
+          colors: ["#304758"],
+        },
+      },
 
-        setOptions({
-          colors: ["#228B22", "#228B22"],
+      xaxis: {
+        categories: visitDate.slice(0, 7).reverse(),
+        position: "bottom",
+        labels: {
+          show: true,
+          formatter: function (val: string) {
+            return val?.slice(-5);
+          },
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
           fill: {
             type: "gradient",
             gradient: {
-              shadeIntensity: 1,
-              type: "vertical",
-              opacityFrom: 0.7,
-              opacityTo: 0.9,
-              colorStops: [
-                { offset: 0, color: "#81c147", opacity: 1 },
-                { offset: 100, color: "#008000", opacity: 1 },
-              ],
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
             },
           },
-          chart: {
-            height: 350,
-            type: "bar",
-            toolbar: {
-              show: false,
-            },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      yaxis: {
+        tickAmount: 5,
+        max: 15,
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: true,
+          formatter: function (val: number) {
+            return String(val);
           },
-
-          plotOptions: {
-            bar: {
-              borderRadius: 10,
-              dataLabels: {
-                position: "top",
-              },
-            },
-          },
-          dataLabels: {
-            enabled: true,
-            formatter: function (val: string | number) {
-              return val;
-            },
-            offsetY: -20,
-            style: {
-              colors: ["#304758"],
-            },
-          },
-
-          xaxis: {
-            categories: visitDate.slice(0, 7).reverse(),
-            position: "bottom",
-            labels: {
-              show: true,
-              formatter: function (val: string) {
-                return val?.slice(-5);
-              },
-            },
-            axisBorder: {
-              show: false,
-            },
-            axisTicks: {
-              show: false,
-            },
-            crosshairs: {
-              fill: {
-                type: "gradient",
-                gradient: {
-                  colorFrom: "#D8E3F0",
-                  colorTo: "#BED1E6",
-                  stops: [0, 100],
-                  opacityFrom: 0.4,
-                  opacityTo: 0.5,
-                },
-              },
-            },
-            tooltip: {
-              enabled: true,
-            },
-          },
-          yaxis: {
-            tickAmount: 5,
-            max: 15,
-            axisBorder: {
-              show: false,
-            },
-            axisTicks: {
-              show: false,
-            },
-            labels: {
-              show: true,
-              formatter: function (val: number) {
-                return String(val);
-              },
-            },
-          },
-          title: {
-            text: `${year}년 ${month}월 방문자 현황`,
-            floating: true,
-            offsetY: 0,
-            align: "center",
-            style: {
-              color: "#444",
-            },
-          },
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    getShopVisitCount();
+        },
+      },
+      title: {
+        text: `${year}년 ${month}월 방문자 현황`,
+        floating: true,
+        offsetY: 0,
+        align: "center",
+        style: {
+          color: "#444",
+        },
+      },
+    });
   }, []);
 
   if (!series || !options) {

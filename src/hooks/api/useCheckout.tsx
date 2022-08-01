@@ -8,7 +8,7 @@ const useCheckout = (checkoutId: string | number) => {
     return instance.get(url).then((res) => res.data);
   };
 
-  const { data, error, mutate } = useSWR(cartUrl, fetcher);
+  const { data, error, mutate } = useSWR(cartUrl, fetcher, { suspense: true });
 
   return {
     checkoutData: data,

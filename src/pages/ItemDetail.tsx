@@ -8,10 +8,8 @@ import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
 import { addToCartApi, createCheckoutsApi } from "api";
 
-import Loading from "components/common/Loading";
 import CommonModal from "components/common/CommonModal";
 import QuantityCounter from "components/common/QuantityCounter";
-import ErrorMessage from "components/common/ErrorMessage";
 
 interface IOption {
   id: number;
@@ -57,15 +55,9 @@ const ItemDetail = () => {
   const btnWidth = "40%";
   const contentPadding = "50px 0";
 
-  const { productData, productError } = useProductItem(matchParams.productId);
-  const { loadingCart, cartError, mutateCart } = useMyCart();
+  const { productData } = useProductItem(matchParams.productId);
+  const { mutateCart } = useMyCart();
   const { token } = useTokenStatus();
-
-  if (productError) return <ErrorMessage />;
-  if (!productData) return <Loading />;
-
-  if (cartError) return <ErrorMessage />;
-  if (loadingCart) return <Loading />;
 
   const selectOptions = productData.variants;
 

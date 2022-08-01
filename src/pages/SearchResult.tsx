@@ -3,13 +3,11 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { SWRInfiniteKeyLoader } from "swr/infinite";
 
+import useSearchCount from "hooks/api/useSearchCount";
 import usePagingQuery from "hooks/api/usePagingQuery";
-import { getProductsApi } from "api";
 
 import ProductItem from "components/home/ProductItem";
-import Loading from "components/common/Loading";
 import MoreViewBtn from "components/common/MoreViewBtn";
-import ErrorMessage from "components/common/ErrorMessage";
 
 interface IProduct {
   id: number;
@@ -31,32 +29,16 @@ interface IVariants {
 const SearchResult = () => {
   const matchParams = useParams();
 
-  const [resultCount, setResultCount] = useState<number>(0);
-  const [searchWord, setSearchWord] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchWord, setSearchWord] = useState("");
 
   useEffect(() => {
     setSearchWord(matchParams.searchWord || "");
-
-    async function searchProduct() {
-      try {
-        setIsLoading(true);
-        const res = await getProductsApi({
-          searchInput: matchParams.searchWord || "",
-          count: true,
-        });
-        setResultCount(res.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (matchParams.searchWord !== searchWord) {
-      searchProduct();
-    }
   }, [matchParams]);
+
+  const { searchCount } = useSearchCount({
+    searchInput: matchParams.searchWord || "",
+    count: true,
+  });
 
   const PAGE_LIMIT = 8;
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
@@ -73,14 +55,9 @@ const SearchResult = () => {
     }&name=${searchWord}`;
   };
 
-  const { data, error, size, setSize } = usePagingQuery(getKey);
+  const { data, size, setSize } = usePagingQuery(getKey);
 
-  if (error) return <ErrorMessage />;
-  if (!data) return <Loading />;
-
-  if (isLoading) return <Loading />;
-
-  const products = data.flat(Infinity);
+  const products = data?.flat(Infinity) ?? [];
 
   function handleMoreViewBtnClick() {
     setSize(size + 1);
@@ -90,7 +67,7 @@ const SearchResult = () => {
     <ResultWrap>
       <SearchResultTitle>
         <SearchWord>{searchWord}</SearchWord>
-        <span>검색결과 {resultCount}건</span>
+        <span>검색결과 {searchCount}건</span>
       </SearchResultTitle>
       <ul className="list_group">
         {products.length === 0 ? (
@@ -101,7 +78,7 @@ const SearchResult = () => {
           })
         )}
       </ul>
-      {resultCount > 9 && size * PAGE_LIMIT < resultCount ? (
+      {searchCount > 9 && size * PAGE_LIMIT < searchCount ? (
         <MoreViewBtn onClick={handleMoreViewBtnClick} margin={"0 0 30px"} />
       ) : (
         ""

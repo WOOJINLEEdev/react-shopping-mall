@@ -17,7 +17,6 @@ import {
 } from "api";
 
 import SearchModal from "components/search/SearchModal";
-import ErrorMessage from "components/common/ErrorMessage";
 
 import signInImg from "assets/images/user.png";
 import { ReactComponent as MenuImg } from "assets/images/menu.svg";
@@ -75,11 +74,9 @@ const Header = () => {
     updateShopVisitCount();
   }, []);
 
-  const { cart, loadingCart, cartError, mutateCart } = useMyCart();
+  const { cart, loadingCart, mutateCart } = useMyCart();
 
-  if (cartError) return <ErrorMessage />;
-
-  const cartAmount = cart?.items?.length;
+  const cartAmount = cart.items.length;
 
   const handleMenuClick = () => {
     setMenuShow(true);

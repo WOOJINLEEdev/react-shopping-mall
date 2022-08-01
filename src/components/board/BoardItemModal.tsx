@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import useBoardItem from "hooks/api/useBoardItem";
 import { formatDate } from "utils/date";
 
-import Loading from "components/common/Loading";
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 
 import { IBoardItemModalProps } from "types";
@@ -17,9 +16,7 @@ const BoardItemModal = ({
 }: IBoardItemModalProps) => {
   const date = new Date();
 
-  const { boardItem, boardItemError } = useBoardItem(boardItemId);
-  if (boardItemError) return <div>failed to load</div>;
-  if (!boardItem) return <Loading />;
+  const { boardItem } = useBoardItem(boardItemId);
 
   return (
     <Modal
@@ -35,13 +32,13 @@ const BoardItemModal = ({
           <thead>
             <tr>
               <th className="item_table_th">제목</th>
-              <td className="item_table_td">{boardItem.title}</td>
+              <td className="item_table_td">{boardItem?.title}</td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <th className="item_table_th">작성자</th>
-              <td className="item_table_td">{boardItem.userId}</td>
+              <td className="item_table_td">{boardItem?.userId}</td>
             </tr>
             <tr>
               <th className="item_table_th">작성일</th>
@@ -49,13 +46,13 @@ const BoardItemModal = ({
             </tr>
             <tr>
               <th className="item_table_th">조회수</th>
-              <td className="item_table_td">{boardItem.id}</td>
+              <td className="item_table_td">{boardItem?.id}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div>
-        <div className="board_item_textarea">{boardItem.body}</div>
+        <div className="board_item_textarea">{boardItem?.body}</div>
       </div>
     </Modal>
   );

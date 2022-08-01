@@ -5,10 +5,9 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "index.css";
 import App from "App";
 import reportWebVitals from "reportWebVitals";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import * as serviceWorkerRegistration from "serviceWorkerRegistration";
 import { RecoilRoot } from "recoil";
 
 ReactDOM.render(

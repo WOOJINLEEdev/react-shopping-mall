@@ -8,8 +8,6 @@ import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
-import Loading from "components/common/Loading";
-import ErrorMessage from "components/common/ErrorMessage";
 
 import { ILineItem } from "types";
 
@@ -18,11 +16,7 @@ const Order = () => {
   const checkoutNumber = Number(matchParams.checkoutId);
 
   const { isPc, isTablet, isMobile } = useDevice();
-  const { checkoutData, loadingCheckout, checkoutError } =
-    useCheckout(checkoutNumber);
-
-  if (loadingCheckout) return <Loading />;
-  if (checkoutError) return <ErrorMessage />;
+  const { checkoutData } = useCheckout(checkoutNumber);
 
   const items: ILineItem[] = checkoutData.line_items;
   const totalPrice: number = items

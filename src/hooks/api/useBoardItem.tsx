@@ -1,13 +1,18 @@
 import useSWR from "swr";
 import axios from "axios";
 
-const useBoardItem = (boardItemId: number) => {
-  const boardUrl = `https://jsonplaceholder.typicode.com/posts/${boardItemId}`;
+const useBoardItem = (boardItemId?: number) => {
+  const boardUrl = boardItemId
+    ? `https://jsonplaceholder.typicode.com/posts/${boardItemId}`
+    : null;
   const fetcher = (url: string) => {
     return axios.get(url).then((res) => res.data);
   };
 
-  const { data, error, mutate } = useSWR(boardUrl, fetcher);
+  const { data, error, mutate } = useSWR(boardUrl, fetcher, {
+    suspense: true,
+    revalidateIfStale: false,
+  });
 
   return {
     boardItem: data,

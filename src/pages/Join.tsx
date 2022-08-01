@@ -21,7 +21,8 @@ import {
   userMonth,
   userDate,
 } from "utils/login-validation";
-import { createJoinApi, checkUserIdExistenceApi } from "api";
+import { createJoinApi } from "api";
+import useCheckUserId from "hooks/api/useCheckUserId";
 
 const Join = () => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);
@@ -84,6 +85,10 @@ const Join = () => {
     }
   };
 
+  const { refetch } = useCheckUserId({
+    userId: formikRef?.current?.values.id,
+  });
+
   const handleIdCheckBtnClick = async () => {
     let userId = formikRef?.current?.values.id;
 
@@ -95,16 +100,7 @@ const Join = () => {
       return;
     }
 
-    try {
-      const res = await checkUserIdExistenceApi({ userId });
-
-      if (res.data) {
-        return alert("이미 존재하는 ID 입니다. 다른 ID를 입력해주세요.");
-      }
-      alert("사용 가능한 ID 입니다.");
-    } catch (err) {
-      console.log(err);
-    }
+    refetch();
   };
 
   return (

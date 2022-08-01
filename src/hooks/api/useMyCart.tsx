@@ -26,6 +26,8 @@ const useMyCart = () => {
     }
     try {
       const res = await instance.get(url);
+      console.log("res data", res.data);
+
       return {
         ...res.data,
         items: res.data.items.map((cartItem: ICartItem) => ({
@@ -48,10 +50,11 @@ const useMyCart = () => {
   };
   const { data, error, mutate } = useSWR(cartUrl, fetcher, {
     shouldRetryOnError: false,
+    suspense: true,
   });
 
   return {
-    cart: data,
+    cart: data ?? { items: [] },
     loadingCart: !error && !data,
     cartError: error,
     mutateCart: mutate,

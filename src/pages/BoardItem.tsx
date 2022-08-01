@@ -4,9 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import useBoardItem from "hooks/api/useBoardItem";
 import { formatDate } from "utils/date";
 
-import Loading from "components/common/Loading";
-import ErrorMessage from "components/common/ErrorMessage";
-
 const BoardItem = () => {
   const navigate = useNavigate();
   const matchParams = useParams();
@@ -15,10 +12,7 @@ const BoardItem = () => {
   const curDate = formatDate(date);
   const boardItemId = Number(matchParams.id);
 
-  const { boardItem, boardItemError } = useBoardItem(boardItemId);
-
-  if (boardItemError) return <ErrorMessage />;
-  if (!boardItem) return <Loading />;
+  const { boardItem } = useBoardItem(boardItemId);
 
   const handleMoveBoardBtn = () => {
     navigate(-1);

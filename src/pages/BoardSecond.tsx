@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense, ChangeEvent } from "react";
+import { useState, useEffect, lazy, ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "react-modal";
@@ -14,8 +14,7 @@ import BoardTableRow from "components/board/BoardTableRow";
 import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
 import SearchInputBtn from "components/search/SearchInputBtn";
-import Loading from "components/common/Loading";
-import ErrorMessage from "components/common/ErrorMessage";
+import CommonAsyncBoundary from "components/common/CommonAsyncBoundary";
 
 import { curBoardState } from "state";
 
@@ -34,14 +33,12 @@ interface IPosts {
 
 const BoardSecond = () => {
   const navigate = useNavigate();
-  const { isPc, isTablet, isMobile } = useDevice();
-  const detectMobile = detectMobileDevice();
 
   const [pageState, setPageState] = useRecoilState(curBoardState("second"));
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [posts, setPosts] = useState<IPosts[]>([]);
-  const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
+  const [selectedPreviewId, setSelectedPreviewId] = useState<number>();
   const [limit, setLimit] = useState<number>(10);
   const [mobileLimit, setMobileLimit] = useState<number>(20);
   const [page, setPage] = useState<number>(pageState.pageNumber);
@@ -51,6 +48,10 @@ const BoardSecond = () => {
   const [searchBtnClassName, setsearchBtnClassName] =
     useState<string>("board_search_btn");
 
+  const detectMobile = detectMobileDevice();
+  const { isPc, isTablet, isMobile } = useDevice();
+  const { boardList } = useBoardList();
+
   const offset =
     detectMobile === true ? (page - 1) * mobileLimit : (page - 1) * limit;
   const offsetLimit =
@@ -59,8 +60,6 @@ const BoardSecond = () => {
   const token = getToken();
   const date = new Date();
   let searchInput = "";
-
-  const { boardList, boardListError } = useBoardList();
 
   useEffect(() => {
     detectMobileDevice();
@@ -78,9 +77,6 @@ const BoardSecond = () => {
       setPosts(reverseData);
     }
   }, [boardList]);
-
-  if (!boardList) return <Loading />;
-  if (boardListError) return <ErrorMessage />;
 
   function detectMobileDevice() {
     const minWidth = 500;
@@ -150,13 +146,14 @@ const BoardSecond = () => {
           글쓰기
         </button>
       </div>
-      <Suspense fallback={<Loading />}>
+
+      <CommonAsyncBoundary>
         <BoardItemModal
           boardItemId={selectedPreviewId}
           isOpen={isOpen}
           onRequestClose={onRequestClose}
         />
-      </Suspense>
+      </CommonAsyncBoundary>
 
       <BoardTable headersName={getHeadersName()} boardLocal="second">
         {posts.slice(offset, offsetLimit).map((item, i) => (

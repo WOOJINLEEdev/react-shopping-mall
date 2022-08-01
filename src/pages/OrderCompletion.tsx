@@ -5,7 +5,6 @@ import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
 import { formatDate } from "utils/date";
 import { getOrderNumber } from "utils/order";
-import { getOrdersApi } from "api";
 
 import { ReactComponent as ShoppingBag } from "assets/images/shopping-bag.svg";
 import downArrow from "assets/images/down-arrow.png";
@@ -15,6 +14,7 @@ import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import Loading from "components/common/Loading";
+import useMyOrder from "hooks/api/useMyOrder";
 
 interface IOrderData {
   created_at: string;
@@ -74,17 +74,10 @@ const OrderCompletion = () => {
   const checkoutNumber = Number(matchParams.checkoutId);
   const date = new Date();
 
-  useEffect(() => {
-    async function getCompletedOrder() {
-      try {
-        const res = await getOrdersApi({ checkoutId: checkoutNumber });
-        setOrderData(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  const { myOrderData } = useMyOrder({ checkoutId: checkoutNumber });
 
-    getCompletedOrder();
+  useEffect(() => {
+    setOrderData(myOrderData);
   }, [checkoutNumber]);
 
   if (orderData.length === 0) {
