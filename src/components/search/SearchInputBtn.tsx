@@ -16,9 +16,9 @@ const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
       searchInputId,
       handleRemoveBtnClick,
     },
-    ref
+    ref,
   ) => {
-    const [search, setSearch] = useState<string>("");
+    const [search, setSearch] = useState("");
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
       setSearch(e.currentTarget.value);
@@ -44,7 +44,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
           name="search_input"
           id={searchInputId}
           className={searchInputClassName}
-          placeholder={searchPlaceHolder ? searchPlaceHolder : "Search..."}
+          placeholder={searchPlaceHolder || "Search..."}
           value={search}
           onChange={handleSearchChange}
           ref={ref}
@@ -69,7 +69,7 @@ const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
         />
       </form>
     );
-  }
+  },
 );
 
 export default SearchInputBtn;

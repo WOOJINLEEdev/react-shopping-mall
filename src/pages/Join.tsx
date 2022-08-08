@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import {
   Formik,
   Form,
@@ -77,11 +77,11 @@ const Join = () => {
     }
 
     if (month) {
-      return <div className="input_check">{month}</div>;
+      return <div className="input_check">{month as string}</div>;
     }
 
     if (date) {
-      return <div className="input_check">{date}</div>;
+      return <div className="input_check">{date as string}</div>;
     }
   };
 
@@ -235,7 +235,7 @@ const Join = () => {
                 className="input_check"
               />
 
-              <button type="submit" className="join_btn" id="joinBtn">
+              <button type="submit" className="join_btn">
                 가입하기
               </button>
             </div>

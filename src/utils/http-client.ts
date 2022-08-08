@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import axios from "axios";
 import { getToken, removeToken } from "utils/token";
 
@@ -10,13 +11,13 @@ instance.defaults.withCredentials = true;
 
 instance.interceptors.request.use(
   function (config) {
-    config.headers["Authorization"] = `Bearer ${getToken()}`;
+    config.headers.Authorization = `Bearer ${getToken()}`;
 
     return config;
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 instance.interceptors.response.use(
@@ -28,5 +29,5 @@ instance.interceptors.response.use(
       removeToken();
     }
     return Promise.reject(error);
-  }
+  },
 );

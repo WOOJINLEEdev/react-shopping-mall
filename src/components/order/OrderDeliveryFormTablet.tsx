@@ -26,7 +26,7 @@ const OrderDeliveryFormTablet = ({
   requirement,
 }: IOrderDeliveryFormTabletProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
-    deliveryInfoState(checkoutId)
+    deliveryInfoState(checkoutId),
   );
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const OrderDeliveryFormTablet = ({
                     <option key={item.no} value={item.label}>
                       {item.value}
                     </option>
-                  )
+                  ),
                 )}
               </PreexistenceSelect>
               <SelectRequirementWrite

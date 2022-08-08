@@ -17,7 +17,7 @@ interface IMyToken {
 }
 
 const BoardEditor = () => {
-  const [inputTitle, setInputTitle] = useState<string>("");
+  const [inputTitle, setInputTitle] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
 
@@ -40,7 +40,7 @@ const BoardEditor = () => {
     if (!editorRef.current) return;
 
     const inputBody = DOMPurify.sanitize(
-      editorRef?.current?.getInstance().getHTML()
+      editorRef?.current?.getInstance().getHTML(),
     );
 
     try {
@@ -61,7 +61,7 @@ const BoardEditor = () => {
 
   const handleEditorSaveBtnAlertClick = () => {
     alert(
-      "현재 서비스 준비 중입니다. Board Second에서는 저장하기 버튼 클릭 시 console 창에서 확인 가능합니다. "
+      "현재 서비스 준비 중입니다. Board Second에서는 저장하기 버튼 클릭 시 console 창에서 확인 가능합니다. ",
     );
   };
 

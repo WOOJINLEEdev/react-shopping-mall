@@ -72,11 +72,11 @@ const OrderPaymentItem = React.memo(
         {item.payment}
       </li>
     );
-  }
+  },
 );
 
 const OrderPaymentList = React.memo(() => {
-  const [paymentName, setPaymentName] = useRecoilState<string>(paymentState);
+  const [paymentName, setPaymentName] = useRecoilState(paymentState);
   const [selectedPaymentIndex, setSelectedPaymentIndex] = useState<number>();
 
   const basePaymentClass = "payment";
@@ -89,7 +89,7 @@ const OrderPaymentList = React.memo(() => {
 
       return setSelectedPaymentIndex(clickedPaymentMethodIndex);
     },
-    []
+    [],
   );
 
   return (

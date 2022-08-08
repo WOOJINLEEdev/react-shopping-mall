@@ -17,33 +17,32 @@ import { IOrderDeliveryProps, IDeliveryRequirementOption } from "types";
 const OrderDelivery = ({ checkoutData }: IOrderDeliveryProps) => {
   const { isPc, isTablet, isMobile } = useDevice();
 
-  const [deliveryClassName, setDeliveryClassName] = useState<string>(
-    "delivery_write selected"
+  const [deliveryClassName, setDeliveryClassName] = useState(
+    "delivery_write selected",
   );
   const [deliveryClassName1, setDeliveryClassName1] =
-    useState<string>("delivery_write");
-  const [deliveryForm, setDeliveryForm] = useState<string>("delivery_box_wrap");
-  const [deliveryForm1, setDeliveryForm1] = useState<string>(
-    "delivery_box_wrap_second hide"
+    useState("delivery_write");
+  const [deliveryForm, setDeliveryForm] = useState("delivery_box_wrap");
+  const [deliveryForm1, setDeliveryForm1] = useState(
+    "delivery_box_wrap_second hide",
   );
 
-  const [arrowImg, setArrowImg] = useState<string>(upArrow);
-  const [infoHeadAddress, setInfoHeadAddress] = useState<string>("hide");
-  const [deliveryWrapClass, setDeliveryWrapClass] =
-    useState<string>("delivery_wrap");
-  const [deliveryWrite, setDeliveryWrite] = useState<string>("");
+  const [arrowImg, setArrowImg] = useState(upArrow);
+  const [infoHeadAddress, setInfoHeadAddress] = useState("hide");
+  const [deliveryWrapClass, setDeliveryWrapClass] = useState("delivery_wrap");
+  const [deliveryWrite, setDeliveryWrite] = useState("");
   const [deliveryFirstRequirementWrite, setDeliveryFirstRequirementWrite] =
-    useState<string>("hide");
+    useState("hide");
   const [deliverySecondRequirementWrite, setDeliverySecondRequirementWrite] =
-    useState<string>("hide");
+    useState("hide");
 
   const [deliveryFirstRequirementOption, setDeliveryFirstRequirementOption] =
     useState<IDeliveryRequirementOption[]>(OPTION_DATA);
   const [deliverySecondRequirementOption, setDeliverySecondRequirementOption] =
     useState<IDeliveryRequirementOption[]>(OPTION_DATA);
 
-  const [requirement, setRequirement] = useState<string>("");
-  const [requirement1, setRequirement1] = useState<string>("");
+  const [requirement, setRequirement] = useState("");
+  const [requirement1, setRequirement1] = useState("");
 
   useEffect(() => {
     if (!checkoutData.user.shipping_address) {

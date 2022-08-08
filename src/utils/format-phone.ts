@@ -19,14 +19,14 @@ export function parsePhone(phoneNumber: string) {
     return newPhone(
       phoneNumber.substring(0, 2),
       phoneNumber.substring(2, 6),
-      phoneNumber.substring(6)
+      phoneNumber.substring(6),
     );
   }
 
   return newPhone(
     phoneNumber.substring(0, 3),
     phoneNumber.substring(3, 7),
-    phoneNumber.substring(7)
+    phoneNumber.substring(7),
   );
 }
 

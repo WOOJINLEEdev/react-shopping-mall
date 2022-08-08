@@ -14,18 +14,16 @@ import {
 
 const OrderCoupon = ({ checkoutData }: IOrderCouponProps) => {
   const [coupons, setCoupons] = useState<ICoupon[] | undefined>(
-    checkoutData.user.coupons
+    checkoutData.user.coupons,
   );
-  const [mileage, setMileage] = useState<number>(checkoutData.user.mileage);
-  const [availableMileage, setAvailableMileage] = useState<number>(
-    checkoutData.user.mileage
+  const [mileage, setMileage] = useState(checkoutData.user.mileage);
+  const [availableMileage, setAvailableMileage] = useState(
+    checkoutData.user.mileage,
   );
-  const [selectOption, setSelectOption] =
-    useRecoilState<number>(selectOptionState);
+  const [selectOption, setSelectOption] = useRecoilState(selectOptionState);
   const [selectCouponId, setSelectCouponId] =
-    useRecoilState<number>(selectCouponIdState);
-  const [usedMileage, setUsedMileage] =
-    useRecoilState<number>(usedMileageState);
+    useRecoilState(selectCouponIdState);
+  const [usedMileage, setUsedMileage] = useRecoilState(usedMileageState);
 
   const { isTablet, isMobile } = useDevice();
 

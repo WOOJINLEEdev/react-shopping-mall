@@ -19,12 +19,12 @@ const Menu = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [searchClassName, setSearchClassName] = useState<string>("menu_search");
+  const [searchClassName, setSearchClassName] = useState("menu_search");
   const [searchInputClassName, setsearchInputClassName] =
-    useState<string>("menu_search_input");
+    useState("menu_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
-    useState<string>("menu_search_btn");
-  const [searchInputId, setSearchInputId] = useState<string>("menuSearchInput");
+    useState("menu_search_btn");
+  const [searchInputId, setSearchInputId] = useState("menuSearchInput");
   const ref = useRef<HTMLInputElement>(null);
 
   const [show, setShow] = useRecoilState(menuState);
@@ -34,21 +34,21 @@ const Menu = () => {
   }, [location.pathname, setShow]);
 
   const handleSearchBtnClick = (searchInput: string) => {
-    searchInput = searchInput?.trim() ?? "";
+    const trimmedSearchInput = searchInput?.trim() ?? "";
 
-    if (searchInput === "") {
+    if (trimmedSearchInput === "") {
       alert("검색어를 입력해주세요.");
       return false;
     }
 
-    navigate(`/searchResult/${searchInput}`);
+    navigate(`/searchResult/${trimmedSearchInput}`);
     ref?.current?.blur();
 
     setShow(false);
   };
 
   const handleMenuItemClick = (
-    e: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>
+    e: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>,
   ) => {
     const itemName = (e.currentTarget as HTMLLIElement).dataset.name;
 

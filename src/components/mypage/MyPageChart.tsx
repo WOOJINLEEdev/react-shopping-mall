@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ApexOptions } from "apexcharts";
 
+import useVisitCount from "hooks/api/useVisitCount";
 import { formatDate } from "utils/date";
-import { getMyVisitCountApi } from "api";
 
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 
 import { IMyPageChartProps, IDailyVisit } from "types";
-import useVisitCount from "hooks/api/useVisitCount";
 
 const MyPageChart = ({ userName }: IMyPageChartProps) => {
   const [series, setSeries] = useState<ApexOptions["series"]>();
@@ -20,7 +19,7 @@ const MyPageChart = ({ userName }: IMyPageChartProps) => {
   const month = formatDate(date, "MM");
 
   const visitStartDate = formatDate(
-    new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6)
+    new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6),
   );
   const visitEndDate = formatDate(date);
 

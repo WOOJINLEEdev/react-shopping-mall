@@ -14,6 +14,6 @@ export function createLoginApi({ userId, userPassword }: ICreateLoginPayload) {
     },
     {
       withCredentials: true,
-    }
+    },
   );
 }

@@ -13,16 +13,16 @@ import Chart from "components/common/Chart";
 import { IDailyVisit } from "types";
 
 const AboutMe = () => {
-  const [total, setTotal] = useState<number>(0);
-  const [today, setToday] = useState<number>(0);
-  const [yesterday, setYesterday] = useState<number>(0);
+  const [total, setTotal] = useState(0);
+  const [today, setToday] = useState(0);
+  const [yesterday, setYesterday] = useState(0);
   const [series, setSeries] = useState<ApexOptions["series"]>();
   const [options, setOptions] = useState<ApexOptions>();
 
   const now = new Date();
   const formattedToday = formatDate(now);
   const formattedYesterday = formatDate(
-    new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1)
+    new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1),
   );
 
   const year = formatDate(now, "YYYY");
@@ -39,19 +39,23 @@ const AboutMe = () => {
 
   useEffect(() => {
     const visitDate: string[] = data.map(
-      (item: IDailyVisit) => item.visit_date
+      (item: IDailyVisit) => item.visit_date,
     );
     const visitCount: number[] = data.map(
-      (item: IDailyVisit) => item.visit_count
+      (item: IDailyVisit) => item.visit_count,
     );
     const sum = visitCount.reduce((a: number, b: number) => a + b);
 
     const todayVisit = data.find(
-      (t: IDailyVisit) => t.visit_date === formattedToday
-    ) || { visit_count: 0 };
+      (t: IDailyVisit) => t.visit_date === formattedToday,
+    ) || {
+      visit_count: 0,
+    };
     const yesterdayVisit = data.find(
-      (t: IDailyVisit) => t.visit_date === formattedYesterday
-    ) || { visit_count: 0 };
+      (t: IDailyVisit) => t.visit_date === formattedYesterday,
+    ) || {
+      visit_count: 0,
+    };
 
     setToday(todayVisit.visit_count);
     setYesterday(yesterdayVisit.visit_count);
@@ -215,12 +219,7 @@ const AboutMe = () => {
       </VisitCountWrap>
 
       <ChartWrap>
-        <Chart
-          type={"bar"}
-          series={series}
-          options={options}
-          chartHeight={350}
-        />
+        <Chart type="bar" series={series} options={options} chartHeight={350} />
       </ChartWrap>
     </MeWrap>
   );

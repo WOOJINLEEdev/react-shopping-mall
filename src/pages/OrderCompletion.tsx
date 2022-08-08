@@ -65,11 +65,11 @@ const OrderCompletion = () => {
   const [orderData, setOrderData] = useState<IOrderData[]>([]);
   const [remainderClass, setRemainderClass] =
     useState<string>("info_remainder");
-  const [arrowImg, setArrowImg] = useState<string>(upArrow);
-  const [arrowImg1, setArrowImg1] = useState<string>(downArrow);
-  const [closeText, setCloseText] = useState<string>("");
-  const [itemInfoClass, setItemInfoClass] = useState<string>("info_group");
-  const [itemInfoHeadClass, setItemInfoHeadClass] = useState<string>("hide");
+  const [arrowImg, setArrowImg] = useState(upArrow);
+  const [arrowImg1, setArrowImg1] = useState(downArrow);
+  const [closeText, setCloseText] = useState("");
+  const [itemInfoClass, setItemInfoClass] = useState("info_group");
+  const [itemInfoHeadClass, setItemInfoHeadClass] = useState("hide");
 
   const checkoutNumber = Number(matchParams.checkoutId);
   const date = new Date();

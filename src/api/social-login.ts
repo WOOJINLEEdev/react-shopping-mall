@@ -26,7 +26,7 @@ export function createSocialLoginApi({
       },
       {
         withCredentials: true,
-      }
+      },
     );
   }
 
@@ -38,6 +38,6 @@ export function createSocialLoginApi({
     },
     {
       withCredentials: true,
-    }
+    },
   );
 }

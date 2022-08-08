@@ -2,7 +2,9 @@ import AsyncBoundary from "components/common/AsyncBoundary";
 import ErrorMessage from "components/common/ErrorMessage";
 import Loading from "components/common/Loading";
 
-const CommonAsyncBoundary: React.FC = ({ children }) => {
+import { ICommonAsyncBoundary } from "types";
+
+const CommonAsyncBoundary = ({ children }: ICommonAsyncBoundary) => {
   return (
     <AsyncBoundary
       rejectedFallback={() => <ErrorMessage />}

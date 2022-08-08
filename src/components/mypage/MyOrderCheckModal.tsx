@@ -24,13 +24,12 @@ const MyOrderCheckModal = ({
   myOrderList,
   orderItemId,
 }: IMyOrderCheckModalProps) => {
-  const [arrowImg, setArrowImg] = useState<string>(upArrow);
-  const [arrowImg1, setArrowImg1] = useState<string>(downArrow);
-  const [closeText, setCloseText] = useState<string>("");
-  const [itemInfoClass, setItemInfoClass] = useState<string>("info_group");
-  const [remainderClass, setRemainderClass] =
-    useState<string>("info_remainder");
-  const [itemInfoHeadClass, setItemInfoHeadClass] = useState<string>("hide");
+  const [arrowImg, setArrowImg] = useState(upArrow);
+  const [arrowImg1, setArrowImg1] = useState(downArrow);
+  const [closeText, setCloseText] = useState("");
+  const [itemInfoClass, setItemInfoClass] = useState("info_group");
+  const [remainderClass, setRemainderClass] = useState("info_remainder");
+  const [itemInfoHeadClass, setItemInfoHeadClass] = useState("hide");
 
   useEffect(() => {
     if (isOpen) {
@@ -43,7 +42,7 @@ const MyOrderCheckModal = ({
   }
 
   const selectedOrderData = myOrderList.filter(
-    (item: IMyOrderList) => item.checkout_id === orderItemId
+    (item: IMyOrderList) => item.checkout_id === orderItemId,
   );
 
   if (
@@ -51,7 +50,7 @@ const MyOrderCheckModal = ({
     orderItemId === undefined ||
     orderItemId <= 0
   ) {
-    return <div></div>;
+    return <div />;
   }
   const items = selectedOrderData[0].line_items;
 
@@ -102,7 +101,7 @@ const MyOrderCheckModal = ({
           주문번호 :{" "}
           {getOrderNumber(
             selectedOrderData[0].created_at,
-            selectedOrderData[0].id
+            selectedOrderData[0].id,
           )}
         </ModalTitle>
         <OrderCompletionItemInfo

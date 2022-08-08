@@ -10,6 +10,7 @@ const useBoardList = () => {
   const { data, error, mutate } = useSWR(boardUrl, fetcher, {
     suspense: true,
     revalidateIfStale: false,
+    revalidateOnMount: false,
   });
 
   return {

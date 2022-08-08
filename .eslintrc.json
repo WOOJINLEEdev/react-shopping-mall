@@ -1,0 +1,139 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react-hooks", "prettier", "import"],
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "react-app",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "semi": "error",
+    "camelcase": "off",
+    "endOfLine": "off",
+    "consistent-return": "off",
+    "linebreak-style": "off",
+    "lines-between-class-members": "off",
+    "global-require": "off",
+    "object-shorthand": "off",
+    "func-names": ["error", "as-needed"], 
+    "prefer-const": ["warn"],
+    "prefer-destructuring": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-filename-extension": [
+      "error",
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "react/jsx-indent": "warn",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "warn",
+    "react/require-default-props": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": "off",
+    "react/forbid-prop-types": "off",
+    "react/function-component-definition": ["warn", { "namedComponents": "arrow-function" }],
+    "react/prop-types": "off",
+    "react/jsx-boolean-value": "off",
+    "react/jsx-curly-brace-presence":"off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/jsx-no-bind": ["error", {
+      "allowArrowFunctions": true,
+      "allowFunctions": true
+    }],
+    "react/no-unstable-nested-components": [
+      "error",
+      { "allowAsProps": true }
+    ],
+    "import/extensions": "off",
+    "import/no-dynamic-require": "off",
+    "import/prefer-default-export": "off",
+    "import/order": "off",
+    "import/no-unresolved": "off",
+    "import/no-cycle": "off",
+    "import/no-anonymous-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [".storybook/**", "src/stories/**"]
+      }
+    ],
+    "no-param-reassign": ["warn", { "props": false }],
+    "no-use-before-define": "off",
+    "no-shadow": "off",
+    "no-unused-expressions": ["warn"],
+    "no-underscore-dangle": "off",
+    "no-empty-pattern": "off",
+    "no-alert": "off",
+    "no-undef": "off",
+    "no-plusplus": "off",
+    "no-restricted-globals": "off",
+    "no-await-in-loop": "warn",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/object-curly-spacing" : "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "labelComponents": ["label"],
+        "labelAttributes": ["htmlFor"],
+        "controlComponents": ["input"]
+      }
+    ],  
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-quotes": ["error", "prefer-double"],
+    "jsx-a11y/no-onchange": "off",
+    "jsx-a11y/no-noninteractive-tabindex": [
+      "error",
+      {
+        "tags": ["li"],
+        "roles": ["button"],
+        "allowExpressionValues": true
+      }
+    ]
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx", ".js"]
+    },
+    "import/resolver": {
+      "typescript": {},
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

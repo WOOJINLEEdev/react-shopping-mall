@@ -8,7 +8,7 @@ import { IStarRatingProps } from "types";
 
 const StarRating = ({ myRating }: IStarRatingProps) => {
   const stars = [1, 2, 3, 4, 5];
-  const [starRatings, setStarRatings] = useState<boolean[]>([
+  const [starRatings, setStarRatings] = useState([
     false,
     false,
     false,
@@ -22,7 +22,7 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
 
   const handleStarClick = async (
     e: MouseEvent<SVGElement> | KeyboardEvent<SVGElement>,
-    selectedStar: number
+    selectedStar: number,
   ) => {
     e.preventDefault();
 

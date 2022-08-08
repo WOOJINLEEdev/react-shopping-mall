@@ -33,15 +33,15 @@ const SearchWrap = ({
   }, [location.pathname, show]);
 
   const handleSearchBtnClick = async (searchInput: string) => {
-    searchInput = searchInput?.trim() ?? "";
+    const trimmedSearchInput = searchInput?.trim() ?? "";
 
-    if (searchInput === "") {
+    if (trimmedSearchInput === "") {
       alert("검색어를 입력해주세요.");
       ref?.current?.focus();
       return false;
     }
 
-    navigate(`/searchResult/${searchInput}`);
+    navigate(`/searchResult/${trimmedSearchInput}`);
     setSearchWrapState(false);
     ref?.current?.focus();
   };

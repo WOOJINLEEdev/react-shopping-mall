@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, ReactNode } from "react";
 
 // CommonModal
 export interface ICommonModalProps {
@@ -57,4 +57,9 @@ export interface IMoreViewBtnProps {
 
 export interface IMoreBtnProps {
   margin?: string;
+}
+
+// CommonAsyncBoundary
+export interface ICommonAsyncBoundary {
+  children: ReactNode;
 }

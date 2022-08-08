@@ -10,10 +10,10 @@ import { IDimmedLayer } from "types";
 
 const SearchModal = () => {
   const [searchClassName, setSearchClassName] = useState<string>(
-    "header_search_style"
+    "header_search_style",
   );
   const [searchInputClassName, setSearchInputClassName] = useState<string>(
-    "header_search_input"
+    "header_search_input",
   );
   const [searchBtnClassName, setSearchBtnClassName] =
     useState<string>("header_search_btn");

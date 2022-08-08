@@ -36,17 +36,17 @@ const BoardSecond = () => {
 
   const [pageState, setPageState] = useRecoilState(curBoardState("second"));
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [posts, setPosts] = useState<IPosts[]>([]);
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>();
-  const [limit, setLimit] = useState<number>(10);
-  const [mobileLimit, setMobileLimit] = useState<number>(20);
-  const [page, setPage] = useState<number>(pageState.pageNumber);
-  const [searchClassName, setSearchClassName] = useState<string>("search_wrap");
+  const [limit, setLimit] = useState(10);
+  const [mobileLimit, setMobileLimit] = useState(20);
+  const [page, setPage] = useState(pageState.pageNumber);
+  const [searchClassName, setSearchClassName] = useState("search_wrap");
   const [searchInputClassName, setsearchInputClassName] =
-    useState<string>("board_search_input");
+    useState("board_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
-    useState<string>("board_search_btn");
+    useState("board_search_btn");
 
   const detectMobile = detectMobileDevice();
   const { isPc, isTablet, isMobile } = useDevice();
@@ -109,7 +109,7 @@ const BoardSecond = () => {
 
   const handleSearchBtnClick = () => {
     const searchFilter = posts.filter((item) =>
-      item.title.includes(searchInput)
+      item.title.includes(searchInput),
     );
     console.log(searchFilter);
   };

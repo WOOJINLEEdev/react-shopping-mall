@@ -26,7 +26,7 @@ const OrderDeliveryFormPc = ({
   requirement,
 }: IOrderDeliveryFormPcProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
-    deliveryInfoState(checkoutId)
+    deliveryInfoState(checkoutId),
   );
 
   useEffect(() => {
@@ -256,7 +256,7 @@ const OrderDeliveryFormPc = ({
         </div>
 
         <div className="delivery_box">
-          <div className="label_box"></div>
+          <div className="label_box" />
           <DeliveryRequirementWrap>
             <PreexistenceSelect
               color={"#333"}
@@ -271,7 +271,7 @@ const OrderDeliveryFormPc = ({
                   >
                     {item.value}
                   </option>
-                )
+                ),
               )}
             </PreexistenceSelect>
             <SelectRequirementWrite
@@ -285,7 +285,7 @@ const OrderDeliveryFormPc = ({
         </div>
 
         <div className="delivery_box notice">
-          <div className="label_box"></div>※ 배송지를 수정하길 원하시면 신규입력
+          <div className="label_box" />※ 배송지를 수정하길 원하시면 신규입력
           탭을 이용해주세요.
         </div>
       </div>

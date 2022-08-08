@@ -43,11 +43,11 @@ const ItemDetail = () => {
   const navigate = useNavigate();
   const matchParams = useParams();
 
-  const [quantity, setQuantity] = useState<number>(1);
+  const [quantity, setQuantity] = useState(1);
   const [itemOption, setItemOption] = useState<number | string>("");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [onOverlayClick, setOnOverlayClick] = useState<boolean>(false);
-  const [onEsc, setOnEsc] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [onOverlayClick, setOnOverlayClick] = useState(false);
+  const [onEsc, setOnEsc] = useState(false);
 
   const modalText = "장바구니에 상품이 추가되었습니다.";
   const yesBtnText = "장바구니 이동";
@@ -213,7 +213,7 @@ const ItemDetail = () => {
               </td>
             </tr>
             <tr>
-              <td></td>
+              <td />
               <td className="tbody_td_qty">
                 <QuantityCounter
                   margin

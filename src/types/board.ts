@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
+import { ChangeEvent, Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface IBoardFilterProps {
   handleSelectOption: (event: ChangeEvent<HTMLSelectElement>) => void;
@@ -51,20 +51,20 @@ export interface IButtonProps {
 // BoardTable
 export interface IBoardTableProps {
   headersName: string[];
-  children?: React.ReactNode;
+  children?: ReactNode;
   loading?: any;
   boardLocal?: "first" | "second";
 }
 
 // BoardTableColumn
 export interface IBoardTableColumnProp {
-  children?: React.ReactNode;
+  children?: ReactNode;
   title?: string;
 }
 
 // BoardTableRow
 export interface IBoardTableRowProps {
-  children?: React.ReactNode;
+  children?: ReactNode;
   background?: string;
 }
 

@@ -99,8 +99,6 @@ const LogIn = () => {
   };
 
   const onSuccess = async (response: any) => {
-    console.log(response);
-
     try {
       const res = await createSocialLoginApi({
         socialType: "google",
@@ -110,7 +108,6 @@ const LogIn = () => {
           email: response.profileObj.email,
         },
       });
-      console.log(res);
       loginCheck(res);
     } catch (err) {
       console.log(err);

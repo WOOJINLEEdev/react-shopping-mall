@@ -52,22 +52,22 @@ const BoardFirstModal = lazy(() => import("components/board/BoardFirstModal"));
 
 const BoardFirst = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [pageState, setPageState] = useRecoilState(curBoardState("first"));
 
   const [dataList, setDataList] = useState<IPostList[]>([]);
-  const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(pageState.pageNumber);
-  const [selectedPreviewId, setSelectedPreviewId] = useState<number>(1);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(pageState.pageNumber);
+  const [selectedPreviewId, setSelectedPreviewId] = useState(1);
   const offset = (page - 1) * limit;
 
-  const [searchClassName, setSearchClassName] = useState<string>("search_wrap");
+  const [searchClassName, setSearchClassName] = useState("search_wrap");
   const [searchInputClassName, setsearchInputClassName] =
-    useState<string>("board_search_input");
+    useState("board_search_input");
   const [searchBtnClassName, setsearchBtnClassName] =
-    useState<string>("board_search_btn");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+    useState("board_search_btn");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const token = getToken();
   const { isPc, isTablet, isMobile } = useDevice();
@@ -123,12 +123,12 @@ const BoardFirst = () => {
       setSelectedOption("");
       setDataList(sortedPostList);
     },
-    [selectedOption, dataList]
+    [selectedOption, dataList],
   );
 
   const handleSearchBtnClick = () => {
     const searchFilter = dataList.filter((item: IPostList) =>
-      item.title.includes(searchInput)
+      item.title.includes(searchInput),
     );
     setDataList(searchFilter);
   };
@@ -232,7 +232,7 @@ const BoardFirst = () => {
         {dataList
           .slice(offset, offset + limit)
           .map((item: IPostList, i: number) => (
-            <BoardTableRow key={i}>
+            <BoardTableRow key={`board_table_row${i}`}>
               {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
               {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}
               <BoardTableColumn>{item.type}</BoardTableColumn>

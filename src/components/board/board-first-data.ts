@@ -112,7 +112,7 @@ export const postList = [
 ];
 
 const sortPostList = (posts: IPosts[]) => {
-  return [...posts].sort(function (a, b) {
+  return [...posts].sort((a, b) => {
     if (a.no < b.no) {
       return 1;
     }

@@ -16,14 +16,14 @@ Modal.setAppElement("#root");
 
 const CommonModal = lazy(() => import("components/common/CommonModal"));
 const MyPageCouponModal = lazy(
-  () => import("components/mypage/MyPageCouponModal")
+  () => import("components/mypage/MyPageCouponModal"),
 );
 
 const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
   const navigate = useNavigate();
 
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState<boolean>(false);
-  const [isCouponModalOpen, setIsCouponModalOpen] = useState<boolean>(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
 
   const modalText = "정말 로그아웃 하시겠습니까?";
   const yesBtnText = "예";
@@ -49,7 +49,7 @@ const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
       {
         items: [],
       },
-      false
+      false,
     );
 
     navigate("/");

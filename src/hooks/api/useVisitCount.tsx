@@ -27,7 +27,7 @@ const useVisitCount = ({
       revalidateOnMount: false,
       revalidateOnFocus: false,
       suspense: true,
-    }
+    },
   );
 
   return {

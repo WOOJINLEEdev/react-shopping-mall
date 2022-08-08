@@ -3,14 +3,15 @@ import "regenerator-runtime/runtime";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "App";
 import reportWebVitals from "reportWebVitals";
 import * as serviceWorkerRegistration from "serviceWorkerRegistration";
 import { RecoilRoot } from "recoil";
 
-ReactDOM.render(
+// ReactDOM.render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <RecoilRoot>
@@ -18,7 +19,7 @@ ReactDOM.render(
       </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById("root")
+  // document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

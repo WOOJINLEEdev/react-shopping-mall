@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -69,7 +70,7 @@ const CartList = ({
                           media={cartItem.media}
                           srcSet={getSizedImageUrl(
                             item.product_image_src,
-                            cartItem.size
+                            cartItem.size,
                           )}
                         />
                       );
@@ -78,7 +79,7 @@ const CartList = ({
                       className="cart_item_img"
                       src={getSizedImageUrl(
                         item.product_image_src,
-                        "_200x200.jpg"
+                        "_200x200.jpg",
                       )}
                       alt={`${item.product_name}_상품 이미지`}
                     />
@@ -123,7 +124,7 @@ const CartList = ({
                         {formatPrice(
                           (
                             Number(item.variant_price) * item.quantity
-                          ).toString()
+                          ).toString(),
                         )}
                         원
                       </span>

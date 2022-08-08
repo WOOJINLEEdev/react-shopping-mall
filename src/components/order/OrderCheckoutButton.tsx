@@ -20,7 +20,7 @@ const OrderCheckoutButton = ({
   const { isPc, isTablet, isMobile } = useDevice();
 
   const checkoutDeliveryData = useRecoilValue(
-    deliveryInfoState(checkoutData.id)
+    deliveryInfoState(checkoutData.id),
   );
   const checkoutPaymentData = useRecoilValue(paymentState);
   const checkoutTotalDetailData = useRecoilValue(totalDetailSelector);

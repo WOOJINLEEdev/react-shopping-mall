@@ -9,10 +9,10 @@ import { IOrderCompletionDeliveryInfoProps, IShippingAddress } from "types";
 const OrderCompletionDeliveryInfo = ({
   orderData,
 }: IOrderCompletionDeliveryInfoProps) => {
-  const [arrowImg, setArrowImg] = useState<string>(downArrow);
-  const [deliveryInfoClass, setDeliveryInfoClass] = useState<string>("hide");
-  const [infoHeadAddress, setInfoHeadAddress] = useState<string>(
-    "order_check_head_address"
+  const [arrowImg, setArrowImg] = useState(downArrow);
+  const [deliveryInfoClass, setDeliveryInfoClass] = useState("hide");
+  const [infoHeadAddress, setInfoHeadAddress] = useState(
+    "order_check_head_address",
   );
 
   const handleOrderDeliveryInfoBtnClick = () => {
@@ -30,19 +30,19 @@ const OrderCompletionDeliveryInfo = ({
   };
 
   function getFormattedShippingAddress(shippingAddress: IShippingAddress) {
-    return shippingAddress.address1 + " " + shippingAddress.address2;
+    return `${shippingAddress.address1} ${shippingAddress.address2}`;
   }
 
   function getFormattedRecipient(shippingAddress: IShippingAddress) {
-    return (
-      shippingAddress.recipient_name +
-      "/" +
-      shippingAddress.phone1?.substring(0, 3) +
-      "-" +
-      shippingAddress.phone1?.substring(3, 7) +
-      "-" +
-      shippingAddress.phone1?.substring(7, 11)
-    );
+    return `${
+      shippingAddress.recipient_name
+    }/${shippingAddress.phone1?.substring(
+      0,
+      3,
+    )}-${shippingAddress.phone1?.substring(
+      3,
+      7,
+    )}-${shippingAddress.phone1?.substring(7, 11)}`;
   }
 
   return (

@@ -26,9 +26,9 @@ const OrderDeliveryForm = ({
   requirement1,
 }: IOrderDeliveryFormProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
-    deliveryInfoState(checkoutId)
+    deliveryInfoState(checkoutId),
   );
-  const [showDaumPostModal, setShowDaumPostModal] = useState<boolean>(false);
+  const [showDaumPostModal, setShowDaumPostModal] = useState(false);
 
   useEffect(() => {
     return setDeliveryState({
@@ -253,7 +253,7 @@ const OrderDeliveryForm = ({
       </div>
 
       <div className="delivery_box">
-        <div className="label_box"></div>
+        <div className="label_box" />
         <DeliveryRequirementWrap>
           <PreexistenceSelect
             color={"#333"}
@@ -264,7 +264,7 @@ const OrderDeliveryForm = ({
                 <option key={item.no} value={item.label}>
                   {item.value}
                 </option>
-              )
+              ),
             )}
           </PreexistenceSelect>
           <SelectRequirementWrite
@@ -277,7 +277,7 @@ const OrderDeliveryForm = ({
         </DeliveryRequirementWrap>
       </div>
       <div className="delivery_box notice">
-        <div className="label_box"></div>
+        <div className="label_box" />
         입력하신 내용은 기본 배송지로 등록됩니다.
       </div>
     </div>

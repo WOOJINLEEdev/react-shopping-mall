@@ -17,7 +17,7 @@ const AddDeliveryAddressModal = ({
   myDeliveryAddressId,
 }: IAddDeliveryAddressModalProps) => {
   const [myDeliveryState, setMyDeliveryState] = useRecoilState(
-    myDeliveryInfoState(myDeliveryAddressId)
+    myDeliveryInfoState(myDeliveryAddressId),
   );
 
   const [showDaumPostModal, setShowDaumPostModal] = useState(false);

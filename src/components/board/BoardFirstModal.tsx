@@ -15,7 +15,7 @@ const BoardItemModal = ({
 }: IBoardFirstModalProps) => {
   const boardItemNumber = boardItemNo;
   const boardItem = postList.find(
-    (postItem: IPostItem) => postItem.no === boardItemNumber
+    (postItem: IPostItem) => postItem.no === boardItemNumber,
   );
 
   return (

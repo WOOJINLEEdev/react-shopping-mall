@@ -50,7 +50,7 @@ const ProductItem = ({ item }: IProductItemProps) => {
               />
             </picture>
           </div>
-          <div className="image_dim"></div>
+          <div className="image_dim" />
           <p className="item_name">{item.name}</p>
           <p className="item_price">
             {formatPrice(item.variants[0].price)} {""}원

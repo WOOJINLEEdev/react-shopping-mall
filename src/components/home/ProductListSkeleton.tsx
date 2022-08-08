@@ -10,9 +10,9 @@ const ProductListSkeleton = () => {
             key={`product_skeleton_item_${i}`}
             className="product_skeleton_item"
           >
-            <div className="product_skeleton_item_img"></div>
-            <p className="product_skeleton_item_text"></p>
-            <p className="product_skeleton_item_text"></p>
+            <div className="product_skeleton_item_img" />
+            <p className="product_skeleton_item_text" />
+            <p className="product_skeleton_item_text" />
           </li>
         ))}
       </ul>

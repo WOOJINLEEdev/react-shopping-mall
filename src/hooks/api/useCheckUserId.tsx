@@ -33,7 +33,7 @@ const useCheckUserId = ({ userId }: IUseCheckUserId) => {
     fetcher,
     {
       revalidateIfStale: false,
-    }
+    },
   );
 
   return {

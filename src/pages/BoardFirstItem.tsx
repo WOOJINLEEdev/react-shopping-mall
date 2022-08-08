@@ -19,7 +19,7 @@ const BoardFirstItem = () => {
 
   const boardItemNo = Number(matchParams.no);
   const boardItem: IPostList | undefined = postList.find(
-    (post) => post.no === boardItemNo
+    (post) => post.no === boardItemNo,
   );
 
   if (!boardItem) {

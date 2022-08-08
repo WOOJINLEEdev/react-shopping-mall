@@ -8,8 +8,6 @@ import {
   createCheckoutsApi,
 } from "api";
 
-import Loading from "components/common/Loading";
-import CartErrorMessage from "components/cart/CartErrorMessage";
 import CartHead from "components/cart/CartHead";
 import CartList from "components/cart/CartList";
 import CartDetail from "components/cart/CartDetail";
@@ -55,7 +53,7 @@ const Cart = () => {
             quantity: cartItem.id === itemId ? quantity : cartItem.quantity,
           })),
         },
-        false
+        false,
       );
     } catch (err) {
       console.log(err);
@@ -63,7 +61,7 @@ const Cart = () => {
   };
 
   const checkedItems: IItem[] = cart.items.filter(
-    (item: IItem) => item.checked
+    (item: IItem) => item.checked,
   );
   const numCheckedTotalItem = checkedItems.length;
   const totalPrice = checkedItems
@@ -94,7 +92,7 @@ const Cart = () => {
           return newItem;
         }),
       },
-      false
+      false,
     );
   };
 
@@ -211,7 +209,7 @@ const Cart = () => {
 
       <CartBuyBtn
         handleBuyBtnClick={handleBuyBtnClick}
-        disabled={numCheckedTotalItem >= 1 ? false : true}
+        disabled={!(numCheckedTotalItem >= 1)}
       />
 
       <SnackBar

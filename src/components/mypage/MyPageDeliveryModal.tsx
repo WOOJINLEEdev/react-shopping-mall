@@ -27,7 +27,7 @@ const MyPageDeliveryModal = ({
   myDeliveryAddress,
 }: IMyPageDeliveryModalProps) => {
   const myDeliveryData = useRecoilValue<IDeliveryInfoState>(
-    myDeliveryInfoState(myDeliveryAddress ? myDeliveryAddress.id : 0)
+    myDeliveryInfoState(myDeliveryAddress ? myDeliveryAddress.id : 0),
   );
   const [addDeliveryClassName, setAddDeliveryClassName] = useState("hide");
   const [addressDisplay, setAddressDisplay] = useState("block");
@@ -114,7 +114,7 @@ const MyPageDeliveryModal = ({
         !myDeliveryData.tel6
       ) {
         return alert(
-          "연락처2에 입력되어 있는 칸이 있습니다. 연락처2 나머지 칸을 입력해주세요."
+          "연락처2에 입력되어 있는 칸이 있습니다. 연락처2 나머지 칸을 입력해주세요.",
         );
       }
 

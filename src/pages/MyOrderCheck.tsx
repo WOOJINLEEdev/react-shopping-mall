@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, lazy, Suspense } from "react";
 import { SWRInfiniteKeyLoader } from "swr/infinite";
 import Modal from "react-modal";
 import styled from "styled-components";
@@ -14,19 +14,14 @@ import MoreViewBtn from "components/common/MoreViewBtn";
 Modal.setAppElement("#root");
 
 const MyOrderCheckModal = lazy(
-  () => import("components/mypage/MyOrderCheckModal")
+  () => import("components/mypage/MyOrderCheckModal"),
 );
 
 const MyOrderCheck = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [totalCount, setTotalCount] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false);
   const [selectItemId, setSelectItemId] = useState<number>();
 
   const { myOrderData } = useMyOrder({ count: true });
-
-  // useEffect(() => {
-  //   setTotalCount(myOrderData);
-  // }, []);
 
   const PAGE_LIMIT = 5;
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {

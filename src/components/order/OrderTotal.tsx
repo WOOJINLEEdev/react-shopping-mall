@@ -13,15 +13,15 @@ import { IOrderTotalProps, ILineItem } from "types";
 
 const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
   const [remainderClassName, setRemainderClassName] =
-    useState<string>("info_remainder");
-  const [arrowImg, setArrowImg] = useState<string>(downArrow);
-  const [closeText, setCloseText] = useState<string>("");
+    useState("info_remainder");
+  const [arrowImg, setArrowImg] = useState(downArrow);
+  const [closeText, setCloseText] = useState("");
 
   const { isPc, isTablet, isMobile } = useDevice();
 
   const items = useMemo(
     () => checkoutData.line_items,
-    [checkoutData.line_items]
+    [checkoutData.line_items],
   );
 
   const totalPrice = items
@@ -66,7 +66,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                   <img
                     className="info_list_img"
                     alt={`${item.product_name}_상품 이미지`}
-                    src={item.image_src.slice(0, -4) + "_150x200.jpg"}
+                    src={`${item.image_src.slice(0, -4)}_150x200.jpg`}
                   />
                 </Link>
 
@@ -117,7 +117,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                       개
                     </label>
                     <p className="list_price_text">
-                      <span className="list_price_dollar"></span>
+                      <span className="list_price_dollar" />
                       <span className="list_goods price">
                         {formatPrice(item.variant_price.toString())}
                       </span>
@@ -157,7 +157,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
 
                   <div className="list_info_text priceAndQuantity">
                     <p className="list_price_text">
-                      <span className="list_price_dollar"></span>
+                      <span className="list_price_dollar" />
                       <span className="list_goods price">
                         {formatPrice(firstItem.variant_price.toString())}원
                       </span>
@@ -177,7 +177,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                   <img
                     className="info_list_img"
                     alt={`${firstItem.product_name}_상품 이미지`}
-                    src={firstItem.image_src.slice(0, -4) + "_150x200.jpg"}
+                    src={`${firstItem.image_src.slice(0, -4)}_150x200.jpg`}
                   />
                 </Link>
               </li>
@@ -196,7 +196,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
 
                     <div className="list_info_text priceAndQuantity">
                       <p className="list_price_text">
-                        <span className="list_price_dollar"></span>
+                        <span className="list_price_dollar" />
                         <span className="list_goods price">
                           {formatPrice(item.variant_price.toString())}원
                         </span>
@@ -216,7 +216,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                     <img
                       className="info_list_img"
                       alt={`${item.product_name}_상품 이미지`}
-                      src={item.image_src.slice(0, -4) + "_150x200.jpg"}
+                      src={`${item.image_src.slice(0, -4)}_150x200.jpg`}
                     />
                   </Link>
                 </li>
@@ -275,7 +275,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
 
                   <div className="list_info_text priceAndQuantity">
                     <p className="list_price_text">
-                      <span className="list_price_dollar"></span>
+                      <span className="list_price_dollar" />
                       <span className="list_goods price">
                         {formatPrice(firstItem.variant_price.toString())}원
                       </span>
@@ -295,7 +295,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                   <img
                     className="info_list_img"
                     alt={`${firstItem.product_name}_상품 이미지`}
-                    src={firstItem.image_src.slice(0, -4) + "_150x200.jpg"}
+                    src={`${firstItem.image_src.slice(0, -4)}_150x200.jpg`}
                   />
                 </Link>
               </li>
@@ -314,7 +314,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
 
                     <div className="list_info_text priceAndQuantity">
                       <p className="list_price_text">
-                        <span className="list_price_dollar"></span>
+                        <span className="list_price_dollar" />
                         <span className="list_goods price">
                           {formatPrice(item.variant_price.toString())}원
                         </span>
@@ -334,7 +334,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                     <img
                       className="info_list_img"
                       alt={`${item.product_name}_상품 이미지`}
-                      src={item.image_src.slice(0, -4) + "_150x200.jpg"}
+                      src={`${item.image_src.slice(0, -4)}_150x200.jpg`}
                     />
                   </Link>
                 </li>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { IoIosArrowUp } from "react-icons/io";
 
 const TopBtn = () => {
-  const [scrollY, setScrollY] = useState<boolean>(false);
+  const [scrollY, setScrollY] = useState(false);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScrollY);

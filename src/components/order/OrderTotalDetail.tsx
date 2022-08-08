@@ -18,9 +18,8 @@ const OrderTotalDetail = ({
 }: IOrderTotalDetailProps) => {
   const couponState = useRecoilValue(couponStateSelector);
   const { usedMileage, selectOption } = couponState;
-  const [agreeChecked, setAgreeChecked] =
-    useRecoilState<boolean>(agreeCheckedState);
-  const setFinalPrice = useSetRecoilState<number>(finalPriceState);
+  const [agreeChecked, setAgreeChecked] = useRecoilState(agreeCheckedState);
+  const setFinalPrice = useSetRecoilState(finalPriceState);
 
   const countFinalPrice =
     totalPrice +

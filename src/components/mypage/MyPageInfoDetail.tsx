@@ -12,7 +12,7 @@ import { IMyPageInfoDetailProps } from "types";
 Modal.setAppElement("#root");
 
 const MyPageDeliveryModal = lazy(
-  () => import("components/mypage/MyPageDeliveryModal")
+  () => import("components/mypage/MyPageDeliveryModal"),
 );
 
 const MyPageInfoDetail = ({ myData }: IMyPageInfoDetailProps) => {
