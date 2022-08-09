@@ -1,6 +1,6 @@
 import { updateCheckoutsApi } from "api";
 
-import { IDeliveryInfoState } from "types";
+import { IDeliveryInfoState } from "state/order";
 
 interface ISubmitCheckoutProps {
   checkoutDeliveryData: IDeliveryInfoState;

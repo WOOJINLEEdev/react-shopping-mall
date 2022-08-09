@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { ISnackBarProps } from "types";
+export interface ISnackBarProps {
+  open: boolean;
+  autoHideDuration: number;
+  message?: string;
+  onClose: () => void;
+}
 
 const SnackBar = ({
   open,

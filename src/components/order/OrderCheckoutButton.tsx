@@ -5,13 +5,19 @@ import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
 import { formatPrice } from "utils/money";
 
+import { IOrderCheckoutData } from "components/order/types";
+
 import {
   deliveryInfoState,
   paymentState,
   totalDetailSelector,
   finalPriceState,
 } from "state";
-import { IOrderCheckoutButtonProps } from "types";
+
+interface IOrderCheckoutButtonProps {
+  checkoutData: IOrderCheckoutData;
+  checkoutNumber: number;
+}
 
 const OrderCheckoutButton = ({
   checkoutData,

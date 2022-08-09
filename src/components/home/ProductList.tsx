@@ -4,8 +4,7 @@ import usePagingQuery from "hooks/api/usePagingQuery";
 
 import ProductItem from "components/home/ProductItem";
 import MoreViewBtn from "components/common/MoreViewBtn";
-
-import { IProduct } from "types";
+import { IProductItem } from "components/home/types";
 
 const PAGE_LIMIT = 8;
 
@@ -20,7 +19,7 @@ const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
 const ProductList = () => {
   const { data, size, setSize } = usePagingQuery(getKey);
 
-  const products = data?.flat(Infinity) as IProduct[];
+  const products = data?.flat(Infinity) as IProductItem[];
 
   function handleMoreViewBtnClick() {
     setSize(size + 1);
@@ -29,7 +28,7 @@ const ProductList = () => {
   return (
     <>
       <ul className="list_group">
-        {products.map((product: IProduct) => {
+        {products.map((product: IProductItem) => {
           return <ProductItem key={product.id} item={product} />;
         })}
       </ul>

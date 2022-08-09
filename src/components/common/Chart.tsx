@@ -1,4 +1,3 @@
-import React from "react";
 import ApexChart, { Props } from "react-apexcharts";
 
 const Chart = ({
@@ -17,4 +16,4 @@ const Chart = ({
   );
 };
 
-export default React.memo(Chart);
+export default Chart;

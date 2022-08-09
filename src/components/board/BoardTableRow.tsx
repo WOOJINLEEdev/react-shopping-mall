@@ -1,12 +1,20 @@
+import { ReactNode } from "react";
 import styled from "styled-components";
 
-import { IBoardTableRowProps, ITableRowProps } from "types";
+interface IBoardTableRowProps {
+  children?: ReactNode;
+  background?: string;
+}
 
 const BoardTableRow = ({ children, background }: IBoardTableRowProps) => {
   return <TableRow background={background}>{children}</TableRow>;
 };
 
 export default BoardTableRow;
+
+interface ITableRowProps {
+  background?: string;
+}
 
 const TableRow = styled.tr<ITableRowProps>`
   @media (hover: hover) {

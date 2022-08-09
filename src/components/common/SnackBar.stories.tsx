@@ -1,8 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Meta, Story } from "@storybook/react";
 
-import SnackBar from "components/common/SnackBar";
-
-import { ISnackBarProps } from "types";
+import SnackBar, { ISnackBarProps } from "components/common/SnackBar";
 
 export default {
   component: SnackBar,

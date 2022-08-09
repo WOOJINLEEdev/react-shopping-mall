@@ -1,4 +1,6 @@
-import { IOrderItemInfoHeadQtyProps } from "types";
+interface IOrderItemInfoHeadQtyProps {
+  sum: number;
+}
 
 const OrderItemInfoHeadQty = ({ sum }: IOrderItemInfoHeadQtyProps) => {
   return (

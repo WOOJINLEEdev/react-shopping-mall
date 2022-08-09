@@ -4,17 +4,7 @@ import axios, { AxiosError } from "axios";
 import { instance } from "utils/http-client";
 import { isLogin } from "utils/auth";
 
-export interface ICartItem {
-  cart_id: number;
-  id: number;
-  product_id: number;
-  product_image_src: string;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-  variant_price: string;
-}
+import { ICartItem } from "components/cart/types";
 
 const useMyCart = () => {
   const cartUrl = "/v1/me/cart";
@@ -26,7 +16,6 @@ const useMyCart = () => {
     }
     try {
       const res = await instance.get(url);
-      console.log("res data", res.data);
 
       return {
         ...res.data,

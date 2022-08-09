@@ -8,8 +8,7 @@ import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
-
-import { ILineItem } from "types";
+import { ILineItem } from "components/order/types";
 
 const Order = () => {
   const matchParams = useParams();

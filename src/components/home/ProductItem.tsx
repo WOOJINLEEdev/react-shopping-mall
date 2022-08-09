@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
 
-import { IProductItemProps } from "types";
+import { IProductItem } from "components/home/types";
 
 const SOURCE_LIST = [
   { id: "1", media: "(max-width: 408px)", size: "_200x200.jpg" },
@@ -25,6 +25,10 @@ const SOURCE_LIST = [
     size: "_300x300.jpg",
   },
 ];
+
+interface IProductItemProps {
+  item: IProductItem;
+}
 
 const ProductItem = ({ item }: IProductItemProps) => {
   return (

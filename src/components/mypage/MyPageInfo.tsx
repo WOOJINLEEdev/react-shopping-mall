@@ -9,8 +9,7 @@ import { formatPrice } from "utils/money";
 import { createLogoutApi } from "api";
 
 import Loading from "components/common/Loading";
-
-import { IMyData, IMyPageInfoProps } from "types";
+import { IMyData } from "components/mypage/types";
 
 Modal.setAppElement("#root");
 
@@ -18,6 +17,10 @@ const CommonModal = lazy(() => import("components/common/CommonModal"));
 const MyPageCouponModal = lazy(
   () => import("components/mypage/MyPageCouponModal"),
 );
+
+interface IMyPageInfoProps {
+  myData: IMyData;
+}
 
 const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
   const navigate = useNavigate();

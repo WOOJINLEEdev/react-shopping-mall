@@ -1,19 +1,29 @@
 /* eslint-disable react/jsx-no-useless-fragment */
+import { MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { formatPrice } from "utils/money";
 import { getSizedImageUrl } from "utils/image";
 
-import { IItem } from "pages/Cart";
 import QuantityCounter from "components/common/QuantityCounter";
-
-import { ICartList } from "types";
+import { IAddedCartItem } from "components/cart/types";
 
 const SOURCE_LIST = [
   { id: "0", media: "(max-width:849px)", size: "_150x200.jpg" },
   { id: "1", media: "(min-width:850px)", size: "_200x200.jpg" },
 ];
+
+interface ICartListProps {
+  items: IAddedCartItem[];
+  handleCartItemCheck: (cartItemIndex: number) => void;
+  handleItemRemoveBtnClick: (e: MouseEvent<HTMLInputElement>) => Promise<void>;
+  handleQuantity: (itemId: number, quantity: number) => Promise<void>;
+  handleListBuyBtnClick: (
+    item: IAddedCartItem,
+    quantity: number,
+  ) => Promise<void>;
+}
 
 const CartList = ({
   items,
@@ -21,13 +31,13 @@ const CartList = ({
   handleItemRemoveBtnClick,
   handleQuantity,
   handleListBuyBtnClick,
-}: ICartList) => {
+}: ICartListProps) => {
   return (
     <ul className="item_group">
       {items.length < 1 ? (
         <CartEmpty>장바구니가 비었습니다.</CartEmpty>
       ) : (
-        items.map((item: IItem, index: number) => {
+        items.map((item: IAddedCartItem, index: number) => {
           return (
             <li className="item" key={item.id}>
               <div className="item_select">

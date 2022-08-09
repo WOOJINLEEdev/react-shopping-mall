@@ -8,18 +8,18 @@ import { fixOverlay } from "utils/fix-overlay";
 import { updateShippingAddressApi } from "api";
 
 import AddDeliveryAddressModal from "components/mypage/AddDeliveryAddressModal";
+import { IMyShippingAddress } from "components/mypage/types";
 
 import { myDeliveryInfoState } from "state/mypage";
-import {
-  IMyPageDeliveryModalProps,
-  ICloseBtnProps,
-  ICancelRegistrationBtnProps,
-  IAddBtnProps,
-  IDeliveryAddressItemProps,
-  IDeliveryInfoState,
-} from "types";
+import { IDeliveryInfoState } from "state/order";
 
 Modal.setAppElement("#root");
+
+interface IMyPageDeliveryModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  myDeliveryAddress?: IMyShippingAddress;
+}
 
 const MyPageDeliveryModal = ({
   isOpen,
@@ -227,6 +227,10 @@ const MyPageDeliveryModal = ({
 
 export default MyPageDeliveryModal;
 
+interface ICommonProps {
+  display: string;
+}
+
 const ModalContentContainer = styled.div`
   overflow: auto;
   -ms-overflow-style: none;
@@ -275,7 +279,7 @@ const NotDeliveryAddress = styled.p`
   text-align: center;
 `;
 
-const DeliveryAddressItem = styled.div<IDeliveryAddressItemProps>`
+const DeliveryAddressItem = styled.div<ICommonProps>`
   display: ${(props) => props.display || "block"};
   padding: 20px;
   background-color: #fff;
@@ -332,7 +336,7 @@ const ModifyBtn = styled.button`
 
 const BtnContainer = styled.div``;
 
-const AddBtn = styled.button<IAddBtnProps>`
+const AddBtn = styled.button<ICommonProps>`
   display: ${(props) => props.display || "block"};
   width: 100%;
   min-height: 50px;
@@ -347,7 +351,7 @@ const AddBtn = styled.button<IAddBtnProps>`
   cursor: pointer;
 `;
 
-const CancelRegistrationBtnWrap = styled.div<ICancelRegistrationBtnProps>`
+const CancelRegistrationBtnWrap = styled.div<ICommonProps>`
   display: ${(props) => props.display || "flex"};
   justify-content: space-between;
   margin-top: 10px;
@@ -380,7 +384,7 @@ const RegistrationBtn = styled.button`
   cursor: pointer;
 `;
 
-const CloseBtn = styled.button<ICloseBtnProps>`
+const CloseBtn = styled.button<ICommonProps>`
   display: ${(props) => props.display || "block"};
   width: 100%;
   min-height: 50px;

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
@@ -8,8 +8,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { getSizedImageUrl } from "utils/image";
 
 import { IMAGE_DATA } from "components/home/banner-image-data";
-
-import { IArrowProps } from "types";
 
 const SOURCE_LIST = [
   {
@@ -70,6 +68,12 @@ const Banner = () => {
       </div>
     ),
   };
+
+  interface IArrowProps {
+    className?: string;
+    style?: CSSProperties;
+    onClick?: () => void;
+  }
 
   function NextArrow(props: IArrowProps) {
     const { className, style, onClick } = props;

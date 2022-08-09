@@ -1,7 +1,7 @@
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import useMyCart, { ICartItem } from "hooks/api/useMyCart";
+import useMyCart from "hooks/api/useMyCart";
 import {
   deleteCartItemApi,
   updateCartItemQuantityApi,
@@ -13,10 +13,7 @@ import CartList from "components/cart/CartList";
 import CartDetail from "components/cart/CartDetail";
 import CartBuyBtn from "components/cart/CartBuyBtn";
 import SnackBar from "components/common/SnackBar";
-
-export interface IItem extends ICartItem {
-  checked: boolean;
-}
+import { IAddedCartItem } from "components/cart/types";
 
 const Cart = () => {
   const [chkId, setChkId] = useState("");
@@ -28,7 +25,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const { cart, mutateCart } = useMyCart();
 
-  const items: IItem[] = cart.items;
+  const items: IAddedCartItem[] = cart.items;
 
   const handleItemRemoveBtnClick = async (e: MouseEvent<HTMLInputElement>) => {
     const cartItemId = Number((e.currentTarget as HTMLInputElement).name);
@@ -48,7 +45,7 @@ const Cart = () => {
       mutateCart(
         {
           ...cart,
-          items: items.map((cartItem: IItem) => ({
+          items: items.map((cartItem: IAddedCartItem) => ({
             ...cartItem,
             quantity: cartItem.id === itemId ? quantity : cartItem.quantity,
           })),
@@ -60,12 +57,12 @@ const Cart = () => {
     }
   };
 
-  const checkedItems: IItem[] = cart.items.filter(
-    (item: IItem) => item.checked,
+  const checkedItems: IAddedCartItem[] = cart.items.filter(
+    (item: IAddedCartItem) => item.checked,
   );
   const numCheckedTotalItem = checkedItems.length;
   const totalPrice = checkedItems
-    .map((item: IItem) => Number(item.variant_price) * item.quantity)
+    .map((item: IAddedCartItem) => Number(item.variant_price) * item.quantity)
     .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
 
   if (totalPrice < 70000) {
@@ -85,7 +82,7 @@ const Cart = () => {
     mutateCart(
       {
         ...cart,
-        items: items.map((item: IItem) => {
+        items: items.map((item: IAddedCartItem) => {
           const newItem = { ...item };
           newItem.checked = !checked;
 
@@ -104,7 +101,7 @@ const Cart = () => {
   const handleCartItemCheck = (cartItemIndex: number) => {
     const newCart = {
       ...cart,
-      items: items.map((cartItem: IItem, index: number) => ({
+      items: items.map((cartItem: IAddedCartItem, index: number) => ({
         ...cartItem,
         checked: cartItemIndex === index ? !cartItem.checked : cartItem.checked,
       })),
@@ -112,13 +109,13 @@ const Cart = () => {
 
     mutateCart(newCart, false);
     const isSomeUnchecked =
-      newCart.items.filter((item: IItem) => !item.checked).length > 0;
+      newCart.items.filter((item: IAddedCartItem) => !item.checked).length > 0;
     if (isSomeUnchecked) {
       setAllChecked(false);
     }
 
     const isAllChecked =
-      newCart.items.filter((item: IItem) => item.checked).length ===
+      newCart.items.filter((item: IAddedCartItem) => item.checked).length ===
       newCart.items.length;
     if (isAllChecked) {
       setAllChecked(true);
@@ -127,8 +124,8 @@ const Cart = () => {
 
   const handleBuyBtnClick = async () => {
     const checkedLineItems = cart.items
-      .filter((item: IItem) => item.checked)
-      .map((item: IItem) => ({
+      .filter((item: IAddedCartItem) => item.checked)
+      .map((item: IAddedCartItem) => ({
         variant_id: item.variant_id,
         quantity: item.quantity,
       }));
@@ -144,7 +141,10 @@ const Cart = () => {
     }
   };
 
-  const handleListBuyBtnClick = async (item: IItem, quantity: number) => {
+  const handleListBuyBtnClick = async (
+    item: IAddedCartItem,
+    quantity: number,
+  ) => {
     if (Number(item.variant_price) * item.quantity < 70000) {
       localStorage.setItem("delivery", "3000");
     } else {
@@ -167,7 +167,7 @@ const Cart = () => {
   };
 
   const handleChoiceItemRemoveBtnClick = async () => {
-    const chkItems = cart.items.filter((item: IItem) => item.checked);
+    const chkItems = cart.items.filter((item: IAddedCartItem) => item.checked);
 
     for (const chkItem of chkItems) {
       let cartItemId: number = chkItem.id;

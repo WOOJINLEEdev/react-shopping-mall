@@ -5,12 +5,13 @@ import { useRecoilState } from "recoil";
 
 import { formatPhone } from "utils/format-phone";
 
-import { deliveryInfoState } from "state";
 import {
-  IOrderDeliveryFormMobileProps,
+  IOrderDeliveryFormDeviceProps,
   IDeliveryRequirementOption,
   IPreexistenceSelectProps,
-} from "types";
+} from "components/order/types";
+
+import { deliveryInfoState } from "state";
 
 const OrderDeliveryFormMobile = ({
   deliveryWrapClass,
@@ -24,7 +25,7 @@ const OrderDeliveryFormMobile = ({
   deliveryFirstRequirementOption,
   checkoutId,
   requirement,
-}: IOrderDeliveryFormMobileProps) => {
+}: IOrderDeliveryFormDeviceProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
     deliveryInfoState(checkoutId),
   );

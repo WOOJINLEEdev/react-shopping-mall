@@ -5,12 +5,13 @@ import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
 import { formatPhone } from "utils/format-phone";
 
-import { deliveryInfoState } from "state";
 import {
-  IOrderDeliveryFormTabletProps,
+  IOrderDeliveryFormDeviceProps,
   IDeliveryRequirementOption,
   IPreexistenceSelectProps,
-} from "types";
+} from "components/order/types";
+
+import { deliveryInfoState } from "state";
 
 const OrderDeliveryFormTablet = ({
   deliveryWrapClass,
@@ -24,7 +25,7 @@ const OrderDeliveryFormTablet = ({
   deliveryFirstRequirementOption,
   checkoutId,
   requirement,
-}: IOrderDeliveryFormTabletProps) => {
+}: IOrderDeliveryFormDeviceProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
     deliveryInfoState(checkoutId),
   );

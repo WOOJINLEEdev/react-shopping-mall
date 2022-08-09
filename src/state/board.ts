@@ -1,6 +1,8 @@
 import { atomFamily } from "recoil";
 
-import { ICurBoardState } from "types";
+interface ICurBoardState {
+  pageNumber: number;
+}
 
 export const curBoardState = atomFamily<ICurBoardState, string>({
   key: "#curBoardState",

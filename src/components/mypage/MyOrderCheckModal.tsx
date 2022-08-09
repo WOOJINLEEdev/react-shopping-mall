@@ -10,13 +10,19 @@ import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliver
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import Loading from "components/common/Loading";
+import { IMyOrderList, ILineItem } from "components/mypage/types";
 
 import upArrow from "assets/images/up-arrow-icon.png";
 import downArrow from "assets/images/down-arrow.png";
 
-import { IMyOrderCheckModalProps, IMyOrderList, ILineItems } from "types";
-
 Modal.setAppElement("#root");
+
+interface IMyOrderCheckModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  myOrderList: IMyOrderList[];
+  orderItemId?: number;
+}
 
 const MyOrderCheckModal = ({
   isOpen,
@@ -54,9 +60,9 @@ const MyOrderCheckModal = ({
   }
   const items = selectedOrderData[0].line_items;
 
-  const firstItem: ILineItems = selectedOrderData[0].line_items[0];
-  const remainder = items.filter((item: ILineItems) => item !== firstItem);
-  const itemQuantity = items.map((item: ILineItems) => item.quantity);
+  const firstItem: ILineItem = selectedOrderData[0].line_items[0];
+  const remainder = items.filter((item: ILineItem) => item !== firstItem);
+  const itemQuantity = items.map((item: ILineItem) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtnClick = () => {

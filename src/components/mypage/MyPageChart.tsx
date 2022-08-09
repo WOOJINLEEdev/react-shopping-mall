@@ -8,9 +8,13 @@ import { formatDate } from "utils/date";
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
 
-import { IMyPageChartProps, IDailyVisit } from "types";
+import { IDailyVisit } from "components/mypage/types";
 
-const MyPageChart = ({ userName }: IMyPageChartProps) => {
+interface IMyPageChart {
+  userName: string;
+}
+
+const MyPageChart = ({ userName }: IMyPageChart) => {
   const [series, setSeries] = useState<ApexOptions["series"]>();
   const [options, setOptions] = useState<ApexOptions>();
 

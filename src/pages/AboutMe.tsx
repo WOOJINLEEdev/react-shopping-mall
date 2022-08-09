@@ -9,8 +9,7 @@ import { formatDate } from "utils/date";
 
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
-
-import { IDailyVisit } from "types";
+import { IDailyVisit } from "components/mypage/types";
 
 const AboutMe = () => {
   const [total, setTotal] = useState(0);

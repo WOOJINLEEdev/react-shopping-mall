@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import DaumPostcode from "react-daum-postcode";
@@ -7,13 +7,19 @@ import { CgClose } from "@react-icons/all-files/cg/CgClose";
 import { getFullAddress } from "utils/get-address";
 import { isNumberCheck } from "utils/number";
 
-import { deliveryInfoState } from "state";
 import {
-  IOrderDeliveryFormProps,
+  IDeliveryForm,
   IDeliveryRequirementOption,
   IPreexistenceSelectProps,
-  IAddress,
-} from "types";
+} from "components/order/types";
+import { IAddress } from "components/mypage/types";
+
+import { deliveryInfoState } from "state";
+
+export interface IOrderDeliveryFormProps extends IDeliveryForm {
+  deliveryForm1: string;
+  requirement1: string;
+}
 
 const OrderDeliveryForm = ({
   deliveryForm1,

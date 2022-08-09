@@ -4,13 +4,17 @@ import { useRecoilState } from "recoil";
 import useDevice from "hooks/useDevice";
 import { formatPrice } from "utils/money";
 
-import { IOrderCouponProps, ICoupon } from "types";
+import { IOrderCouponCheckoutData, ICoupon } from "components/order/types";
 
 import {
   selectOptionState,
   selectCouponIdState,
   usedMileageState,
 } from "state";
+
+interface IOrderCouponProps {
+  checkoutData: IOrderCouponCheckoutData;
+}
 
 const OrderCoupon = ({ checkoutData }: IOrderCouponProps) => {
   const [coupons, setCoupons] = useState<ICoupon[] | undefined>(

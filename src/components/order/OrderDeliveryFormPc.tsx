@@ -4,13 +4,13 @@ import { useRecoilState } from "recoil";
 
 import { parsePhone } from "utils/format-phone";
 
-import { deliveryInfoState } from "state";
 import {
-  IOrderDeliveryFormPcProps,
+  IOrderDeliveryFormDeviceProps,
   IDeliveryRequirementOption,
   IPreexistenceSelectProps,
-  LiProps,
-} from "types";
+} from "components/order/types";
+
+import { deliveryInfoState } from "state";
 
 const OrderDeliveryFormPc = ({
   deliveryWrapClass,
@@ -24,7 +24,7 @@ const OrderDeliveryFormPc = ({
   deliveryFirstRequirementWrite,
   checkoutId,
   requirement,
-}: IOrderDeliveryFormPcProps) => {
+}: IOrderDeliveryFormDeviceProps) => {
   const [deliveryState, setDeliveryState] = useRecoilState(
     deliveryInfoState(checkoutId),
   );
@@ -294,6 +294,10 @@ const OrderDeliveryFormPc = ({
 };
 
 export default OrderDeliveryFormPc;
+
+interface LiProps {
+  disabled?: string | boolean;
+}
 
 const Li = styled.li<LiProps>``;
 

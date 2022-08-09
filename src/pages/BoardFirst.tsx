@@ -23,20 +23,11 @@ import BoardFilter from "components/board/BoardFilter";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import Loading from "components/common/Loading";
 import { postList, sortedPostList } from "components/board/board-first-data";
+import { IFirstPostItem } from "components/board/types";
 
 import { curBoardState } from "state";
 
 Modal.setAppElement("#root");
-
-interface IPostList {
-  no: number;
-  type: string;
-  title: string;
-  content: string | string[];
-  user: string;
-  createDate: string;
-  readCount: number;
-}
 
 const headersName = [
   "번호",
@@ -56,7 +47,7 @@ const BoardFirst = () => {
 
   const [pageState, setPageState] = useRecoilState(curBoardState("first"));
 
-  const [dataList, setDataList] = useState<IPostList[]>([]);
+  const [dataList, setDataList] = useState<IFirstPostItem[]>([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(pageState.pageNumber);
   const [selectedPreviewId, setSelectedPreviewId] = useState(1);
@@ -127,7 +118,7 @@ const BoardFirst = () => {
   );
 
   const handleSearchBtnClick = () => {
-    const searchFilter = dataList.filter((item: IPostList) =>
+    const searchFilter = dataList.filter((item: IFirstPostItem) =>
       item.title.includes(searchInput),
     );
     setDataList(searchFilter);
@@ -184,7 +175,7 @@ const BoardFirst = () => {
       </Suspense>
 
       <BoardTable headersName={getHeadersName()} boardLocal="first">
-        {notice.map((item, i) => (
+        {notice.map((item) => (
           <BoardTableRow key={item.no}>
             {isTablet && (
               <BoardTableColumn>
@@ -222,16 +213,15 @@ const BoardFirst = () => {
                   type="button"
                   className="board_preview_btn"
                   onClick={() => handlePreviewBtnClick(item.no)}
-                >
-                  <span className="visually_hidden">미리보기</span>
-                </button>
+                  aria-label="미리보기"
+                />
               </BoardTableColumn>
             )}
           </BoardTableRow>
         ))}
         {dataList
           .slice(offset, offset + limit)
-          .map((item: IPostList, i: number) => (
+          .map((item: IFirstPostItem, i: number) => (
             <BoardTableRow key={`board_table_row${i}`}>
               {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
               {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}

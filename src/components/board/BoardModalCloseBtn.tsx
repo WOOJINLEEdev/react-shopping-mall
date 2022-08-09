@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-import { IBoardModalCloseBtnProps } from "types";
+interface IBoardModalCloseBtnProps {
+  handleModalClose: () => void;
+}
 
 const BoardModalCloseBtn = ({ handleModalClose }: IBoardModalCloseBtnProps) => {
   return (

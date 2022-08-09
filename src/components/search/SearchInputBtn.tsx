@@ -1,8 +1,27 @@
-import { useState, forwardRef, ChangeEvent, FormEvent } from "react";
+import {
+  useState,
+  forwardRef,
+  ChangeEvent,
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import styled from "styled-components";
 import { FaTimesCircle } from "@react-icons/all-files/fa/FaTimesCircle";
 
-import { ISearchInputBtnProps } from "types";
+interface ISearchInputBtnProps {
+  searchClassName?: string;
+  handleSearchBtnClick:
+    | ((searchInput: string) => false | undefined)
+    | ((searchInput: string) => Promise<false | undefined>)
+    | (() => void);
+  handleSearchInputChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  searchInputClassName?: string;
+  searchBtnClassName?: string;
+  searchPlaceHolder?: string;
+  searchInputId?: string;
+  handleRemoveBtnClick?: (setState: Dispatch<SetStateAction<string>>) => void;
+}
 
 const SearchInputBtn = forwardRef<HTMLInputElement, ISearchInputBtnProps>(
   (

@@ -6,14 +6,17 @@ import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight";
 
 import StarRating from "components/mypage/StarRating";
 import Loading from "components/common/Loading";
-
-import { IMyPageInfoDetailProps } from "types";
+import { IMyDetailData } from "components/mypage/types";
 
 Modal.setAppElement("#root");
 
 const MyPageDeliveryModal = lazy(
   () => import("components/mypage/MyPageDeliveryModal"),
 );
+
+interface IMyPageInfoDetailProps {
+  myData: IMyDetailData;
+}
 
 const MyPageInfoDetail = ({ myData }: IMyPageInfoDetailProps) => {
   const [isOpen, setIsOpen] = useState(false);

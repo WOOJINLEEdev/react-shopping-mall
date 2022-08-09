@@ -1,19 +1,28 @@
 import { useRecoilValue } from "recoil";
 
+import useDevice from "hooks/useDevice";
+
+import { IOrderDeliveryHeadCheckoutData } from "components/order/types";
+
 import { deliveryInfoState } from "state";
 
-import { IOrderDeliveryHeadProps } from "types";
+interface IOrderDeliveryHeadProps {
+  deliveryWrite?: string;
+  infoHeadAddress: string;
+  checkoutData: IOrderDeliveryHeadCheckoutData;
+  handleAddressBtnClick: () => void;
+  arrowImg: string;
+}
 
 const OrderDeliveryHead = ({
-  isPc,
-  isTablet,
-  isMobile,
   deliveryWrite,
   infoHeadAddress,
   checkoutData,
   handleAddressBtnClick,
   arrowImg,
 }: IOrderDeliveryHeadProps) => {
+  const { isPc, isTablet, isMobile } = useDevice();
+
   const deliveryStateValue = useRecoilValue(deliveryInfoState(checkoutData.id));
 
   return (

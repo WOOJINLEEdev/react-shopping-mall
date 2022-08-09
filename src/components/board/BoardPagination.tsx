@@ -1,7 +1,12 @@
-import React from "react";
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
-import { IBoardPaginationProps, IButtonProps } from "types";
+interface IBoardPaginationProps {
+  total: number;
+  limit: number;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+}
 
 const BoardPagination = ({
   total,
@@ -20,7 +25,7 @@ const BoardPagination = ({
         .fill(undefined)
         .map((_, i) => (
           <Button
-            key={i + 1}
+            key={`page_button_${i + 1}`}
             onClick={() => setPage(i + 1)}
             aria-current={page === i + 1 ? "page" : undefined}
           >
@@ -34,7 +39,7 @@ const BoardPagination = ({
   );
 };
 
-export default React.memo(BoardPagination);
+export default BoardPagination;
 
 const Nav = styled.nav`
   display: flex;
@@ -43,6 +48,11 @@ const Nav = styled.nav`
   gap: 4px;
   margin: 16px;
 `;
+
+interface IButtonProps {
+  disabled?: boolean;
+  ["aria-current"]?: "page";
+}
 
 const Button = styled.button<IButtonProps>`
   border: none;
@@ -63,7 +73,7 @@ const Button = styled.button<IButtonProps>`
 
   &[disabled] {
     background: #efefef;
-    color: gray;
+    color: #808080;
     cursor: revert;
     transform: revert;
   }

@@ -2,23 +2,14 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { postList } from "components/board/board-first-data";
-
-interface IPostList {
-  no: number;
-  type: string;
-  title: string;
-  content: string | string[];
-  user: string;
-  createDate: string;
-  readCount: number;
-}
+import { IFirstPostItem } from "components/board/types";
 
 const BoardFirstItem = () => {
   const navigate = useNavigate();
   const matchParams = useParams();
 
   const boardItemNo = Number(matchParams.no);
-  const boardItem: IPostList | undefined = postList.find(
+  const boardItem: IFirstPostItem | undefined = postList.find(
     (post) => post.no === boardItemNo,
   );
 

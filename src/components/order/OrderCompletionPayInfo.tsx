@@ -6,7 +6,11 @@ import { formatPrice, formatPriceWithUnit } from "utils/money";
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderCompletionPayInfoProps, IUsedCoupon } from "types";
+import { OrderDataType, UsedCouponAmount } from "components/order/types";
+
+export interface IOrderCompletionPayInfoProps {
+  orderData: OrderDataType[];
+}
 
 const OrderCompletionPayInfo = ({
   orderData,
@@ -29,7 +33,7 @@ const OrderCompletionPayInfo = ({
     }
   };
 
-  function getUsedCouponAmount(usedCoupon: IUsedCoupon | undefined) {
+  function getUsedCouponAmount(usedCoupon?: UsedCouponAmount) {
     if (!usedCoupon) {
       return 0;
     }

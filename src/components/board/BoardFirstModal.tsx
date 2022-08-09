@@ -3,9 +3,16 @@ import styled from "styled-components";
 
 import BoardModalCloseBtn from "components/board/BoardModalCloseBtn";
 
-import { IBoardFirstModalProps, IPostItem } from "types";
+import { IFirstPostItem } from "components/board/types";
 
 Modal.setAppElement("#root");
+
+interface IBoardFirstModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  postList: IFirstPostItem[];
+  boardItemNo: number;
+}
 
 const BoardItemModal = ({
   isOpen,
@@ -15,7 +22,7 @@ const BoardItemModal = ({
 }: IBoardFirstModalProps) => {
   const boardItemNumber = boardItemNo;
   const boardItem = postList.find(
-    (postItem: IPostItem) => postItem.no === boardItemNumber,
+    (postItem: IFirstPostItem) => postItem.no === boardItemNumber,
   );
 
   return (
@@ -69,7 +76,7 @@ export default BoardItemModal;
 
 const Div = styled.div`
   & .item_table_text {
-    color: blue;
+    color: #0000ff;
     font-weight: bold;
   }
 `;

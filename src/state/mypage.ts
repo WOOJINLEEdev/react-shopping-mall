@@ -1,6 +1,6 @@
 import { atomFamily } from "recoil";
 
-import { IDeliveryInfoState } from "types";
+import { IDeliveryInfoState } from "state/order";
 
 export const myDeliveryInfoState = atomFamily<IDeliveryInfoState, number>({
   key: "#myDeliveryInfoState",

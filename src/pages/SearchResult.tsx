@@ -8,23 +8,7 @@ import usePagingQuery from "hooks/api/usePagingQuery";
 
 import ProductItem from "components/home/ProductItem";
 import MoreViewBtn from "components/common/MoreViewBtn";
-
-interface IProduct {
-  id: number;
-  images: IImages[];
-  name: string;
-  variants: IVariants[];
-}
-
-interface IImages {
-  id: number;
-  product_id: number;
-  src: string;
-}
-
-interface IVariants {
-  price: string;
-}
+import { IProductItem } from "components/home/types";
 
 const SearchResult = () => {
   const matchParams = useParams();
@@ -73,7 +57,7 @@ const SearchResult = () => {
         {products.length === 0 ? (
           <NoSearchWord>검색 결과가 없습니다.</NoSearchWord>
         ) : (
-          products.map((product: IProduct) => {
+          products.map((product: IProductItem) => {
             return <ProductItem key={product.id} item={product} />;
           })
         )}

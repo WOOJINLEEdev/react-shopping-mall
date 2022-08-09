@@ -1,4 +1,4 @@
-import { IAddress } from "types";
+import { IAddress } from "components/mypage/types";
 
 export const getFullAddress = (data: IAddress) => {
   let fullAddress = data.address;

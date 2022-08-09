@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 const PageNotFound = () => {
-  return <Div>This page could not be found.</Div>;
+  return <DivContainer>This page could not be found.</DivContainer>;
 };
 
 export default PageNotFound;
 
-const Div = styled.div`
+const DivContainer = styled.div`
   width: 100%;
   height: calc(100vh - 171px);
   line-height: calc(100vh - 171px);

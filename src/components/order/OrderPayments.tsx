@@ -2,7 +2,6 @@ import React, { useState, useCallback, MouseEvent } from "react";
 import { useRecoilState } from "recoil";
 
 import { paymentState } from "state";
-import { IOrderPaymentItemProps, IPayment } from "types";
 
 const PAYMENTS = [
   {
@@ -46,6 +45,19 @@ const PAYMENTS = [
     payment: "계좌 이체",
   },
 ];
+
+interface IPayment {
+  id: string;
+  payment: string;
+}
+interface IOrderPaymentItemProps {
+  i: number;
+  selected: boolean;
+  item: IPayment;
+  handlePaymentMethodClick: (e: MouseEvent<HTMLLIElement>) => void;
+  basePaymentClass: string;
+  selectedPaymentClass: string;
+}
 
 const OrderPaymentItem = React.memo(
   ({
@@ -94,7 +106,7 @@ const OrderPaymentList = React.memo(() => {
 
   return (
     <ol className="payment_method">
-      {PAYMENTS.map((item: IPayment, i: number) => (
+      {PAYMENTS.map((item, i: number) => (
         <OrderPaymentItem
           key={`payment_${item.id}`}
           item={item}

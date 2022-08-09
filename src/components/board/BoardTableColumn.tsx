@@ -1,6 +1,11 @@
-import { IBoardTableColumnProp } from "types";
+import { ReactNode } from "react";
 
-const BoardTableColumn = ({ children, title }: IBoardTableColumnProp) => {
+interface IBoardTableColumnProps {
+  children?: ReactNode;
+  title?: string;
+}
+
+const BoardTableColumn = ({ children, title }: IBoardTableColumnProps) => {
   return (
     <td className="board_table_column" title={title}>
       {children}

@@ -4,7 +4,11 @@ import styled from "styled-components";
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderCompletionDeliveryInfoProps, IShippingAddress } from "types";
+import { IOrderDataType, ShippingAddress } from "components/order/types";
+
+interface IOrderCompletionDeliveryInfoProps {
+  orderData: IOrderDataType[];
+}
 
 const OrderCompletionDeliveryInfo = ({
   orderData,
@@ -29,11 +33,11 @@ const OrderCompletionDeliveryInfo = ({
     }
   };
 
-  function getFormattedShippingAddress(shippingAddress: IShippingAddress) {
+  function getFormattedShippingAddress(shippingAddress: ShippingAddress) {
     return `${shippingAddress.address1} ${shippingAddress.address2}`;
   }
 
-  function getFormattedRecipient(shippingAddress: IShippingAddress) {
+  function getFormattedRecipient(shippingAddress: ShippingAddress) {
     return `${
       shippingAddress.recipient_name
     }/${shippingAddress.phone1?.substring(

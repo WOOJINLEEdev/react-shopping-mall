@@ -5,10 +5,16 @@ import { formatPrice } from "utils/money";
 
 import OrderCheckoutButton from "components/order/OrderCheckoutButton";
 import OrderAgreeCheck from "components/order/OrderAgreeCheck";
-
-import { IOrderTotalDetailProps } from "types";
+import { IOrderCheckoutData } from "components/order/types";
 
 import { finalPriceState, agreeCheckedState, couponStateSelector } from "state";
+
+interface IOrderTotalDetailProps {
+  totalPrice: number;
+  deliveryCharge: string;
+  checkoutData: IOrderCheckoutData;
+  checkoutNumber: number;
+}
 
 const OrderTotalDetail = ({
   totalPrice,

@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
-import { ICartBuyBtn } from "types";
+interface ICartBuyBtnProps {
+  handleBuyBtnClick: () => Promise<void>;
+  disabled?: boolean;
+}
 
-const CartBuyBtn = ({ handleBuyBtnClick, disabled }: ICartBuyBtn) => {
+const CartBuyBtn = ({ handleBuyBtnClick, disabled }: ICartBuyBtnProps) => {
   return (
     <Button type="button" onClick={handleBuyBtnClick} disabled={disabled}>
       BUY NOW

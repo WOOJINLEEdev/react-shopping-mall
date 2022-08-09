@@ -1,6 +1,6 @@
 import { getFullAddress } from "utils/get-address";
 
-import { IAddress } from "types";
+import { IAddress } from "components/mypage/types";
 
 describe("getFullAddress", () => {
   it("건물명(buildingName)과 동이름(bname)이 있으면 기본 주소 (동이름, 빌딩명)를 반환해야 한다.", () => {

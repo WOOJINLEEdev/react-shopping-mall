@@ -1,11 +1,18 @@
-import { ICartHead } from "types";
+import { IAddedCartItem } from "components/cart/types";
+
+interface ICartHeadProps {
+  items: IAddedCartItem[];
+  allChecked: boolean;
+  handleAllCheckChange: () => void;
+  handleChoiceItemRemoveBtnClick: () => Promise<void>;
+}
 
 const CartHead = ({
   items,
   allChecked,
   handleAllCheckChange,
   handleChoiceItemRemoveBtnClick,
-}: ICartHead) => {
+}: ICartHeadProps) => {
   return (
     <div className="info_title">
       <h2 className="info_head orderInfo">

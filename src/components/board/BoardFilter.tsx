@@ -1,6 +1,10 @@
+import { ChangeEvent } from "react";
 import styled from "styled-components";
 
-import { IBoardFilterProps } from "types";
+interface IBoardFilterProps {
+  handleSelectOption: (e: ChangeEvent<HTMLSelectElement>) => void;
+  selectedOption: string;
+}
 
 const BoardFilter = ({
   handleSelectOption,

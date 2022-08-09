@@ -1,12 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, MouseEvent } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 
 import { fixOverlay } from "utils/fix-overlay";
 
-import { ICommonModalProps, IModalTextProps, IModalBtnProps } from "types";
-
 Modal.setAppElement("#root");
+
+interface ICommonModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  modalText: string;
+  yesBtnText: string;
+  noBtnText: string;
+  yesBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  noBtnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  btnWidth?: string;
+  contentPadding?: string;
+  onOverlayClick?: boolean;
+  onEsc?: boolean;
+}
 
 const CommonModal = ({
   isOpen,
@@ -44,9 +56,9 @@ const CommonModal = ({
         <ModalBtn
           type="button"
           width={btnWidth}
-          backgroundColor={"#008000"}
-          border={"3px solid #008000"}
-          color={"#fff"}
+          backgroundColor="#008000"
+          border="3px solid #008000"
+          color="#fff"
           onClick={yesBtnClick}
           name="yes"
         >
@@ -58,6 +70,10 @@ const CommonModal = ({
 };
 
 export default CommonModal;
+
+interface IModalTextProps {
+  contentPadding?: string;
+}
 
 const ModalText = styled.p<IModalTextProps>`
   padding: ${(props) => props.contentPadding || "50px 20px"};
@@ -75,6 +91,13 @@ const ModalBtnWrap = styled.div`
   justify-content: flex-end;
   width: 100%;
 `;
+
+interface IModalBtnProps {
+  width?: string;
+  color?: string;
+  border?: string;
+  backgroundColor?: string;
+}
 
 const ModalBtn = styled.button<IModalBtnProps>`
   width: ${(props) => props.width || "30%"};

@@ -1,6 +1,14 @@
+import { MouseEvent } from "react";
 import styled from "styled-components";
 
-import { IQuantityCounterProps, IQuantityAreaProps } from "types";
+interface IQuantityCounterProps {
+  quantity: number;
+  onIncrement: (event: MouseEvent<HTMLInputElement>) => void;
+  onDecrement: (event: MouseEvent<HTMLInputElement>) => void;
+  margin?: boolean;
+  flexEnd?: boolean;
+  productId?: number;
+}
 
 const QuantityCounter = ({
   quantity,
@@ -46,6 +54,11 @@ const QuantityCounter = ({
 };
 
 export default QuantityCounter;
+
+interface IQuantityAreaProps {
+  margin?: boolean;
+  flexEnd?: boolean;
+}
 
 const QuantityArea = styled.div<IQuantityAreaProps>`
   display: flex;

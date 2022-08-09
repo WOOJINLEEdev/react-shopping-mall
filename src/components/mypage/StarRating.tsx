@@ -4,7 +4,9 @@ import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 
 import { updateStarRatingApi } from "api";
 
-import { IStarRatingProps } from "types";
+interface IStarRatingProps {
+  myRating: number;
+}
 
 const StarRating = ({ myRating }: IStarRatingProps) => {
   const stars = [1, 2, 3, 4, 5];

@@ -3,68 +3,25 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
 
+import useMyOrder from "hooks/api/useMyOrder";
 import { formatDate } from "utils/date";
 import { getOrderNumber } from "utils/order";
-
-import { ReactComponent as ShoppingBag } from "assets/images/shopping-bag.svg";
-import downArrow from "assets/images/down-arrow.png";
-import upArrow from "assets/images/up-arrow-icon.png";
 
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
 import Loading from "components/common/Loading";
-import useMyOrder from "hooks/api/useMyOrder";
+import { IOrderCompletionData, ILineItem } from "components/order/types";
 
-interface IOrderData {
-  created_at: string;
-  line_items: IItem[];
-  id: number;
-  shipping_address: IShippingAddress;
-  payment_method: string;
-  shipping_price: string;
-  product_price: string;
-  total_discount: string | number;
-  total_price: string;
-  used_coupon?: ICoupon;
-  used_point?: number;
-}
-
-interface IItem {
-  image_src: string;
-  price: string;
-  product_id: number;
-  product_name: string;
-  quantity: number;
-  variant_id: number;
-  variant_name: string;
-}
-
-interface IShippingAddress {
-  address1: string;
-  address2: string;
-  name?: string;
-  note?: string;
-  phone1: string;
-  postal_code: string;
-  recipient_name: string;
-  request_note?: string;
-}
-
-interface ICoupon {
-  applied_amount: string;
-  id: number;
-  name: string;
-  type: string;
-  user_coupon_id: number;
-}
+import { ReactComponent as ShoppingBag } from "assets/images/shopping-bag.svg";
+import downArrow from "assets/images/down-arrow.png";
+import upArrow from "assets/images/up-arrow-icon.png";
 
 const OrderCompletion = () => {
   const matchParams = useParams();
 
-  const [orderData, setOrderData] = useState<IOrderData[]>([]);
-  const [remainderClass, setRemainderClass] =
-    useState<string>("info_remainder");
+  const [orderData, setOrderData] = useState<IOrderCompletionData[]>([]);
+  const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [arrowImg1, setArrowImg1] = useState(downArrow);
   const [closeText, setCloseText] = useState("");
@@ -84,10 +41,10 @@ const OrderCompletion = () => {
     return <Loading />;
   }
 
-  const items: IItem[] = orderData[0].line_items;
+  const items: ILineItem[] = orderData[0].line_items;
   const firstItem = items[0];
-  const remainder = items.filter((item: IItem) => item !== firstItem);
-  const itemQuantity = items.map((item: IItem) => item.quantity);
+  const remainder = items.filter((item: ILineItem) => item !== firstItem);
+  const itemQuantity = items.map((item: ILineItem) => item.quantity);
   const sum = itemQuantity.reduce((a: number, b: number) => a + b);
 
   const handleInfoOpenBtnClick = () => {

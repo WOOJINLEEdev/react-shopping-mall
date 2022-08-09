@@ -6,7 +6,13 @@ import { useSetRecoilState } from "recoil";
 import SearchInputBtn from "components/search/SearchInputBtn";
 
 import { searchWrapState } from "state";
-import { ISearchWrapProps } from "types";
+
+interface ISearchWrapProps {
+  show: boolean;
+  searchClassName: string;
+  searchInputClassName: string;
+  searchBtnClassName: string;
+}
 
 const SearchWrap = ({
   show,

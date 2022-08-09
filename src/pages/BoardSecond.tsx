@@ -15,6 +15,7 @@ import BoardTableColumn from "components/board/BoardTableColumn";
 import BoardPagination from "components/board/BoardPagination";
 import SearchInputBtn from "components/search/SearchInputBtn";
 import CommonAsyncBoundary from "components/common/CommonAsyncBoundary";
+import { ISecondPostItem } from "components/board/types";
 
 import { curBoardState } from "state";
 
@@ -24,20 +25,13 @@ const BoardItemModal = lazy(() => import("components/board/BoardItemModal"));
 
 const HEADER_NAME = ["번호", "제목", "작성자", "등록일", "조회수", "미리보기"];
 
-interface IPosts {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
-
 const BoardSecond = () => {
   const navigate = useNavigate();
 
   const [pageState, setPageState] = useRecoilState(curBoardState("second"));
 
   const [isOpen, setIsOpen] = useState(false);
-  const [posts, setPosts] = useState<IPosts[]>([]);
+  const [posts, setPosts] = useState<ISecondPostItem[]>([]);
   const [selectedPreviewId, setSelectedPreviewId] = useState<number>();
   const [limit, setLimit] = useState(10);
   const [mobileLimit, setMobileLimit] = useState(20);
@@ -180,9 +174,8 @@ const BoardSecond = () => {
                   type="button"
                   className="board_preview_btn"
                   onClick={() => handlePreviewBtnClick(item.id)}
-                >
-                  <span className="visually_hidden">미리보기</span>
-                </button>
+                  aria-label="미리보기"
+                />
               </BoardTableColumn>
             )}
           </BoardTableRow>

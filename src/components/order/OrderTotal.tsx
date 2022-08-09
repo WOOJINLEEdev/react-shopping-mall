@@ -9,7 +9,12 @@ import OrderTotalDetail from "components/order/OrderTotalDetail";
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderTotalProps, ILineItem } from "types";
+import { IOrderCheckoutData, ILineItem } from "components/order/types";
+
+interface IOrderTotalProps {
+  checkoutData: IOrderCheckoutData;
+  checkoutNumber: number;
+}
 
 const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
   const [remainderClassName, setRemainderClassName] =

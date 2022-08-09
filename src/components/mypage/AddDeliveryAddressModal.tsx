@@ -9,8 +9,14 @@ import { parsePhone } from "utils/format-phone";
 import { getFullAddress } from "utils/get-address";
 import { isNumberCheck } from "utils/number";
 
+import { IAddress } from "components/mypage/types";
+
 import { myDeliveryInfoState } from "state/mypage";
-import { IAddDeliveryAddressModalProps, IAddress } from "types";
+
+interface IAddDeliveryAddressModalProps {
+  addDeliveryClassName: string;
+  myDeliveryAddressId: number;
+}
 
 const AddDeliveryAddressModal = ({
   addDeliveryClassName,

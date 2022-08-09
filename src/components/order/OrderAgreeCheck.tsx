@@ -1,4 +1,9 @@
-import { IOrderAgreeCheckProps } from "types";
+import { ChangeEvent } from "react";
+
+interface IOrderAgreeCheckProps {
+  agreeChecked: boolean;
+  handleAgreeCheckChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
 const OrderAgreeCheck = ({
   agreeChecked,

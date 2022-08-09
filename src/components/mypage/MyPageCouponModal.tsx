@@ -4,9 +4,15 @@ import styled from "styled-components";
 
 import { fixOverlay } from "utils/fix-overlay";
 
-import { IMyPageCouponModalProps, ICouponInfo } from "types";
+import { ICouponInfo } from "components/mypage/types";
 
 Modal.setAppElement("#root");
+
+interface IMyPageCouponModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  myCoupon?: ICouponInfo[];
+}
 
 const MyPageCouponModal = ({
   isOpen,

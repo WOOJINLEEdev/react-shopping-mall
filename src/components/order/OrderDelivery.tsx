@@ -11,8 +11,14 @@ import OrderDeliveryFormPc from "components/order/OrderDeliveryFormPc";
 import OrderDeliveryFormTablet from "components/order/OrderDeliveryFormTablet";
 import OrderDeliveryFormMobile from "components/order/OrderDeliveryFormMobile";
 import OrderDeliveryForm from "components/order/OrderDeliveryForm";
+import {
+  IOrderDeliveryCheckoutData,
+  IDeliveryRequirementOption,
+} from "components/order/types";
 
-import { IOrderDeliveryProps, IDeliveryRequirementOption } from "types";
+interface IOrderDeliveryProps {
+  checkoutData: IOrderDeliveryCheckoutData;
+}
 
 const OrderDelivery = ({ checkoutData }: IOrderDeliveryProps) => {
   const { isPc, isTablet, isMobile } = useDevice();
@@ -158,9 +164,6 @@ const OrderDelivery = ({ checkoutData }: IOrderDeliveryProps) => {
   return (
     <section className="delivery_info">
       <OrderDeliveryHead
-        isPc={isPc}
-        isTablet={isTablet}
-        isMobile={isMobile}
         deliveryWrite={deliveryWrite}
         infoHeadAddress={infoHeadAddress}
         checkoutData={checkoutData}

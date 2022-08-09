@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-import { IOrderItemLinkProps } from "types";
+import { ILineItem } from "components/order/types";
+
+interface IOrderItemLinkProps {
+  item: Pick<ILineItem, "image_src" | "product_name" | "product_id">;
+}
 
 const OrderItemLink = ({ item }: IOrderItemLinkProps) => {
   return (

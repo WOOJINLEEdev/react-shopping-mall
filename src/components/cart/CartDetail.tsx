@@ -1,15 +1,20 @@
 import { formatPrice } from "utils/money";
 
-import { IItem } from "pages/Cart";
+import { IAddedCartItem } from "components/cart/types";
 
-import { ICartDetail } from "types";
+interface ICartDetailProps {
+  items: IAddedCartItem[];
+  totalPrice: number;
+  finalPrice: number;
+  deliveryCharge: string;
+}
 
 const CartDetail = ({
   items,
   totalPrice,
   finalPrice,
   deliveryCharge,
-}: ICartDetail) => {
+}: ICartDetailProps) => {
   return (
     <div className="detail_wrap cart_detail">
       <div className="detail_box">
@@ -18,7 +23,7 @@ const CartDetail = ({
         </div>
         <p className="price_unit">
           <span className="total_qty" id="totalQty">
-            {items.filter((item: IItem) => item.checked).length}
+            {items.filter((item: IAddedCartItem) => item.checked).length}
           </span>
           개
         </p>

@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from "react";
+import { useRef } from "react";
 import {
   Formik,
   Form,
@@ -12,6 +12,7 @@ import {
 import * as Yup from "yup";
 import styled from "styled-components";
 
+import useCheckUserId from "hooks/api/useCheckUserId";
 import {
   userId,
   userPassword,
@@ -22,7 +23,6 @@ import {
   userDate,
 } from "utils/login-validation";
 import { createJoinApi } from "api";
-import useCheckUserId from "hooks/api/useCheckUserId";
 
 const Join = () => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);

@@ -1,4 +1,4 @@
-import { IPosts } from "types";
+import { IFirstPostItem } from "components/board/types";
 
 export const postList = [
   {
@@ -111,7 +111,7 @@ export const postList = [
   },
 ];
 
-const sortPostList = (posts: IPosts[]) => {
+const sortPostList = (posts: IFirstPostItem[]) => {
   return [...posts].sort((a, b) => {
     if (a.no < b.no) {
       return 1;

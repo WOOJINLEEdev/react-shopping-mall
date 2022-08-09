@@ -5,8 +5,22 @@ import { formatPrice } from "utils/money";
 
 import OrderItemLink from "components/order/OrderItemLink";
 import OrderItemInfoHeadQty from "components/order/OrderItemInfoHeadQty";
+import { ILineItem } from "components/order/types";
 
-import { IOrderCompletionItemInfoProps } from "types";
+interface IOrderCompletionItemInfoProps {
+  items: ILineItem[];
+  firstItem: ILineItem;
+  remainder: ILineItem[];
+  remainderClass: string;
+  handleOpenCloseBtnClick: () => void;
+  handleInfoOpenBtnClick: () => void;
+  itemInfoHeadClass: string;
+  itemInfoClass: string;
+  arrowImg: string;
+  arrowImg1: string;
+  closeText: string;
+  sum: number;
+}
 
 const OrderCompletionItemInfo = ({
   items,
@@ -113,7 +127,7 @@ const OrderCompletionItemInfo = ({
                     <p className="list_price_text">
                       <span className="list_price_dollar" />
                       <span className="list_goods price">
-                        {formatPrice(item.price.toString())}
+                        {formatPrice(item.variant_price.toString())}
                       </span>
                       원
                     </p>
@@ -146,7 +160,7 @@ const OrderCompletionItemInfo = ({
                     <p className="list_price_text">
                       <span className="list_price_dollar" />
                       <span className="list_goods price">
-                        {formatPrice(firstItem.price.toString())}원
+                        {formatPrice(firstItem.variant_price.toString())}원
                       </span>
 
                       <span className="list_price_quantity">
@@ -178,7 +192,7 @@ const OrderCompletionItemInfo = ({
                       <p className="list_price_text">
                         <span className="list_price_dollar" />
                         <span className="list_goods price">
-                          {formatPrice(item.price.toString())}원
+                          {formatPrice(item.variant_price.toString())}원
                         </span>
 
                         <span className="list_price_quantity">
@@ -238,7 +252,7 @@ const OrderCompletionItemInfo = ({
                     <p className="list_price_text">
                       <span className="list_price_dollar" />
                       <span className="list_goods price">
-                        {formatPrice(firstItem.price.toString())}원
+                        {formatPrice(firstItem.variant_price.toString())}원
                       </span>
 
                       <span className="list_price_quantity">
@@ -270,7 +284,7 @@ const OrderCompletionItemInfo = ({
                       <p className="list_price_text">
                         <span className="list_price_dollar" />
                         <span className="list_goods price">
-                          {formatPrice(item.price.toString())}원
+                          {formatPrice(item.variant_price.toString())}원
                         </span>
 
                         <span className="list_price_quantity">

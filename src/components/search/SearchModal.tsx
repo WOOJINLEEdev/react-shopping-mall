@@ -6,20 +6,17 @@ import { CgClose } from "react-icons/cg";
 import SearchWrap from "components/search/SearchWrap";
 
 import { searchWrapState } from "state";
-import { IDimmedLayer } from "types";
 
 const SearchModal = () => {
-  const [searchClassName, setSearchClassName] = useState<string>(
-    "header_search_style",
-  );
-  const [searchInputClassName, setSearchInputClassName] = useState<string>(
+  const [searchClassName, setSearchClassName] = useState("header_search_style");
+  const [searchInputClassName, setSearchInputClassName] = useState(
     "header_search_input",
   );
   const [searchBtnClassName, setSearchBtnClassName] =
-    useState<string>("header_search_btn");
+    useState("header_search_btn");
 
   const [searchWrapStatus, setSearchWrapStatus] =
-    useRecoilState<boolean>(searchWrapState);
+    useRecoilState(searchWrapState);
 
   const handleDimCloseBtnClick = () => {
     setSearchWrapStatus(false);
@@ -47,17 +44,21 @@ const SearchModal = () => {
 
 export default SearchModal;
 
+interface IDimmedLayer {
+  show: boolean;
+}
+
 const DimmedLayer = styled.div<IDimmedLayer>`
+  z-index: 99;
   display: ${(props) => (props.show ? "block" : "none")};
   position: fixed;
+  top: 0;
   width: 100%;
   max-width: 1024px;
   height: 100%;
-  top: 0;
   padding-top: 120px;
   background: rgba(255, 255, 255, 0.9);
   text-align: right;
-  z-index: 99;
 
   .btn_dim_close {
     width: 100px;
