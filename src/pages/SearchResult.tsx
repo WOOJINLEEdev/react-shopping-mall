@@ -13,12 +13,6 @@ import { IProductItem } from "components/home/types";
 const SearchResult = () => {
   const matchParams = useParams();
 
-  const [searchWord, setSearchWord] = useState("");
-
-  useEffect(() => {
-    setSearchWord(matchParams.searchWord || "");
-  }, [matchParams]);
-
   const { searchCount } = useSearchCount({
     searchInput: matchParams.searchWord || "",
     count: true,
@@ -26,7 +20,7 @@ const SearchResult = () => {
 
   const PAGE_LIMIT = 8;
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
-    if (searchWord === "") {
+    if (matchParams.searchWord === "") {
       return null;
     }
 
@@ -36,7 +30,7 @@ const SearchResult = () => {
 
     return `/v1/products?limit=${PAGE_LIMIT}&offset=${
       pageIndex * PAGE_LIMIT
-    }&name=${searchWord}`;
+    }&name=${matchParams.searchWord}`;
   };
 
   const { data, size, setSize } = usePagingQuery(getKey);
@@ -50,7 +44,7 @@ const SearchResult = () => {
   return (
     <ResultWrap>
       <SearchResultTitle>
-        <SearchWord>{searchWord}</SearchWord>
+        <SearchWord>{matchParams.searchWord}</SearchWord>
         <span>검색결과 {searchCount}건</span>
       </SearchResultTitle>
       <ul className="list_group">

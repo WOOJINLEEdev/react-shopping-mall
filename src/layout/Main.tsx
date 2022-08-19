@@ -4,11 +4,10 @@ import { useSetRecoilState } from "recoil";
 
 import Loading from "components/common/Loading";
 import HomeSkeleton from "components/home/HomeSkeleton";
-
-import { headerItemState } from "state";
-
 import AsyncBoundary from "components/common/AsyncBoundary";
 import ErrorMessage from "components/common/ErrorMessage";
+
+import { headerItemState } from "state";
 
 const Home = lazy(() => import("pages/Home"));
 const ItemDetail = lazy(() => import("pages/ItemDetail"));

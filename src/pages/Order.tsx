@@ -8,7 +8,7 @@ import OrderCoupon from "components/order/OrderCoupon";
 import OrderPayments from "components/order/OrderPayments";
 import OrderTotal from "components/order/OrderTotal";
 import OrderTotalDetail from "components/order/OrderTotalDetail";
-import { ILineItem } from "components/order/types";
+import { IModifiedLineItem } from "components/order/types";
 
 const Order = () => {
   const matchParams = useParams();
@@ -17,9 +17,11 @@ const Order = () => {
   const { isPc, isTablet, isMobile } = useDevice();
   const { checkoutData } = useCheckout(checkoutNumber);
 
-  const items: ILineItem[] = checkoutData.line_items;
+  const items: IModifiedLineItem[] = checkoutData.line_items;
   const totalPrice: number = items
-    .map((item: ILineItem) => Number(item.variant_price) * item.quantity)
+    .map(
+      (item: IModifiedLineItem) => Number(item.variant_price) * item.quantity,
+    )
     .reduce((sum: number, itemPrice: number) => sum + itemPrice, 0);
   const deliveryCharge: string = localStorage.getItem("delivery")!;
 

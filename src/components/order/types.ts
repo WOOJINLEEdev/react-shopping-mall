@@ -7,6 +7,11 @@ export interface ILineItem {
   quantity: number;
   variant_id: number;
   variant_name: string;
+  price: string;
+}
+
+type LineItem = Omit<ILineItem, "price">;
+export interface IModifiedLineItem extends LineItem {
   variant_price: string;
 }
 
@@ -126,7 +131,7 @@ export interface IOrderDeliveryHeadCheckoutData {
 export interface IOrderCheckoutData {
   created_at: string;
   id: number;
-  line_items: ILineItem[];
+  line_items: IModifiedLineItem[];
   user: Pick<ICheckoutUser, "shipping_address">;
 }
 

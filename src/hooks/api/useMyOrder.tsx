@@ -29,6 +29,8 @@ const useMyOrder = ({ checkoutId, count }: IUseMyOrder) => {
 
   const { data, error, mutate } = useSWR(orderUrl, fetcher, {
     suspense: true,
+    revalidateOnFocus: false,
+    revalidateOnMount: false,
   });
 
   return {

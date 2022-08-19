@@ -26,7 +26,7 @@ export interface ILineItem {
   quantity: number;
   variant_id: number;
   variant_name: string;
-  variant_price: string;
+  price: string;
 }
 
 export interface IMyShippingAddress {

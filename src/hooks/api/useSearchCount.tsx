@@ -44,6 +44,7 @@ const useSearchCount = ({
   };
 
   const { data, error, mutate } = useSWR(productUrl, fetcher, {
+    revalidateOnFocus: false,
     suspense: true,
   });
 

@@ -9,7 +9,7 @@ import OrderTotalDetail from "components/order/OrderTotalDetail";
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderCheckoutData, ILineItem } from "components/order/types";
+import { IOrderCheckoutData, IModifiedLineItem } from "components/order/types";
 
 interface IOrderTotalProps {
   checkoutData: IOrderCheckoutData;
@@ -30,7 +30,9 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
   );
 
   const totalPrice = items
-    .map((item: ILineItem) => Number(item.variant_price) * item.quantity)
+    .map(
+      (item: IModifiedLineItem) => Number(item.variant_price) * item.quantity,
+    )
     .reduce((prevValue: number, curValue: number) => prevValue + curValue, 0);
 
   const deliveryCharge: string = localStorage.getItem("delivery")!;
