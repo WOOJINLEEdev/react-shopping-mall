@@ -5,6 +5,7 @@ import { Formik, Form, ErrorMessage, Field, FormikValues } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import GoogleLogin from "react-google-login";
+import * as Sentry from "@sentry/react";
 
 import useTokenStatus from "hooks/useTokenStatus";
 import { userId, userPassword } from "utils/login-validation";
@@ -30,7 +31,7 @@ const LogIn = () => {
 
         loginCheck(res);
       } catch (err) {
-        console.log(err);
+        Sentry.captureException(`Catched Error : ${err}`);
       }
     }
 
@@ -60,6 +61,7 @@ const LogIn = () => {
       mutateToken(res.data);
       loginCheck(res);
     } catch (err: any | AxiosError) {
+      Sentry.captureException(`Catched Error : ${err}`);
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
         if (err.response.data.error === "user not found") {
@@ -110,7 +112,7 @@ const LogIn = () => {
       });
       loginCheck(res);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
     try {
       const res = await createSocialLoginApi({
@@ -124,7 +126,7 @@ const LogIn = () => {
 
       loginCheck(res);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 

@@ -1,5 +1,6 @@
 import { ChangeEvent, MouseEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 
 import useProductItem from "hooks/api/useProductItem";
 import useMyCart from "hooks/api/useMyCart";
@@ -96,7 +97,7 @@ const ItemDetail = () => {
       mutateCart(res.data, false);
       setIsOpen(true);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   }
 
@@ -140,7 +141,7 @@ const ItemDetail = () => {
       });
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 

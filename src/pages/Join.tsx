@@ -11,6 +11,7 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
+import * as Sentry from "@sentry/react";
 
 import useCheckUserId from "hooks/api/useCheckUserId";
 import {
@@ -58,7 +59,7 @@ const Join = () => {
       alert("회원가입이 완료되었습니다.");
       window.location.replace("/login");
     } catch (err: any) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
       if (err.response) {
         alert("이미 입력한 ID가 존재합니다.");
       }

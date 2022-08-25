@@ -1,5 +1,6 @@
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as Sentry from "@sentry/react";
 
 import useMyCart from "hooks/api/useMyCart";
 import {
@@ -35,7 +36,7 @@ const Cart = () => {
       mutateCart(null, true);
       setOpen((prev) => !prev);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 
@@ -53,7 +54,7 @@ const Cart = () => {
         false,
       );
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 
@@ -137,7 +138,7 @@ const Cart = () => {
       setChkId(res.data.checkout_id);
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 
@@ -162,7 +163,7 @@ const Cart = () => {
       });
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 
@@ -178,7 +179,7 @@ const Cart = () => {
         setAllChecked(true);
         setOpen((prev) => !prev);
       } catch (err) {
-        console.log(err);
+        Sentry.captureException(`Catched Error : ${err}`);
       }
     }
   };

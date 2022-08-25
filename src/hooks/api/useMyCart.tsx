@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import axios, { AxiosError } from "axios";
+import * as Sentry from "@sentry/react";
 
 import { instance } from "utils/http-client";
 import { isLogin } from "utils/auth";
@@ -25,6 +26,7 @@ const useMyCart = () => {
         })),
       };
     } catch (err: any | AxiosError) {
+      Sentry.captureException(`Catched Error : ${err}`);
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
 

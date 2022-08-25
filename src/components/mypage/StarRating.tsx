@@ -1,6 +1,7 @@
 import { useState, useEffect, MouseEvent, KeyboardEvent } from "react";
 import styled from "styled-components";
 import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
+import * as Sentry from "@sentry/react";
 
 import { updateStarRatingApi } from "api";
 
@@ -35,7 +36,7 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
 
       setStarRatings(selectedStarRatings);
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 

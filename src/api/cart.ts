@@ -22,7 +22,7 @@ export function deleteCartItemApi({ cartItemId }: IDeleteCartItemPayload) {
   return instance.delete(`/v1/me/cart/items/${cartItemId}`);
 }
 
-interface UpdateCartItemQuantityPayload {
+interface IUpdateCartItemQuantityPayload {
   itemId: number;
   quantity: number;
 }
@@ -30,7 +30,7 @@ interface UpdateCartItemQuantityPayload {
 export function updateCartItemQuantityApi({
   itemId,
   quantity,
-}: UpdateCartItemQuantityPayload) {
+}: IUpdateCartItemQuantityPayload) {
   return instance.patch(`/v1/me/cart/items/${itemId}/quantity`, {
     quantity: quantity,
   });

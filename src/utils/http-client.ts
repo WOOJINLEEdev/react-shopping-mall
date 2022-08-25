@@ -1,5 +1,6 @@
 /* eslint-disable func-names */
 import axios from "axios";
+
 import { getToken, removeToken } from "utils/token";
 
 export const instance = axios.create({

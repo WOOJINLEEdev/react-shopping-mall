@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
+import * as Sentry from "@sentry/react";
 
 import { formatPhone } from "utils/format-phone";
 import { fixOverlay } from "utils/fix-overlay";
@@ -148,7 +149,7 @@ const MyPageDeliveryModal = ({
       alert("배송지 등록이 완료되었습니다.");
       handleCancelBtnClick();
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 

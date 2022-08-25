@@ -2,6 +2,7 @@ import React, { useState, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
+import * as Sentry from "@sentry/react";
 
 import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
@@ -41,7 +42,7 @@ const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
         await createLogoutApi();
         removeToken();
       } catch (err) {
-        console.log("logout err:", err);
+        Sentry.captureException(`Catched Error : ${err}`);
       }
     }
 

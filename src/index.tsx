@@ -5,12 +5,24 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
+import { RecoilRoot } from "recoil";
+
 import App from "App";
 import reportWebVitals from "reportWebVitals";
 import * as serviceWorkerRegistration from "serviceWorkerRegistration";
-import { RecoilRoot } from "recoil";
 
-// ReactDOM.render(
+Sentry.init({
+  dsn:
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_SENTRY_DSN
+      : undefined,
+  integrations: [new BrowserTracing()],
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 1.0,
+});
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -19,7 +31,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       </RecoilRoot>
     </BrowserRouter>
   </React.StrictMode>,
-  // document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change

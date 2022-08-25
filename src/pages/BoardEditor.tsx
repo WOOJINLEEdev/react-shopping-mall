@@ -5,6 +5,7 @@ import styled from "styled-components";
 import jwt_decode from "jwt-decode";
 import DOMPurify from "dompurify";
 import { Editor } from "@toast-ui/react-editor";
+import * as Sentry from "@sentry/react";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
 import { getToken } from "utils/token";
@@ -51,7 +52,7 @@ const BoardEditor = () => {
         body: inputBody,
       });
     } catch (err) {
-      console.log(err);
+      Sentry.captureException(`Catched Error : ${err}`);
     }
   };
 

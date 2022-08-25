@@ -6,6 +6,7 @@ import { GoSearch } from "@react-icons/all-files/go/GoSearch";
 import { FiShoppingCart } from "@react-icons/all-files/fi/FiShoppingCart";
 import { GrHomeRounded } from "react-icons/gr";
 import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
+import * as Sentry from "@sentry/react";
 
 import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
@@ -39,7 +40,7 @@ const Header = () => {
       try {
         await updateMyVisitCountsApi();
       } catch (err) {
-        console.log(err);
+        Sentry.captureException(`Catched Error : ${err}`);
       }
     }
 
@@ -55,7 +56,7 @@ const Header = () => {
         mutateToken(res.data);
         mutateCart(null, true);
       } catch (err) {
-        console.log(err);
+        Sentry.captureException(`Catched Error : ${err}`);
       }
     }
 
@@ -67,7 +68,7 @@ const Header = () => {
       try {
         await updateShopVisitCountsApi();
       } catch (err) {
-        console.log(err);
+        Sentry.captureException(`Catched Error : ${err}`);
       }
     }
 

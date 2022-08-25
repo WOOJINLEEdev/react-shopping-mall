@@ -13,7 +13,7 @@ export function createCheckoutsApi({ lineItems }: ICreateCheckoutsPayload) {
   return instance.post("/v1/checkouts", { line_items: lineItems });
 }
 
-interface UpdateCheckoutsPayload {
+interface IUpdateCheckoutsPayload {
   checkoutNumber: number;
   shippingAddress: CheckoutShippingAddress;
   userCouponIdToBeUsed: number;
@@ -39,7 +39,7 @@ export function updateCheckoutsApi({
   userCouponIdToBeUsed,
   mileageToBeUsed,
   paymentMethod,
-}: UpdateCheckoutsPayload) {
+}: IUpdateCheckoutsPayload) {
   return instance.put(`/v1/checkouts/${checkoutNumber}`, {
     shipping_address: shippingAddress,
     user_coupon_id_to_be_used: userCouponIdToBeUsed,
