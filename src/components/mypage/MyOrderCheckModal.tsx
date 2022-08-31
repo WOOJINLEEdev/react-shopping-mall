@@ -124,8 +124,8 @@ const MyOrderCheckModal = ({
           closeText={closeText}
           sum={sum}
         />
-        <OrderCompletionDeliveryInfo orderData={selectedOrderData} />
-        <OrderCompletionPayInfo orderData={selectedOrderData} />
+        <OrderCompletionDeliveryInfo myOrderData={selectedOrderData} />
+        <OrderCompletionPayInfo myOrderData={selectedOrderData} />
       </ModalContent>
       <CloseBtn onClick={onRequestClose}>닫기</CloseBtn>
     </Modal>
@@ -141,7 +141,7 @@ const ModalTitle = styled.p`
   padding-bottom: 10px;
   border-bottom: 3px solid #333;
 
-  & svg {
+  svg {
     margin-right: 10px;
   }
 

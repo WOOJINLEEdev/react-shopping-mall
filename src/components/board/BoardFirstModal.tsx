@@ -75,7 +75,7 @@ const BoardItemModal = ({
 export default BoardItemModal;
 
 const Div = styled.div`
-  & .item_table_text {
+  .item_table_text {
     color: #0000ff;
     font-weight: bold;
   }

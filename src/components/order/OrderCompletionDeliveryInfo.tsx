@@ -1,17 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+import { IMyOrderDataType, ShippingAddress } from "components/order/types";
+
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { IOrderDataType, ShippingAddress } from "components/order/types";
-
 interface IOrderCompletionDeliveryInfoProps {
-  orderData: IOrderDataType[];
+  myOrderData: IMyOrderDataType[];
 }
 
 const OrderCompletionDeliveryInfo = ({
-  orderData,
+  myOrderData,
 }: IOrderCompletionDeliveryInfoProps) => {
   const [arrowImg, setArrowImg] = useState(downArrow);
   const [deliveryInfoClass, setDeliveryInfoClass] = useState("hide");
@@ -55,7 +55,7 @@ const OrderCompletionDeliveryInfo = ({
         <h2 className="order_info_header">배송 정보</h2>
         <AddressBtnWrap>
           <div className={infoHeadAddress}>
-            {getFormattedShippingAddress(orderData[0].shipping_address)}
+            {getFormattedShippingAddress(myOrderData[0].shipping_address)}
           </div>
           <button
             type="button"
@@ -75,12 +75,12 @@ const OrderCompletionDeliveryInfo = ({
         <ul>
           <DeliveryInfo>
             <div>수령인</div>
-            <div>{getFormattedRecipient(orderData[0].shipping_address)}</div>
+            <div>{getFormattedRecipient(myOrderData[0].shipping_address)}</div>
           </DeliveryInfo>
           <DeliveryInfo>
             <div className="delivery_info_address_title">배송지</div>
             <div className="delivery_info_address_content">
-              {getFormattedShippingAddress(orderData[0].shipping_address)}
+              {getFormattedShippingAddress(myOrderData[0].shipping_address)}
             </div>
           </DeliveryInfo>
         </ul>
@@ -96,12 +96,12 @@ const DeliveryInfo = styled.li`
   justify-content: space-between;
   padding: 20px;
 
-  & .delivery_info_address_title {
+  .delivery_info_address_title {
     min-width: 44.16px;
     text-align: left;
   }
 
-  & .delivery_info_address_content {
+  .delivery_info_address_content {
     width: 75%;
     text-align: right;
   }

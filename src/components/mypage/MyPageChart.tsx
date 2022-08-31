@@ -7,7 +7,6 @@ import { formatDate } from "utils/date";
 
 import Loading from "components/common/Loading";
 import Chart from "components/common/Chart";
-
 import { IDailyVisit } from "components/mypage/types";
 
 interface IMyPageChart {

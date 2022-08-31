@@ -100,13 +100,13 @@ const MyInfoDetailList = styled.li`
     padding: 0;
   }
 
-  & .order_check_link {
+  .order_check_link {
     width: 100%;
     text-decoration: none;
     color: #000;
   }
 
-  & .arrow_right {
+  .arrow_right {
     position: absolute;
     top: 30px;
     right: 30px;
@@ -118,7 +118,7 @@ const MyInfoDetailList = styled.li`
       color: green;
     }
 
-    & h3:hover {
+    h3:hover {
       color: green;
     }
   }

@@ -101,7 +101,7 @@ const RemoveBtn = styled.button`
   background: transparent;
   cursor: pointer;
 
-  & svg {
+  svg {
     display: block;
     width: 20px;
     height: 20px;
@@ -112,7 +112,7 @@ const RemoveBtn = styled.button`
     padding: 0;
     right: 20%;
 
-    & svg {
+    svg {
       width: 14px;
       height: 14px;
       padding: 18px 10px;

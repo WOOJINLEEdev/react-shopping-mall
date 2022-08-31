@@ -141,7 +141,7 @@ const OrderListItem = styled.li`
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
   cursor: pointer;
 
-  & .list_item_price {
+  .list_item_price {
     padding-bottom: 0;
   }
 `;
@@ -175,7 +175,7 @@ const TotalOrderCount = styled.p`
   padding: 20px 0 10px;
   font-size: 18px;
 
-  & span {
+  span {
     font-weight: bold;
     color: green;
   }

@@ -332,7 +332,7 @@ export default OrderCompletionItemInfo;
 const OrderItemInfoWrap = styled.div`
   border-bottom: 3px solid #333;
 
-  & .order_item_info_head {
+  .order_item_info_head {
     display: flex;
   }
 `;

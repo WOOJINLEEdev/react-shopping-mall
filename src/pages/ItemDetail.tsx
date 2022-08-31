@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { useState, ChangeEvent, MouseEvent, lazy, Suspense } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 
@@ -9,8 +9,10 @@ import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
 import { addToCartApi, createCheckoutsApi } from "api";
 
-import CommonModal from "components/common/CommonModal";
 import QuantityCounter from "components/common/QuantityCounter";
+import Loading from "components/common/Loading";
+
+const CommonModal = lazy(() => import("components/common/CommonModal"));
 
 interface IOption {
   id: number;
@@ -147,19 +149,22 @@ const ItemDetail = () => {
 
   return (
     <div className="list_element_detail">
-      <CommonModal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        modalText={modalText}
-        yesBtnText={yesBtnText}
-        noBtnText={noBtnText}
-        yesBtnClick={handleModalBtnClick}
-        noBtnClick={handleModalBtnClick}
-        btnWidth={btnWidth}
-        contentPadding={contentPadding}
-        onOverlayClick={onOverlayClick}
-        onEsc={onEsc}
-      />
+      <Suspense fallback={<Loading />}>
+        <CommonModal
+          isOpen={isOpen}
+          onRequestClose={onRequestClose}
+          modalText={modalText}
+          yesBtnText={yesBtnText}
+          noBtnText={noBtnText}
+          yesBtnClick={handleModalBtnClick}
+          noBtnClick={handleModalBtnClick}
+          btnWidth={btnWidth}
+          contentPadding={contentPadding}
+          onOverlayClick={onOverlayClick}
+          onEsc={onEsc}
+        />
+      </Suspense>
+
       <div className="image_wrapper">
         <picture className="image_picture">
           {SOURCE_LIST.map((item) => {

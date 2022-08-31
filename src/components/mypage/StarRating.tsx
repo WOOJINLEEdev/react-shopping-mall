@@ -75,38 +75,38 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
 export default StarRating;
 
 const StarWrap = styled.div`
-  & svg {
+  svg {
     color: #c7c7c7;
     cursor: pointer;
   }
 
-  & .star_content_box {
+  .star_content_box {
     display: flex;
     flex-direction: column;
   }
 
-  & .star_rating_box {
+  .star_rating_box {
     display: flex;
     width: 140px;
     padding: 20px 0 0;
     line-height: 27px;
   }
 
-  & .star_count {
+  .star_count {
     margin-left: 10px;
   }
 
   @media (hover: hover) {
-    & div:hover > svg {
-      color: orange;
+    div:hover > svg {
+      color: #ffa500;
     }
 
-    & svg:hover ~ svg {
+    svg:hover ~ svg {
       color: #c7c7c7;
     }
   }
 
   .clickedstar {
-    color: gold;
+    color: #ffd700;
   }
 `;

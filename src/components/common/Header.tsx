@@ -11,11 +11,7 @@ import * as Sentry from "@sentry/react";
 import useMyCart from "hooks/api/useMyCart";
 import useTokenStatus from "hooks/useTokenStatus";
 import useDevice from "hooks/useDevice";
-import {
-  updateMyVisitCountsApi,
-  updateShopVisitCountsApi,
-  createAccessTokenApi,
-} from "api";
+import { updateMyVisitCountsApi, updateShopVisitCountsApi } from "api";
 
 import SearchModal from "components/search/SearchModal";
 
@@ -46,22 +42,9 @@ const Header = () => {
 
     if (token) {
       updateMyVisitCount();
+      mutateCart(null, true);
     }
   }, [token]);
-
-  useEffect(() => {
-    async function createAccessToken() {
-      try {
-        const res = await createAccessTokenApi();
-        mutateToken(res.data);
-        mutateCart(null, true);
-      } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
-      }
-    }
-
-    createAccessToken();
-  }, []);
 
   useEffect(() => {
     async function updateShopVisitCount() {
@@ -228,7 +211,7 @@ const MenuWrap = styled.div`
     margin: 0;
     text-align: center;
 
-    & svg {
+    svg {
       width: 20px;
       height: 20px;
       margin: 15px;
@@ -238,7 +221,7 @@ const MenuWrap = styled.div`
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     display: inline-block;
 
-    & svg {
+    svg {
       width: 30px;
       height: 30px;
       margin: 25px 30px;
@@ -258,7 +241,7 @@ const HeaderAbout = styled.li`
   justify-content: center;
   cursor: pointer;
 
-  & svg {
+  svg {
     width: 32px;
     min-height: 32px;
     margin: 24px 29px;
@@ -274,7 +257,7 @@ const HeaderSearch = styled.li`
   text-align: center;
   cursor: pointer;
 
-  & svg {
+  svg {
     width: 32px;
     height: 32px;
     margin: 24px 29px;
@@ -291,7 +274,7 @@ const HeaderSignIn = styled.li`
   text-align: center;
   cursor: pointer;
 
-  & svg {
+  svg {
     width: 32px;
     min-height: 32px;
     margin: 24px 29px;
@@ -301,7 +284,7 @@ const HeaderSignIn = styled.li`
     width: 50px;
     height: 50px;
 
-    & svg,
+    svg,
     img {
       width: 20px;
       min-height: 20px;
@@ -320,7 +303,7 @@ const HeaderCart = styled.li`
   text-align: center;
   cursor: pointer;
 
-  & svg {
+  svg {
     width: 32px;
     height: 32px;
     margin: 24px 29px;
@@ -330,7 +313,7 @@ const HeaderCart = styled.li`
     width: 50px;
     height: 50px;
 
-    & svg {
+    svg {
       width: 20px;
       height: 20px;
       margin: 15px;

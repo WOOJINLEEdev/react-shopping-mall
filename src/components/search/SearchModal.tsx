@@ -44,11 +44,11 @@ const SearchModal = () => {
 
 export default SearchModal;
 
-interface IDimmedLayer {
+interface IDimmedLayerProps {
   show: boolean;
 }
 
-const DimmedLayer = styled.div<IDimmedLayer>`
+const DimmedLayer = styled.div<IDimmedLayerProps>`
   z-index: 99;
   display: ${(props) => (props.show ? "block" : "none")};
   position: fixed;
@@ -69,7 +69,7 @@ const DimmedLayer = styled.div<IDimmedLayer>`
     cursor: pointer;
     margin-right: 100px;
 
-    & svg {
+    svg {
       min-width: 100%;
       min-height: 100%;
     }

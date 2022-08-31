@@ -254,7 +254,7 @@ const BirthWrap = styled.div`
   font-size: 0;
 
   @media only screen and (min-width: 320px) and (max-width: 1023px) {
-    & input {
+    input {
       width: 30%;
       max-width: 100px;
     }
@@ -292,7 +292,7 @@ const IdCheckBtn = styled.button`
 const LabelWrap = styled.div`
   display: flex;
 
-  & span {
+  span {
     font-size: 12px;
     color: #6d6d6d;
     line-height: 14px;
@@ -304,11 +304,11 @@ const LabelWrap = styled.div`
   @media only screen and (min-width: 320px) and (max-width: 359px) {
     flex-direction: column;
 
-    & .form_label {
+    .form_label {
       padding-bottom: 5px;
     }
 
-    & span {
+    span {
       margin: 0;
       padding-left: 5px;
       padding-bottom: 5px;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FcCheckmark } from "@react-icons/all-files/fc/FcCheckmark";
@@ -10,8 +10,7 @@ import { getOrderNumber } from "utils/order";
 import OrderCompletionPayInfo from "components/order/OrderCompletionPayInfo";
 import OrderCompletionItemInfo from "components/order/OrderCompletionItemInfo";
 import OrderCompletionDeliveryInfo from "components/order/OrderCompletionDeliveryInfo";
-import Loading from "components/common/Loading";
-import { IOrderCompletionData, ILineItem } from "components/order/types";
+import { ILineItem } from "components/order/types";
 
 import { ReactComponent as ShoppingBag } from "assets/images/shopping-bag.svg";
 import downArrow from "assets/images/down-arrow.png";
@@ -20,7 +19,6 @@ import upArrow from "assets/images/up-arrow-icon.png";
 const OrderCompletion = () => {
   const matchParams = useParams();
 
-  const [orderData, setOrderData] = useState<IOrderCompletionData[]>([]);
   const [remainderClass, setRemainderClass] = useState("info_remainder");
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [arrowImg1, setArrowImg1] = useState(downArrow);
@@ -33,15 +31,7 @@ const OrderCompletion = () => {
 
   const { myOrderData } = useMyOrder({ checkoutId: checkoutNumber });
 
-  useEffect(() => {
-    setOrderData(myOrderData);
-  }, [checkoutNumber]);
-
-  if (orderData.length === 0) {
-    return <Loading />;
-  }
-
-  const items: ILineItem[] = orderData[0].line_items;
+  const items: ILineItem[] = myOrderData[0].line_items;
   const firstItem = items[0];
   const remainder = items.filter((item: ILineItem) => item !== firstItem);
   const itemQuantity = items.map((item: ILineItem) => item.quantity);
@@ -91,7 +81,8 @@ const OrderCompletion = () => {
           <HeadContentText>
             <Text>
               {formatDate(date).replaceAll("-", ".")} 주문하신 상품의 주문번호는{" "}
-              {getOrderNumber(orderData[0].created_at, orderData[0].id)} 입니다.
+              {getOrderNumber(myOrderData[0].created_at, myOrderData[0].id)}{" "}
+              입니다.
             </Text>
           </HeadContentText>
         </HeadContent>
@@ -111,8 +102,8 @@ const OrderCompletion = () => {
         closeText={closeText}
         sum={sum}
       />
-      <OrderCompletionDeliveryInfo orderData={orderData} />
-      <OrderCompletionPayInfo orderData={orderData} />
+      <OrderCompletionDeliveryInfo myOrderData={myOrderData} />
+      <OrderCompletionPayInfo myOrderData={myOrderData} />
     </Wrapper>
   );
 };
@@ -153,7 +144,7 @@ const CompletionHead = styled.div`
   flex-direction: row;
   justify-content: center;
 
-  & svg {
+  svg {
     width: 150px;
     height: 150px;
   }
@@ -162,7 +153,7 @@ const CompletionHead = styled.div`
     flex-direction: column;
     text-align: center;
 
-    & svg {
+    svg {
       width: 100px;
       height: 100px;
       margin: 0 auto;
@@ -173,7 +164,7 @@ const CompletionHead = styled.div`
     flex-direction: column;
     text-align: center;
 
-    & svg {
+    svg {
       width: 100px;
       height: 100px;
       margin: 0 auto;
@@ -199,7 +190,7 @@ const HeadTitle = styled.h2`
   margin-left: 10px;
   line-height: 150px;
 
-  & svg {
+  svg {
     width: 25px;
     height: 25px;
     margin: 0;
@@ -214,7 +205,7 @@ const HeadTitle = styled.h2`
     margin: 20px 0;
     line-height: 20px;
 
-    & svg {
+    svg {
       width: 20px;
       height: 20px;
       margin: 0;

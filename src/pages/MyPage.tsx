@@ -6,19 +6,14 @@ import useMyPageData from "hooks/api/useMyPageData";
 import MyPageChart from "components/mypage/MyPageChart";
 import MyPageInfo from "components/mypage/MyPageInfo";
 import MyPageInfoDetail from "components/mypage/MyPageInfoDetail";
-import Loading from "components/common/Loading";
+import CommonAsyncBoundary from "components/common/CommonAsyncBoundary";
 
 const MyPage = () => {
-  const { myData, loadingMyData, myDataError } = useMyPageData();
+  const { myData, myDataError } = useMyPageData();
 
   useEffect(() => {
     myDataError && window.location.replace("/login");
   }, [myDataError]);
-
-  if (loadingMyData) return <Loading />;
-  if (myDataError) {
-    return <Loading />;
-  }
 
   return (
     <MyPageWrap className="main_wrap">
@@ -31,7 +26,9 @@ const MyPage = () => {
 
       <MyPageChartWrap>
         <ChartTitle>Chart</ChartTitle>
-        <MyPageChart userName={myData.name} />
+        <CommonAsyncBoundary>
+          <MyPageChart userName={myData.name} />
+        </CommonAsyncBoundary>
       </MyPageChartWrap>
     </MyPageWrap>
   );

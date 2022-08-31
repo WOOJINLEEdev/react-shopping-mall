@@ -241,7 +241,7 @@ const SocialBtnWrap = styled.div`
   min-width: 200px;
   min-heigth: 120px;
 
-  & button,
+  button,
   img {
     min-width: 200px;
     max-width: 200px;
@@ -251,7 +251,7 @@ const SocialBtnWrap = styled.div`
     justify-content: space-evenly;
     height: 120px;
 
-    & button {
+    button {
       margin: 0 auto;
     }
   }

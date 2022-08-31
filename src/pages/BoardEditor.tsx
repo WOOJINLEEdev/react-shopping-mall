@@ -122,7 +122,7 @@ const EditorWrap = styled.div`
   padding: 50px;
   height: 100vh;
 
-  & .editor_user_id {
+  .editor_user_id {
     color: #333;
     font-weight: bold;
   }

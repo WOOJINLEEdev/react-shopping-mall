@@ -18,7 +18,7 @@ const SelectBoardPage = () => {
     <SelectWrapper>
       <SelectBoard>
         <Link
-          to="/selectBoard1"
+          to="/boardFirst"
           className="select_board_link"
           onClick={() => handleSelectBoardClick("first")}
         >
@@ -27,7 +27,7 @@ const SelectBoardPage = () => {
       </SelectBoard>
       <SelectBoard>
         <Link
-          to="/selectBoard2"
+          to="/boardSecond"
           className="select_board_link"
           onClick={() => handleSelectBoardClick("second")}
         >
@@ -76,7 +76,7 @@ const SelectBoard = styled.div`
     line-height: 50%;
   }
 
-  & p {
+  p {
     position: absolute;
     width: 400px;
     height: 400px;

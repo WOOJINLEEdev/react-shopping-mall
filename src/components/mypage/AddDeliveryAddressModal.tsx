@@ -9,6 +9,8 @@ import { parsePhone } from "utils/format-phone";
 import { getFullAddress } from "utils/get-address";
 import { isNumberCheck } from "utils/number";
 
+import AsyncBoundary from "components/common/AsyncBoundary";
+import Loading from "components/common/Loading";
 import { IAddress } from "components/mypage/types";
 
 import { myDeliveryInfoState } from "state/mypage";
@@ -95,7 +97,15 @@ const AddDeliveryAddressModal = ({
   return (
     <>
       {showDaumPostModal ? (
-        <>
+        <AsyncBoundary
+          rejectedFallback={({ resetErrorBoundary }) => {
+            setTimeout(() => {
+              resetErrorBoundary();
+            }, 300);
+            return null;
+          }}
+          pendingFallback={<Loading />}
+        >
           <PostModalEscBtn
             type="button"
             aria-label="close"
@@ -104,7 +114,7 @@ const AddDeliveryAddressModal = ({
             <CgClose />
           </PostModalEscBtn>
           <DaumPostcode onComplete={handleComplete} style={postCodeStyle} />
-        </>
+        </AsyncBoundary>
       ) : null}
 
       <div className={addDeliveryClassName}>

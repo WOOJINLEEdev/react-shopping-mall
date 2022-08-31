@@ -249,7 +249,7 @@ const ModalTitle = styled.p`
   padding-bottom: 10px;
   border-bottom: 3px solid #333;
 
-  & svg {
+  svg {
     margin-right: 10px;
   }
 

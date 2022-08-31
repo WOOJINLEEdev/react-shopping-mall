@@ -31,7 +31,7 @@ const DivContainer = styled.div`
   margin: 0 auto;
   text-decoration: none;
 
-  & .login_link {
+  .login_link {
     height: 100px;
     margin: 0 auto;
     line-height: 20px;

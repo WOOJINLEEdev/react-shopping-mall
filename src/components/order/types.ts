@@ -71,7 +71,7 @@ export interface IDeliveryRequirementOption {
   selected?: string;
 }
 
-export interface IOrderDataType {
+export interface IMyOrderDataType {
   shipping_address: Omit<ICheckoutShippingAddress, "phone2">;
 }
 
@@ -149,7 +149,7 @@ export interface IOrderCompletionData {
   used_point?: number;
 }
 
-export type OrderDataType = Omit<
+export type MyOrderDataType = Omit<
   IOrderCompletionData,
   "created_at" | "line_items" | "id" | "shipping_address"
 >;

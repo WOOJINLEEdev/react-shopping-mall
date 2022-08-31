@@ -29,7 +29,9 @@ const ProductList = () => {
     <>
       <ul className="list_group">
         {products.map((product: IProductItem) => {
-          return <ProductItem key={product.id} item={product} />;
+          return (
+            <ProductItem key={`product_item_${product.id}`} item={product} />
+          );
         })}
       </ul>
 

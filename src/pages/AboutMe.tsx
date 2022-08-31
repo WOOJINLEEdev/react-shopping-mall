@@ -250,7 +250,7 @@ const MeContentItem = styled.li`
   font-size: 18px;
   color: #333;
 
-  & svg {
+  svg {
     margin-right: 5px;
     fill: green;
   }
@@ -376,7 +376,7 @@ const ListItem = styled.div`
   font-size: 25px;
   color: green;
 
-  & svg {
+  svg {
     position: absolute;
     width: 10px;
     height: 10px;

@@ -1,11 +1,10 @@
-import { useEffect, lazy } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect, lazy, Suspense } from "react";
+import { Routes, Route, useLocation, Outlet } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
 import Loading from "components/common/Loading";
 import HomeSkeleton from "components/home/HomeSkeleton";
-import AsyncBoundary from "components/common/AsyncBoundary";
-import ErrorMessage from "components/common/ErrorMessage";
+import CommonAsyncBoundary from "components/common/CommonAsyncBoundary";
 
 import { headerItemState } from "state";
 
@@ -40,34 +39,45 @@ const Main = () => {
 
   return (
     <main>
-      <AsyncBoundary
-        rejectedFallback={() => <ErrorMessage />}
-        pendingFallback={
-          location.pathname === "/" ? <HomeSkeleton /> : <Loading />
-        }
+      <Suspense
+        fallback={location.pathname === "/" ? <HomeSkeleton /> : <Loading />}
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="products/:productId" element={<ItemDetail />} />
+          <Route path="selectBoard" element={<SelectBoard />} />
+          <Route path="boardFirst" element={<BoardFirst />} />
+          <Route path="boardFirst/posts/:no" element={<BoardFirstItem />} />
+          <Route path="boardPost" element={<BoardEditor />} />
+          <Route path="join" element={<Join />} />
           <Route path="login" element={<LogIn />} />
           <Route path="mypage" element={<MyPage />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="join" element={<Join />} />
-          <Route path="checkout/:checkoutId" element={<Order />} />
-          <Route path="postView/:id" element={<BoardItem />} />
-          <Route path="post/:no" element={<BoardFirstItem />} />
-          <Route path="boardPost" element={<BoardEditor />} />
-          <Route path="selectBoard" element={<SelectBoard />} />
-          <Route path="selectBoard1" element={<BoardFirst />} />
-          <Route path="selectBoard2" element={<BoardSecond />} />
-          <Route path="orderCheck/:checkoutId" element={<OrderCompletion />} />
-          <Route path="myOrderCheck" element={<MyOrderCheck />} />
-          <Route path="searchResult/:searchWord" element={<SearchResult />} />
-          <Route path="aboutMe" element={<AboutMe />} />
           <Route path="*" element={<PageNotFound />} />
+
+          <Route path="/" element={<WithCommonAsyncBoundary />}>
+            <Route path="aboutMe" element={<AboutMe />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="products/:productId" element={<ItemDetail />} />
+            <Route path="boardSecond" element={<BoardSecond />} />
+            <Route path="boardSecond/posts/:id" element={<BoardItem />} />
+            <Route path="searchResult/:searchWord" element={<SearchResult />} />
+            <Route path="checkout/:checkoutId" element={<Order />} />
+            <Route path="myOrderCheck" element={<MyOrderCheck />} />
+            <Route
+              path="orderCheck/:checkoutId"
+              element={<OrderCompletion />}
+            />
+          </Route>
         </Routes>
-      </AsyncBoundary>
+      </Suspense>
     </main>
+  );
+};
+
+const WithCommonAsyncBoundary = () => {
+  return (
+    <CommonAsyncBoundary>
+      <Outlet />
+    </CommonAsyncBoundary>
   );
 };
 

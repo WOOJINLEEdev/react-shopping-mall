@@ -193,7 +193,7 @@ const BoardFirst = () => {
               </span>
             </BoardTableColumn>
             <BoardTableColumn>
-              <Link to={`/post/${item.no}`} className="board_link">
+              <Link to={`/boardFirst/posts/${item.no}`} className="board_link">
                 <span style={{ fontWeight: "bold" }}>{item.title}</span>
               </Link>
             </BoardTableColumn>
@@ -222,12 +222,15 @@ const BoardFirst = () => {
         {dataList
           .slice(offset, offset + limit)
           .map((item: IFirstPostItem, i: number) => (
-            <BoardTableRow key={`board_table_row${i}`}>
+            <BoardTableRow key={`board_first_table_row${i}`}>
               {isTablet && <BoardTableColumn>{item.no}</BoardTableColumn>}
               {isPc && <BoardTableColumn>{item.no}</BoardTableColumn>}
               <BoardTableColumn>{item.type}</BoardTableColumn>
               <BoardTableColumn>
-                <Link to={`/post/${item.no}`} className="board_link">
+                <Link
+                  to={`/boardFirst/posts/${item.no}`}
+                  className="board_link"
+                >
                   {item.title}
                 </Link>
               </BoardTableColumn>

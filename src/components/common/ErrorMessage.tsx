@@ -18,14 +18,14 @@ const DivContainer = styled.div`
   font-size: 18px;
   text-align: center;
 
-  & p {
+  p {
     padding: 10px 0;
   }
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {
     font-size: 13px;
 
-    & p {
+    p {
       width: 320px;
       margin: 0 auto;
     }
@@ -34,7 +34,7 @@ const DivContainer = styled.div`
   @media only screen and (min-width: 768px) and (max-width: 1023px) {
     font-size: 16px;
 
-    & p {
+    p {
       width: 768px;
       margin: 0 auto;
     }

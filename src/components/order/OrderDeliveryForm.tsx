@@ -301,12 +301,12 @@ const DeliveryRequirementWrap = styled.div`
 const PreexistenceSelect = styled.select<IPreexistenceSelectProps>`
   width: 100%;
   height: 40px;
+  padding: 10px;
+  margin: ${(props) => props.margin || "0"};
+  color: ${(props) => props.color || "#bababa"};
   border: 1px solid #d4d4d4;
   border-radius: 5px;
-  margin: ${(props) => props.margin || "0"};
   outline: none;
-  padding: 10px;
-  color: ${(props) => props.color || "#bababa"};
   font-family: "RobotoCondensed Regular", "Spoqa Han Sans 400", sans-serif;
 
   @media only screen and (min-width: 768px) and (max-width: 1023px) {

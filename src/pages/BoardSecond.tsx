@@ -151,10 +151,10 @@ const BoardSecond = () => {
 
       <BoardTable headersName={getHeadersName()} boardLocal="second">
         {posts.slice(offset, offsetLimit).map((item, i) => (
-          <BoardTableRow key={`table_row_${i}`}>
+          <BoardTableRow key={`board_second_table_row_${i}`}>
             <BoardTableColumn>{item.id}</BoardTableColumn>
             <BoardTableColumn title={item.title}>
-              <Link to={`/postView/${item.id}`} className="board_link">
+              <Link to={`/boardSecond/posts/${item.id}`} className="board_link">
                 <span className="board_item_title">{item.title}</span>
               </Link>
             </BoardTableColumn>

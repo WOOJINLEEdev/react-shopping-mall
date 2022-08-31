@@ -3,17 +3,17 @@ import styled from "styled-components";
 
 import { formatPrice, formatPriceWithUnit } from "utils/money";
 
+import { MyOrderDataType, UsedCouponAmount } from "components/order/types";
+
 import downArrow from "assets/images/down-arrow.png";
 import upArrow from "assets/images/up-arrow-icon.png";
 
-import { OrderDataType, UsedCouponAmount } from "components/order/types";
-
 export interface IOrderCompletionPayInfoProps {
-  orderData: OrderDataType[];
+  myOrderData: MyOrderDataType[];
 }
 
 const OrderCompletionPayInfo = ({
-  orderData,
+  myOrderData,
 }: IOrderCompletionPayInfoProps) => {
   const [arrowImg, setArrowImg] = useState(upArrow);
   const [payInfoClass, setPayInfoClass] = useState("order_pay_info_wrap");
@@ -56,8 +56,8 @@ const OrderCompletionPayInfo = ({
 
         <PaymentBtnWrap>
           <div className={infoHeadPayment}>
-            {orderData[0].payment_method} /{" "}
-            {formatPrice(orderData[0].total_price.toString())}
+            {myOrderData[0].payment_method} /{" "}
+            {formatPrice(myOrderData[0].total_price.toString())}
           </div>
           <button
             type="button"
@@ -75,30 +75,30 @@ const OrderCompletionPayInfo = ({
       <ul className={payInfoClass}>
         <li className="order_pay_info">
           <div className="order_pay_info_label">결제 수단</div>
-          <div>{orderData[0].payment_method}</div>
+          <div>{myOrderData[0].payment_method}</div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">총 상품금액</div>
-          <div>{formatPrice(orderData[0].product_price.toString())}</div>
+          <div>{formatPrice(myOrderData[0].product_price.toString())}</div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">배송비</div>
-          <div>{formatPriceWithUnit(orderData[0].shipping_price, "+")}</div>
+          <div>{formatPriceWithUnit(myOrderData[0].shipping_price, "+")}</div>
         </li>
         <li className="order_pay_info">
           <div className="order_pay_info_label">할인금액</div>
           <div className="pay_info_discount_wrap">
             <span className="pay_info_total_discount">
-              {formatPriceWithUnit(orderData[0].total_discount)}
+              {formatPriceWithUnit(myOrderData[0].total_discount)}
             </span>
             <ul className="coupon_mileage_wrap">
               <UsedCouponMileage>
                 <CouponTitle>쿠폰</CouponTitle>
-                <div>{getUsedCouponAmount(orderData[0].used_coupon)}</div>
+                <div>{getUsedCouponAmount(myOrderData[0].used_coupon)}</div>
               </UsedCouponMileage>
               <UsedCouponMileage>
                 <MileageTitle>마일리지</MileageTitle>
-                <div>{getUsedMileage(orderData[0].used_point)}</div>
+                <div>{getUsedMileage(myOrderData[0].used_point)}</div>
               </UsedCouponMileage>
             </ul>
           </div>
@@ -108,7 +108,7 @@ const OrderCompletionPayInfo = ({
             총 결제금액
           </div>
           <div className="order_final_price">
-            {formatPrice(orderData[0].total_price.toString())}
+            {formatPrice(myOrderData[0].total_price.toString())}
           </div>
         </li>
       </ul>
@@ -121,18 +121,18 @@ export default OrderCompletionPayInfo;
 const PayInfoWrap = styled.div`
   border-bottom: 3px solid #333;
 
-  & .pay_info_discount_wrap {
+  .pay_info_discount_wrap {
     display: flex;
     flex-direction: column;
     width: 50%;
     text-align: right;
   }
 
-  & .pay_info_total_discount {
+  .pay_info_total_discount {
     padding-bottom: 10px;
   }
 
-  & .coupon_mileage_wrap {
+  .coupon_mileage_wrap {
     width: 100%;
   }
 `;

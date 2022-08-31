@@ -38,7 +38,7 @@ const MoreBtn = styled.button<IMoreBtnProps>`
   margin: ${(props) => props.margin || "30px 0 0"};
   cursor: pointer;
 
-  & svg {
+  svg {
     width: 15px;
     height: 15px;
     margin: 15.5px 0 15.5px 3px;
