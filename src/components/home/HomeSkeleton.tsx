@@ -16,7 +16,8 @@ export default HomeSkeleton;
 
 const DivContainer = styled.div`
   position: relative;
-  width: 100%;
+  width: 1024px;
+  margin: 0 auto;
   padding-top: 50px;
 
   @media only screen and (min-width: 320px) and (max-width: 767px) {

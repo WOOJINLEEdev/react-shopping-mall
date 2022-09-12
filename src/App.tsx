@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import * as Sentry from "@sentry/react";
 import "focus-visible";
 import "App.css";
@@ -6,14 +6,7 @@ import "App.css";
 import useTokenStatus from "hooks/useTokenStatus";
 import { createAccessTokenApi } from "api";
 
-import Main from "layout/Main";
-import Header from "components/common/Header";
-import Footer from "components/common/Footer";
-import Loading from "components/common/Loading";
-import TopBtn from "components/common/TopBtn";
-import CommonAsyncBoundary from "components/common/CommonAsyncBoundary";
-
-const Menu = lazy(() => import("components/common/Menu"));
+import Router from "routes";
 
 const App = () => {
   const { mutateToken } = useTokenStatus();
@@ -33,16 +26,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <CommonAsyncBoundary>
-        <Header />
-      </CommonAsyncBoundary>
-      <Main />
-      <Footer />
-      <TopBtn />
-
-      <Suspense fallback={<Loading />}>
-        <Menu />
-      </Suspense>
+      <Router />
     </div>
   );
 };

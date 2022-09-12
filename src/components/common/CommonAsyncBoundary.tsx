@@ -1,11 +1,12 @@
 import { ReactNode } from "react";
+import { Outlet } from "react-router-dom";
 
 import AsyncBoundary from "components/common/AsyncBoundary";
 import ErrorMessage from "components/common/ErrorMessage";
 import Loading from "components/common/Loading";
 
 interface ICommonAsyncBoundaryProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const CommonAsyncBoundary = ({ children }: ICommonAsyncBoundaryProps) => {
@@ -14,7 +15,7 @@ const CommonAsyncBoundary = ({ children }: ICommonAsyncBoundaryProps) => {
       rejectedFallback={() => <ErrorMessage />}
       pendingFallback={<Loading />}
     >
-      {children}
+      {children || <Outlet />}
     </AsyncBoundary>
   );
 };
