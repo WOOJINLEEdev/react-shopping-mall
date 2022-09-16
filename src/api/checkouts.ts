@@ -1,6 +1,7 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
 interface ICreateCheckoutsPayload {
+  instance: AxiosInstance;
   lineItems: ILineItem[];
 }
 
@@ -9,11 +10,15 @@ interface ILineItem {
   quantity: number;
 }
 
-export function createCheckoutsApi({ lineItems }: ICreateCheckoutsPayload) {
+export function createCheckoutsApi({
+  instance,
+  lineItems,
+}: ICreateCheckoutsPayload) {
   return instance.post("/v1/checkouts", { line_items: lineItems });
 }
 
 interface IUpdateCheckoutsPayload {
+  instance: AxiosInstance;
   checkoutNumber: number;
   shippingAddress: CheckoutShippingAddress;
   userCouponIdToBeUsed: number;
@@ -34,6 +39,7 @@ interface CheckoutShippingAddress {
 }
 
 export function updateCheckoutsApi({
+  instance,
   checkoutNumber,
   shippingAddress,
   userCouponIdToBeUsed,

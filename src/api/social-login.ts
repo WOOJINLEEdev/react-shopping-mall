@@ -1,6 +1,7 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
 interface ICreateSocialLoginPayload {
+  instance: AxiosInstance;
   socialType: string;
   accessToken?: string;
   profile?: ISocialProfile;
@@ -13,6 +14,7 @@ interface ISocialProfile {
 }
 
 export function createSocialLoginApi({
+  instance,
   socialType,
   accessToken,
   profile,

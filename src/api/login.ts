@@ -1,11 +1,16 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
 interface ICreateLoginPayload {
+  instance: AxiosInstance;
   userId: string;
   userPassword: string;
 }
 
-export function createLoginApi({ userId, userPassword }: ICreateLoginPayload) {
+export function createLoginApi({
+  instance,
+  userId,
+  userPassword,
+}: ICreateLoginPayload) {
   return instance.post(
     "/v1/auth/login",
     {

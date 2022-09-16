@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 interface IUseVisitCount {
   visitStartDate: string;
@@ -13,6 +13,8 @@ const useVisitCount = ({
   visitEndDate,
   division,
 }: IUseVisitCount) => {
+  const instance = useHttpClient();
+
   const shopVisitCountUrl = `/v1/shop/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`;
   const myVisitCountUrl = `/v1/me/daily-visits?visit_start_date=${visitStartDate}&visit_end_date=${visitEndDate}`;
 

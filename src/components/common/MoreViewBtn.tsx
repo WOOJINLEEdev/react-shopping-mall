@@ -16,11 +16,9 @@ const MoreViewBtn = ({ onClick, margin }: IMoreViewBtnProps) => {
 
 export default MoreViewBtn;
 
-interface IMoreBtnProps {
-  margin?: string;
-}
+type MoreBtnProps = Omit<IMoreViewBtnProps, "onClick">;
 
-const MoreBtn = styled.button<IMoreBtnProps>`
+const MoreBtn = styled.button<MoreBtnProps>`
   display: flex;
   justify-content: center;
   width: 100%;

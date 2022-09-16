@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 import * as Sentry from "@sentry/react";
 
+import useHttpClient from "hooks/useHttpClient";
 import { updateStarRatingApi } from "api";
 
 interface IStarRatingProps {
@@ -19,6 +20,8 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
     false,
   ]);
 
+  const instance = useHttpClient();
+
   useEffect(() => {
     myRating && setStarRatings(updatedStarRatings(myRating));
   }, [myRating]);
@@ -32,7 +35,10 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
     const selectedStarRatings = updatedStarRatings(selectedStar);
 
     try {
-      await updateStarRatingApi(countClickedStarsNumber(selectedStarRatings));
+      await updateStarRatingApi({
+        instance,
+        starRating: countClickedStarsNumber(selectedStarRatings),
+      });
 
       setStarRatings(selectedStarRatings);
     } catch (err) {

@@ -14,6 +14,7 @@ import styled from "styled-components";
 import * as Sentry from "@sentry/react";
 
 import useCheckUserId from "hooks/api/useCheckUserId";
+import useHttpClient from "hooks/useHttpClient";
 import {
   userId,
   userPassword,
@@ -27,6 +28,8 @@ import { createJoinApi } from "api";
 
 const Join = () => {
   const formikRef = useRef<FormikProps<FormikValues>>(null);
+
+  const instance = useHttpClient();
 
   const initialValues = {
     id: "",
@@ -51,6 +54,7 @@ const Join = () => {
   const onSubmit = async (values: FormikValues) => {
     try {
       await createJoinApi({
+        instance,
         userId: values.id,
         userPassword: values.password2,
         name: values.name,

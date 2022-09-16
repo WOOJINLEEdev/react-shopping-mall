@@ -1,13 +1,15 @@
 import { useState } from "react";
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 interface IUseCheckUserId {
   userId: string;
 }
 
 const useCheckUserId = ({ userId }: IUseCheckUserId) => {
+  const instance = useHttpClient();
+
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   const refetch = () => {

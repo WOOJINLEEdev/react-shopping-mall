@@ -1,10 +1,12 @@
 import * as Sentry from "@sentry/react";
+import { AxiosInstance } from "axios";
 
 import { updateCheckoutsApi } from "api";
 
 import { IDeliveryInfoState } from "state/order";
 
 interface ISubmitCheckoutProps {
+  instance: AxiosInstance;
   checkoutDeliveryData: IDeliveryInfoState;
   checkoutPaymentData: string;
   checkoutTotalDetailData: ICheckoutTotalDetailData;
@@ -39,6 +41,7 @@ interface ICheckoutTotalDetailData {
 }
 
 export async function submitCheckout({
+  instance,
   checkoutDeliveryData,
   checkoutPaymentData,
   checkoutTotalDetailData,
@@ -48,6 +51,7 @@ export async function submitCheckout({
   if (checkoutDeliveryData.deliveryClassName === "delivery_write selected") {
     try {
       await updateCheckoutsApi({
+        instance,
         checkoutNumber,
         shippingAddress: {
           name: checkoutDeliveryData.designation,
@@ -75,6 +79,7 @@ export async function submitCheckout({
   if (checkoutDeliveryData.deliveryClassName1 === "delivery_write selected") {
     try {
       await updateCheckoutsApi({
+        instance,
         checkoutNumber,
         shippingAddress: {
           name: checkoutDeliveryData.designation,

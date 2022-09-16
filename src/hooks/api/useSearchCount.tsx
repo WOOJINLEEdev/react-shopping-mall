@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 interface IUseSearchCount {
   searchInput: string;
@@ -33,6 +33,8 @@ const useSearchCount = ({
   offset,
   count,
 }: IUseSearchCount) => {
+  const instance = useHttpClient();
+
   const productUrl = getProductUrl({
     searchInput,
     limit,

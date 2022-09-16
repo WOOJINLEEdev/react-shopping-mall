@@ -6,17 +6,23 @@ import * as Yup from "yup";
 import styled from "styled-components";
 import GoogleLogin from "react-google-login";
 import * as Sentry from "@sentry/react";
+import { useSetRecoilState } from "recoil";
 
-import useTokenStatus from "hooks/useTokenStatus";
+import useHttpClient from "hooks/useHttpClient";
 import { userId, userPassword } from "utils/login-validation";
 import { createSocialLoginApi, createLoginApi } from "api";
+
+import { tokenState } from "App";
 
 const LogIn = () => {
   const { naver } = window;
   const [naverIdToken, setNaverIdToken] = useState("");
 
+  const setToken = useSetRecoilState(tokenState);
+
   const location = useLocation();
   const navigate = useNavigate();
+  const instance = useHttpClient();
 
   useEffect(() => {
     initializeNaverLogin();
@@ -25,6 +31,7 @@ const LogIn = () => {
     async function createSocialLogin() {
       try {
         const res = await createSocialLoginApi({
+          instance,
           socialType: "naver",
           accessToken: naverIdToken,
         });
@@ -40,8 +47,6 @@ const LogIn = () => {
     }
   }, [naverIdToken]);
 
-  const { mutateToken } = useTokenStatus();
-
   const initialValues = {
     userId: "",
     userPassword: "",
@@ -55,10 +60,11 @@ const LogIn = () => {
   const onSubmit = async (values: FormikValues) => {
     try {
       const res = await createLoginApi({
+        instance,
         userId: values.userId,
         userPassword: values.userPassword,
       });
-      mutateToken(res.data);
+      setToken(res.data);
       loginCheck(res);
     } catch (err: any | AxiosError) {
       Sentry.captureException(`Catched Error : ${err}`);
@@ -103,6 +109,7 @@ const LogIn = () => {
   const onSuccess = async (response: any) => {
     try {
       const res = await createSocialLoginApi({
+        instance,
         socialType: "google",
         profile: {
           id: response.profileObj.googleId,
@@ -116,6 +123,7 @@ const LogIn = () => {
     }
     try {
       const res = await createSocialLoginApi({
+        instance,
         socialType: "google",
         profile: {
           id: response.profileObj.googleId,

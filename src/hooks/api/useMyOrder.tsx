@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 interface IUseMyOrder {
   checkoutId?: number;
@@ -22,6 +22,8 @@ function getOrderUrl({ checkoutId, count }: IUseMyOrder) {
 }
 
 const useMyOrder = ({ checkoutId, count }: IUseMyOrder) => {
+  const instance = useHttpClient();
+
   const orderUrl = getOrderUrl({ checkoutId, count });
   const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);

@@ -1,8 +1,10 @@
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 const useProductItem = (productId?: string) => {
+  const instance = useHttpClient();
+
   const productUrl = `/v1/products/${productId}`;
   const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);

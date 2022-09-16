@@ -1,8 +1,10 @@
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 const useCheckout = (checkoutId: string | number) => {
+  const instance = useHttpClient();
+
   const cartUrl = `/v1/checkouts/${checkoutId}`;
   const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);

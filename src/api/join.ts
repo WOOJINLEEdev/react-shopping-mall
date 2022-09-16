@@ -1,6 +1,7 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
 interface ICreateJoinPayload {
+  instance: AxiosInstance;
   userId: string;
   userPassword: string;
   name: string;
@@ -8,6 +9,7 @@ interface ICreateJoinPayload {
 }
 
 export function createJoinApi({
+  instance,
   userId,
   userPassword,
   name,

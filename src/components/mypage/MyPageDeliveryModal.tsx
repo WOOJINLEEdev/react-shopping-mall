@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import * as Sentry from "@sentry/react";
 
+import useHttpClient from "hooks/useHttpClient";
 import { formatPhone } from "utils/format-phone";
 import { fixOverlay } from "utils/fix-overlay";
 import { updateShippingAddressApi } from "api";
@@ -27,6 +28,8 @@ const MyPageDeliveryModal = ({
   onRequestClose,
   myDeliveryAddress,
 }: IMyPageDeliveryModalProps) => {
+  const instance = useHttpClient();
+
   const myDeliveryData = useRecoilValue<IDeliveryInfoState>(
     myDeliveryInfoState(myDeliveryAddress ? myDeliveryAddress.id : 0),
   );
@@ -134,6 +137,7 @@ const MyPageDeliveryModal = ({
 
     try {
       await updateShippingAddressApi({
+        instance,
         name: !myDeliveryData.designation ? " " : myDeliveryData.designation,
         recipientName: myDeliveryData.recipient,
         postalCode: myDeliveryData.address1,

@@ -1,6 +1,14 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
-export function updateStarRatingApi(starRating: number) {
+interface IUpdateStarRatingApiPayload {
+  instance: AxiosInstance;
+  starRating: number;
+}
+
+export function updateStarRatingApi({
+  instance,
+  starRating,
+}: IUpdateStarRatingApiPayload) {
   return instance.put("/v1/me/rating", {
     rating: starRating,
   });

@@ -1,5 +1,9 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
-export function createLogoutApi() {
+interface ICreateLogoutApi {
+  instance: AxiosInstance;
+}
+
+export function createLogoutApi({ instance }: ICreateLogoutApi) {
   return instance.post("/v1/auth/logout");
 }

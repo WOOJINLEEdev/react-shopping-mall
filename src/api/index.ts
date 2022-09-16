@@ -6,6 +6,5 @@ export * from "./rating";
 export * from "./access-token";
 export * from "./logout";
 export * from "./join";
-export * from "./check-user-id";
 export * from "./social-login";
 export * from "./login";

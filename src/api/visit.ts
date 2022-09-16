@@ -1,9 +1,17 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
-export function updateMyVisitCountsApi() {
+export function updateMyVisitCountsApi({
+  instance,
+}: {
+  instance: AxiosInstance;
+}) {
   return instance.put("/v1/me/visit", null);
 }
 
-export function updateShopVisitCountsApi() {
+export function updateShopVisitCountsApi({
+  instance,
+}: {
+  instance: AxiosInstance;
+}) {
   return instance.put("/v1/shop/visit", null);
 }

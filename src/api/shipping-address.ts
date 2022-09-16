@@ -1,6 +1,7 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
 interface IUpdateShippingAddressPayload {
+  instance: AxiosInstance;
   name?: string;
   recipientName: string;
   postalCode: string;
@@ -12,6 +13,7 @@ interface IUpdateShippingAddressPayload {
 }
 
 export function updateShippingAddressApi({
+  instance,
   name,
   recipientName,
   postalCode,

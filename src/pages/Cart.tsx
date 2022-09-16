@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import * as Sentry from "@sentry/react";
 
 import useMyCart from "hooks/api/useMyCart";
+import useHttpClient from "hooks/useHttpClient";
 import {
   deleteCartItemApi,
   updateCartItemQuantityApi,
@@ -25,6 +26,7 @@ const Cart = () => {
 
   const navigate = useNavigate();
   const { cart, mutateCart } = useMyCart();
+  const instance = useHttpClient();
 
   const items: IAddedCartItem[] = cart.items;
 
@@ -32,7 +34,7 @@ const Cart = () => {
     const cartItemId = Number((e.currentTarget as HTMLInputElement).name);
 
     try {
-      await deleteCartItemApi({ cartItemId });
+      await deleteCartItemApi({ instance, cartItemId });
       mutateCart(null, true);
       setOpen((prev) => !prev);
     } catch (err) {
@@ -42,7 +44,7 @@ const Cart = () => {
 
   const handleQuantity = async (itemId: number, quantity: number) => {
     try {
-      await updateCartItemQuantityApi({ itemId, quantity });
+      await updateCartItemQuantityApi({ instance, itemId, quantity });
       mutateCart(
         {
           ...cart,
@@ -133,6 +135,7 @@ const Cart = () => {
 
     try {
       const res = await createCheckoutsApi({
+        instance,
         lineItems: checkedLineItems,
       });
       setChkId(res.data.checkout_id);
@@ -154,6 +157,7 @@ const Cart = () => {
 
     try {
       const res = await createCheckoutsApi({
+        instance,
         lineItems: [
           {
             variant_id: item.variant_id,
@@ -174,7 +178,7 @@ const Cart = () => {
       let cartItemId: number = chkItem.id;
 
       try {
-        await deleteCartItemApi({ cartItemId });
+        await deleteCartItemApi({ instance, cartItemId });
         mutateCart(null, true);
         setAllChecked(true);
         setOpen((prev) => !prev);

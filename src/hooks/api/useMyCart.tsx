@@ -1,16 +1,21 @@
 import useSWR from "swr";
 import axios, { AxiosError } from "axios";
 import * as Sentry from "@sentry/react";
+import { useRecoilValue } from "recoil";
 
-import { instance } from "utils/http-client";
-import { isLogin } from "utils/auth";
+import useHttpClient from "hooks/useHttpClient";
 
 import { ICartItem } from "components/cart/types";
+import { tokenState } from "App";
 
 const useMyCart = () => {
+  const instance = useHttpClient();
+
+  const token = useRecoilValue(tokenState);
+
   const cartUrl = "/v1/me/cart";
   const fetcher = async (url: string) => {
-    if (!isLogin()) {
+    if (!token) {
       return {
         items: [],
       };

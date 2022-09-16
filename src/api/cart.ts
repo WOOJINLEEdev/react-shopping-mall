@@ -1,6 +1,7 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
 interface IAddToCartPayload {
+  instance: AxiosInstance;
   items: ICartItem[];
 }
 
@@ -10,24 +11,30 @@ interface ICartItem {
   quantity: number;
 }
 
-export function addToCartApi({ items }: IAddToCartPayload) {
+export function addToCartApi({ instance, items }: IAddToCartPayload) {
   return instance.put("/v1/me/cart", { items });
 }
 
 interface IDeleteCartItemPayload {
+  instance: AxiosInstance;
   cartItemId: number;
 }
 
-export function deleteCartItemApi({ cartItemId }: IDeleteCartItemPayload) {
+export function deleteCartItemApi({
+  instance,
+  cartItemId,
+}: IDeleteCartItemPayload) {
   return instance.delete(`/v1/me/cart/items/${cartItemId}`);
 }
 
 interface IUpdateCartItemQuantityPayload {
+  instance: AxiosInstance;
   itemId: number;
   quantity: number;
 }
 
 export function updateCartItemQuantityApi({
+  instance,
   itemId,
   quantity,
 }: IUpdateCartItemQuantityPayload) {

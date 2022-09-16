@@ -1,8 +1,10 @@
 import useSWR from "swr";
 
-import { instance } from "utils/http-client";
+import useHttpClient from "hooks/useHttpClient";
 
 const useMyPageData = () => {
+  const instance = useHttpClient();
+
   const myPageUrl = "/v1/me";
   const fetcher = (url: string) => {
     return instance.get(url).then((res) => res.data);

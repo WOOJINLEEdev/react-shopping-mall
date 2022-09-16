@@ -9,8 +9,8 @@ import { RiLoginBoxLine } from "@react-icons/all-files/ri/RiLoginBoxLine";
 import * as Sentry from "@sentry/react";
 
 import useMyCart from "hooks/api/useMyCart";
-import useTokenStatus from "hooks/useTokenStatus";
 import useDevice from "hooks/useDevice";
+import useHttpClient from "hooks/useHttpClient";
 import { updateMyVisitCountsApi, updateShopVisitCountsApi } from "api";
 
 import SearchModal from "components/search/SearchModal";
@@ -19,22 +19,24 @@ import signInImg from "assets/images/user.png";
 import { ReactComponent as MenuImg } from "assets/images/menu.svg";
 
 import { headerItemState, menuState, searchWrapState } from "state";
+import { tokenState } from "App";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { token, mutateToken } = useTokenStatus();
   const { isPc } = useDevice();
+  const instance = useHttpClient();
 
   const setMenuShow = useSetRecoilState(menuState);
   const setSearchWrapStatus = useSetRecoilState(searchWrapState);
+  const token = useRecoilValue(tokenState);
   const activeCheck = useRecoilValue(headerItemState);
 
   useEffect(() => {
     async function updateMyVisitCount() {
       try {
-        await updateMyVisitCountsApi();
+        await updateMyVisitCountsApi({ instance });
       } catch (err) {
         Sentry.captureException(`Catched Error : ${err}`);
       }
@@ -49,7 +51,7 @@ const Header = () => {
   useEffect(() => {
     async function updateShopVisitCount() {
       try {
-        await updateShopVisitCountsApi();
+        await updateShopVisitCountsApi({ instance });
       } catch (err) {
         Sentry.captureException(`Catched Error : ${err}`);
       }

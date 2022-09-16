@@ -1,6 +1,7 @@
 import { useRecoilValue } from "recoil";
 
 import useDevice from "hooks/useDevice";
+import useHttpClient from "hooks/useHttpClient";
 import { validateCheckout } from "utils/checkout-validator";
 import { submitCheckout } from "utils/order-submit-api";
 import { formatPrice } from "utils/money";
@@ -24,6 +25,7 @@ const OrderCheckoutButton = ({
   checkoutNumber,
 }: IOrderCheckoutButtonProps) => {
   const { isPc, isTablet, isMobile } = useDevice();
+  const instance = useHttpClient();
 
   const checkoutDeliveryData = useRecoilValue(
     deliveryInfoState(checkoutData.id),
@@ -44,6 +46,7 @@ const OrderCheckoutButton = ({
     }
 
     submitCheckout({
+      instance,
       checkoutDeliveryData,
       checkoutPaymentData,
       checkoutTotalDetailData,

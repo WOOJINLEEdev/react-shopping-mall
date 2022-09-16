@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
 import * as Sentry from "@sentry/react";
+import { useResetRecoilState } from "recoil";
 
 import useMyCart from "hooks/api/useMyCart";
-import useTokenStatus from "hooks/useTokenStatus";
+import useHttpClient from "hooks/useHttpClient";
 import { formatPrice } from "utils/money";
 import { createLogoutApi } from "api";
 
 import Loading from "components/common/Loading";
 import { IMyData } from "components/mypage/types";
+import { tokenState } from "App";
 
 Modal.setAppElement("#root");
 
@@ -25,21 +27,22 @@ interface IMyPageInfoProps {
 
 const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
   const navigate = useNavigate();
+  const { mutateCart } = useMyCart();
+  const instance = useHttpClient();
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
+
+  const removeToken = useResetRecoilState(tokenState);
 
   const modalText = "정말 로그아웃 하시겠습니까?";
   const yesBtnText = "예";
   const noBtnText = "아니오";
 
-  const { mutateCart } = useMyCart();
-  const { removeToken } = useTokenStatus();
-
   const logout = () => {
     async function createLogout() {
       try {
-        await createLogoutApi();
+        await createLogoutApi({ instance });
         removeToken();
       } catch (err) {
         Sentry.captureException(`Catched Error : ${err}`);

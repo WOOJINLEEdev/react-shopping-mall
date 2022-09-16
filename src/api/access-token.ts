@@ -1,5 +1,9 @@
-import { instance } from "utils/http-client";
+import { AxiosInstance } from "axios";
 
-export function createAccessTokenApi() {
+interface ICreateAccessTokenApi {
+  instance: AxiosInstance;
+}
+
+export function createAccessTokenApi({ instance }: ICreateAccessTokenApi) {
   return instance.post("/v1/auth/access-token", null);
 }

@@ -4,13 +4,15 @@ import * as Sentry from "@sentry/react";
 
 import useProductItem from "hooks/api/useProductItem";
 import useMyCart from "hooks/api/useMyCart";
-import useTokenStatus from "hooks/useTokenStatus";
+import useHttpClient from "hooks/useHttpClient";
 import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
 import { addToCartApi, createCheckoutsApi } from "api";
 
 import QuantityCounter from "components/common/QuantityCounter";
 import Loading from "components/common/Loading";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "App";
 
 const CommonModal = lazy(() => import("components/common/CommonModal"));
 
@@ -52,6 +54,8 @@ const ItemDetail = () => {
   const [onOverlayClick, setOnOverlayClick] = useState(false);
   const [onEsc, setOnEsc] = useState(false);
 
+  const token = useRecoilValue(tokenState);
+
   const modalText = "장바구니에 상품이 추가되었습니다.";
   const yesBtnText = "장바구니 이동";
   const noBtnText = "쇼핑 계속하기";
@@ -60,7 +64,7 @@ const ItemDetail = () => {
 
   const { productData } = useProductItem(matchParams.productId);
   const { mutateCart } = useMyCart();
-  const { token } = useTokenStatus();
+  const instance = useHttpClient();
 
   const selectOptions = productData.variants;
 
@@ -88,6 +92,7 @@ const ItemDetail = () => {
 
     try {
       const res = await addToCartApi({
+        instance,
         items: [
           {
             product_id: productData.id,
@@ -134,6 +139,7 @@ const ItemDetail = () => {
 
     try {
       const res = await createCheckoutsApi({
+        instance,
         lineItems: [
           {
             variant_id: itemOption,
