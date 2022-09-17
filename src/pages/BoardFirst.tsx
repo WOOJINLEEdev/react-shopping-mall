@@ -9,11 +9,10 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { GiSpeaker } from "@react-icons/all-files/gi/GiSpeaker";
 
 import useDevice from "hooks/useDevice";
-import { getToken } from "utils/token";
 
 import BoardTable from "components/board/BoardTable";
 import BoardTableRow from "components/board/BoardTableRow";
@@ -26,6 +25,7 @@ import { postList, sortedPostList } from "components/board/board-first-data";
 import { IFirstPostItem } from "components/board/types";
 
 import { curBoardState } from "state";
+import { tokenState } from "App";
 
 Modal.setAppElement("#root");
 
@@ -60,7 +60,7 @@ const BoardFirst = () => {
     useState("board_search_btn");
   const [selectedOption, setSelectedOption] = useState("");
 
-  const token = getToken();
+  const token = useRecoilValue(tokenState);
   const { isPc, isTablet, isMobile } = useDevice();
 
   const notice = postList.filter((data) => data.type === "공지사항");

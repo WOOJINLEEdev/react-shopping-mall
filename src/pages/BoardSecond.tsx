@@ -2,11 +2,10 @@ import { useState, useEffect, lazy, ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "react-modal";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 import useBoardList from "hooks/api/useBoardList";
 import useDevice from "hooks/useDevice";
-import { getToken } from "utils/token";
 import { formatDate } from "utils/date";
 
 import BoardTable from "components/board/BoardTable";
@@ -18,6 +17,7 @@ import CommonAsyncBoundary from "components/common/CommonAsyncBoundary";
 import { ISecondPostItem } from "components/board/types";
 
 import { curBoardState } from "state";
+import { tokenState } from "App";
 
 Modal.setAppElement("#root");
 
@@ -29,6 +29,7 @@ const BoardSecond = () => {
   const navigate = useNavigate();
 
   const [pageState, setPageState] = useRecoilState(curBoardState("second"));
+  const token = useRecoilValue(tokenState);
 
   const [isOpen, setIsOpen] = useState(false);
   const [posts, setPosts] = useState<ISecondPostItem[]>([]);
@@ -51,7 +52,6 @@ const BoardSecond = () => {
   const offsetLimit =
     detectMobile === true ? offset + mobileLimit : offset + limit;
 
-  const token = getToken();
   const date = new Date();
   let searchInput = "";
 

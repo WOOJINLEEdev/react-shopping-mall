@@ -6,9 +6,10 @@ import jwt_decode from "jwt-decode";
 import DOMPurify from "dompurify";
 import { Editor } from "@toast-ui/react-editor";
 import * as Sentry from "@sentry/react";
+import { useRecoilValue } from "recoil";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
-import { getToken } from "utils/token";
+import { tokenState } from "App";
 
 interface IMyToken {
   user: {
@@ -18,13 +19,13 @@ interface IMyToken {
 }
 
 const BoardEditor = () => {
+  const navigate = useNavigate();
+
   const [inputTitle, setInputTitle] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<Editor>(null);
 
-  const navigate = useNavigate();
-
-  const token = getToken();
+  const token = useRecoilValue(tokenState);
   const boardLocalStorage = localStorage.getItem("board");
   const decoded = jwt_decode<IMyToken>(token);
   const userId = decoded.user.user_id;
