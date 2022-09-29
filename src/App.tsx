@@ -7,6 +7,7 @@ import "focus-visible";
 import "App.css";
 
 import useHttpClient from "hooks/useHttpClient";
+import { SentryError } from "utils/error";
 import { createAccessTokenApi } from "api";
 
 import Router from "routes";
@@ -23,6 +24,8 @@ const App = () => {
 
   const handleAxiosError = (error: AxiosError) => {
     const { method, url, params, data: requestData, headers } = error.config;
+    console.log("url", url);
+
     Sentry.setContext("API Request Detail", {
       method,
       url,
@@ -49,7 +52,7 @@ const App = () => {
         if (axios.isAxiosError(err)) {
           handleAxiosError(err);
         }
-        Sentry.captureException(err);
+        Sentry.captureException(new SentryError(err as Error));
         console.error(err);
       }
     }

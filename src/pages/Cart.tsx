@@ -1,9 +1,11 @@
 import { MouseEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 import * as Sentry from "@sentry/react";
 
 import useMyCart from "hooks/api/useMyCart";
 import useHttpClient from "hooks/useHttpClient";
+import { SentryError } from "utils/error";
 import {
   deleteCartItemApi,
   updateCartItemQuantityApi,
@@ -16,7 +18,6 @@ import CartDetail from "components/cart/CartDetail";
 import CartBuyBtn from "components/cart/CartBuyBtn";
 import SnackBar from "components/common/SnackBar";
 import { IAddedCartItem } from "components/cart/types";
-import { AxiosError } from "axios";
 
 const Cart = () => {
   const [chkId, setChkId] = useState("");
@@ -39,7 +40,7 @@ const Cart = () => {
       mutateCart(null, true);
       setOpen((prev) => !prev);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 
@@ -57,14 +58,15 @@ const Cart = () => {
         false,
       );
     } catch (err) {
-      if (
-        (err as AxiosError).response?.status === 400 ||
-        (err as AxiosError).response?.status === 500
-      ) {
-        alert((err as AxiosError).response?.data.error.message);
+      if (axios.isAxiosError(err)) {
+        err = err as AxiosError;
+
+        if (err.response?.status === 400 || err.response?.status === 500) {
+          alert(err.response?.data.error.message);
+        }
       }
 
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 
@@ -149,7 +151,7 @@ const Cart = () => {
       setChkId(res.data.checkout_id);
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 
@@ -175,7 +177,7 @@ const Cart = () => {
       });
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 
@@ -193,7 +195,7 @@ const Cart = () => {
       setAllChecked(true);
       setOpen((prev) => !prev);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 

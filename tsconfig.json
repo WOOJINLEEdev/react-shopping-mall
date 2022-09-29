@@ -22,7 +22,8 @@
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": false,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "useUnknownInCatchVariables": false
   },
   "include": ["src"],
   "exclude": ["scripts/sentry.js"]

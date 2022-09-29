@@ -13,6 +13,7 @@ import { createLogoutApi } from "api";
 import Loading from "components/common/Loading";
 import { IMyData } from "components/mypage/types";
 import { tokenState } from "App";
+import { SentryError } from "utils/error";
 
 Modal.setAppElement("#root");
 
@@ -45,7 +46,7 @@ const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
         await createLogoutApi({ instance });
         removeToken();
       } catch (err) {
-        Sentry.captureException(err);
+        Sentry.captureException(new SentryError(err as Error));
       }
     }
 

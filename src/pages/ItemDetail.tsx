@@ -7,6 +7,7 @@ import useMyCart from "hooks/api/useMyCart";
 import useHttpClient from "hooks/useHttpClient";
 import { getSizedImageUrl } from "utils/image";
 import { formatPrice } from "utils/money";
+import { SentryError } from "utils/error";
 import { addToCartApi, createCheckoutsApi } from "api";
 
 import QuantityCounter from "components/common/QuantityCounter";
@@ -104,7 +105,7 @@ const ItemDetail = () => {
       mutateCart(res.data, false);
       setIsOpen(true);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   }
 
@@ -149,7 +150,7 @@ const ItemDetail = () => {
       });
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 

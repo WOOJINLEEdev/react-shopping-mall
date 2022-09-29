@@ -10,6 +10,7 @@ import { useSetRecoilState } from "recoil";
 
 import useHttpClient from "hooks/useHttpClient";
 import { userId, userPassword } from "utils/login-validation";
+import { SentryError } from "utils/error";
 import { createSocialLoginApi, createLoginApi } from "api";
 
 import { tokenState } from "App";
@@ -38,7 +39,7 @@ const LogIn = () => {
 
         loginCheck(res);
       } catch (err) {
-        Sentry.captureException(err);
+        Sentry.captureException(new SentryError(err as Error));
       }
     }
 
@@ -67,7 +68,7 @@ const LogIn = () => {
       setToken(res.data);
       loginCheck(res);
     } catch (err: any | AxiosError) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
         if (err.response.data.error === "user not found") {
@@ -119,7 +120,7 @@ const LogIn = () => {
       });
       loginCheck(res);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
     try {
       const res = await createSocialLoginApi({
@@ -134,7 +135,7 @@ const LogIn = () => {
 
       loginCheck(res);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 

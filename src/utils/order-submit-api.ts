@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react";
 import { AxiosInstance } from "axios";
 
+import { SentryError } from "utils/error";
 import { updateCheckoutsApi } from "api";
 
 import { IDeliveryInfoState } from "state/order";
@@ -72,7 +73,7 @@ export async function submitCheckout({
 
       window.location.replace(`/orderCheck/${checkoutNumber}`);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   }
 
@@ -108,7 +109,7 @@ export async function submitCheckout({
 
       window.location.replace(`/orderCheck/${checkoutNumber}`);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   }
 }

@@ -9,7 +9,7 @@
     "@toast-ui/editor": "^3.1.10",
     "@toast-ui/react-editor": "^3.1.10",
     "apexcharts": "^3.29.0",
-    "axios": "^0.21.1",
+    "axios": "^0.27.2",
     "core-js": "^3.19.1",
     "dompurify": "^2.3.4",
     "draft-js": "^0.11.7",

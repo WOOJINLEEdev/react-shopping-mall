@@ -1,6 +1,6 @@
 /* eslint-disable func-names */
 import { useMemo } from "react";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { useRecoilState } from "recoil";
 
 import { tokenState } from "App";
@@ -17,7 +17,11 @@ const useHttpClient = () => {
     newInstance.defaults.withCredentials = true;
 
     newInstance.interceptors.request.use(
-      function (config) {
+      function (config: AxiosRequestConfig) {
+        if (config.headers === undefined) {
+          config.headers = {};
+        }
+
         config.headers.Authorization = `Bearer ${token}`;
 
         return config;

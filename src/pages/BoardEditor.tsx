@@ -9,6 +9,8 @@ import * as Sentry from "@sentry/react";
 import { useRecoilValue } from "recoil";
 import "@toast-ui/editor/dist/toastui-editor.css";
 
+import { SentryError } from "utils/error";
+
 import { tokenState } from "App";
 
 interface IMyToken {
@@ -53,7 +55,7 @@ const BoardEditor = () => {
         body: inputBody,
       });
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 

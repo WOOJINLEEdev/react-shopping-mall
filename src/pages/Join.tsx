@@ -24,6 +24,7 @@ import {
   userMonth,
   userDate,
 } from "utils/login-validation";
+import { SentryError } from "utils/error";
 import { createJoinApi } from "api";
 
 const Join = () => {
@@ -63,7 +64,7 @@ const Join = () => {
       alert("회원가입이 완료되었습니다.");
       window.location.replace("/login");
     } catch (err: any) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
       if (err.response) {
         alert("이미 입력한 ID가 존재합니다.");
       }

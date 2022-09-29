@@ -11,6 +11,7 @@ import * as Sentry from "@sentry/react";
 import useMyCart from "hooks/api/useMyCart";
 import useDevice from "hooks/useDevice";
 import useHttpClient from "hooks/useHttpClient";
+import { SentryError } from "utils/error";
 import { updateMyVisitCountsApi, updateShopVisitCountsApi } from "api";
 
 import SearchModal from "components/search/SearchModal";
@@ -38,7 +39,7 @@ const Header = () => {
       try {
         await updateMyVisitCountsApi({ instance });
       } catch (err) {
-        Sentry.captureException(err);
+        Sentry.captureException(new SentryError(err as Error));
       }
     }
 
@@ -53,7 +54,7 @@ const Header = () => {
       try {
         await updateShopVisitCountsApi({ instance });
       } catch (err) {
-        Sentry.captureException(err);
+        Sentry.captureException(new SentryError(err as Error));
       }
     }
 

@@ -4,6 +4,7 @@ import { AiTwotoneStar } from "@react-icons/all-files/ai/AiTwotoneStar";
 import * as Sentry from "@sentry/react";
 
 import useHttpClient from "hooks/useHttpClient";
+import { SentryError } from "utils/error";
 import { updateStarRatingApi } from "api";
 
 interface IStarRatingProps {
@@ -42,7 +43,7 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
 
       setStarRatings(selectedStarRatings);
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 

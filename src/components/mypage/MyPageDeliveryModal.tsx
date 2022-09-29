@@ -14,6 +14,7 @@ import { IMyShippingAddress } from "components/mypage/types";
 
 import { myDeliveryInfoState } from "state/mypage";
 import { IDeliveryInfoState } from "state/order";
+import { SentryError } from "utils/error";
 
 Modal.setAppElement("#root");
 
@@ -153,7 +154,7 @@ const MyPageDeliveryModal = ({
       alert("배송지 등록이 완료되었습니다.");
       handleCancelBtnClick();
     } catch (err) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
     }
   };
 

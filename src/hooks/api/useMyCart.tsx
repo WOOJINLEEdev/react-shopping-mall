@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/react";
 import { useRecoilValue } from "recoil";
 
 import useHttpClient from "hooks/useHttpClient";
+import { SentryError } from "utils/error";
 
 import { ICartItem } from "components/cart/types";
 import { tokenState } from "App";
@@ -31,7 +32,7 @@ const useMyCart = () => {
         })),
       };
     } catch (err: any | AxiosError) {
-      Sentry.captureException(err);
+      Sentry.captureException(new SentryError(err as Error));
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
 
