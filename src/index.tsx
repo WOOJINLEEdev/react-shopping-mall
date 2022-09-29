@@ -21,6 +21,10 @@ Sentry.init({
   integrations: [new BrowserTracing()],
   environment: process.env.NODE_ENV,
   tracesSampleRate: 1.0,
+  release:
+    process.env.NODE_ENV === "production"
+      ? process.env.REACT_APP_GIT_SHA
+      : undefined,
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

@@ -24,5 +24,6 @@
     "noImplicitThis": false,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["scripts/sentry.js"]
 }
