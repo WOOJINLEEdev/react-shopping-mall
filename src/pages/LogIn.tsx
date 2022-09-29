@@ -38,7 +38,7 @@ const LogIn = () => {
 
         loginCheck(res);
       } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
+        Sentry.captureException(err);
       }
     }
 
@@ -67,7 +67,7 @@ const LogIn = () => {
       setToken(res.data);
       loginCheck(res);
     } catch (err: any | AxiosError) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
         if (err.response.data.error === "user not found") {
@@ -119,7 +119,7 @@ const LogIn = () => {
       });
       loginCheck(res);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
     try {
       const res = await createSocialLoginApi({
@@ -134,7 +134,7 @@ const LogIn = () => {
 
       loginCheck(res);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 

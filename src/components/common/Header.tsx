@@ -38,7 +38,7 @@ const Header = () => {
       try {
         await updateMyVisitCountsApi({ instance });
       } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
+        Sentry.captureException(err);
       }
     }
 
@@ -53,7 +53,7 @@ const Header = () => {
       try {
         await updateShopVisitCountsApi({ instance });
       } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
+        Sentry.captureException(err);
       }
     }
 

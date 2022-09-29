@@ -72,7 +72,7 @@ export async function submitCheckout({
 
       window.location.replace(`/orderCheck/${checkoutNumber}`);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   }
 
@@ -108,7 +108,7 @@ export async function submitCheckout({
 
       window.location.replace(`/orderCheck/${checkoutNumber}`);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   }
 }

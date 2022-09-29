@@ -31,7 +31,7 @@ const useMyCart = () => {
         })),
       };
     } catch (err: any | AxiosError) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
       if (axios.isAxiosError(err)) {
         err = err as AxiosError;
 

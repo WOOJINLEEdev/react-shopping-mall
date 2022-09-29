@@ -45,7 +45,7 @@ const MyPageInfo = ({ myData }: IMyPageInfoProps) => {
         await createLogoutApi({ instance });
         removeToken();
       } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
+        Sentry.captureException(err);
       }
     }
 

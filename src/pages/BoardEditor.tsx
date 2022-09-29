@@ -53,7 +53,7 @@ const BoardEditor = () => {
         body: inputBody,
       });
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 

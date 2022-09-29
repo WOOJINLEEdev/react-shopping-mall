@@ -26,7 +26,7 @@ const App = () => {
         const res = await createAccessTokenApi({ instance });
         setToken(res.data);
       } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
+        Sentry.captureException(err);
       }
     }
 

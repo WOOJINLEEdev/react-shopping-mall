@@ -42,7 +42,7 @@ const StarRating = ({ myRating }: IStarRatingProps) => {
 
       setStarRatings(selectedStarRatings);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 

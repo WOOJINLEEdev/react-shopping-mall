@@ -104,7 +104,7 @@ const ItemDetail = () => {
       mutateCart(res.data, false);
       setIsOpen(true);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   }
 
@@ -149,7 +149,7 @@ const ItemDetail = () => {
       });
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 

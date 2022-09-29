@@ -16,6 +16,7 @@ import CartDetail from "components/cart/CartDetail";
 import CartBuyBtn from "components/cart/CartBuyBtn";
 import SnackBar from "components/common/SnackBar";
 import { IAddedCartItem } from "components/cart/types";
+import { AxiosError } from "axios";
 
 const Cart = () => {
   const [chkId, setChkId] = useState("");
@@ -38,7 +39,7 @@ const Cart = () => {
       mutateCart(null, true);
       setOpen((prev) => !prev);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 
@@ -56,7 +57,14 @@ const Cart = () => {
         false,
       );
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      if (
+        (err as AxiosError).response?.status === 400 ||
+        (err as AxiosError).response?.status === 500
+      ) {
+        alert((err as AxiosError).response?.data.error.message);
+      }
+
+      Sentry.captureException(err);
     }
   };
 
@@ -141,7 +149,7 @@ const Cart = () => {
       setChkId(res.data.checkout_id);
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 
@@ -167,24 +175,25 @@ const Cart = () => {
       });
       navigate(`/checkout/${res.data.checkout_id}`);
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 
   const handleChoiceItemRemoveBtnClick = async () => {
     const chkItems = cart.items.filter((item: IAddedCartItem) => item.checked);
 
-    for (const chkItem of chkItems) {
-      let cartItemId: number = chkItem.id;
-
-      try {
-        await deleteCartItemApi({ instance, cartItemId });
-        mutateCart(null, true);
-        setAllChecked(true);
-        setOpen((prev) => !prev);
-      } catch (err) {
-        Sentry.captureException(`Catched Error : ${err}`);
-      }
+    const chkItemIds = chkItems.map((item: IAddedCartItem) => item.id);
+    try {
+      await Promise.all(
+        chkItemIds.map((cartItemId: number) =>
+          deleteCartItemApi({ instance, cartItemId }),
+        ),
+      );
+      mutateCart(null, true);
+      setAllChecked(true);
+      setOpen((prev) => !prev);
+    } catch (err) {
+      Sentry.captureException(err);
     }
   };
 

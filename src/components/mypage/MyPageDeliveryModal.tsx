@@ -153,7 +153,7 @@ const MyPageDeliveryModal = ({
       alert("배송지 등록이 완료되었습니다.");
       handleCancelBtnClick();
     } catch (err) {
-      Sentry.captureException(`Catched Error : ${err}`);
+      Sentry.captureException(err);
     }
   };
 
