@@ -35,6 +35,7 @@ const SearchResult = () => {
   const { data, size, setSize } = usePagingQuery(getKey);
 
   const products = data?.flat(Infinity) ?? [];
+  const isVisibility = searchCount > 9 && size * PAGE_LIMIT < searchCount;
 
   function handleMoreViewBtnClick() {
     setSize(size + 1);
@@ -55,11 +56,12 @@ const SearchResult = () => {
           })
         )}
       </ul>
-      {searchCount > 9 && size * PAGE_LIMIT < searchCount ? (
-        <MoreViewBtn onClick={handleMoreViewBtnClick} margin={"0 0 30px"} />
-      ) : (
-        ""
-      )}
+
+      <MoreViewBtn
+        onClick={handleMoreViewBtnClick}
+        margin={"0 0 30px"}
+        isVisibility={isVisibility}
+      />
     </ResultWrap>
   );
 };

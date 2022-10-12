@@ -20,6 +20,7 @@ const ProductList = () => {
   const { data, size, setSize } = usePagingQuery(getKey);
 
   const products = data?.flat(Infinity) as IProductItem[];
+  const isVisibility = size * PAGE_LIMIT < 100;
 
   function handleMoreViewBtnClick() {
     setSize(size + 1);
@@ -35,7 +36,11 @@ const ProductList = () => {
         })}
       </ul>
 
-      <MoreViewBtn onClick={handleMoreViewBtnClick} margin={"0 0 30px"} />
+      <MoreViewBtn
+        onClick={handleMoreViewBtnClick}
+        margin={"0 0 30px"}
+        isVisibility={isVisibility}
+      />
     </>
   );
 };

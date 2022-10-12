@@ -34,6 +34,7 @@ const MyOrderCheck = () => {
   const { data, size, setSize } = usePagingQuery(getKey);
 
   const myOrderList = data?.flat(Infinity) ?? [];
+  const isVisibility = myOrderData > 5 && size * PAGE_LIMIT < myOrderData;
 
   const handleOrderListItem = (itemId: number) => {
     setSelectItemId(itemId);
@@ -97,11 +98,11 @@ const MyOrderCheck = () => {
           );
         })}
       </ul>
-      {myOrderData > 5 && size * PAGE_LIMIT < myOrderData ? (
-        <MoreViewBtn onClick={handleMoreViewBtnClick} />
-      ) : (
-        ""
-      )}
+
+      <MoreViewBtn
+        onClick={handleMoreViewBtnClick}
+        isVisibility={isVisibility}
+      />
     </OrderCheckWrap>
   );
 };

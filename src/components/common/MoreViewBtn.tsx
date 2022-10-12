@@ -4,11 +4,17 @@ import { IoIosArrowDown } from "@react-icons/all-files/io/IoIosArrowDown";
 interface IMoreViewBtnProps {
   onClick: () => void;
   margin?: string;
+  isVisibility: boolean;
 }
 
-const MoreViewBtn = ({ onClick, margin }: IMoreViewBtnProps) => {
+const MoreViewBtn = ({ onClick, margin, isVisibility }: IMoreViewBtnProps) => {
   return (
-    <MoreBtn onClick={onClick} margin={margin} aria-label="list_more_view">
+    <MoreBtn
+      aria-label="list_more_view"
+      onClick={onClick}
+      margin={margin}
+      isVisibility={isVisibility}
+    >
       더보기 <IoIosArrowDown />
     </MoreBtn>
   );
@@ -35,6 +41,7 @@ const MoreBtn = styled.button<MoreBtnProps>`
   box-shadow: 0 3px 15px 3px rgba(0, 0, 0, 0.1);
   margin: ${(props) => props.margin || "30px 0 0"};
   cursor: pointer;
+  visibility: ${(props) => (props.isVisibility ? "visibility" : "hidden")};
 
   svg {
     width: 15px;
