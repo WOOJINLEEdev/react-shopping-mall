@@ -61,7 +61,7 @@ const Router = () => {
           <Route path="products/:productId" element={<ItemDetail />} />
           <Route path="boardSecond" element={<BoardSecond />} />
           <Route path="boardSecond/posts/:id" element={<BoardItem />} />
-          <Route path="searchResult/:searchWord" element={<SearchResult />} />
+          <Route path="search" element={<SearchResult />} />
           <Route path="checkout/:checkoutId" element={<Order />} />
           <Route path="myOrderCheck" element={<MyOrderCheck />} />
           <Route path="orderCheck/:checkoutId" element={<OrderCompletion />} />

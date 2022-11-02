@@ -23,9 +23,9 @@ const SearchWrap = ({
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [pathName, setPathName] = useState<string>("");
-  const [searchPlaceHolder, setSearchPlaceHolder] = useState<string>("Search");
-  const [searchInputId, setSearchInputId] = useState<string>("mainSearchInput");
+  const [pathName, setPathName] = useState("");
+  const [searchPlaceHolder, setSearchPlaceHolder] = useState("Search");
+  const [searchInputId, setSearchInputId] = useState("mainSearchInput");
   const ref = useRef<HTMLInputElement>(null);
 
   const setSearchWrapState = useSetRecoilState<boolean>(searchWrapState);
@@ -47,7 +47,7 @@ const SearchWrap = ({
       return false;
     }
 
-    navigate(`/searchResult/${trimmedSearchInput}`);
+    navigate(`/search?q=${trimmedSearchInput}`);
     setSearchWrapState(false);
     ref?.current?.focus();
   };

@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { SWRInfiniteKeyLoader } from "swr/infinite";
 
@@ -10,16 +9,16 @@ import MoreViewBtn from "components/common/MoreViewBtn";
 import { IProductItem } from "components/home/types";
 
 const SearchResult = () => {
-  const matchParams = useParams();
+  const searchKeyword = new URLSearchParams(location.search).get("q");
 
   const { searchCount } = useSearchCount({
-    searchInput: matchParams.searchWord || "",
+    searchInput: searchKeyword || "",
     count: true,
   });
 
   const PAGE_LIMIT = 8;
   const getKey: SWRInfiniteKeyLoader = (pageIndex, previousPageData) => {
-    if (matchParams.searchWord === "") {
+    if (searchKeyword === "") {
       return null;
     }
 
@@ -29,7 +28,7 @@ const SearchResult = () => {
 
     return `/v1/products?limit=${PAGE_LIMIT}&offset=${
       pageIndex * PAGE_LIMIT
-    }&name=${matchParams.searchWord}`;
+    }&name=${searchKeyword}`;
   };
 
   const { data, size, setSize } = usePagingQuery(getKey);
@@ -44,7 +43,7 @@ const SearchResult = () => {
   return (
     <ResultWrap>
       <SearchResultTitle>
-        <SearchWord>{matchParams.searchWord}</SearchWord>
+        <SearchWord>{searchKeyword}</SearchWord>
         <span>검색결과 {searchCount}건</span>
       </SearchResultTitle>
       <ul className="list_group">
