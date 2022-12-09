@@ -41,7 +41,7 @@ const Menu = () => {
       return false;
     }
 
-    navigate(`/searchResult/${trimmedSearchInput}`);
+    navigate(`/search?q=${trimmedSearchInput}`);
     ref?.current?.blur();
 
     setShow(false);

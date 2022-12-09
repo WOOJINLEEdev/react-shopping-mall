@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Formik, Form, ErrorMessage, Field, FormikValues } from "formik";
+import {
+  Formik,
+  Form,
+  ErrorMessage,
+  Field,
+  FormikValues,
+  FormikHelpers,
+} from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import GoogleLogin from "react-google-login";
@@ -14,6 +21,11 @@ import { SentryError } from "utils/error";
 import { createSocialLoginApi, createLoginApi } from "api";
 
 import { tokenState } from "App";
+
+interface IValues {
+  userId: string;
+  userPassword: string;
+}
 
 const LogIn = () => {
   const { naver } = window;
@@ -58,7 +70,11 @@ const LogIn = () => {
     userPassword: userPassword(),
   });
 
-  const onSubmit = async (values: FormikValues) => {
+  const handleFormSubmit = async (
+    values: FormikValues,
+    { setSubmitting }: FormikHelpers<IValues>,
+  ) => {
+    setSubmitting(true);
     try {
       const res = await createLoginApi({
         instance,
@@ -79,6 +95,8 @@ const LogIn = () => {
           return alert("비밀번호가 일치하지 않습니다.");
         }
       }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -151,75 +169,82 @@ const LogIn = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleFormSubmit}
     >
-      <Form className="login_form">
-        <div className="login_wrap">
-          <fieldset className="login_fieldset">
-            <legend className="visually_hidden">로그인</legend>
-            <div>
-              <label htmlFor="userId" className="visually_hidden">
-                아이디
-              </label>
-              <Field
-                type="text"
-                name="userId"
-                id="userId"
-                className="login_input id"
-                placeholder="아이디"
-              />
-              <ErrorMessage
-                name="userId"
-                component="div"
-                className="input_check"
-              />
-            </div>
-            <div>
-              <label htmlFor="userPassword" className="visually_hidden">
-                비밀번호
-              </label>
-              <Field
-                type="password"
-                name="userPassword"
-                id="userPassword"
-                className="login_input password"
-                placeholder="비밀번호"
-                autoComplete="off"
-              />
-              <ErrorMessage
-                name="userPassword"
-                component="div"
-                className="input_check"
-              />
-            </div>
-            <button type="submit" id="logInButton" className="login_btn">
-              로그인
-            </button>
-
-            <BtnWrap>
-              <SocialBtnWrap>
-                <NaverLoginBtn
-                  type="button"
-                  id="naverIdLogin"
-                  onClick={initializeNaverLogin}
-                  aria-label="네이버 아이디로 로그인"
+      {({ isSubmitting }) => (
+        <Form className="login_form">
+          <div className="login_wrap">
+            <fieldset className="login_fieldset">
+              <legend className="visually_hidden">로그인</legend>
+              <div>
+                <label htmlFor="userId" className="visually_hidden">
+                  아이디
+                </label>
+                <Field
+                  type="text"
+                  name="userId"
+                  id="userId"
+                  className="login_input id"
+                  placeholder="아이디"
                 />
-                <GoogleLogin
-                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ""}
-                  buttonText="구글 아이디로 로그인"
-                  onSuccess={onSuccess}
-                  onFailure={onFailure}
-                  cookiePolicy={"single_host_origin"}
+                <ErrorMessage
+                  name="userId"
+                  component="div"
+                  className="input_check"
                 />
-              </SocialBtnWrap>
+              </div>
+              <div>
+                <label htmlFor="userPassword" className="visually_hidden">
+                  비밀번호
+                </label>
+                <Field
+                  type="password"
+                  name="userPassword"
+                  id="userPassword"
+                  className="login_input password"
+                  placeholder="비밀번호"
+                  autoComplete="off"
+                />
+                <ErrorMessage
+                  name="userPassword"
+                  component="div"
+                  className="input_check"
+                />
+              </div>
+              <button
+                type="submit"
+                id="logInButton"
+                className="login_btn"
+                disabled={isSubmitting}
+              >
+                로그인
+              </button>
 
-              <JoinBtn type="button" onClick={handleJoinBtnClick}>
-                회원가입
-              </JoinBtn>
-            </BtnWrap>
-          </fieldset>
-        </div>
-      </Form>
+              <BtnWrap>
+                <SocialBtnWrap>
+                  <NaverLoginBtn
+                    type="button"
+                    id="naverIdLogin"
+                    onClick={initializeNaverLogin}
+                    aria-label="네이버 아이디로 로그인"
+                  />
+                  <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ""}
+                    buttonText="구글 아이디로 로그인"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </SocialBtnWrap>
+
+                <JoinBtn type="button" onClick={handleJoinBtnClick}>
+                  회원가입
+                </JoinBtn>
+              </BtnWrap>
+            </fieldset>
+          </div>
+        </Form>
+      )}
     </Formik>
   );
 };

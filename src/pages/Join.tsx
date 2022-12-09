@@ -8,6 +8,7 @@ import {
   FormikValues,
   FieldAttributes,
   FormikErrors,
+  FormikHelpers,
 } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -27,8 +28,18 @@ import {
 import { SentryError } from "utils/error";
 import { createJoinApi } from "api";
 
+interface IValues {
+  id: string;
+  password1: string;
+  password2: string;
+  name: string;
+  month: string;
+  date: string;
+  email: string;
+}
+
 const Join = () => {
-  const formikRef = useRef<FormikProps<FormikValues>>(null);
+  const formikRef = useRef<FormikProps<IValues>>(null);
 
   const instance = useHttpClient();
 
@@ -52,7 +63,11 @@ const Join = () => {
     email: userEmail(),
   });
 
-  const onSubmit = async (values: FormikValues) => {
+  const handleFormSubmit = async (
+    values: IValues,
+    { setSubmitting }: FormikHelpers<IValues>,
+  ) => {
+    setSubmitting(true);
     try {
       await createJoinApi({
         instance,
@@ -68,6 +83,8 @@ const Join = () => {
       if (err.response) {
         alert("이미 입력한 ID가 존재합니다.");
       }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -92,7 +109,7 @@ const Join = () => {
   };
 
   const { refetch } = useCheckUserId({
-    userId: formikRef?.current?.values.id,
+    userId: formikRef?.current?.values.id ?? "",
   });
 
   const handleIdCheckBtnClick = async () => {
@@ -115,9 +132,9 @@ const Join = () => {
       enableReinitialize={true}
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleFormSubmit}
     >
-      {({ errors, touched, setFieldValue }) => (
+      {({ errors, touched, setFieldValue, isSubmitting }) => (
         <Form>
           <div className="join_wrapper">
             <div className="join">
@@ -241,7 +258,11 @@ const Join = () => {
                 className="input_check"
               />
 
-              <button type="submit" className="join_btn">
+              <button
+                type="submit"
+                className="join_btn"
+                disabled={isSubmitting}
+              >
                 가입하기
               </button>
             </div>
