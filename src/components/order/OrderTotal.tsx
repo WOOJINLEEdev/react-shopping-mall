@@ -73,7 +73,7 @@ const OrderTotal = ({ checkoutData, checkoutNumber }: IOrderTotalProps) => {
                   <img
                     className="info_list_img"
                     alt={`${item.product_name}_상품 이미지`}
-                    src={`${item.image_src.slice(0, -4)}_150x200.jpg`}
+                    src={item.image_src}
                   />
                 </Link>
 
