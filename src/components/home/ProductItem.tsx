@@ -36,23 +36,11 @@ const ProductItem = ({ item }: IProductItemProps) => {
       <Link to={`/products/${item.id}`} className="list_link">
         <div className="list_element">
           <div className="image_wrap">
-            <picture>
-              {SOURCE_LIST.map((listItem) => {
-                return (
-                  <source
-                    key={`source_${listItem.id}`}
-                    media={listItem.media}
-                    srcSet={getSizedImageUrl(item.images[0].src, listItem.size)}
-                  />
-                );
-              })}
-
-              <img
-                src={getSizedImageUrl(item.images[0].src, "_300x300.jpg")}
-                className="test_img"
-                alt={`${item.name}_상품 이미지`}
-              />
-            </picture>
+            <img
+              src={item.images[0].src}
+              className="test_img"
+              alt={`${item.name}_상품 이미지`}
+            />
           </div>
           <div className="image_dim" />
           <p className="item_name">{item.name}</p>

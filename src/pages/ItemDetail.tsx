@@ -173,22 +173,11 @@ const ItemDetail = () => {
       </Suspense>
 
       <div className="image_wrapper">
-        <picture className="image_picture">
-          {SOURCE_LIST.map((item) => {
-            return (
-              <source
-                key={`item_detail_${item.id}`}
-                media={item.media}
-                srcSet={getSizedImageUrl(productData.images[0].src, item.size)}
-              />
-            );
-          })}
-          <img
-            className="image"
-            src={getSizedImageUrl(productData.images[0].src, "_400x300.jpg")}
-            alt={`${productData.name}_상품 이미지`}
-          />
-        </picture>
+        <img
+          className="image"
+          src={productData.images[0].src}
+          alt={`${productData.name}_상품 이미지`}
+        />
       </div>
 
       <div className="image_text_wrap" id="imageTextWrap">

@@ -120,21 +120,7 @@ const Banner = () => {
           ? ""
           : data.map((item) => (
               <SlideItem key={item.id}>
-                <picture>
-                  {SOURCE_LIST.map((bannerItem) => {
-                    return (
-                      <source
-                        key={bannerItem.id}
-                        media={bannerItem.media}
-                        srcSet={getSizedImageUrl(item.url, bannerItem.size)}
-                      />
-                    );
-                  })}
-                  <Image
-                    src={getSizedImageUrl(item.url, "_1024x500.jpg")}
-                    alt={item.name}
-                  />
-                </picture>
+                <Image src={item.url} alt={item.name} />
               </SlideItem>
             ))}
       </StyledSlider>

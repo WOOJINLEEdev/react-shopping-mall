@@ -72,28 +72,11 @@ const CartList = ({
                   className="info_img_box"
                   aria-label={`${item.product_name} 상품 페이지로 이동`}
                 >
-                  <picture className="cart_item_picture">
-                    {SOURCE_LIST.map((cartItem) => {
-                      return (
-                        <source
-                          key={`cart_item_picture_${cartItem.id}`}
-                          media={cartItem.media}
-                          srcSet={getSizedImageUrl(
-                            item.product_image_src,
-                            cartItem.size,
-                          )}
-                        />
-                      );
-                    })}
-                    <img
-                      className="cart_item_img"
-                      src={getSizedImageUrl(
-                        item.product_image_src,
-                        "_200x200.jpg",
-                      )}
-                      alt={`${item.product_name}_상품 이미지`}
-                    />
-                  </picture>
+                  <img
+                    className="cart_item_img"
+                    src={item.product_image_src}
+                    alt={`${item.product_name}_상품 이미지`}
+                  />
                 </Link>
                 <div className="info_box">
                   <div className="info_text">
