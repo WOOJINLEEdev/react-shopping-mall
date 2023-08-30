@@ -36,7 +36,7 @@ const useHttpClient = () => {
         return response;
       },
       function (error) {
-        if (error.message === "Request failed with status code 401") {
+        if (token && error.message === "Request failed with status code 401") {
           setToken("");
         }
         return Promise.reject(error);
